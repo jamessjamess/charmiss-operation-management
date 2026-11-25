@@ -55,15 +55,17 @@
       foreign.forEach(n => { if (word(n).test(txt)) hits.push(where + ': ' + n); });
       foreignCh.forEach(c => { if (word(c).test(txt)) hits.push(where + ': ' + c); });
     };
-    for (const v of SUP.filter(v => global.workCanVisit(v) && v !== 'supProposals')) {
-      global.navigate(v); await wait(1100);
-      scan(v, document.querySelector('#supRoot').innerText);
+    for (const v of SUP.filter(v => global.workCanVisit(v))) {
+      global.navigate(v); await wait(v === 'supProposals' ? 200 : 1100);
+      scan(v, (document.querySelector('#supRoot') || document.querySelector('#page')).innerText);   // the proposals page (Phase C) is an Ops-style page
       Object.values(global.Chart.instances || {}).forEach(c => scan(v + ' chart', [...(c.data.labels || []), ...(c.data.datasets || []).map(d => d.label || '')].join(' | ')));
       if (v === 'supStock') {                       // open the SKU drawer of the first row too
         const sku = App.model().rows[0].sku; App.openSku(sku); await wait(500);
         scan('drawer ' + sku, document.querySelector('#supDrawer').innerText); App.closeSku(); global.U.drawer.close();
       }
     }
+    global.navigate('overview'); await wait(400); const card = document.querySelector('.sup-b4'); if (card) scan('B4 card', card.innerText);
+    global.navigate('workQueue'); await wait(150); scan('work queue', document.querySelector('#page').innerText.split(String.fromCharCode(10)).filter(l => /SPR-/.test(l)).join(' '));
     return { id: 'SUP-NOLEAK-' + userId, pass: hits.length === 0, lock, hits: [...new Set(hits)].slice(0, 20) };
   }
 
@@ -211,9 +213,97 @@
     return res;
   }
 
+  /* ---------------------------------------------------------------- Phase C · B1–B5 + F7 (run on a fresh Integrated demo)
+     SUP-PROP-{recall,quota,po} · SUP-PROP-MERGE · SUP-PROP-SELF · SUP-PROP-REJECT · SUP-ETA · SUP-ATP-{MT,TT,Ecom} · SUP-B2-MATCH · SUP-B4 · SUP-B5 */
+  async function phaseC() {
+    const res = [], App = global.App, Calc = global.Calc, step = (id, pass, info) => res.push(Object.assign({ id, pass: !!pass }, info || {}));
+    if (global.supDataset() !== 'integrated' || !db.feedBase) return [{ id: 'SUP-PHASE-C', pass: false, info: 'needs a fresh Integrated demo' }];
+    const S = global.Supply, act = (id, a, arg) => global.supPropAct(id, a, arg);
+    await login('planner'); global.navigate('supQuota'); await S.ensureData();
+    for (let k = 0; k < 40 && !App.F; k++) await wait(200);
+    const DB = App.DB, nextM = Calc.monthKey(Calc.addMonths(Calc.monthStart(Calc.dn(dateKey(Date.now()))), 1));
+    // a recall candidate (consignment), a quota pair of A01 (MT) and a SKU to plan
+    const M0 = App.model(), C = Calc.consignmentOf(DB, M0.rows, M0.asDn, M0.period, M0.mask, M0.S), rc = C.pairs.find(p => p.recall && DB.accounts[p.j].channel === 'MT');
+    const qSku = DB.skus.find(s => (DB.quota[s.i].get('2026-11') || [])[DB.accIdx.get('A01')] > 0).sku, poSku = (M0.rows.find(r => r.suggestedQty > 0 && global.supAtpSources(r.sku).length === 0) || M0.rows.find(r => r.suggestedQty > 0)).sku;   // no other inbound, so the ATP date can only come from this PO
+    // 1) create · merge · submit (Planner)
+    const pr = global.supPropose({ type: 'recall', sku: rc.sku, account: DB.accounts[rc.j].account_id, qty: Math.round(rc.recall.qty), value: Math.round(rc.recall.value), dest: rc.recall.to || 'Clearance' });
+    const pq1 = global.supPropose({ type: 'quota', sku: qSku, account: 'A01', period: nextM, qty: 500 }), pq2 = global.supPropose({ type: 'quota', sku: qSku, account: 'A01', period: nextM, qty: 600 });
+    const pp = global.supPropose({ type: 'po', sku: poSku, qty: 1000, value: 1, lt: 30 });
+    step('SUP-PROP-MERGE', pq1.ok && pq2.ok && pq2.merged && pq2.prop.id === pq1.prop.id && pq2.prop.qty === 600 && db.supplyProposals.filter(p => p.key === pq1.prop.key).length === 1);
+    [pr, pq1, pp].forEach(x => act(x.prop.id, 'submit'));
+    const planApprove = act(pp.prop.id, 'approve');                                        // the Planner has no approve right
+    // 2) creators never approve their own · reject needs a reason (Director, who may also propose once allowed)
+    await login('director');
+    global.fuSetPermission('director', 'supply.propose', true);
+    const own = global.supPropose({ type: 'po', sku: M0.rows.find(r => r.sku !== poSku).sku, qty: 500, lt: 20 }); act(own.prop.id, 'submit');
+    const selfApprove = act(own.prop.id, 'approve');
+    step('SUP-PROP-SELF', planApprove.ok === false && selfApprove.ok === false && selfApprove.error === 'propSelf');
+    await login('planner'); const p4 = global.supPropose({ type: 'po', sku: M0.rows[3].sku, qty: 300, lt: 15 }); act(p4.prop.id, 'submit');
+    await login('director');
+    const rj0 = act(p4.prop.id, 'reject', ''), rj1 = act(p4.prop.id, 'reject', 'UAT not needed this month');
+    step('SUP-PROP-REJECT', rj0.ok === false && rj1.ok && rj1.prop.status === 'rejected' && db.logs.some(l => l.event === 'propEvent' && l.ref.includes(p4.prop.id + ' · rejected')));
+    // 3) approvals → drafts downstream (Director: recall + PO · Manager MT: quota of its own account)
+    const ar = act(pr.prop.id, 'approve'), ap = act(pp.prop.id, 'approve');
+    await login('manager', 'mgr-mt'); const aq = act(pq1.prop.id, 'approve');
+    await S.ensureData();
+    const rcl = (db.recallRequests || []).find(r => r.proposalId === pr.prop.id), qd = db.allocations.find(a => a.proposalId === pq1.prop.id), poNo = ar && ap.prop.downstream.id;
+    step('SUP-PROP-recall', ar.ok && rcl && rcl.status === 'draft' && App.raw.cn.some(c => c.cn_no === rcl.id && c.status === 'Planned'));
+    step('SUP-PROP-quota (draft, not in this month)', aq.ok && qd && qd.status === 'draft' && qd.month === nextM && global.quotaFor('A01', qSku) === Math.round(DB.quota[DB.skuIdx.get(qSku)].get('2026-11')[DB.accIdx.get('A01')]));
+    step('SUP-PROP-po (Planned)', ap.ok && App.raw.po_inbound.some(p => p.po_no === poNo && p.status === 'Planned'));
+    // 4) the drafts go on through the usual Ops flows → the proposals become Done; an approved next-month quota reaches Supply
+    await login('salesAdmin', 'sa-mt');
+    const r1 = global.supRecallAct(rcl.id, 'requested'), r2 = global.supQuotaDraftSend(qd.id);
+    await login('admin'); global.changeAllocation(qd.id, 'approved');
+    await S.ensureData();
+    const qi = DB.skuIdx.get(qSku), decQ = App.DB.quota[qi].get(nextM), propsDone = [pr, pq1].every(x => db.supplyProposals.find(p => p.id === x.prop.id).status === 'done');
+    step('SUP-PROP-downstream', r1.ok && r2.ok && propsDone && decQ && Math.abs(decQ[App.DB.accIdx.get('A01')] - 600) < 0.5 && App.sc.checks.find(c => c.id === 'quota_ops').ok, { dec: decQ && decQ[App.DB.accIdx.get('A01')] });
+    // 5) ATP: Planned PO is not counted; Confirmed (F7) is, and the date follows the ETA
+    await login('planner');
+    const pi = App.DB.skuIdx.get(poSku), base = global.workPhysicalAvailable(poSku), need = base + 600;
+    await S.ensureData(); const atp0 = global.supAtp(poSku, need);
+    const eta = Calc.iso(Calc.dn(dateKey(Date.now())) + 20), noReason = global.supPoSave(poNo, { eta: Calc.iso(Calc.dn(eta) + 30), status: 'Planned', reason: '' });
+    const ok1 = global.supPoSave(poNo, { eta, status: 'Confirmed', reason: '' });
+    await S.ensureData(); const atp1 = global.supAtp(poSku, need);
+    const ok2 = global.supPoSave(poNo, { eta: Calc.iso(Calc.dn(eta) + 10), status: 'Delayed', reason: 'UAT supplier late' });
+    await S.ensureData(); const atp2 = global.supAtp(poSku, need), hist = db.poPlan.edits[poNo].history.length;
+    const ok3 = global.supPoSave(poNo, { eta: Calc.iso(Calc.dn(eta) + 10), status: 'Shipped', reason: 'UAT on the way' });
+    await S.ensureData(); const atp3 = global.supAtp(poSku, need), p5 = App.DB.po[pi].find(p => p.po_no === poNo);
+    step('SUP-ETA', noReason.ok === false && ok1.ok && ok2.ok && ok3.ok && hist === 2 && p5 && p5.status === 'Shipped' && p5.eta === Calc.dn(eta) + 10 && db.supplyProposals.find(p => p.id === pp.prop.id).status === 'done', { history: hist });
+    step('SUP-ATP (Planned ignored · Confirmed / Shipped counted · ETA moves the date)', !atp0.date && atp1.date === Calc.dn(eta) && !atp2.date && atp3.date === Calc.dn(eta) + 10, { atp0, atp1: atp1.date && Calc.iso(atp1.date), atp3: atp3.date && Calc.iso(atp3.date) });
+    // 6) ATP on the SO form for MT / TT and on the order page for Ecom (WMS short → the date shows, nothing is unblocked)
+    const mkOrder = async (role, user, acc, tag) => {
+      await login(role, user);
+      const id = 'OR-UAT-' + tag + String(Date.now()).slice(-5);
+      db.orders.unshift({ id, customer: 'UAT ATP', phone: '080', address: 'Demo', billingAddress: 'Demo', partner: acc, channel: 'originManual', payment: 'cod', pay: 'unpaid', lines: [{ sku: poSku, qty: need, price: 100 }], sku: poSku, qty: need, price: 100, vat: 7, confirmed: false, status: 'orderPending', ship: 'toShip', tracking: '', salesOwner: partner(acc).sales, externalId: 'UAT-' + id, tags: [partner(acc).type], internalNote: '', events: [], packed: {}, time: Date.now() });
+      global.orderEvent(db.orders[0], 'eventCreated'); global.persist(); global.orderTransition(db.orders[0], 'confirm');
+      return id;
+    };
+    for (const [role, user, acc, tag] of [['salesAdmin', 'sa-mt', 'A01', 'MT'], ['salesAdmin', 'sa-tt', 'A08', 'TT'], ['salesAdmin', 'sa-ecom', 'A10', 'EC']]) {
+      const id = await mkOrder(role, user, acc, tag);
+      let shown = false, blocked = true;
+      if (tag !== 'EC') { global.soRequestForm(id); await wait(150); shown = !!document.querySelector('#modal .sup-atp'); blocked = !!document.querySelector('#soRequestForm button[type="submit"][disabled]'); document.querySelector('#modal').close(); }
+      else { const html = global.orderWorkspace(db.orders.find(o => o.id === id)); shown = /sup-atp/.test(html); }
+      step('SUP-ATP-' + tag, shown && blocked, { order: id });
+    }
+    // 7) B2 = Quota vs Actual for the same account × SKU (same filter, AS OF, formulas)
+    await login('manager', 'mgr-mt'); global.navigate('supQuota'); for (let k = 0; k < 40 && !document.querySelector('#qHost'); k++) await wait(200);
+    const b2 = global.supB2('A01', qSku, 0), Q = global.Pages.quotaData(App, 3), pq = Q.pairs.find(p => p.sku === qSku && p.accId === 'A01');
+    step('SUP-B2-MATCH', b2 && pq && (b2.fit == null ? pq.fit == null : Math.abs(b2.fit - pq.fit) < 0.01) && (pq.mape == null || Math.abs(b2.mape - pq.mape) < 0.01) && (pq.coverage == null || Math.abs(b2.cov[1] - pq.coverage) < 0.01), { b2: { fit: b2.fit, mape: b2.mape, cov3: b2.cov[1] }, page: { fit: pq.fit, mape: pq.mape, cov3: pq.coverage } });
+    // 8) B4 card in the Manager's scope · 9) B5 sections in Supply Review
+    global.navigate('overview'); await wait(400);
+    const card = document.querySelector('.sup-b4'), Mm = App.model();
+    step('SUP-B4', card && card.innerText.includes(String(Mm.statusCount.stockout)) && /MT/.test(card.innerText));
+    await login('planner'); global.navigate('supReview'); await wait(1500);
+    const txt = document.querySelector('#supRoot .report')?.innerText || '';
+    step('SUP-B5', txt.includes(t('b5Ops')) && txt.includes(t('b5Props')) && /SPR-/.test(txt));
+    step('selfCheck 1–9 (after Phase C)', App.sc.ok, { checks: App.sc.checks.filter(c => !c.ok).map(c => c.id) });
+    const a = await anchors(); step('SUP-ANCHOR (after Phase C)', a.pass, { diff: a.diff });
+    return res;
+  }
+
   global.SupUAT = {
     menu, noleak, anchors, theme, errors,
-    opsGate, mobile, flow,
+    opsGate, mobile, flow, phaseC,
     async all() {
       const out = [].concat(await anchors(), await menu(), await noleak('mgr-mt'), await noleak('mgr-tt'), await noleak('mgr-ecom'), await theme(), await opsGate());
       return { pass: out.filter(r => r.pass).length, of: out.length, failed: out.filter(r => !r.pass), consoleErrors: errors.slice() };

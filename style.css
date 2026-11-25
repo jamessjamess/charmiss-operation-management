@@ -698,3 +698,26 @@ button.linkish{background:none!important;border:0!important;padding:0!important;
   body{background:#fff!important}
 }
 
+/* CR-01 Phase C — ATP (B1), quota panel (B2), Supply Alert card (B4) */
+.sup-atp{display:block;margin-top:6px;color:var(--text);font-size:12px;line-height:1.5}
+.sup-atp b{color:var(--accent)}
+.sup-atp-box{display:block}
+.sup-atp-box > div > div{margin:6px 0}
+.sup-b2{border:1px solid var(--line);border-radius:9px;padding:12px 14px;margin:12px 0;background:var(--panel)}
+.sup-b2-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 16px;margin-top:10px}
+.sup-b2-grid small{display:block;color:var(--muted);font-size:11px}
+.sup-b2-grid b{display:block;font-size:15px;margin-top:2px}
+.sup-b2-grid .bad{color:#b7465f}
+.sup-b2-warn{margin-top:8px;padding:8px 10px;border-radius:7px;background:#fff3df;color:#8a5a0c;font-size:12px}
+:root[data-theme="dark"] .sup-b2-warn{background:#3a2a10;color:#f2cb80}
+.sup-b4 .panelhead{padding:14px 18px}
+.sup-b4-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0}
+.sup-b4-item{border:0;border-right:1px solid var(--line);border-radius:0;background:transparent;text-align:left;padding:14px 18px;color:var(--text)}
+.sup-b4-item:last-child{border-right:0}
+.sup-b4-item small{display:block;color:var(--muted)}
+.sup-b4-item b{display:block;font-size:22px;margin-top:4px}
+.sup-b4-item.bad b{color:#c23b3a}
+.sup-b4-item.warn b{color:#e8732c}
+.sup-b4-item:disabled{opacity:1;cursor:default}
+@media(max-width:700px){.sup-b2-grid{grid-template-columns:1fr 1fr}.sup-b4-row{grid-template-columns:1fr 1fr}.sup-b4-item:nth-child(2){border-right:0}.sup-b4-item{border-bottom:1px solid var(--line)}}
+

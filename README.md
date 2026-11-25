@@ -13,8 +13,8 @@ HTML + CSS + Vanilla JS · static (ไม่มี Backend) · ข้อมู�
 | Phase | ขอบเขต | สถานะ |
 |---|---|---|
 | A | ชื่อระบบ/ธีม (ข้อ 4) · เมนู (ข้อ 5) · บทบาทและสิทธิ์ (ข้อ 7) · ชุดสาธิต 2 ชุด (ข้อ 2.2) · หน้า Supply ใช้ธีม Ops | ✅ เสร็จ |
-| B | Data Adapter Ops → Supply (ข้อ 6) + F5 In-transit · F6 CN Good/Bad · F9 Clearance · selfCheck 7–9 | ✅ เสร็จ — รอตรวจ |
-| C | B1 ATP · B2 แผงอนุมัติ Quota · B3 ข้อเสนอ Supply · B4 การ์ด Supply Alert · B5 Review + งานค้าง · F7 ETA | รอ |
+| B | Data Adapter Ops → Supply (ข้อ 6) + F5 In-transit · F6 CN Good/Bad · F9 Clearance · selfCheck 7–9 | ✅ เสร็จ |
+| C | B1 ATP · B2 แผงอนุมัติ Quota · B3 ข้อเสนอ Supply · B4 การ์ด Supply Alert · B5 Review + งานค้าง · F7 ETA | ✅ เสร็จ — รอตรวจ |
 | D | F1–F4 · F8 · UAT ทั้งหมด · README ฉบับเต็ม | รอ |
 
 ## เปิดใช้งาน
@@ -95,6 +95,8 @@ HTML + CSS + Vanilla JS · static (ไม่มี Backend) · ข้อมู�
 - **ชุด Integrated demo (ตอนเริ่มชุด):** Quota ของ Ops เดือน พ.ย. 2026 = Quota ของ Supply เดือนเดียวกัน (953 คู่ อนุมัติแล้ว) · "ใช้ไปยกมา" = Sales In ต้นเดือนถึง 22 พ.ย. (168,591 ชิ้น) และนับกลับเข้า "ส่วนกลางโควตา" เหมือนของที่ WMS ส่งแล้ว · Quota สาธิตเดิมของช่องทาง Direct / Social คงไว้ · ตัวอย่างคำขอเพิ่ม Quota รออนุมัติ 1 ใบ (AL-260014)
 - **WMS DEMO ของ Integrated demo:** ปุ่มดึงยอด WMS คืนยอด = ยอดเริ่ม − ของที่ส่งมอบขนส่งแล้ว + ของคืนสภาพดีที่ WMS รับแล้ว (จำลองระบบ WMS จริง) — Ops ยังแค่ **อ่าน** ผ่าน `wmsApplySnapshot` เดิม · ชุด UAT seed ใช้ WMS DEMO เดิม
 - **ออเดอร์ที่ออกจากคลังก่อนเริ่มชุด** ถือเป็นประวัติเดิม ไม่ถูกนำเข้าซ้ำ
+- Quota สาธิตของ Ops ที่ถูกแทนด้วย Quota จริงถูกจดไว้ใน `db.retiredSeeds` — ตัว Seed ตอนโหลดหน้าของโมดูล E-commerce (เดิมใช้รหัส `16160` / `16310`) จะไม่สร้างกลับมาอีก
+- `account_master` ใช้ account_id ชุดเดียวกับคู่ค้าของ Ops (ตั้งตอนเริ่มชุด) · Safety Units (Ecom) ของ Ops เก็บแยกใน Product master ไม่ปนกับ Safety Days (ROP) ของ Supply
 - **AS OF:** ถ้ามีธุรกรรม Ops แล้ว AS OF ล่าสุด = วันจันทร์ถัดจากรอบดึง WMS (เช่น 30 พ.ย. 2026) และเป็นค่าเริ่มต้น · AS OF 23 พ.ย. ยังให้ตัวเลข Anchor เดิมทุกค่า (ย้อนคำนวณจาก Snapshot ใหม่ได้ตรง)
 - **Run Rate** คิดถึงสัปดาห์สุดท้ายของประวัติ Integrated demo เท่านั้น (สัปดาห์หลังจากนั้นมีแต่ธุรกรรมสาธิต — ถ้านับจะทำให้ Run Rate ตกผิดจริง)
 - **selfCheck ใหม่ (6.3):** (7) WH ของ Supply = WMS Actual ทุก SKU · (8) Σ Sales In ของงวด = Σ ออเดอร์ Delivered ของงวด · (9) Quota จัดสรร / จอง / หักจริง = Ops ทุกคู่ค้า × SKU × เดือน — แสดงที่หน้า ข้อมูล & ตั้งค่า Supply และ Console
@@ -106,6 +108,22 @@ HTML + CSS + Vanilla JS · static (ไม่มี Backend) · ข้อมู�
 
 ### calc.js ที่แก้ (ทุกจุดมี `// CR-01`)
 `prepare` อ่าน `in_transit`, `quota.reserved_qty / committed_qty`, `_history_end` · `itAt()` ใหม่ · `stockAt` แยกระหว่างขนส่งออกจาก WH · `skuRow` / `projectSku` / `seriesOf` / `waterfallOf` / `skuDetail` / `replenList` / `selfCheck` (reconcile) รวมระหว่างขนส่ง · `runRate` หยุดที่ปลายประวัติ · สถานะ Clearance (`skuRow`, `recommend`, `replenList`) — สูตรเดิมทั้งหมดไม่เปลี่ยน เมื่อไม่มีธุรกรรม Ops ผลลัพธ์เท่าเดิมทุกตัว
+
+## ประโยชน์ใหม่ B1–B5 และ F7 (Phase C) — `supply-actions.js`
+
+| | ที่ไหน | ทำอะไร |
+|---|---|---|
+| **B1 ATP** | เปิด SO · MT/TT (ฟอร์มขอ SO) · หน้าออเดอร์ · สินค้าคงคลังและโควตา › ตรวจ Actual | แถวที่ "WMS ไม่พอ" แสดง **ของจะพอวันที่…** + เลข PO / CN ที่ทำให้พอ + ลิงก์ Stock & Projection (เฉพาะคนที่เปิดหน้า Supply ได้) · สูตร: วันแรกที่ `WMS ใช้ได้ − Safety Units − ยอดจอง/หักที่ยังไม่ส่ง (= workPhysicalAvailable ของ Ops) + PO Confirmed/Shipped + CN Good ที่ Approved` ≥ จำนวนที่ขอ · มองไป 6 เดือน ไม่มี → "ยังไม่มีแผนของเข้า" · **แสดงผลอย่างเดียว** ไม่จอง ไม่ปลดบล็อก · ไม่นับ PO Planned / Delayed · คำนวณใหม่ทุกครั้งที่เปิด จึงเปลี่ยนทันทีเมื่อ WMS version หรือ ETA เปลี่ยน |
+| **B2 แผง Quota** | ฟอร์ม ขอรับสต็อก / Director Override (ตามช่อง SKU · ช่องทาง · จำนวน) · ปุ่ม "◈ Supply" ข้างปุ่ม "ส่งให้ผู้ขอ" · Quota Draft | Run Rate (Sell-out) · Quota Fit เดือนนี้ (+ หลังคำขอนี้) · MAPE / Bias 3M · Coverage 1/3/6M · Stockout Date · สถานะ SKU — **ใช้ `Calc.quotaOf` ชุดเดียวกับหน้า Quota vs Actual** (AS OF / ขอบเขตฝ่าย / Run Rate เดียวกัน) · เตือน (ไม่บล็อก): Fit > 120% "ตั้งสูงกว่ายอดขายจริง…" · Coverage < 100% "Supply ไม่พอตาม Quota นี้" |
+| **B3 ข้อเสนอ Supply** | ปุ่ม "เสนอ" ในตาราง ฝากขาย (แนะนำเรียกคืน) · เสี่ยงหมดอายุ (Lot ที่แนะนำ CN) · Quota vs Actual (Quota เดือนถัดไป = Run Rate × วัน = Fit 100%) · วางแผนสั่งผลิต (จำนวนสั่งที่ปัดตาม MOQ) · เมนู Supply › ข้อเสนอ Supply · งานค้างและส่งมอบ (ส่วน "ข้อเสนอ Supply") | Draft → ส่งขออนุมัติ → อนุมัติ / ปฏิเสธ (ต้องมีเหตุผล) → Done · **รวมใบซ้ำ** (ประเภท + SKU + คู่ค้า + งวด) · **ผู้สร้างอนุมัติเองไม่ได้** · ทุกขั้นบันทึกใน ประวัติการทำงาน · มีผู้รับผิดชอบ / ครบกำหนด / ความสำคัญ / บันทึก · ผู้อนุมัติ: เรียกคืน = Director หรือ Manager MT · Quota = Manager ฝ่ายนั้น (หรือ Director) · PO = Director |
+| ปลายทางเมื่ออนุมัติ | | เรียกคืน → **คำขอเรียกคืน (Draft)** ในหน้าคืนสินค้า / CN (ฝ่ายขายกดยืนยันส่ง → Done) และเป็น CN Planned ฝั่ง Supply · Quota → **Quota Draft เดือนถัดไป** ในหน้าสินค้าคงคลังและโควตา (ไม่นับใน Quota เดือนนี้ · ส่งขออนุมัติ → Done · Admin อนุมัติตาม Flow เดิม → เป็น Quota ของเดือนนั้นฝั่ง Supply) · PO → `po_inbound` **Planned** (เห็นใน Projection ไม่นับ ATP · Planner ยืนยันเป็น Confirmed → Done) + ปุ่ม Export ใบเสนอสั่งผลิต |
+| **B4 Supply Alert** | หน้าหลัก (ใต้ตัวเลขยอดขาย) | เสี่ยงขาด · สั่งผลิตภายใน 30 วัน · เสี่ยงหมดอายุ 3M (มูลค่า) · ข้อเสนอรออนุมัติ — กดไปหน้าที่เกี่ยวข้อง (ถ้ามีสิทธิ์) · นับตามขอบเขตฝ่าย · ไม่แสดงถ้าไม่มี `supply.view` |
+| **B5 Supply Review** | Supply Review | + "สถานะปฏิบัติการ" (งานที่ต้องติดตาม · เกินกำหนด · ต้องตรวจโควตาใหม่ · ใบส่งมอบรอยืนยัน · WMS แจ้งปัญหา — ตัวเลข ณ ตอนนี้ ตามขอบเขตผู้ใช้) + "ข้อเสนอ Supply ในงวดนี้" (สร้าง / อนุมัติ / ปฏิเสธ + รายการ) · รวมใน Print A4 · Excel (ชีต Operations / Proposals) · JSON |
+| **F7 ETA PO** | Supply › ของเข้า & CN Calendar และ › วางแผนสั่งผลิต (การ์ด "PO ที่ยังไม่รับเข้า" — ผู้มี `supply.import` = Planner / Admin) | แก้ ETA · สถานะ Planned / Confirmed / Shipped / Delayed / Received / Cancelled · เหตุผล (บังคับเมื่อ Delayed หรือเลื่อน ETA ออกไป) · มีประวัติการแก้ + Audit · Projection / Calendar / ATP ใช้ค่าใหม่ทันที · Received ได้เฉพาะชุด Integrated demo (WMS DEMO รับเข้าในรอบดึงถัดไป และเพิ่ม Lot ใหม่ใน Supply) |
+
+- ข้อมูล Phase C อยู่ใน db ของ Ops: `supplyProposals` · `recallRequests` · `poPlan` (`edits` + `added`) · Quota Draft = รายการใน `allocations` ที่มี `month` เดือนถัดไป + `proposalId` — Feed (supply-feed.js) นำไปลงตาราง Supply (PO / CN Planned / Quota เดือนอื่น) · ชุด UAT seed ใช้ได้เฉพาะการแก้ PO
+- ใน Integrated demo Quota ของ Ops = เดือน พ.ย. 2026 เท่านั้น: Quota Draft เดือนอื่นไม่ถูกนับใน "ใช้ได้" / "ส่วนกลางโควตา" ของเดือนนี้
+- ปุ่ม "เสนอ" อยู่ในตารางแบบ Desktop (บนมือถือ ตารางเป็นการ์ด — ยังไม่มีปุ่ม)
 
 ## ธีม (CR-01 ข้อ 4)
 ธีม Ops (Sidebar กรมท่า · ปุ่มฟ้า · Card ขาว) ทั้งระบบ + **สว่าง / มืด / ตามระบบ** ที่ Header (`localStorage['ops.theme']`) · โหมดมืดของ Ops สร้างจากกฎสีของธีมสว่างโดย `tools/build_css.py` · สีสถานะ (แดง/ส้ม/ม่วง/เขียว/เทา/ดำ) และสีกราฟของ Supply คงเดิม · ปีเป็น ค.ศ.
@@ -124,6 +142,7 @@ HTML + CSS + Vanilla JS · static (ไม่มี Backend) · ข้อมู�
 | SUP-THEME-{light,dark} | ทุกหน้า Supply ไม่มี Error |
 | OPS-GATE-{11 บัญชี} | ทุกหน้า Ops เปิดได้/ถูกปฏิเสธ **ตรงกับเว็บต้นฉบับ v13** และไม่มี Error / "undefined" |
 | SUP-MOBILE (`SupUAT.mobile()`) | ตั้ง Viewport 390px ก่อน — ทุกหน้าไม่ล้นแนวนอน |
+| **Phase C** `SupUAT.phaseC()` (Integrated demo) | SUP-PROP-MERGE · SUP-PROP-SELF · SUP-PROP-REJECT · SUP-PROP-recall / quota / po · ปลายทาง → Done + Quota เดือนถัดไปถึง Supply · SUP-ETA (ประวัติ / เหตุผล) · ATP (Planned ไม่นับ · Confirmed / Shipped นับ · ETA เลื่อน → วันที่เลื่อน) · SUP-ATP-MT / TT (ฟอร์ม SO) / Ecom (หน้าออเดอร์) ไม่ปลดบล็อก · SUP-B2-MATCH · SUP-B4 · SUP-B5 · selfCheck 1–9 · Anchor ที่ AS OF 23 พ.ย. |
 | **Phase B** `SupUAT.flow()` (ต้องเป็น Integrated demo ที่เพิ่งเริ่ม) | ออเดอร์ 7-Eleven 40 ชิ้น → SO/IV (SLA) → WMS พร้อมส่ง → ส่งมอบขนส่ง → ดึง WMS → Delivered → ดึง WMS → คืน 30 (ดี 25 / เสีย 5) → WMS รับคืน → ดึง WMS · ตรวจ SUP-FEED-DELIVERED (IV ยังไม่ออกจากคลัง = ไม่ขยับ · ระหว่างขนส่ง · Sales In / Remaining) · SUP-FEED-IDEMP · SUP-READONLY · SUP-CN-COND · SUP-SC-7/8/9 · selfCheck 1–9 · Anchor ที่ AS OF 23 พ.ย. หลังทำธุรกรรม |
 
 > ชุด UAT 943 ข้อของ Ops เดิมรันซ้ำไม่ได้ (ไม่มี Source / Harness / fixture) — ใช้ OPS-GATE เทียบกับเว็บต้นฉบับแทนในตอนนี้
@@ -135,6 +154,7 @@ style.css                  GENERATED — Ops 7.0 (แยกจาก .sup) + โ
 app.js … work-operations.js  ไฟล์ Ops 7.0 (แก้เฉพาะจุดที่มี /* CR-01 */ — ดูด้านล่าง)
 supply-feed.js             ใหม่ (Phase B) — Data Adapter Ops → Supply · selfCheck 7–9 · WMS DEMO ของ Integrated · F6 · F9
 supply-planning.js         ใหม่ — เมนูกลุ่ม · Planner · supply.* · Page gate · ธีม · ชุดสาธิต · ลิงก์ข้ามหน้า
+supply-actions.js          ใหม่ (Phase C) — B1 ATP · B2 แผง Quota · B3 ข้อเสนอ Supply · B4 Supply Alert · B5 · F7 แก้ PO
 supply/host.js             ใหม่ — รันหน้า Supply ใน Shell ของ Ops (Filter, URL, โหลดข้อมูล, สิทธิ์ Export)
 supply/*.js, supply/pages/*.js   SCM v3.3 (calc.js ไม่แก้ · หน้าแก้เฉพาะ CR-01)
 supply/supply.css          GENERATED — CSS ของ SCM อยู่ใต้ .sup + Token ของ Ops

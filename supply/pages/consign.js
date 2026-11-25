@@ -89,6 +89,7 @@
         { k: 'cn', label: t('col_cnqty'), num: true, sum: true, get: p => p.recall.qty, html: p => `<b>${U.n(p.recall.qty)}</b>` },
         { k: 'cnv', label: t('col_value'), num: true, sum: true, fmt: U.money, get: p => p.recall.value, html: p => U.money(p.recall.value) },
         { k: 'to', label: t('col_dest'), get: p => U.maskTo(p.recall.to) || t('clearance'), html: p => p.recall.to ? `→ ${U.esc(U.maskTo(p.recall.to))}` : `<span class="muted">${t('clearance')}</span>` },   // CR-01: U.maskTo (NOLEAK)
+        ...Pages.propCol(p => ({ type: 'recall', sku: p.sku, account: App.DB.accounts[p.j].account_id, qty: Math.round(p.recall.qty), value: Math.round(p.recall.value), dest: p.recall.to || 'Clearance', detail: p.recall.reasons.join(',') })),   // CR-01 B3
         { k: 'why', label: t('col_reason'), get: p => p.recall.reasons.map(r => t('rs_' + r)).join(', '), html: p => p.recall.reasons.map(r => `<span class="chip">${t('rs_' + r)}</span>`).join(' ') }
       ];
       U.table(main.querySelector('#rcHost'), { key: 'rc', cols: rcCols, rows: rec, defaultSort: { key: 'cnv', dir: 'desc' }, empty: t('no_recall'),

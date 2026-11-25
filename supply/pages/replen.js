@@ -105,7 +105,8 @@
       { k: 'pos', label: t('rp_pos'), num: true, get: r => r.totalAll + r.openPO, html: r => `<span title="${U.esc(t('rp_pos_tip', { s: U.n(r.totalAll), p: U.n(r.openPO) }))}">${U.n(r.totalAll + r.openPO)}</span>` },
       { k: 'rop', label: 'ROP', num: true, get: r => r.rop, html: r => `<span class="${r.totalAll + r.openPO <= r.rop ? 'late' : ''}">${U.n(r.rop)}</span>` },
       { k: 'lt', label: t('dr_lt'), num: true, get: r => r.lt + (W.F.ltAdd || 0), html: r => U.n(r.lt + (W.F.ltAdd || 0)) },
-      { k: 'moq', label: 'MOQ', num: true, get: r => r.moq, html: r => U.n(r.moq) }
+      { k: 'moq', label: 'MOQ', num: true, get: r => r.moq, html: r => U.n(r.moq) },
+      ...Pages.propCol(r => qtyOf(r) > 0 ? { type: 'po', sku: r.sku, qty: qtyOf(r), value: Math.round(qtyOf(r) * r.cost), detail: 'MOQ ' + r.moq + ' · LT ' + (r.lt + (W.F.ltAdd || 0)) + 'd', lt: r.lt + (W.F.ltAdd || 0), supplier: supplierOf(DB, r.i) } : null)   // CR-01 B3
     ];
     const tb = U.table(host, { key: 'rp-' + App.ui.rpMode, cols, rows: list, cardDiv: true, defaultSort: { key: 'orderby', dir: 'asc' }, empty: t('rp_empty'),
       total: rows => t('total') + ' · ' + U.n(rows.length) + ' SKU',

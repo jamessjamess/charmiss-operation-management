@@ -320,8 +320,13 @@
     if (typeof global.navigate === 'function') global.navigate(VIEW_OF[ph.page], { fromHash: true });
   });
 
+  /** CR-01 Phase C (B3): a "เสนอ" column for the tables a proposal starts from — only for accounts with supply.propose.
+      fn(row) → payload { type: 'recall' | 'quota' | 'po', sku, account?, qty, value?, dest?, detail? } or null for no button on that row. */
+  global.Pages.propCol = fn => (ctx.can('supply.propose') ? [{ k: 'prop', label: t('prop_col'), nosort: true, noxl: true, get: () => '',
+    html: r => { const p = fn(r); return p && p.qty > 0 ? `<button type="button" class="btn small" data-propose="${U.esc(JSON.stringify(p))}" title="${U.esc(t('prop_tip'))}">${U.icon('proposal')}${t('prop_btn')}</button>` : ''; } }] : []);
+
   const Supply = global.Supply = {
-    App, VIEW_OF, PAGE_OF, ctx, shellHTML, mount, ensureData, parseHash, renderPage, openSheet,
+    App, VIEW_OF, PAGE_OF, ctx, shellHTML, mount, ensureData, parseHash, renderPage, openSheet, defaultAsOf: () => defaultAsOf(),   // CR-01 Phase C
     isView: v => !!PAGE_OF[v],
     clearHash() { if (parseHash(location.hash)) history.replaceState(null, '', location.pathname + location.search); },
     refreshTheme() { if (document.getElementById('supRoot') && App.DB) renderPage(); },

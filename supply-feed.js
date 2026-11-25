@@ -46,16 +46,23 @@ function supFeedSeed(base){
      balance that reflects goods handed to carriers and good returns it received — Ops still only READS it (wmsApplySnapshot). */
 let feedIdxKey='',feedIdx=null;
 function feedIndex(){const key=(db.opsRevision||0)+':'+db.allocations.length+':'+Object.keys(db.quotaOpening||{}).length;if(key===feedIdxKey&&feedIdx)return feedIdx;
- const appr={};db.allocations.forEach(a=>{if(a.status==='approved'){const k=a.partner+'|'+a.sku;appr[k]=(appr[k]||0)+a.qty}});
+ const appr={};db.allocations.forEach(a=>{if(a.status==='approved'&&feedOpsMonth(a)){const k=a.partner+'|'+a.sku;appr[k]=(appr[k]||0)+a.qty}});
  const bySku={};Object.entries(db.quotaOpening||{}).forEach(([k,q])=>{const sku=k.split('|')[1];bySku[sku]=(bySku[sku]||0)+Math.min(q,appr[k]||0)});
  feedIdxKey=key;feedIdx={appr,bySku};return feedIdx}
+/* CR-01 Phase C: Ops quota is one planning month — a next-month Quota Draft (B3) never counts in this month's quota or free pool */
+const feedOpsMonth=a=>!feedOn()||!a.month||a.month===FEED_MONTH;
+const feedQuotaForBefore=quotaFor;quotaFor=function(pid,sku){if(!feedOn())return feedQuotaForBefore(pid,sku);return db.allocations.filter(a=>a.partner===pid&&a.sku===sku&&a.status==='approved'&&feedOpsMonth(a)).reduce((x,a)=>x+a.qty,0)};
+used=sku=>db.allocations.filter(a=>a.sku===sku&&['submitted','approved'].includes(a.status)&&feedOpsMonth(a)).reduce((x,a)=>x+a.qty,0);
 const feedConsumedBefore=consumedFor;consumedFor=function(pid,sku){return feedConsumedBefore(pid,sku)+(feedOn()?(db.quotaOpening?.[pid+'|'+sku]||0):0)};
 const feedFreeBefore=free;free=function(sku){return feedFreeBefore(sku)+(feedOn()?(feedIndex().bySku[sku]||0):0)};
 function feedShipped(o){return feedOn()&&feedT(o.shippedAt)>db.feedBase.builtAt}
+/* F7: a PO the Planner marks Received (Integrated demo) is a goods receipt the mock WMS reports on its next read */
+function feedPoReceipts(T){return Object.entries(db.poPlan?.edits||{}).filter(([,e])=>e.status==='Received'&&feedT(e.receivedAt)>db.feedBase.builtAt&&feedT(e.receivedAt)<=T).map(([po,e])=>({po,...e}))}
 function feedWmsMoves(T){const out={},back={},orders=[];
  db.orders.forEach(o=>{if(!feedShipped(o)||feedT(o.shippedAt)>T||!orderDoc(o)?.invoice)return;orders.push(o);getOrderLines(o).forEach(l=>{out[l.sku]=(out[l.sku]||0)+l.qty})});
  const ids=new Set(orders.map(o=>o.id));
  db.returns.forEach(r=>{if(!ids.has(r.orderId)||!r.wmsReceiptAt||feedT(r.wmsReceiptAt)>T)return;r.lines.forEach(l=>{back[l.sku]=(back[l.sku]||0)+(l.good||0)})});
+ feedPoReceipts(T).forEach(e=>{if(e.sku)back[e.sku]=(back[e.sku]||0)+(+e.qty||0)});
  return{out,back,orders}}
 const feedWmsBefore=wmsRefreshMock;wmsRefreshMock=function(outage=false){
  if(!feedOn()||outage)return feedWmsBefore(outage);if(!wmsCanRead())return{ok:false,error:'denied'};
@@ -79,6 +86,14 @@ Object.assign(dict.th,{feedLifecycleEvent:'เปลี่ยนสถานะ�
 function feedReserved(pid,sku){return typeof soHold==='function'?soHold(pid,sku):0}
 function feedQuotaRows(base){const rows=[];const accs=base.account_master.map(a=>a.account_id),skus=base.sku_master.map(s=>s.sku);
  for(const a of accs)for(const s of skus){const q=quotaFor(a,s),res=feedReserved(a,s),com=Math.max(0,consumedFor(a,s)-res);if(q>0||res>0||com>0)rows.push({month:db.feedBase.month,sku:s,account_id:a,quota_qty:q,reserved_qty:res,committed_qty:com})}return rows}
+/* other months: an approved Ops quota (e.g. a next-month draft from a Supply proposal) replaces the plan of that account × SKU × month */
+function feedOtherMonths(){const m={};db.allocations.forEach(a=>{if(a.status!=='approved'||!a.month||a.month===FEED_MONTH)return;const k=a.month+'|'+a.partner+'|'+a.sku;m[k]=(m[k]||0)+a.qty});return m}
+/* F7 + B3: PO edits (ETA / status / delay reason / receipt) and Planned POs from approved proposals, over the imported po_inbound */
+function feedPoRows(base,cut){const P=db.poPlan;if(!P||(!Object.keys(P.edits||{}).length&&!(P.added||[]).length))return null;const edits=P.edits||{},day=ts=>dateKey(ts);
+ const fix=r=>{const e=edits[r.po_no];if(!e)return r;const x={...r,eta_date:e.eta||r.eta_date,status:e.status||r.status};if(e.status==='Received'){if(feedOn()&&feedT(e.receivedAt)<=feedT(cut)){x.received_date=e.receivedDate;x.status='Received'}else{x.status='Shipped';x.eta_date=e.receivedDate||x.eta_date}}return x};
+ return base.po_inbound.map(fix).concat((P.added||[]).map(fix))}
+/* B3 recall: a recall request (draft / requested) is a planned CN back from that account */
+function feedRecallRows(base){const A=new Map(base.account_master.map(a=>[a.account_id,a]));return(db.recallRequests||[]).filter(r=>['draft','requested'].includes(r.status)&&A.has(r.partner)).map(r=>({cn_no:r.id,date:dateKey(feedT(r.time)+Math.max(3,+(A.get(r.partner)?.delivery_lead_days)||3)*86400000),sku:r.sku,account_id:r.partner,qty:r.qty,reason:'Recall · '+(r.dest||'Supply'),condition:'Good',status:'Planned'}))}
 function feedLots(base,events,accType){
  const wh=new Map(),acc=new Map(),key=(loc,sku)=>loc+'|'+sku,put=(m,k,L)=>{if(!m.has(k))m.set(k,[]);const a=m.get(k),x=a.find(y=>y.lot_no===L.lot_no);if(x)x.qty+=L.qty;else a.push({...L})};
  base.stock_lot.forEach(r=>{const L={lot_no:r.lot_no,qty:+r.qty,mfg:r.mfg_date,exp:r.exp_date};if(r.location==='WH')put(wh,r.sku,L);else put(acc,key(r.location,r.sku),L)});
@@ -86,6 +101,7 @@ function feedLots(base,events,accType){
  const parcels=new Map();
  for(const e of events){
   if(e.kind==='issue'){const p=[];e.lines.forEach(l=>take(wh.get(l.sku),l.qty).forEach(x=>p.push({...x,sku:l.sku})));parcels.set(e.order.id,p)}
+  else if(e.kind==='receive'){put(wh,e.sku,{...e.lot,qty:e.qty})}
   else if(e.kind==='deliver'){if(accType(e.order.partner)==='C')(parcels.get(e.order.id)||[]).forEach(x=>put(acc,key(e.order.partner,x.sku),x))}
   else if(e.kind==='return'){const pref=new Set((parcels.get(e.ret.orderId)||[]).map(x=>x.lot_no));e.ret.lines.forEach(l=>{const good=l.good||0,bad=l.damaged||0;
    if(accType(e.ret.partner)==='C'){const got=take(acc.get(key(e.ret.partner,l.sku)),good+bad,pref);let g=good;got.forEach(x=>{const q=Math.min(g,x.qty);if(q>0){put(wh,l.sku,{...x,qty:q});g-=q}})}
@@ -93,13 +109,16 @@ function feedLots(base,events,accType){
  }
  return{wh,acc}}
 function supplyFeed(base){
- if(!feedOn()||!base)return null;
+ if(!base)return null;
+ if(!feedOn()){const po=feedPoRows(base,0);return po?{raw:Object.assign({},base,{po_inbound:po}),meta:null}:null}
  const B=db.feedBase,cut=db.wmsSnapshot.asOf,A=new Map(base.account_master.map(a=>[a.account_id,a])),accType=id=>/^y/i.test(A.get(id)?.is_consignment||'')?'C':'O';
  const orders=db.orders.filter(o=>A.has(o.partner)&&feedShipped(o)&&feedT(o.shippedAt)<=cut&&orderDoc(o)?.invoice);
  const ids=new Set(orders.map(o=>o.id)),returns=db.returns.filter(r=>ids.has(r.orderId)&&A.has(r.partner)&&feedT(r.time)<=cut);
  const raw=Object.assign({},base);
  raw.sku_master=base.sku_master.map(s=>{const lc=opsMaster(s.sku)?.lifecycle;return lc?{...s,status:lc==='New'?'NPD':lc}:s});
- raw.quota=base.quota.filter(r=>r.month!==B.month).concat(feedQuotaRows(base));
+ const other=feedOtherMonths();
+ raw.quota=base.quota.filter(r=>r.month!==B.month&&!(other[r.month+'|'+r.account_id+'|'+r.sku]>0)).concat(feedQuotaRows(base),Object.entries(other).map(([k,q])=>{const[month,account_id,sku]=k.split('|');return{month,sku,account_id,quota_qty:q}}));
+ raw.po_inbound=feedPoRows(base,cut)||base.po_inbound;
  const si=[],so=[],it=[],cn=[],day=ts=>dateKey(ts),delivered=o=>o.deliveredAt&&feedT(o.deliveredAt)<=cut;
  orders.forEach(o=>{const iv=orderDoc(o).invoice;getOrderLines(o).forEach(l=>{
   it.push({iv_no:iv,order_id:o.id,sku:l.sku,account_id:o.partner,qty:l.qty,ship_date:day(o.shippedAt),delivered_date:delivered(o)?day(o.deliveredAt):''});
@@ -108,12 +127,15 @@ function supplyFeed(base){
   const date=recv?day(r.wmsReceiptAt):day(Math.max(feedT(r.time),cut)+Math.max(3,+(A.get(r.partner)?.delivery_lead_days)||3)*86400000);
   r.lines.forEach(l=>{const inspected=Number.isFinite(l.good)&&l.good!==null,parts=inspected?[['Good',l.good||0,r.reason],['Bad',l.damaged||0,r.badReason||r.reason]]:[['Good',l.qty,r.reason]];
    parts.forEach(([cond,q,why])=>{if(q>0)cn.push({cn_no:r.creditNo||r.id,date,sku:l.sku,account_id:r.partner,qty:q,reason:why||'',condition:cond,status})})})});
- const hasEvents=orders.length>0||returns.length>0;
+ cn.push(...feedRecallRows(base));
+ const receipts=feedPoReceipts(cut),hasEvents=orders.length>0||returns.length>0||receipts.length>0;
  const meta={cut,wmsVersion:db.wmsSnapshot.version,builtAt:B.builtAt,hasEvents,issued:orders.length,delivered:orders.filter(delivered).length,inTransit:orders.filter(o=>!delivered(o)).length,cn:returns.length,history:B.snap};
- if(!hasEvents){raw.in_transit=[];return{raw,meta}}
+ if(!hasEvents){raw.in_transit=[];if(cn.length)raw.cn=base.cn.concat(cn);return{raw,meta}}
  // events in time order → lots (FEFO) at the new snapshot = the Monday after the WMS read
  const ev=[];orders.forEach(o=>{ev.push({kind:'issue',t:feedT(o.shippedAt),order:o,lines:getOrderLines(o)});if(delivered(o))ev.push({kind:'deliver',t:feedT(o.deliveredAt),order:o})});
  returns.forEach(r=>{if(r.wmsReceiptAt&&feedT(r.wmsReceiptAt)<=cut&&r.status!=='rejected')ev.push({kind:'return',t:feedT(r.wmsReceiptAt),ret:r})});
+ const shelf=new Map(base.sku_master.map(k=>[k.sku,+k.shelf_life_months||24]));
+ receipts.forEach(e=>ev.push({kind:'receive',t:feedT(e.receivedAt),sku:e.sku,qty:+e.qty,lot:{lot_no:'PO-'+e.po,mfg:e.receivedDate,exp:Calc.iso(Calc.dn(e.receivedDate)+Math.round((shelf.get(e.sku)||24)*30.4))}}));
  ev.sort((a,b)=>a.t-b.t);
  const L=feedLots(base,ev,accType),snap=Calc.iso(Calc.monday(Calc.dn(day(cut)))+7),lots=[];
  L.wh.forEach((arr,sku)=>arr.forEach(x=>{if(x.qty>0)lots.push({snapshot_date:snap,sku,lot_no:x.lot_no,location:'WH',qty:x.qty,mfg_date:x.mfg,exp_date:x.exp})}));
@@ -122,7 +144,7 @@ function supplyFeed(base){
  meta.snapshot=snap;return{raw,meta}
 }
 /* A key that changes whenever the feed could change: dataset, every Ops save (revision) and the WMS read. */
-function supplyFeedKey(){return feedOn()?['ops',db.datasetBuiltAt,db.opsRevision||0,db.wmsSnapshot?.version].join(':'):'base'}
+function supplyFeedKey(){return feedOn()?['ops',db.datasetBuiltAt,db.opsRevision||0,db.wmsSnapshot?.version].join(':'):'base:'+(db?.poPlan?.rev||0)}
 
 /* ---------------------------------------------------------------- selfCheck 7–9 (Ops ↔ Supply) */
 function supplyFeedChecks(DB){
@@ -139,6 +161,7 @@ function supplyFeedChecks(DB){
  out.push(add('delivered',bad,pairs,worst));
  // 9) Quota allocated / reserved / committed of the Ops month = Ops, every account × SKU
  bad=0;worst='';pairs=0;const m=B.month;DB.accounts.forEach(a=>DB.skus.forEach(s=>{const q=DB.quota[s.i].get(m),r=DB.quotaRes[s.i].get(m),c=DB.quotaCom[s.i].get(m),sq=q?q[a.j]:0,sr=r?r[a.j]:0,sc=c?c[a.j]:0,oq=quotaFor(a.account_id,s.sku),or=feedReserved(a.account_id,s.sku),oc=Math.max(0,consumedFor(a.account_id,s.sku)-or);if(sq||sr||sc||oq||or||oc){pairs++;if(Math.abs(sq-oq)>0.5||Math.abs(sr-or)>0.5||Math.abs(sc-oc)>0.5){bad++;if(!worst)worst=a.account_id+' · '+s.sku}}}));
+ const other=feedOtherMonths();Object.entries(other).forEach(([k,q])=>{const[mo,acc,sku]=k.split('|'),i=DB.skuIdx.get(sku),j=DB.accIdx.get(acc);if(i==null||j==null)return;pairs++;const a=DB.quota[i].get(mo);if(!a||Math.abs(a[j]-q)>0.5){bad++;if(!worst)worst=acc+' · '+sku+' · '+mo}});
  out.push(add('quota_ops',bad,pairs,worst));
  return out
 }

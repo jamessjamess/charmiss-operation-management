@@ -83,6 +83,8 @@
         { k: 'st', label: 'Sell-through', num: true, get: p => p.st, html: p => p.st == null ? '—' : U.pct(p.st), xl: p => p.st == null ? '' : +p.st.toFixed(1) },
         { k: 'cov', label: t('q_cov', { h: M.h + 'M' }), num: true, get: p => p.coverage, html: p => p.coverage == null ? '—' : `<span class="${p.coverage < 100 ? 'late' : ''}">${U.pct(p.coverage)}</span>`, xl: p => p.coverage == null ? '' : Math.round(p.coverage) },
         { k: 'mape', label: 'MAPE', num: true, get: p => p.mape, html: p => U.pct(p.mape), xl: p => p.mape == null ? '' : Math.round(p.mape) },
+        // CR-01 B3: next-month quota = the pair's sell-out run rate × days of next month (a Quota Fit of 100 %)
+        ...Pages.propCol(p => { const nm = Calc.addMonths(Calc.monthStart(M.asDn), 1), rr = p.expected / Calc.daysInMonth(M.asDn); return rr > 0 ? { type: 'quota', sku: p.sku, account: p.accId, period: Calc.monthKey(nm), qty: Math.round(rr * Calc.daysInMonth(nm)), detail: 'fit ' + (p.fit == null ? '—' : Math.round(p.fit) + '%') } : null; }),
         { k: 'bias', label: 'Bias', num: true, get: p => p.bias, html: p => p.bias == null ? '—' : (p.bias > 0 ? '+' : '') + U.pct(p.bias), xl: p => p.bias == null ? '' : Math.round(p.bias) }
       ];
       U.table(main.querySelector('#qHost'), { key: 'quota', cols, rows, defaultSort: { key: 'acc', dir: 'asc' }, empty: t('no_events_list'),

@@ -68,7 +68,8 @@
         { k: 'sellout', label: t('col_sellout'), get: L => L.sellOutDn, html: L => L.sellOutDn ? U.date(L.sellOutDn) : `<span class="muted">${t('not_before')}</span>`, xl: L => L.sellOutDn ? Calc.iso(L.sellOutDn) : '' },
         { k: 'risk', label: t('col_atrisk'), num: true, sum: true, get: L => L.atRisk, html: L => L.atRisk > 0.5 ? U.n(L.atRisk) : '—', cls: L => L.atRisk > 0.5 ? 'heat-neg' : '' },
         { k: 'riskv', label: t('col_atrisk_v'), num: true, sum: true, fmt: U.money, get: L => L.atRiskValue, html: L => L.atRisk > 0.5 ? U.money(L.atRiskValue) : '—' },
-        { k: 'action', label: t('col_action'), get: L => U.actionText(L.action) }
+        { k: 'action', label: t('col_action'), get: L => U.actionText(L.action) },
+        ...Pages.propCol(L => L.j >= 0 && L.atRisk > 0.5 && L.action && L.action.key === 'act_cn' ? { type: 'recall', sku: L.sku, account: App.DB.accounts[L.j].account_id, qty: Math.round(L.atRisk), value: Math.round(L.atRiskValue), dest: L.action.to || 'Clearance', detail: 'expiry ' + L.lot_no } : null)   // CR-01 B3
       ];
       U.table(main.querySelector('#lotHost'), { key: 'lots', cols, rows: shown, defaultSort: { key: 'deadline', dir: 'asc' }, empty: t('no_risk_lots'),
         total: rows => t('total') + ' · ' + U.n(rows.length) + ' Lot', onRow: L => { App.ui.stockTab = 'all'; App.go('stock', { sku: L.sku }); },

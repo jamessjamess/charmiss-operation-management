@@ -256,7 +256,7 @@
     return { rows: sorted(), reset() { st.page = 1; draw(); } };
   };
   /** Excel rows from table columns: header + one row per item (xl() if given, else get()). */
-  U.xlRows = (cols, rows) => [cols.map(c => c.label), ...rows.map(r => cols.map(c => { const v = c.xl ? c.xl(r) : c.get(r); return typeof v === 'number' ? (isFinite(v) ? Math.round(v * 100) / 100 : '∞') : v; }))];
+  U.xlRows = (cols, rows) => (cols = cols.filter(c => !c.noxl), [cols.map(c => c.label), ...rows.map(r => cols.map(c => { const v = c.xl ? c.xl(r) : c.get(r); return typeof v === 'number' ? (isFinite(v) ? Math.round(v * 100) / 100 : '∞') : v; }))]);   // CR-01: action-only columns (noxl) stay out of Excel
   U.seg = (id, opts, cur, cls) => `<div class="seg ${cls || 'sm'}" data-seg="${id}">${opts.map(([v, l]) => `<button type="button" data-v="${v}" class="${String(cur) === String(v) ? 'on' : ''}">${U.esc(l)}</button>`).join('')}</div>`;
 
   global.U = U;

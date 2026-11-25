@@ -154,6 +154,7 @@ Supply.afterRender=function(main){
  }
  if(Supply.App.page==='quota'){const mk=Calc.monthKey(Supply.App.model().asDn),DB=Supply.App.DB;if(DB.quotaRes&&DB.quotaRes.some(m=>m.has(mk))){const h=main.querySelector('#qHost');if(h)h.insertAdjacentHTML('beforebegin',`<div class="note">${U.icon('info')}<span>${esc(St('q_ops_note'))}</span></div>`)}}   // CR-01 6.3
  supCrossLinks(main);
+ if(['calendar','replen'].includes(Supply.App.page)&&typeof Supply.poCard==='function')Supply.poCard(main,Supply.App);   // CR-01 F7
 };
 
 /* ---------------------------------------------------------------- 5.3 · one topic = one page, linked both ways */

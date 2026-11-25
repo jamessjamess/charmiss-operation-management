@@ -34,6 +34,8 @@
       const M = App.model(), DB = App.DB, S = M.S;
       if (!M.rows.length) { main.innerHTML = Pages.pageHead(M, 'nav_report', 'q_report') + `<div class="card">${U.empty(t('empty'), t('empty_hint'), 'filter')}</div>`; return; }
       const R = Calc.reportOf(DB, M), Q = Pages.quotaData(App, 3);
+      // CR-01 B5: operational status (Ops work queue / operations report, now) + this period's Supply proposals — scoped to the user
+      const X = global.Supply && typeof global.Supply.reviewExtra === 'function' ? global.Supply.reviewExtra(M) : null;
       const over = Q.pairs.filter(p => p.cls === 'over').sort((a, b) => b.fit - a.fit).slice(0, 5);
       const under = Q.pairs.filter(p => p.cls === 'under' || p.cls === 'supply').sort((a, b) => a.fit - b.fit).slice(0, 5);
       const title = t(M.period.view === 'M' ? 'rp_title_m' : 'rp_title_w');
@@ -48,7 +50,7 @@
           <button type="button" class="btn" id="rpXl">${U.icon('download')}Excel</button>
           <button type="button" class="btn" id="rpJson">${U.icon('download')}JSON</button></div></div>
         <article class="report card">
-          <header class="rp-head"><div><div class="rp-kicker">Charmiss Supply Chain</div><h2>${U.esc(title)}</h2><div class="rp-period">${Pages.periodText(M)}</div></div>
+          <header class="rp-head"><div><div class="rp-kicker">Charmiss Ops · Supply Review</div><h2>${U.esc(title)}</h2><div class="rp-period">${Pages.periodText(M)}</div></div>
             <div class="rp-meta">${t('f_asof')} <b>${U.date(M.asDn)}</b><br>Run Rate <b>${M.basis === 'W' ? 'Weighted' : M.basis}</b> · ${t('f_h')} <b>${M.h}M</b><br>${U.esc(filterText(M, DB))}<br><span class="muted">${t('rp_made')} ${U.date(Calc.dn(made.toISOString().slice(0, 10)))} ${made.toTimeString().slice(0, 5)}</span></div></header>
 
           <section class="rp-sec"><h3>${t('rp_kpi')}</h3>
@@ -76,6 +78,9 @@
               <div><h4>${Pages.quotaBadge('under')} / ${Pages.quotaBadge('supply')}</h4>${tbl([t('col_sku'), t('col_acc'), 'Quota Fit'], under.map(p => `<tr>${nm(p)}<td>${U.esc(p.acc)}</td><td class="num">${U.pct(p.fit)}</td></tr>`))}</div>
             </div></section>
 
+          ${X ? `<section class="rp-sec rp-grid2"><div><h3>${U.esc(X.opsTitle)}</h3><table class="tbl compact"><tbody>${X.ops.map(o => `<tr><td>${U.esc(o.label)}</td><td class="num"><b>${U.n(o.value)}</b></td></tr>`).join('')}</tbody></table><div class="foot-note">${U.esc(X.opsNote)}</div></div>
+            <div><h3>${U.esc(X.propsTitle)}</h3><div class="rp-line">${X.counts.map(c => `${U.esc(c.label)} <b>${U.n(c.value)}</b>`).join(' · ')}</div>${tbl([t('col_sku'), t('col_acc'), t('col_qty'), t('col_status')], X.rows.slice(0, 10).map(r => `<tr><td><div class="cell2"><b>${U.esc(r.type)}</b><span class="sub">${U.esc(r.id)} · ${U.esc(r.sku)}</span></div></td><td>${U.esc(r.account || '—')}</td><td class="num">${U.n(r.qty)}</td><td class="num">${U.esc(r.status)}</td></tr>`), t('none'))}</div></section>` : ''}
+
           <section class="rp-sec"><h3>${t('rp_comment')}</h3>
             <textarea class="ctl rp-ta no-print" id="rpTa" rows="6" placeholder="${U.esc(t('rp_comment_ph'))}">${U.esc(comment)}</textarea>
             <div class="rp-ta-print print-only">${U.esc(comment || '—').replace(/\n/g, '<br>')}</div>
@@ -93,7 +98,8 @@
       const meta = () => ({ report: title, view: M.period.view, period: { from: Calc.iso(M.period.p0), to: Calc.iso(M.period.p1 - 1), mtd: !!M.period.partial }, asOf: Calc.iso(M.asDn),
         runRate: M.basis, horizon: M.h + 'M', filters: filterText(M, DB), generated: made.toISOString() });
       main.querySelector('#rpJson').addEventListener('click', () => {
-        const out = Object.assign(meta(), { kpis: R.kpis.map(r => ({ metric: t(r.key), now: r.cur, previous: r.prev })), commentary: ta.value, allCommentaries: (global.Supply && global.Supply.ctx.lockCh) ? undefined : store.all() });   // CR-01 (7.3 NOLEAK): a department-locked account exports only its own commentary
+        const out = Object.assign(meta(), { kpis: R.kpis.map(r => ({ metric: t(r.key), now: r.cur, previous: r.prev })), operations: X ? X.ops.map(o => ({ item: o.label, value: o.value })) : undefined, proposals: X ? { counts: X.counts, list: X.rows } : undefined, commentary: ta.value,   // CR-01 B5
+           allCommentaries: (global.Supply && global.Supply.ctx.lockCh) ? undefined : store.all() });   // CR-01 (7.3 NOLEAK): a department-locked account exports only its own commentary
         U.downloadURL(URL.createObjectURL(new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' })), 'scm-report-' + M.period.view + '-' + Calc.iso(M.asDn) + '.json');
       });
       main.querySelector('#rpXl').addEventListener('click', () => {
@@ -107,6 +113,8 @@
           { name: 'PO 30 days', rows: [['PO', 'SKU', t('col_name'), t('col_qty'), t('col_value'), 'ETA', t('col_status')], ...R.poSoon.map(e => [e.no, e.sku, e.name, e.qty, Math.round(e.value), Calc.iso(e.day), e.status])] },
           { name: 'CN planned', rows: [['CN', 'SKU', t('col_name'), t('col_acc'), t('col_qty'), t('col_date'), 'Condition', 'Reason', t('col_status')], ...R.cnPlan.map(e => [e.no, e.sku, e.name, e.acc, e.qty, Calc.iso(e.day), e.good ? 'Good' : 'Bad', e.reason, e.status])] },
           { name: 'Quota', rows: [['Type', 'SKU', t('col_name'), t('col_acc'), 'Quota Fit %', 'Quota', t('q_expected')], ...over.map(p => [t('qc_over'), p.sku, p.name, p.acc, Math.round(p.fit), p.quota, Math.round(p.expected)]), ...under.map(p => [t('qc_' + p.cls), p.sku, p.name, p.acc, Math.round(p.fit), p.quota, Math.round(p.expected)])] },
+          ...(X ? [{ name: 'Operations', rows: [[X.opsTitle], ...X.ops.map(o => [o.label, o.value]), [X.opsNote]] },   // CR-01 B5
+            { name: 'Proposals', rows: [[X.propsTitle], ...X.counts.map(c => [c.label, c.value]), [], ['No.', 'Type', 'SKU', t('col_acc'), t('col_qty'), t('col_status')], ...X.rows.map(r => [r.id, r.type, r.sku, r.account, r.qty, r.status])] }] : []),
           { name: 'Commentary', rows: [[title, m.period.from + ' – ' + m.period.to], [ta.value]] }
         ]);
       });
