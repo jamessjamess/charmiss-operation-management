@@ -57,9 +57,10 @@
       const itV = M.rows.reduce((x, r) => x + (r.itSel || 0) * r.cost, 0);   // CR-01 (F5): 3rd segment of the stock value
       const soQty = M.rows.reduce((x, r) => x + Calc.flowsSku(App.DB, r.i, M.period.p0, M.period.p1, M.mask, 1).soCons, 0);
       const riskQ = M.rows.reduce((x, r) => x + (r.riskQtyH || 0), 0);
+      // CR-01 F4: the DOC Δ is neutral (grey) — DOC up can be good (restock) or bad (piling up); good / bad is on the Overstock and Stockout cards
       html += `<div class="kpis">
         ${kpiCard(t('k_stock_value'), t('k_stock_tip'), U.money(k.stockValue), t('k_sub_stock', { wh: U.moneyShort(whV), c: U.moneyShort(cV) }) + (itV > 0.5 ? ' · ' + t('k_it') + ' ' + U.moneyShort(itV) : ''), delta(k.stockValue, p.stockValue, 'rel', 'none'), vs)}
-        ${kpiCard(t('k_doc'), t('k_doc_tip'), k.doc == null ? '—' : `${U.n(k.doc)}<small>${t('days')}</small>`, t('k_sub_doc', { m: k.doc == null ? '—' : U.n(k.doc / 30, 1) }), delta(k.doc, p.doc, 'days', 'down'), vs)}
+        ${kpiCard(t('k_doc'), t('k_doc_tip'), k.doc == null ? '—' : `${U.n(k.doc)}<small>${t('days')}</small>`, t('k_sub_doc', { m: k.doc == null ? '—' : U.n(k.doc / 30, 1) }), delta(k.doc, p.doc, 'days', 'none'), vs)}
         ${kpiCard(t('k_st'), t('k_st_tip'), U.pct(k.sellThrough, 1), t('k_sub_st', { so: U.n(soQty) }), delta(k.sellThrough, p.sellThrough, 'pp', 'up'), vs)}
         ${kpiCard(t('k_stockout'), t('k_stockout_tip'), `${U.n(k.stockoutSku)}<small>SKU</small>`, t('k_sub_stockout', { n: U.n(k.skuCount), r: U.n(M.statusCount.reorder) }), delta(k.stockoutSku, p.stockoutSku, 'abs', 'down'), vs)}
         ${kpiCard(t('k_risk'), t('k_risk_tip'), U.money(k.riskValue), t('k_sub_risk', { h: M.h + 'M', q: U.n(riskQ) }), delta(k.riskValue, p.riskValue, 'rel', 'down'), vs)}
@@ -91,6 +92,11 @@
         <section class="card" id="card-actions"><div class="card-head"><h3>${t('c_actions')} ${U.info(t('c_actions_tip'))}</h3>
           <div class="card-tools"><button type="button" class="btn ghost small" data-nav-stock>${t('nav_stock')} ${U.icon('right')}</button></div></div>${actBody}</section>
       </div>`;
+      // CR-03 R2: non-sales issues month-to-date (AS OF), by type — they lower WH but are never Sales Out
+      const oo = Calc.otherOutOf(App.DB, M.rows, M.mask, Calc.monthStart(M.asDn), M.asDn), ooT = ['pr', 'sample', 'internal', 'writeoff', 'other'];
+      html += `<section class="card" id="card-oo" style="margin-top:16px"><div class="card-head"><h3>${t('c_oo')} ${U.info(t('c_oo_tip'))}</h3><span class="muted small">${U.dateShort(Calc.monthStart(M.asDn))} – ${U.dateShort(M.asDn - 1)}</span></div>
+        <div class="oo-row">${ooT.map(k => { const x = oo.byType[k] || { qty: 0, value: 0 }; return `<div class="oo-item${x.qty ? '' : ' zero'}"><span>${t('oo_' + k)}</span><b>${U.n(x.qty)}</b><small>${U.money(x.value)}</small></div>`; }).join('')}
+        <div class="oo-item tot"><span>${t('oo_total')}</span><b>${U.n(oo.qty)}</b><small>${U.money(oo.value)}</small></div></div></section>`;
       main.innerHTML = html;
 
       // bind charts
@@ -193,7 +199,7 @@
   // ------------------------------------------------------------------ waterfall
   function wfSteps(M, unit) {
     const w = M.waterfall, v = unit === 'v', g = k => v ? w[k + 'V'] : w[k];
-    const steps = [['wf_open', g('open'), 'anchor'], ['wf_po', g('po'), 'up'], ['wf_cn', g('cnGood'), 'up'], ['wf_so', -g('so'), 'down'], ['wf_wo', -g('wo'), 'down']];
+    const steps = [['wf_open', g('open'), 'anchor'], ['wf_po', g('po'), 'up'], ['wf_cn', g('cnGood'), 'up'], ['wf_so', -g('so'), 'down'], ['wf_wo', -g('wo'), 'down'], ['wf_oo', -(g('oo') || 0), 'down']];   // CR-03 R2: + non-sales issues
     if (!M.allMask && Math.abs(g('adj')) >= 0.5) steps.push(['wf_adj', g('adj'), 'adj']);
     steps.push(['wf_close', g('close'), 'close']);
     return steps;

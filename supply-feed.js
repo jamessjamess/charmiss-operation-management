@@ -14,6 +14,7 @@
                     committed_qty = deducted at SO / IV (หักจริง, incl. the month-to-date history of the Integrated demo)
      stock_lot    ← WH = the WMS balance (lots FEFO from the Integrated-demo lots) · consignment lots rolled forward by the events
      sku_master   ← + lifecycle from the Ops product master (New / Active / Discontinue / Clearance, F9)
+     other_out    ← CR-03 R2: approved non-sales stock issues (PR / KOL, sample, internal use, write-off) issued before the cut
    Only the Integrated demo is fed (the UAT seed uses other SKUs / partners). Orders that left the WMS before the dataset was built
    are part of the opening history and are not fed again. */
 Object.assign(dict.th,{feedMeta:'ข้อมูล Ops ณ {t} · WMS version {v}',feedMetaNone:'ยังไม่มีธุรกรรม Ops หลังเริ่มชุดข้อมูล — ตัวเลขเท่ากับ Integrated demo',feedMetaEvents:'ธุรกรรม Ops: ส่งออกจากคลัง {i} · ส่งมอบแล้ว {d} · ระหว่างขนส่ง {r} · CN {c}',feedLatestTip:'AS OF ล่าสุดรวมธุรกรรม Ops ถึงรอบดึง WMS',feedUat:'ชุด UAT seed ไม่ผูกกับ Supply (คนละ SKU / คู่ค้า) — หน้า Supply แสดง Integrated demo',f6Reason:'เหตุผลสภาพเสีย (บังคับเมื่อมีของเสีย)',f6ReasonNeed:'มีสินค้าเสียหาย ต้องระบุเหตุผล',f6Cond:'สภาพ',lifecycle:'สถานะสินค้า (Supply)',lcNew:'New (สินค้าใหม่)',lcActive:'Active',lcDiscontinue:'Discontinue',lcClearance:'Clearance (ขายเคลียร์)',wmsLiveNote:'WMS DEMO (Integrated): ยอดใหม่ = ยอดเริ่ม − ของที่ส่งมอบขนส่งแล้ว + ของคืนสภาพดีที่ WMS รับแล้ว'});
@@ -63,7 +64,10 @@ function feedWmsMoves(T){const out={},back={},orders=[];
  const ids=new Set(orders.map(o=>o.id));
  db.returns.forEach(r=>{if(!ids.has(r.orderId)||!r.wmsReceiptAt||feedT(r.wmsReceiptAt)>T)return;r.lines.forEach(l=>{back[l.sku]=(back[l.sku]||0)+(l.good||0)})});
  feedPoReceipts(T).forEach(e=>{if(e.sku)back[e.sku]=(back[e.sku]||0)+(+e.qty||0)});
+ feedIssues(T).forEach(x=>{out[x.sku]=(out[x.sku]||0)+x.qty});   // CR-03 R2: non-sales issues leave the WMS too
  return{out,back,orders}}
+/* CR-03 R2: non-sales stock issues approved after the dataset was built and issued by time T (ops-stock-issue.js) */
+function feedIssues(T){return(db.stockIssues||[]).filter(x=>x.status==='issued'&&feedT(x.issuedAt)>feedT(db.feedBase?.builtAt)&&feedT(x.issuedAt)<=T)}
 const feedWmsBefore=wmsRefreshMock;wmsRefreshMock=function(outage=false){
  if(!feedOn()||outage)return feedWmsBefore(outage);if(!wmsCanRead())return{ok:false,error:'denied'};
  const now=Date.now(),{out,back,orders}=feedWmsMoves(now),open=new Map(db.wmsOpening.map(r=>[r.sku,r]));
@@ -102,6 +106,7 @@ function feedLots(base,events,accType){
  for(const e of events){
   if(e.kind==='issue'){const p=[];e.lines.forEach(l=>take(wh.get(l.sku),l.qty).forEach(x=>p.push({...x,sku:l.sku})));parcels.set(e.order.id,p)}
   else if(e.kind==='receive'){put(wh,e.sku,{...e.lot,qty:e.qty})}
+  else if(e.kind==='otherout'){take(wh.get(e.sku),e.qty,e.lots)}   // CR-03 R2: the issued lot first, then FEFO
   else if(e.kind==='deliver'){if(accType(e.order.partner)==='C')(parcels.get(e.order.id)||[]).forEach(x=>put(acc,key(e.order.partner,x.sku),x))}
   else if(e.kind==='return'){const pref=new Set((parcels.get(e.ret.orderId)||[]).map(x=>x.lot_no));e.ret.lines.forEach(l=>{const good=l.good||0,bad=l.damaged||0;
    if(accType(e.ret.partner)==='C'){const got=take(acc.get(key(e.ret.partner,l.sku)),good+bad,pref);let g=good;got.forEach(x=>{const q=Math.min(g,x.qty);if(q>0){put(wh,l.sku,{...x,qty:q});g-=q}})}
@@ -129,12 +134,15 @@ function supplyFeed(base){
    parts.forEach(([cond,q,why])=>{if(q>0)cn.push({cn_no:r.creditNo||r.id,date,sku:l.sku,account_id:r.partner,qty:q,reason:why||'',condition:cond,status})})})});
  cn.push(...feedRecallRows(base));
  const receipts=feedPoReceipts(cut),hasEvents=orders.length>0||returns.length>0||receipts.length>0;
- const meta={cut,wmsVersion:db.wmsSnapshot.version,builtAt:B.builtAt,hasEvents,issued:orders.length,delivered:orders.filter(delivered).length,inTransit:orders.filter(o=>!delivered(o)).length,cn:returns.length,history:B.snap};
- if(!hasEvents){raw.in_transit=[];if(cn.length)raw.cn=base.cn.concat(cn);return{raw,meta}}
+ const issues=feedIssues(cut);raw._wms_cut=day(cut);   // CR-03: R1 outright run-rate end = the WMS read · R2 other_out
+ raw.other_out=(base.other_out||[]).concat(issues.flatMap(x=>(x.lots||[{lot:'',qty:x.qty}]).map(l=>({date:day(x.issuedAt),sku:x.sku,lot:l.lot,location:'WH',qty:l.qty,type:x.type,ref:x.id}))));
+ const meta={cut,wmsVersion:db.wmsSnapshot.version,builtAt:B.builtAt,hasEvents:hasEvents||issues.length>0,issued:orders.length,delivered:orders.filter(delivered).length,inTransit:orders.filter(o=>!delivered(o)).length,cn:returns.length,history:B.snap,otherOut:issues.length};
+ if(!hasEvents&&!issues.length){raw.in_transit=[];if(cn.length)raw.cn=base.cn.concat(cn);return{raw,meta}}
  // events in time order → lots (FEFO) at the new snapshot = the Monday after the WMS read
  const ev=[];orders.forEach(o=>{ev.push({kind:'issue',t:feedT(o.shippedAt),order:o,lines:getOrderLines(o)});if(delivered(o))ev.push({kind:'deliver',t:feedT(o.deliveredAt),order:o})});
  returns.forEach(r=>{if(r.wmsReceiptAt&&feedT(r.wmsReceiptAt)<=cut&&r.status!=='rejected')ev.push({kind:'return',t:feedT(r.wmsReceiptAt),ret:r})});
  const shelf=new Map(base.sku_master.map(k=>[k.sku,+k.shelf_life_months||24]));
+ issues.forEach(x=>ev.push({kind:'otherout',t:feedT(x.issuedAt),sku:x.sku,qty:x.qty,lots:new Set((x.lots||[]).map(l=>l.lot))}));   // CR-03 R2
  receipts.forEach(e=>ev.push({kind:'receive',t:feedT(e.receivedAt),sku:e.sku,qty:+e.qty,lot:{lot_no:'PO-'+e.po,mfg:e.receivedDate,exp:Calc.iso(Calc.dn(e.receivedDate)+Math.round((shelf.get(e.sku)||24)*30.4))}}));
  ev.sort((a,b)=>a.t-b.t);
  const L=feedLots(base,ev,accType),snap=Calc.iso(Calc.monday(Calc.dn(day(cut)))+7),lots=[];

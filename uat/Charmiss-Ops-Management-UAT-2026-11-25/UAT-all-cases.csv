@@ -1,0 +1,104 @@
+﻿suite,id,profile,page,title,expected,status,actual
+Anchor / selfCheck (CR-01 2.3),SUP-ANCHOR,director,supOverview,"ตัวเลข Anchor ทุกค่า + selfCheck 1–5, 7–9 + modelCheck",เท่ากับ SCM v3.3 ทุกค่า · PASS ทุกข้อ,PASS,"{""stockValue"":50091183,""whV"":39518371,""consV"":10572812,""units"":""514864/136418/651282"",""doc"":73,""sellThrough"":17.8,""status"":""7/2/9/98/4/+7"",""risk3M"":""547597/4489"",""recall"":""519974/11/7194"",""quotaFit"":""92/107/116"",""mape"":13.5,""bias"":-4.2,""fill"":93.1,""achMTD"":94.1} · refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS"
+เมนู Supply ตามสิทธิ์ (7.3),SUP-MENU-director,director,sidebar,เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ,"Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Review",PASS,"Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Review · refused=true"
+เมนู Supply ตามสิทธิ์ (7.3),SUP-MENU-mgr-mt,mgr-mt,sidebar,เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ,"Overview,Stock,Expiry,Consign,Calendar,Quota,Proposals,Review",PASS,"Overview,Stock,Expiry,Consign,Calendar,Quota,Proposals,Review · refused=true"
+เมนู Supply ตามสิทธิ์ (7.3),SUP-MENU-mgr-tt,mgr-tt,sidebar,เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ,"Overview,Stock,Expiry,Calendar,Quota,Proposals,Review",PASS,"Overview,Stock,Expiry,Calendar,Quota,Proposals,Review · refused=true"
+เมนู Supply ตามสิทธิ์ (7.3),SUP-MENU-mgr-ecom,mgr-ecom,sidebar,เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ,"Overview,Stock,Expiry,Calendar,Quota,Proposals,Review",PASS,"Overview,Stock,Expiry,Calendar,Quota,Proposals,Review · refused=true"
+เมนู Supply ตามสิทธิ์ (7.3),SUP-MENU-sa-mt,sa-mt,sidebar,เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ,(ไม่มี),PASS,(ไม่มี) · refused=true
+เมนู Supply ตามสิทธิ์ (7.3),SUP-MENU-sa-tt,sa-tt,sidebar,เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ,(ไม่มี),PASS,(ไม่มี) · refused=true
+เมนู Supply ตามสิทธิ์ (7.3),SUP-MENU-sa-ecom,sa-ecom,sidebar,เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ,(ไม่มี),PASS,(ไม่มี) · refused=true
+เมนู Supply ตามสิทธิ์ (7.3),SUP-MENU-admin,admin,sidebar,เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ,Setup,PASS,Setup · refused=true
+เมนู Supply ตามสิทธิ์ (7.3),SUP-MENU-finance,finance,sidebar,เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ,"Calendar,Review",PASS,"Calendar,Review · refused=true"
+เมนู Supply ตามสิทธิ์ (7.3),SUP-MENU-warehouse,warehouse,sidebar,เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ,"Expiry,Calendar",PASS,"Expiry,Calendar · refused=true"
+เมนู Supply ตามสิทธิ์ (7.3),SUP-MENU-planner,planner,sidebar,เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ,"Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Review,Setup",PASS,"Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Review,Setup · refused=true"
+NOLEAK ขอบเขตฝ่าย,SUP-NOLEAK-mgr-mt (ก่อนมีข้อเสนอ),mgr-mt,ทุกหน้า Supply + กราฟ + Drawer + การ์ด B4 + งานค้าง,ไม่มีชื่อคู่ค้า / ช่องทางของฝ่ายอื่น,ไม่พบ,PASS,hits=[] (SupUAT.all 28/28)
+NOLEAK ขอบเขตฝ่าย,SUP-NOLEAK-mgr-tt (ก่อนมีข้อเสนอ),mgr-tt,ทุกหน้า Supply + กราฟ + Drawer + การ์ด B4 + งานค้าง,ไม่มีชื่อคู่ค้า / ช่องทางของฝ่ายอื่น,ไม่พบ,PASS,hits=[] (SupUAT.all 28/28)
+NOLEAK ขอบเขตฝ่าย,SUP-NOLEAK-mgr-ecom (ก่อนมีข้อเสนอ),mgr-ecom,ทุกหน้า Supply + กราฟ + Drawer + การ์ด B4 + งานค้าง,ไม่มีชื่อคู่ค้า / ช่องทางของฝ่ายอื่น,ไม่พบ,PASS,hits=[] (SupUAT.all 28/28)
+NOLEAK ขอบเขตฝ่าย,SUP-NOLEAK-mgr-mt (หลังมีข้อเสนอ Phase C),mgr-mt,ทุกหน้า Supply + ข้อเสนอ + การ์ด B4 + งานค้าง SPR,ไม่มีชื่อคู่ค้า / ช่องทางของฝ่ายอื่น,ไม่พบ,PASS,lock=MT · hits=[]
+NOLEAK ขอบเขตฝ่าย,SUP-NOLEAK-mgr-tt (หลังมีข้อเสนอ Phase C),mgr-tt,ทุกหน้า Supply + ข้อเสนอ + การ์ด B4 + งานค้าง SPR,ไม่มีชื่อคู่ค้า / ช่องทางของฝ่ายอื่น,ไม่พบ,PASS,lock=TT · hits=[]
+NOLEAK ขอบเขตฝ่าย,SUP-NOLEAK-mgr-ecom (หลังมีข้อเสนอ Phase C),mgr-ecom,ทุกหน้า Supply + ข้อเสนอ + การ์ด B4 + งานค้าง SPR,ไม่มีชื่อคู่ค้า / ช่องทางของฝ่ายอื่น,ไม่พบ,PASS,lock=ECOM · hits=[]
+ธีม สว่าง / มืด,SUP-THEME-light,planner,ทุกหน้า Supply,เปิดทุกหน้า Supply ในธีม light,ไม่มี Error,PASS,errors=[]
+ธีม สว่าง / มืด,SUP-THEME-dark,planner,ทุกหน้า Supply,เปิดทุกหน้า Supply ในธีม dark,ไม่มี Error,PASS,errors=[]
+OPS-GATE เทียบ Ops v13 (18 หน้า),OPS-GATE-director,director,18 หน้า Ops,หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN,ปฏิเสธ: (ไม่มี),PASS,ปฏิเสธ: (ไม่มี) · broken=[]
+OPS-GATE เทียบ Ops v13 (18 หน้า),OPS-GATE-mgr-mt,mgr-mt,18 หน้า Ops,หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN,"ปฏิเสธ: ecommerce,stockoverview",PASS,"ปฏิเสธ: ecommerce,stockoverview · broken=[]"
+OPS-GATE เทียบ Ops v13 (18 หน้า),OPS-GATE-mgr-tt,mgr-tt,18 หน้า Ops,หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN,"ปฏิเสธ: ecommerce,stockoverview",PASS,"ปฏิเสธ: ecommerce,stockoverview · broken=[]"
+OPS-GATE เทียบ Ops v13 (18 หน้า),OPS-GATE-mgr-ecom,mgr-ecom,18 หน้า Ops,หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN,"ปฏิเสธ: stockoverview,soRequests",PASS,"ปฏิเสธ: stockoverview,soRequests · broken=[]"
+OPS-GATE เทียบ Ops v13 (18 หน้า),OPS-GATE-sa-mt,sa-mt,18 หน้า Ops,หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN,"ปฏิเสธ: ecommerce,stockoverview",PASS,"ปฏิเสธ: ecommerce,stockoverview · broken=[]"
+OPS-GATE เทียบ Ops v13 (18 หน้า),OPS-GATE-sa-tt,sa-tt,18 หน้า Ops,หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN,"ปฏิเสธ: ecommerce,stockoverview",PASS,"ปฏิเสธ: ecommerce,stockoverview · broken=[]"
+OPS-GATE เทียบ Ops v13 (18 หน้า),OPS-GATE-sa-ecom,sa-ecom,18 หน้า Ops,หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN,"ปฏิเสธ: stockoverview,soRequests",PASS,"ปฏิเสธ: stockoverview,soRequests · broken=[]"
+OPS-GATE เทียบ Ops v13 (18 หน้า),OPS-GATE-admin,admin,18 หน้า Ops,หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN,ปฏิเสธ: (ไม่มี),PASS,ปฏิเสธ: (ไม่มี) · broken=[]
+OPS-GATE เทียบ Ops v13 (18 หน้า),OPS-GATE-finance,finance,18 หน้า Ops,หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN,"ปฏิเสธ: ecommerce,customers",PASS,"ปฏิเสธ: ecommerce,customers · broken=[]"
+OPS-GATE เทียบ Ops v13 (18 หน้า),OPS-GATE-warehouse,warehouse,18 หน้า Ops,หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN,"ปฏิเสธ: ecommerce,customers,soRequests,reports",PASS,"ปฏิเสธ: ecommerce,customers,soRequests,reports · broken=[]"
+OPS-GATE เทียบ Ops v13 (18 หน้า),OPS-GATE-planner,planner,18 หน้า Ops,หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN,"ปฏิเสธ: ecommerce,customers,stockoverview,soRequests",PASS,"ปฏิเสธ: ecommerce,customers,stockoverview,soRequests · broken=[]"
+มือถือ 390px ไม่ล้นแนวนอน,SUP-MOBILE-director,director,ทุกหน้าที่บัญชีเปิดได้,ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน,width ≤ 400 · overflow = [],PASS,width=390 · overflow=[]
+มือถือ 390px ไม่ล้นแนวนอน,SUP-MOBILE-mgr-mt,mgr-mt,ทุกหน้าที่บัญชีเปิดได้,ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน,width ≤ 400 · overflow = [],PASS,width=390 · overflow=[]
+มือถือ 390px ไม่ล้นแนวนอน,SUP-MOBILE-mgr-tt,mgr-tt,ทุกหน้าที่บัญชีเปิดได้,ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน,width ≤ 400 · overflow = [],PASS,width=390 · overflow=[]
+มือถือ 390px ไม่ล้นแนวนอน,SUP-MOBILE-mgr-ecom,mgr-ecom,ทุกหน้าที่บัญชีเปิดได้,ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน,width ≤ 400 · overflow = [],PASS,width=390 · overflow=[]
+มือถือ 390px ไม่ล้นแนวนอน,SUP-MOBILE-sa-mt,sa-mt,ทุกหน้าที่บัญชีเปิดได้,ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน,width ≤ 400 · overflow = [],PASS,width=390 · overflow=[]
+มือถือ 390px ไม่ล้นแนวนอน,SUP-MOBILE-sa-tt,sa-tt,ทุกหน้าที่บัญชีเปิดได้,ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน,width ≤ 400 · overflow = [],PASS,width=390 · overflow=[]
+มือถือ 390px ไม่ล้นแนวนอน,SUP-MOBILE-sa-ecom,sa-ecom,ทุกหน้าที่บัญชีเปิดได้,ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน,width ≤ 400 · overflow = [],PASS,width=390 · overflow=[]
+มือถือ 390px ไม่ล้นแนวนอน,SUP-MOBILE-admin,admin,ทุกหน้าที่บัญชีเปิดได้,ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน,width ≤ 400 · overflow = [],PASS,width=390 · overflow=[]
+มือถือ 390px ไม่ล้นแนวนอน,SUP-MOBILE-finance,finance,ทุกหน้าที่บัญชีเปิดได้,ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน,width ≤ 400 · overflow = [],PASS,width=390 · overflow=[]
+มือถือ 390px ไม่ล้นแนวนอน,SUP-MOBILE-warehouse,warehouse,ทุกหน้าที่บัญชีเปิดได้,ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน,width ≤ 400 · overflow = [],PASS,width=390 · overflow=[]
+มือถือ 390px ไม่ล้นแนวนอน,SUP-MOBILE-planner,planner,ทุกหน้าที่บัญชีเปิดได้,ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน,width ≤ 400 · overflow = [],PASS,width=390 · overflow=[]
+Phase B · Data Adapter (Flow),"SUP-FEED-DELIVERED (IV, not shipped)",warehouse,Ops → Supply,"SUP-FEED-DELIVERED (IV, not shipped)",ตาม CR-01 ข้อ 6,PASS,
+Phase B · Data Adapter (Flow),SUP-FEED-DELIVERED (in transit),warehouse,Ops → Supply,SUP-FEED-DELIVERED (in transit),ตาม CR-01 ข้อ 6,PASS,"{""sku"":""CM-FD-005"",""asOf"":""2026-11-30"",""it"":40,""wh"":[3084,3044],""total"":[4354,4354],""sc"":""refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS""}"
+Phase B · Data Adapter (Flow),SUP-FEED-DELIVERED (Sales In / Remaining),warehouse,Ops → Supply,SUP-FEED-DELIVERED (Sales In / Remaining),ตาม CR-01 ข้อ 6,PASS,"{""salesIn"":40,""remaining"":[356,396],""sc"":""refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS""}"
+Phase B · Data Adapter (Flow),SUP-FEED-IDEMP,warehouse,Ops → Supply,SUP-FEED-IDEMP,ตาม CR-01 ข้อ 6,PASS,"{""replay"":{""ok"":true,""already"":true}}"
+Phase B · Data Adapter (Flow),SUP-READONLY,warehouse,Ops → Supply,SUP-READONLY,ตาม CR-01 ข้อ 6,PASS,
+Phase B · Data Adapter (Flow),SUP-CN-COND,sa-mt/warehouse,Ops → Supply,SUP-CN-COND,ตาม CR-01 ข้อ 6,PASS,
+Phase B · Data Adapter (Flow),"SUP-FLOW (CN Good → WH up, consignment down)",sa-mt/finance/warehouse,Ops → Supply,"SUP-FLOW (CN Good → WH up, consignment down)",ตาม CR-01 ข้อ 6,PASS,"{""wh"":[3084,3069],""remaining"":[356,366],""total"":[4354,4349]}"
+Phase B · Data Adapter (Flow),SUP-SC-7,sa-mt/finance/warehouse,Ops → Supply,SUP-SC-7,ตาม CR-01 ข้อ 6,PASS,"{""n"":0,""of"":120}"
+Phase B · Data Adapter (Flow),SUP-SC-8,sa-mt/finance/warehouse,Ops → Supply,SUP-SC-8,ตาม CR-01 ข้อ 6,PASS,"{""n"":0,""of"":1}"
+Phase B · Data Adapter (Flow),SUP-SC-9,sa-mt/finance/warehouse,Ops → Supply,SUP-SC-9,ตาม CR-01 ข้อ 6,PASS,"{""n"":0,""of"":953}"
+Phase B · Data Adapter (Flow),selfCheck 1–9,sa-mt/finance/warehouse,Ops → Supply,selfCheck 1–9,ตาม CR-01 ข้อ 6,PASS,"{""checks"":""refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS""}"
+Phase B · Data Adapter (Flow),SUP-ANCHOR (after the flow),sa-mt/finance/warehouse,Ops → Supply,SUP-ANCHOR (after the flow),ตาม CR-01 ข้อ 6,PASS,"{""diff"":[]}"
+Phase C · B1–B5 / F7,SUP-PROP-MERGE,planner/director/mgr-mt,supProposals,SUP-PROP-MERGE,ตาม CR-01 Phase C,PASS,
+Phase C · B1–B5 / F7,SUP-PROP-SELF,planner/director/mgr-mt,supProposals,SUP-PROP-SELF,ตาม CR-01 Phase C,PASS,
+Phase C · B1–B5 / F7,SUP-PROP-REJECT,planner/director/mgr-mt,supProposals,SUP-PROP-REJECT,ตาม CR-01 Phase C,PASS,
+Phase C · B1–B5 / F7,SUP-PROP-recall,planner/director/mgr-mt,supProposals,SUP-PROP-recall,ตาม CR-01 Phase C,PASS,
+Phase C · B1–B5 / F7,"SUP-PROP-quota (draft, not in this month)",planner/director/mgr-mt,supProposals,"SUP-PROP-quota (draft, not in this month)",ตาม CR-01 Phase C,PASS,
+Phase C · B1–B5 / F7,SUP-PROP-po (Planned),planner/director/mgr-mt,supProposals,SUP-PROP-po (Planned),ตาม CR-01 Phase C,PASS,
+Phase C · B1–B5 / F7,SUP-PROP-downstream,planner/director/mgr-mt,supProposals,SUP-PROP-downstream,ตาม CR-01 Phase C,PASS,"{""dec"":600}"
+Phase C · B1–B5 / F7,SUP-ETA,planner/director/mgr-mt,supCalendar,SUP-ETA,ตาม CR-01 Phase C,PASS,"{""history"":2}"
+Phase C · B1–B5 / F7,SUP-ATP (Planned ignored · Confirmed / Shipped counted · ETA moves the date),planner/director/mgr-mt,SO form / order,SUP-ATP (Planned ignored · Confirmed / Shipped counted · ETA moves the date),ตาม CR-01 Phase C,PASS,"{""atp0"":{""none"":true,""base"":161},""atp1"":""2026-12-15"",""atp3"":""2026-12-25""}"
+Phase C · B1–B5 / F7,SUP-ATP-MT,sa-mt,SO form / order,SUP-ATP-MT,ตาม CR-01 Phase C,PASS,"{""order"":""OR-UAT-MT42382""}"
+Phase C · B1–B5 / F7,SUP-ATP-TT,sa-tt,SO form / order,SUP-ATP-TT,ตาม CR-01 Phase C,PASS,"{""order"":""OR-UAT-TT43017""}"
+Phase C · B1–B5 / F7,SUP-ATP-EC,sa-ecom,SO form / order,SUP-ATP-EC,ตาม CR-01 Phase C,PASS,"{""order"":""OR-UAT-EC43598""}"
+Phase C · B1–B5 / F7,SUP-B2-MATCH,mgr-mt,supQuota,SUP-B2-MATCH,ตาม CR-01 Phase C,PASS,"{""b2"":{""fit"":72.83783783783785,""mape"":22.646657571623464,""cov3"":10.938285353486245},""page"":{""fit"":72.83783783783785,""mape"":22.646657571623464,""cov3"":10.938285353486245}}"
+Phase C · B1–B5 / F7,SUP-B4,mgr-mt,overview,SUP-B4,ตาม CR-01 Phase C,PASS,
+Phase C · B1–B5 / F7,SUP-B5,planner/director/mgr-mt,supReview,SUP-B5,ตาม CR-01 Phase C,PASS,
+Phase C · B1–B5 / F7,selfCheck 1–9 (after Phase C),planner/director/mgr-mt,supProposals,selfCheck 1–9 (after Phase C),ตาม CR-01 Phase C,PASS,"{""checks"":[]}"
+Phase C · B1–B5 / F7,SUP-ANCHOR (after Phase C),planner/director/mgr-mt,supProposals,SUP-ANCHOR (after Phase C),ตาม CR-01 Phase C,PASS,"{""diff"":[]}"
+Phase D · F1–F4 / F8 (Desktop 1440px),SUP-F1-CARD,director,supQuota,F1 การ์ด = Achievement MTD 94.1% · Δ เทียบ MTD วันเดียวกันเดือนก่อน · บรรทัดรองสัปดาห์นี้,PASS,PASS,"{""card"":""Quota Achievement MTD | 94.1% | Sales In 180,046 / Quota 191,330 ชิ้น · สัปดาห์นี้ 48.1% | ▼ 17.7 pp | เทียบ MTD วันเดียวกันของเดือนก่อน"",""mtd"":94.1,""prevMtd"":111.77}"
+Phase D · F1–F4 / F8 (Desktop 1440px),SUP-F1-TABLE (desktop),director,supQuota,F1 ตาราง / การ์ด Account × SKU ใช้ MTD ต่อคู่,PASS,PASS,"{""pairs"":953,""mismatch"":0}"
+Phase D · F1–F4 / F8 (Desktop 1440px),SUP-F1-REPORT,director,supReview,F1 Supply Review แสดง Achievement MTD,PASS,PASS,
+Phase D · F1–F4 / F8 (Desktop 1440px),SUP-F4,director,supOverview / supReview,F4 Δ DOC สีเทา (flat),PASS,PASS,"{""overview"":""<span class=\""delta flat\"">▲ 3 วัน</span>"",""review"":""<span class=\""delta flat\"">▲ 3 วัน</span>""}"
+Phase D · F1–F4 / F8 (Desktop 1440px),SUP-F2 (desktop),director,supConsign,F2 Sales In vs Out ต่อคู่ค้า: แนวนอน < 768px / แนวตั้ง ≥ 768px,PASS,PASS,"{""indexAxis"":""x"",""labels"":7}"
+Phase D · F1–F4 / F8 (Desktop 1440px),SUP-F3 (desktop),director,supConsign,F3 การ์ด 20 + โหลดเพิ่ม (ลำดับเดิม · กรองแล้วเริ่ม 20) / Desktop Pager,PASS,PASS,"{""rows"":50}"
+Phase D · F1–F4 / F8 (Desktop 1440px),SUP-F8-SHOW,director,supConsign,F8 แสดงผลนับ 52 คู่ คู่กับค่าคำนวณ,PASS,PASS,"{""counts"":52,""shown"":50,""summary"":""นับแล้ว 52 คู่ · ตรง 36 · ตรวจ 11 · ต่างมาก 5 · ส่วนต่างรวม -423 ชิ้น (−฿30,170)""}"
+Phase D · F1–F4 / F8 (Desktop 1440px),SUP-F8-DIFF (= counted − calculated; calculation untouched),director,supConsign,F8 ส่วนต่าง = นับ − คำนวณ · ค่าคำนวณไม่ถูกเขียนทับ,PASS,PASS,"{""diff"":-423,""calcAtCount"":18826,""lots"":18826}"
+Phase D · F1–F4 / F8 (Desktop 1440px),SUP-F8-SCOPE (after AS OF / other channel → hidden),director,supConsign,F8 ผลนับหลัง AS OF / นอกช่องทาง → ไม่แสดง,PASS,PASS,
+Phase D · F1–F4 / F8 (Desktop 1440px),SUP-F8-IMPORT (schema),director,supSetup,F8 Import consign_count: CSV ถูก = ผ่าน · ผิด = แจ้ง Error / Ref ไม่รู้จัก,PASS,PASS,"{""bad"":[""qty:negative:-3"",""date:not_date:22/13/2026""]}"
+Phase D · F1–F4 / F8 (Desktop 1440px),SUP-NOLEAK-sa-mt,sa-mt,overview / #/supply/*,Sales Admin: ไม่มีเมนู / ลิงก์ตรง / การ์ด Supply,PASS,PASS,"{""refused"":true,""viaUrl"":true}"
+Phase D · F1–F4 / F8 (Desktop 1440px),SUP-NOLEAK-sa-tt,sa-tt,overview / #/supply/*,Sales Admin: ไม่มีเมนู / ลิงก์ตรง / การ์ด Supply,PASS,PASS,"{""refused"":true,""viaUrl"":true}"
+Phase D · F1–F4 / F8 (Desktop 1440px),SUP-NOLEAK-sa-ecom,sa-ecom,overview / #/supply/*,Sales Admin: ไม่มีเมนู / ลิงก์ตรง / การ์ด Supply,PASS,PASS,"{""refused"":true,""viaUrl"":true}"
+Phase D · F1–F4 / F8 (Desktop 1440px),SUP-NOTAG,planner,ทุกหน้า Supply + Ops 3 หน้า,"ไม่มีป้ายภายใน ""CR-01"" บนหน้าจอ",PASS,PASS,"{""pages"":[]}"
+Phase D · F1–F4 / F8 (Desktop 1440px),console errors (Phase D),director,ทุกหน้าที่เปิด,ไม่มี Console error,PASS,PASS,"{""errors"":[]}"
+Phase D · F1–F4 / F8 (Desktop 1440px),SUP-ANCHOR (Phase D),director,supOverview,Anchor + selfCheck หลัง Phase D,PASS,PASS,"{""diff"":[],""selfCheck"":""refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS""}"
+Phase D · F1–F4 / F8 (มือถือ 390px),SUP-F1-CARD,director,supQuota,F1 การ์ด = Achievement MTD 94.1% · Δ เทียบ MTD วันเดียวกันเดือนก่อน · บรรทัดรองสัปดาห์นี้,PASS,PASS,"{""card"":""Quota Achievement MTD | 94.1% | Sales In 180,046 / Quota 191,330 ชิ้น · สัปดาห์นี้ 48.1% | ▼ 17.7 pp | เทียบ MTD วันเดียวกันของเดือนก่อน"",""mtd"":94.1,""prevMtd"":111.77}"
+Phase D · F1–F4 / F8 (มือถือ 390px),SUP-F1-TABLE (mobile),director,supQuota,F1 ตาราง / การ์ด Account × SKU ใช้ MTD ต่อคู่,PASS,PASS,"{""pairs"":953,""mismatch"":0}"
+Phase D · F1–F4 / F8 (มือถือ 390px),SUP-F1-REPORT,director,supReview,F1 Supply Review แสดง Achievement MTD,PASS,PASS,
+Phase D · F1–F4 / F8 (มือถือ 390px),SUP-F4,director,supOverview / supReview,F4 Δ DOC สีเทา (flat),PASS,PASS,"{""overview"":""<span class=\""delta flat\"">▲ 3 วัน</span>"",""review"":""<span class=\""delta flat\"">▲ 3 วัน</span>""}"
+Phase D · F1–F4 / F8 (มือถือ 390px),SUP-F2 (mobile),director,supConsign,F2 Sales In vs Out ต่อคู่ค้า: แนวนอน < 768px / แนวตั้ง ≥ 768px,PASS,PASS,"{""indexAxis"":""y"",""labels"":7}"
+Phase D · F1–F4 / F8 (มือถือ 390px),SUP-F3 (mobile),director,supConsign,F3 การ์ด 20 + โหลดเพิ่ม (ลำดับเดิม · กรองแล้วเริ่ม 20) / Desktop Pager,PASS,PASS,"{""first"":20,""afterMore"":40,""filtered"":20}"
+Phase D · F1–F4 / F8 (มือถือ 390px),SUP-F8-SHOW,director,supConsign,F8 แสดงผลนับ 52 คู่ คู่กับค่าคำนวณ,PASS,PASS,"{""counts"":52,""shown"":20,""summary"":""นับแล้ว 52 คู่ · ตรง 36 · ตรวจ 11 · ต่างมาก 5 · ส่วนต่างรวม -423 ชิ้น (−฿30,170)""}"
+Phase D · F1–F4 / F8 (มือถือ 390px),SUP-F8-DIFF (= counted − calculated; calculation untouched),director,supConsign,F8 ส่วนต่าง = นับ − คำนวณ · ค่าคำนวณไม่ถูกเขียนทับ,PASS,PASS,"{""diff"":-423,""calcAtCount"":18826,""lots"":18826}"
+Phase D · F1–F4 / F8 (มือถือ 390px),SUP-F8-SCOPE (after AS OF / other channel → hidden),director,supConsign,F8 ผลนับหลัง AS OF / นอกช่องทาง → ไม่แสดง,PASS,PASS,
+Phase D · F1–F4 / F8 (มือถือ 390px),SUP-F8-IMPORT (schema),director,supSetup,F8 Import consign_count: CSV ถูก = ผ่าน · ผิด = แจ้ง Error / Ref ไม่รู้จัก,PASS,PASS,"{""bad"":[""qty:negative:-3"",""date:not_date:22/13/2026""]}"
+Phase D · F1–F4 / F8 (มือถือ 390px),SUP-NOLEAK-sa-mt,sa-mt,overview / #/supply/*,Sales Admin: ไม่มีเมนู / ลิงก์ตรง / การ์ด Supply,PASS,PASS,"{""refused"":true,""viaUrl"":true}"
+Phase D · F1–F4 / F8 (มือถือ 390px),SUP-NOLEAK-sa-tt,sa-tt,overview / #/supply/*,Sales Admin: ไม่มีเมนู / ลิงก์ตรง / การ์ด Supply,PASS,PASS,"{""refused"":true,""viaUrl"":true}"
+Phase D · F1–F4 / F8 (มือถือ 390px),SUP-NOLEAK-sa-ecom,sa-ecom,overview / #/supply/*,Sales Admin: ไม่มีเมนู / ลิงก์ตรง / การ์ด Supply,PASS,PASS,"{""refused"":true,""viaUrl"":true}"
+Phase D · F1–F4 / F8 (มือถือ 390px),SUP-NOTAG,planner,ทุกหน้า Supply + Ops 3 หน้า,"ไม่มีป้ายภายใน ""CR-01"" บนหน้าจอ",PASS,PASS,"{""pages"":[]}"
+Phase D · F1–F4 / F8 (มือถือ 390px),console errors (Phase D),director,ทุกหน้าที่เปิด,ไม่มี Console error,PASS,PASS,"{""errors"":[]}"
+Phase D · F1–F4 / F8 (มือถือ 390px),SUP-ANCHOR (Phase D),director,supOverview,Anchor + selfCheck หลัง Phase D,PASS,PASS,"{""diff"":[],""selfCheck"":""refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS""}"

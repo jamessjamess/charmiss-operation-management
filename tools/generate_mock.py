@@ -541,6 +541,27 @@ NEW_ECOM = [
     ("A15", "Web", "ECOM", "Brand.com", "N", 0.30, 2),
 ]
 
+# CR-01 F8: 7-Eleven sends no remaining report — a merchandiser shelf count (consign_count) is imported and compared with the
+# calculated remaining; it never overwrites it. Mock: one count on the Sunday before the snapshot for every 7-Eleven SKU,
+# from its own random stream (the main stream — and so every other table — is untouched).
+def consign_count_rows():
+    r2 = random.Random(SEED + 8)
+    snap = rows_lot[0]["snapshot_date"] if rows_lot else "2026-11-23"
+    y, m, d = map(int, snap.split("-"))
+    import datetime
+    day = (datetime.date(y, m, d) - datetime.timedelta(days=1)).isoformat()
+    rem = {}
+    for r in rows_lot:
+        if r["location"] == "A01":
+            rem[r["sku"]] = rem.get(r["sku"], 0) + int(r["qty"])
+    out = []
+    for sku in sorted(rem):
+        q = rem[sku]
+        gap = r2.choice([0, 0, 0, -1, -2, 1]) + (round(-q * r2.uniform(0.04, 0.12)) if r2.random() < 0.25 else 0)   # a few shrink / miscount
+        out.append(dict(date=day, account_id="A01", sku=sku, qty=max(0, q + gap), source="Mer count"))
+    return out
+
+
 # ----------------------------------------------------------------------------------------------- write
 os.makedirs(OUT, exist_ok=True)
 TABLES = {
@@ -556,6 +577,7 @@ TABLES = {
     "cn": (["cn_no", "date", "sku", "account_id", "qty", "reason", "condition", "status"], sorted(rows_cn, key=lambda r: (r["date"], r["cn_no"]))),
     "po_inbound": (["po_no", "sku", "qty", "order_date", "eta_date", "received_date", "status", "supplier"], po_out),
     "quota": (["month", "sku", "account_id", "quota_qty"], sorted(rows_quota, key=lambda r: (r["month"], r["sku"], r["account_id"]))),
+    "consign_count": (["date", "account_id", "sku", "qty", "source"], consign_count_rows()),
 }
 bundle = {}
 for name, (cols, rows) in TABLES.items():

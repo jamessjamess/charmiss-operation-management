@@ -16,7 +16,7 @@
   }
   function deltaK(r) {
     if (r.cur == null || r.prev == null) return '<span class="delta flat">—</span>';
-    return Pages.delta(r.cur, r.prev, r.kind === 'money' ? 'rel' : r.kind === 'pct' ? 'pp' : r.kind === 'days' ? 'days' : 'abs', r.pol);
+    return Pages.delta(r.cur, r.prev, r.kind === 'money' ? 'rel' : r.kind === 'pct' ? 'pp' : r.kind === 'days' ? 'days' : 'abs', r.key === 'k_doc' ? 'none' : r.pol);   // CR-01 F4: DOC neutral
   }
   function filterText(M, DB) {
     const F = M.F, parts = [];
@@ -55,7 +55,7 @@
 
           <section class="rp-sec"><h3>${t('rp_kpi')}</h3>
             <table class="tbl compact rp-t rp-kpi"><thead><tr><th>${t('col_metric')}</th><th class="num">${t('rp_now')}</th><th class="num">${t('rp_prev')}</th><th class="num">Δ</th></tr></thead>
-            <tbody>${R.kpis.map(r => `<tr><td>${U.esc(t(r.key))}</td><td class="num"><b>${fmtK(r.kind, r.cur)}</b></td><td class="num">${fmtK(r.kind, r.prev)}</td><td class="num">${deltaK(r)}</td></tr>`).join('')}</tbody></table>
+            <tbody>${R.kpis.map(r => `<tr><td>${U.esc(t(r.key === 'k_ach' ? 'k_ach_mtd' : r.key))}</td><td class="num"><b>${fmtK(r.kind, r.cur)}</b></td><td class="num">${fmtK(r.kind, r.prev)}</td><td class="num">${deltaK(r)}</td></tr>`).join('')}</tbody></table>
             <div class="foot-note">${t('rp_kpi_note', { d: S.onTimeDays })}</div></section>
 
           <section class="rp-sec"><h3>${t('rp_risk')}</h3><div class="rp-grid3">

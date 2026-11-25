@@ -33,7 +33,14 @@
     stLowW: 5,             // Sell-through below 5 % in a week …
     stLowM: 20,            // … or below 20 % in a month → slow at that account
     cnKeepDays: 45,        // a recall leaves 45 days of the account's run rate on its shelf
-    onTimeDays: 90         // PO On-time % looks at POs received in the last 90 days
+    onTimeDays: 90,        // PO On-time % looks at POs received in the last 90 days
+    // CR-03 (3A) — a method switch keeps the CR-01 behaviour selectable ('history'); thresholds editable on the settings page
+    rrEndMode: 'account',  // CR-03 R1: run rate ends at each account's latest data week · 'history' = one end for all (CR-01)
+    staleW: 2,             // CR-03 R1: an account whose Sales Out ends more than 2 weeks before AS OF is flagged "stale"
+    soCompleteW: 8,        // CR-03 R1: weeks in the Sales Out completeness table
+    soLateDay: 3,          // CR-03 R1: a weekly report is late when received after day 3 (Wednesday) of the following week
+    prPlanOn: false,       // CR-03 R2: take a monthly PR / KOL issue plan per SKU off WH in the projection
+    prPlan: {}             // CR-03 R2: { sku: units per month }
   };
   const STATUS_ORDER = ['stockout', 'reorder', 'overstock', 'healthy', 'npd', 'inactive'];
   const RR_WEIGHTS = { L4W: [[4, 1]], L3M: [[13, 1]], L6M: [[26, 1]], W: [[4, 0.5], [13, 0.3], [26, 0.2]] };
@@ -94,6 +101,15 @@
     // CR-01 (6.1): weeks the Ops feed appends after the Integrated-demo history carry only the demo transactions, so the
     // sell-out run rate stops at the end of that history (raw._history_end, set by the feed; absent → every week counts)
     const hEnd = dn(raw._history_end), rrEndW = hEnd == null ? nWeeks : Math.max(1, Math.min(nWeeks, Math.round((hEnd - startDn) / 7)));
+    // CR-03 R1: the end of each account's own sell-out data — consignment: the last week that has a Sales Out report;
+    // outright: the last full week before the WMS read (raw._wms_cut, set by the feed; without it the last week with sales out).
+    const lastSOW = new Int32Array(nA).fill(-1);
+    for (const r of raw.sales_out || []) {
+      const j = accIdx.get(String(r.account_id || '').trim()), d = dn(r.date); if (j == null || d == null) continue;
+      const w = wk(d); if (w >= 0 && w < nWeeks && w > lastSOW[j]) lastSOW[j] = w;
+    }
+    const cutD = dn(raw._wms_cut);
+    const rrEndA = Int32Array.from(accounts, a => (!a.is_consignment && cutD != null) ? clamp(wk(monday(cutD)), 0, nWeeks) : (lastSOW[a.j] >= 0 ? lastSOW[a.j] + 1 : rrEndW));
 
     const mk = () => Array.from({ length: nS }, () => Array.from({ length: nA }, () => new Float64Array(nWeeks)));
     const so = mk(), soV = mk(), si = mk(), siV = mk();
@@ -156,11 +172,20 @@
       const q = num(r.qty); if (q <= 0) return;
       it[i].push({ ref: r.iv_no || r.order_id || '', order: r.order_id || '', j, qty: q, ship, del: dn(r.delivered_date) });
     });
+    // CR-03 R2: stock that left for something other than a sale (PR / KOL, sample, internal use, write-off) — never Sales Out
+    const oo = skus.map(() => []);
+    (raw.other_out || []).forEach((r, k) => {
+      const i = skuIdx.get(String(r.sku || '').trim()), loc = String(r.location || 'WH').trim(), j = loc === 'WH' ? -1 : accIdx.get(loc), d = dn(r.date);
+      if (i == null || j == null || d == null) { refErr('other_out', k + 2); return; }
+      const q = num(r.qty); if (q <= 0) return;
+      oo[i].push({ dn: d, j, qty: q, type: String(r.type || 'other').trim(), ref: r.ref || '', lot: r.lot || '' });
+    });
     po.forEach(l => l.sort((a, b) => (a.eta ?? 0) - (b.eta ?? 0)));
     cn.forEach(l => l.sort((a, b) => a.dn - b.dn));
 
     return { skus, accounts, skuIdx, accIdx, startDn, snapDn, nWeeks, wk, so, soV, si, siV, cumSO, cumSI, firstSale, price, lots, po, cn, quota, issues,
       quotaRes, quotaCom, it, hasIT: it.some(l => l.length > 0), rrEndW, historyEndDn: hEnd,   // CR-01
+      oo, hasOO: oo.some(l => l.length > 0), rrEndA, lastSOW, rrEndMode: 'history',   // CR-03: other_out · per-account run-rate end (mode set by computeModel)
       minAsOf: startDn + 28, maxAsOf: snapDn };
   }
 
@@ -193,6 +218,10 @@
       if (DB.accounts[c.j].is_consignment) cons[c.j] += c.qty;
       if (c.good) wh -= c.qty;
     }
+    for (const x of (DB.oo && DB.oo[i]) || []) {                         // CR-03 R2: put back what was issued (not sold) after AS OF
+      if (x.dn < asDn || x.dn >= DB.snapDn) continue;
+      if (x.j < 0) wh += x.qty; else cons[x.j] += x.qty;
+    }
     // CR-01 (F5): the rollback above books a shipment out of WH on its Sales In (delivery) date, so it gives WH + In-transit.
     // WH really dropped at goods issue: put the snapshot's in-transit back and take the in-transit at AS OF out.
     const itA = itAt(DB, i, asDn);
@@ -205,7 +234,8 @@
       L4W = 4 weeks · L3M = 13 weeks · L6M = 26 weeks · W (Weighted) = 50 % L4W + 30 % L3M + 20 % L6M.
       A SKU × account that started selling inside the window is averaged over the weeks since its first sale (NPD). */
   function runRate(DB, i, j, asDn, basis) {
-    const wEnd = clamp(Math.min(DB.wk(asDn), DB.rrEndW ?? Infinity), 0, DB.nWeeks), f = DB.firstSale[i][j];   // CR-01: ≤ end of history
+    const cap = DB.rrEndMode === 'account' && DB.rrEndA ? DB.rrEndA[j] : DB.rrEndW;   // CR-03 R1: per-account end (switch rrEndMode)
+    const wEnd = clamp(Math.min(DB.wk(asDn), cap ?? Infinity), 0, DB.nWeeks), f = DB.firstSale[i][j];   // CR-01: ≤ end of history
     if (f < 0 || f >= wEnd) return 0;
     const c = DB.cumSO[i][j];
     let out = 0;
@@ -329,6 +359,7 @@
       while (mi < months.length - 1 && t >= months[mi].t1) mi++;
       const perDay = months[mi] && months[mi].perDay;
       wh += po[t];
+      if (o.prDaily) wh -= Math.min(Math.max(wh, 0), o.prDaily);          // CR-03 R2: planned PR / KOL issues (switch prPlanOn)
       while (k < cnEv.length && cnEv[k].t === t) {
         const c = cnEv[k++];
         if (isC[c.j]) { const q = Math.min(c.qty, cons[c.j]); cons[c.j] -= q; if (c.good) wh += q; else writeOff += q; }
@@ -439,7 +470,8 @@
 
     // projection
     const H = S.projectionDays;
-    const P = projectSku(DB, i, { asDn: as, H, wh0: st.wh, cons0: st.cons, rr, mask, useQuota: S.useQuotaForSalesIn, qMult: ctx.rrMult, ltShift: ctx.ltAdd });
+    const P = projectSku(DB, i, { asDn: as, H, wh0: st.wh, cons0: st.cons, rr, mask, useQuota: S.useQuotaForSalesIn, qMult: ctx.rrMult, ltShift: ctx.ltAdd,
+      prDaily: S.prPlanOn && S.prPlan ? (+S.prPlan[s.sku] || 0) / 30.4375 : 0 });   // CR-03 R2: + planned PR issues
     out._p = P;
     out.proj = [1, 3, 6].map(m => { const t = Math.min(H, addMonths(as, m) - as) - 1; return P.whA[t] * share + P.consSelA[t] + P.itSelA[t]; });   // CR-01: + in-transit
     out.projAll = [1, 3, 6].map(m => P.totA[Math.min(H, addMonths(as, m) - as) - 1]);
@@ -528,7 +560,7 @@
   // ------------------------------------------------------------------ flows in a period (selected accounts, allocated WH)
   function flowsSku(DB, i, a, b, mask, share) {
     const nA = DB.accounts.length, wa = clamp(DB.wk(a), 0, DB.nWeeks), wb = clamp(DB.wk(b), 0, DB.nWeeks);
-    const f = { so: 0, si: 0, siCons: 0, soCons: 0, poRec: 0, cnGoodOut: 0, cnGoodCons: 0, writeOff: 0, cnBadOut: 0 };
+    const f = { so: 0, si: 0, siCons: 0, soCons: 0, poRec: 0, cnGoodOut: 0, cnGoodCons: 0, writeOff: 0, cnBadOut: 0, oo: 0 };   // CR-03: + oo
     for (let j = 0; j < nA; j++) {
       if (!mask[j]) continue;
       const so = DB.cumSO[i][j][wb] - DB.cumSO[i][j][wa], si = DB.cumSI[i][j][wb] - DB.cumSI[i][j][wa];
@@ -542,6 +574,7 @@
       if (cons) { if (c.good) f.cnGoodCons += c.qty; else f.writeOff += c.qty; }
       else if (c.good) f.cnGoodOut += c.qty; else f.cnBadOut += c.qty;
     }
+    for (const x of (DB.oo && DB.oo[i]) || []) if (x.dn >= a && x.dn < b && (x.j < 0 || mask[x.j])) f.oo += x.qty * (x.j < 0 ? share : 1);   // CR-03 R2
     return f;
   }
 
@@ -551,6 +584,7 @@
   function computeModel(DB, F, S, opts) {
     S = Object.assign({}, DEFAULT_SETTINGS, S || {});
     opts = opts || {};
+    DB.rrEndMode = S.rrEndMode;                                          // CR-03 R1: the run-rate end follows the setting
     const asDn = clamp(monday(F.asDn), DB.minAsOf, DB.maxAsOf);
     const mask = accountMask(DB, F), allMask = isAllMask(mask);
     const basis = F.rr || S.rrBasis, h = +F.h || 3;
@@ -658,7 +692,7 @@
       CN Good from a consignment account only moves stock account → WH, so it does not change Total and is not a bar.
       Under a Channel / Account filter the WH part is allocated; the bar "WH allocation" closes the gap so the chart still adds up. */
   function waterfallOf(DB, rows, period, ctx) {
-    const w = { open: 0, po: 0, cnGood: 0, so: 0, wo: 0, close: 0, adj: 0, openV: 0, poV: 0, cnGoodV: 0, soV: 0, woV: 0, closeV: 0, adjV: 0 };
+    const w = { open: 0, po: 0, cnGood: 0, so: 0, wo: 0, close: 0, adj: 0, openV: 0, poV: 0, cnGoodV: 0, soV: 0, woV: 0, closeV: 0, adjV: 0, oo: 0, ooV: 0 };   // CR-03: + oo
     for (const r of rows) {
       const c = r.cost;
       const o = stockAt(DB, r.i, period.p0);
@@ -666,8 +700,9 @@
       if (o.it) o.it.forEach((q, j) => { if (ctx.mask[j]) oc += q; });   // CR-01 (F5): opening Total includes in-transit
       const open = o.wh * r.share + oc, close = r.totalSel;
       const f = flowsSku(DB, r.i, period.p0, period.p1, ctx.mask, r.share);
-      const adj = close - (open + f.poRec + f.cnGoodOut - f.so - f.writeOff);
+      const adj = close - (open + f.poRec + f.cnGoodOut - f.so - f.writeOff - f.oo);   // CR-03: − other_out
       w.open += open; w.po += f.poRec; w.cnGood += f.cnGoodOut; w.so += f.so; w.wo += f.writeOff; w.close += close; w.adj += adj;
+      w.oo += f.oo; w.ooV += f.oo * c;                                   // CR-03 R2
       w.openV += open * c; w.poV += f.poRec * c; w.cnGoodV += f.cnGoodOut * c; w.soV += f.so * c; w.woV += f.writeOff * c; w.closeV += close * c; w.adjV += adj * c;
     }
     return w;
@@ -701,16 +736,25 @@
     // 3) Opening + In − Out = Closing for every SKU, every week, at WH, each account and Total.
     //    Total is checked through two independent paths: (WH + Σ accounts) vs (PO + CN Good outright − Sales Out − CN Bad consignment).
     let neg = 0, recon = 0, pairs = 0, worst = '';
+    let whBad = 0, whWorst = '';                                          // CR-03 (10)
     for (let i = 0; i < DB.skus.length; i++) {
       let prev = stockAt(DB, i, DB.startDn);
       for (let w = 0; w < DB.nWeeks; w++) {
         const a = DB.startDn + 7 * w, b = a + 7;
         const next = stockAt(DB, i, b);
+        { // CR-03 (10): WH opening + PO received + CN Good back − goods issued (delivered + change in transit) − other_out = WH closing
+          let rec = 0, cnG = 0, out = sumArr(next.it) - sumArr(prev.it), oo = 0;
+          for (const p of DB.po[i]) if (p.rec != null && p.rec >= a && p.rec < b) rec += p.qty;
+          for (const c of DB.cn[i]) if (c.status === 'Received' && c.good && c.dn >= a && c.dn < b) cnG += c.qty;
+          for (let j = 0; j < nA; j++) out += DB.si[i][j][w];
+          for (const x of (DB.oo && DB.oo[i]) || []) if (x.j < 0 && x.dn >= a && x.dn < b) oo += x.qty;
+          if (Math.abs(prev.wh + rec + cnG - out - oo - next.wh) > 0.5) { whBad++; if (!whWorst) whWorst = DB.skus[i].sku + ' wk ' + iso(a); }
+        }
         if (next.wh < -0.5) neg++;
         next.cons.forEach(q => { if (q < -0.5) neg++; });
         const f = flowsSku(DB, i, a, b, new Uint8Array(nA).fill(1), 1);
         const totPrev = prev.wh + prev.cons.reduce((x, y) => x + y, 0) + sumArr(prev.it), totNext = next.wh + next.cons.reduce((x, y) => x + y, 0) + sumArr(next.it);   // CR-01: + in-transit
-        const expect = totPrev + f.poRec + f.cnGoodOut - f.so - f.writeOff;
+        const expect = totPrev + f.poRec + f.cnGoodOut - f.so - f.writeOff - f.oo;   // CR-03: − other_out
         pairs++;
         if (Math.abs(expect - totNext) > 0.5) { recon++; if (!worst) worst = DB.skus[i].sku + ' wk ' + iso(a); }
         prev = next;
@@ -726,6 +770,7 @@
       else if (L.j >= 0 && !A[L.j].is_consignment) lotBad++;           // outright accounts hold no stock of ours
     }));
     add('lots', lotBad, DB.lots.reduce((x, l) => x + l.length, 0));
+    add('wh_flow', whBad, pairs, whWorst);                                // CR-03 (10)
 
     const ok = checks.every(c => c.ok);
     return { ok, checks, snapshot: iso(DB.snapDn), weeks: DB.nWeeks };
@@ -737,7 +782,7 @@
     const out = [{ id: 'kpi_vs_table', ok: Math.abs(sum - M.kpi.stockValue) < 1 }];
     if (M.waterfall) {
       const w = M.waterfall;
-      out.push({ id: 'waterfall', ok: Math.abs(w.openV + w.poV + w.cnGoodV - w.soV - w.woV + w.adjV - w.closeV) < 1 && Math.abs(w.closeV - M.kpi.stockValue) < 1 });
+      out.push({ id: 'waterfall', ok: Math.abs(w.openV + w.poV + w.cnGoodV - w.soV - w.woV - (w.ooV || 0) + w.adjV - w.closeV) < 1 && Math.abs(w.closeV - M.kpi.stockValue) < 1 });   // CR-03: − other_out
     }
     const n = STATUS_ORDER.reduce((x, k) => x + M.statusCount[k], 0);
     out.push({ id: 'status_count', ok: n === M.rows.length });
@@ -1094,6 +1139,7 @@
         const pa = pairAcc.get(j);
         pairs.push({ i, j, sku: r.sku, name: r.name, brand: r.brand, cost: c, acc: A[j].name, accId: A[j].account_id, channel: A[j].channel, consignment: A[j].is_consignment,
           quota: q, expected: exp, fit, cls, si: pf.si, so: pf.so, quotaPeriod: qp, ach: qp > 0 ? pf.si / qp * 100 : null, st, rem: r.cons[j], coverage, skuStatus: r.status,
+          achMtd: (() => { const fm = monthFlows(DB, i, oneMask(nA, j), cur, as), qm = q * fm.days / dimCur; return qm > 0 ? fm.si / qm * 100 : null; })(),   // CR-01 F1
           mape: pa && pa.a > 0 ? pa.abs / pa.a * 100 : null, bias: pa && pa.a > 0 ? (pa.q - pa.a) / pa.a * 100 : null });
       }
     }
@@ -1103,6 +1149,17 @@
         fillRate: k.fillQ > 0 ? k.fillSI / k.fillQ * 100 : null, shortSupply: k.shortSupply, shortOrder: k.shortOrder, constrained: k.constrained } };
   }
   /** Quota Achievement of a period only (for the report's "previous period" column). */
+  /** CR-01 F1: Quota Achievement month-to-date at AS OF — the calendar month of AS OF, Sales In prorated by day, quota spread by day
+      (the same numbers as the MTD point of the monthly series). The weekly figure swings because MT delivers every two weeks. */
+  function achMtd(DB, rows, mask, as) {   // CR-01 F1
+    const m0 = monthStart(as), dim = daysInMonth(as); let si = 0, q = 0;
+    for (const r of rows) {
+      const fl = monthFlows(DB, r.i, mask, m0, as), arr = DB.quota[r.i].get(monthKey(m0));
+      let qq = 0; if (arr) for (let j = 0; j < arr.length; j++) if (mask[j]) qq += arr[j];
+      si += fl.si; q += qq * fl.days / dim;
+    }
+    return q > 0 ? si / q * 100 : null;
+  }
   function quotaAchievement(DB, rows, mask, a, b) {
     let si = 0, q = 0;
     for (const r of rows) { si += flowsSku(DB, r.i, a, b, mask, 1).si; q += quotaDays(DB, r.i, mask, a, b); }
@@ -1118,8 +1175,8 @@
     const I = inboundOf(DB, M);
     const Mp = M.rowsPrev ? Object.assign({}, M, { asDn: M.periodPrev.p1, rows: M.rowsPrev, period: Object.assign({}, M.periodPrev, { view: M.period.view }) }) : null;
     const Ip = Mp ? inboundOf(DB, Mp) : null;
-    const ach = quotaAchievement(DB, M.rows, M.mask, M.period.p0, M.period.p1);
-    const achP = M.rowsPrev ? quotaAchievement(DB, M.rowsPrev, M.mask, M.periodPrev.p0, M.periodPrev.p1) : null;
+    const ach = achMtd(DB, M.rows, M.mask, as);                       // CR-01 F1: MTD …
+    const achP = achMtd(DB, M.rows, M.mask, addMonths(as, -1));       // CR-01 F1: … vs MTD at the same day of the previous month
     const kpis = [
       { key: 'k_stock_value', cur: k.stockValue, prev: p.stockValue, kind: 'money', pol: 'none' },
       { key: 'k_doc', cur: k.doc, prev: p.doc, kind: 'days', pol: 'down' },
@@ -1147,8 +1204,22 @@
     };
   }
 
+  /** CR-03 R1: weeks the account's sell-out data ends before AS OF (0 = up to date). */
+  function staleWeeks(DB, j, asDn) { return DB.rrEndA ? Math.max(0, clamp(DB.wk(asDn), 0, DB.nWeeks) - DB.rrEndA[j]) : 0; }
+  /** CR-03 R2: other_out in [a, b) for the rows / account mask (WH issues × the row's WH share), by type. */
+  function otherOutOf(DB, rows, mask, a, b) {
+    const out = { qty: 0, value: 0, byType: {}, n: 0 };
+    for (const r of rows) for (const x of (DB.oo && DB.oo[r.i]) || []) {
+      if (x.dn < a || x.dn >= b || (x.j >= 0 && !mask[x.j])) continue;
+      const q = x.qty * (x.j < 0 ? (r.share ?? 1) : 1), t = out.byType[x.type] || (out.byType[x.type] = { qty: 0, value: 0, n: 0 });
+      t.qty += q; t.value += q * r.cost; t.n++; out.qty += q; out.value += q * r.cost; out.n++;
+    }
+    return out;
+  }
+
   global.Calc = {
-    replenList, projWeekly, monthFlows, quotaDays, quotaOf, quotaAchievement, reportOf,
+    staleWeeks, otherOutOf,   // CR-03
+    replenList, projWeekly, monthFlows, quotaDays, quotaOf, quotaAchievement, achMtd, reportOf,   // CR-01 F1: + achMtd
     DEFAULT_SETTINGS, STATUS_ORDER, DAY, AGING,
     expiryLots, agingOf, expiryHeat, consignmentOf, periodsBack, consignSeries, poStatusAt, cnStatusAt, inboundOf, eventsByDay, bestOutlet,
     dn, iso, monday, addMonths, monthKey, monthStart, daysInMonth, firstMondayOnOrAfter,

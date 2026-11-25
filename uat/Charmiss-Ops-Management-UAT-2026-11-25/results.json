@@ -1,0 +1,1032 @@
+[
+ {
+  "suite": "Anchor / selfCheck (CR-01 2.3)",
+  "id": "SUP-ANCHOR",
+  "profile": "director",
+  "page": "supOverview",
+  "title": "ตัวเลข Anchor ทุกค่า + selfCheck 1–5, 7–9 + modelCheck",
+  "expected": "เท่ากับ SCM v3.3 ทุกค่า · PASS ทุกข้อ",
+  "status": "PASS",
+  "actual": "{\"stockValue\":50091183,\"whV\":39518371,\"consV\":10572812,\"units\":\"514864/136418/651282\",\"doc\":73,\"sellThrough\":17.8,\"status\":\"7/2/9/98/4/+7\",\"risk3M\":\"547597/4489\",\"recall\":\"519974/11/7194\",\"quotaFit\":\"92/107/116\",\"mape\":13.5,\"bias\":-4.2,\"fill\":93.1,\"achMTD\":94.1} · refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS"
+ },
+ {
+  "suite": "เมนู Supply ตามสิทธิ์ (7.3)",
+  "id": "SUP-MENU-director",
+  "profile": "director",
+  "page": "sidebar",
+  "title": "เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ",
+  "expected": "Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Review",
+  "status": "PASS",
+  "actual": "Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Review · refused=true"
+ },
+ {
+  "suite": "เมนู Supply ตามสิทธิ์ (7.3)",
+  "id": "SUP-MENU-mgr-mt",
+  "profile": "mgr-mt",
+  "page": "sidebar",
+  "title": "เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ",
+  "expected": "Overview,Stock,Expiry,Consign,Calendar,Quota,Proposals,Review",
+  "status": "PASS",
+  "actual": "Overview,Stock,Expiry,Consign,Calendar,Quota,Proposals,Review · refused=true"
+ },
+ {
+  "suite": "เมนู Supply ตามสิทธิ์ (7.3)",
+  "id": "SUP-MENU-mgr-tt",
+  "profile": "mgr-tt",
+  "page": "sidebar",
+  "title": "เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ",
+  "expected": "Overview,Stock,Expiry,Calendar,Quota,Proposals,Review",
+  "status": "PASS",
+  "actual": "Overview,Stock,Expiry,Calendar,Quota,Proposals,Review · refused=true"
+ },
+ {
+  "suite": "เมนู Supply ตามสิทธิ์ (7.3)",
+  "id": "SUP-MENU-mgr-ecom",
+  "profile": "mgr-ecom",
+  "page": "sidebar",
+  "title": "เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ",
+  "expected": "Overview,Stock,Expiry,Calendar,Quota,Proposals,Review",
+  "status": "PASS",
+  "actual": "Overview,Stock,Expiry,Calendar,Quota,Proposals,Review · refused=true"
+ },
+ {
+  "suite": "เมนู Supply ตามสิทธิ์ (7.3)",
+  "id": "SUP-MENU-sa-mt",
+  "profile": "sa-mt",
+  "page": "sidebar",
+  "title": "เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ",
+  "expected": "(ไม่มี)",
+  "status": "PASS",
+  "actual": "(ไม่มี) · refused=true"
+ },
+ {
+  "suite": "เมนู Supply ตามสิทธิ์ (7.3)",
+  "id": "SUP-MENU-sa-tt",
+  "profile": "sa-tt",
+  "page": "sidebar",
+  "title": "เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ",
+  "expected": "(ไม่มี)",
+  "status": "PASS",
+  "actual": "(ไม่มี) · refused=true"
+ },
+ {
+  "suite": "เมนู Supply ตามสิทธิ์ (7.3)",
+  "id": "SUP-MENU-sa-ecom",
+  "profile": "sa-ecom",
+  "page": "sidebar",
+  "title": "เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ",
+  "expected": "(ไม่มี)",
+  "status": "PASS",
+  "actual": "(ไม่มี) · refused=true"
+ },
+ {
+  "suite": "เมนู Supply ตามสิทธิ์ (7.3)",
+  "id": "SUP-MENU-admin",
+  "profile": "admin",
+  "page": "sidebar",
+  "title": "เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ",
+  "expected": "Setup",
+  "status": "PASS",
+  "actual": "Setup · refused=true"
+ },
+ {
+  "suite": "เมนู Supply ตามสิทธิ์ (7.3)",
+  "id": "SUP-MENU-finance",
+  "profile": "finance",
+  "page": "sidebar",
+  "title": "เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ",
+  "expected": "Calendar,Review",
+  "status": "PASS",
+  "actual": "Calendar,Review · refused=true"
+ },
+ {
+  "suite": "เมนู Supply ตามสิทธิ์ (7.3)",
+  "id": "SUP-MENU-warehouse",
+  "profile": "warehouse",
+  "page": "sidebar",
+  "title": "เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ",
+  "expected": "Expiry,Calendar",
+  "status": "PASS",
+  "actual": "Expiry,Calendar · refused=true"
+ },
+ {
+  "suite": "เมนู Supply ตามสิทธิ์ (7.3)",
+  "id": "SUP-MENU-planner",
+  "profile": "planner",
+  "page": "sidebar",
+  "title": "เมนู Supply ที่เห็น + ลิงก์ตรงหน้าที่ไม่มีสิทธิ์ถูกปฏิเสธ",
+  "expected": "Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Review,Setup",
+  "status": "PASS",
+  "actual": "Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Review,Setup · refused=true"
+ },
+ {
+  "suite": "NOLEAK ขอบเขตฝ่าย",
+  "id": "SUP-NOLEAK-mgr-mt (ก่อนมีข้อเสนอ)",
+  "profile": "mgr-mt",
+  "page": "ทุกหน้า Supply + กราฟ + Drawer + การ์ด B4 + งานค้าง",
+  "title": "ไม่มีชื่อคู่ค้า / ช่องทางของฝ่ายอื่น",
+  "expected": "ไม่พบ",
+  "status": "PASS",
+  "actual": "hits=[] (SupUAT.all 28/28)"
+ },
+ {
+  "suite": "NOLEAK ขอบเขตฝ่าย",
+  "id": "SUP-NOLEAK-mgr-tt (ก่อนมีข้อเสนอ)",
+  "profile": "mgr-tt",
+  "page": "ทุกหน้า Supply + กราฟ + Drawer + การ์ด B4 + งานค้าง",
+  "title": "ไม่มีชื่อคู่ค้า / ช่องทางของฝ่ายอื่น",
+  "expected": "ไม่พบ",
+  "status": "PASS",
+  "actual": "hits=[] (SupUAT.all 28/28)"
+ },
+ {
+  "suite": "NOLEAK ขอบเขตฝ่าย",
+  "id": "SUP-NOLEAK-mgr-ecom (ก่อนมีข้อเสนอ)",
+  "profile": "mgr-ecom",
+  "page": "ทุกหน้า Supply + กราฟ + Drawer + การ์ด B4 + งานค้าง",
+  "title": "ไม่มีชื่อคู่ค้า / ช่องทางของฝ่ายอื่น",
+  "expected": "ไม่พบ",
+  "status": "PASS",
+  "actual": "hits=[] (SupUAT.all 28/28)"
+ },
+ {
+  "suite": "NOLEAK ขอบเขตฝ่าย",
+  "id": "SUP-NOLEAK-mgr-mt (หลังมีข้อเสนอ Phase C)",
+  "profile": "mgr-mt",
+  "page": "ทุกหน้า Supply + ข้อเสนอ + การ์ด B4 + งานค้าง SPR",
+  "title": "ไม่มีชื่อคู่ค้า / ช่องทางของฝ่ายอื่น",
+  "expected": "ไม่พบ",
+  "status": "PASS",
+  "actual": "lock=MT · hits=[]"
+ },
+ {
+  "suite": "NOLEAK ขอบเขตฝ่าย",
+  "id": "SUP-NOLEAK-mgr-tt (หลังมีข้อเสนอ Phase C)",
+  "profile": "mgr-tt",
+  "page": "ทุกหน้า Supply + ข้อเสนอ + การ์ด B4 + งานค้าง SPR",
+  "title": "ไม่มีชื่อคู่ค้า / ช่องทางของฝ่ายอื่น",
+  "expected": "ไม่พบ",
+  "status": "PASS",
+  "actual": "lock=TT · hits=[]"
+ },
+ {
+  "suite": "NOLEAK ขอบเขตฝ่าย",
+  "id": "SUP-NOLEAK-mgr-ecom (หลังมีข้อเสนอ Phase C)",
+  "profile": "mgr-ecom",
+  "page": "ทุกหน้า Supply + ข้อเสนอ + การ์ด B4 + งานค้าง SPR",
+  "title": "ไม่มีชื่อคู่ค้า / ช่องทางของฝ่ายอื่น",
+  "expected": "ไม่พบ",
+  "status": "PASS",
+  "actual": "lock=ECOM · hits=[]"
+ },
+ {
+  "suite": "ธีม สว่าง / มืด",
+  "id": "SUP-THEME-light",
+  "profile": "planner",
+  "page": "ทุกหน้า Supply",
+  "title": "เปิดทุกหน้า Supply ในธีม light",
+  "expected": "ไม่มี Error",
+  "status": "PASS",
+  "actual": "errors=[]"
+ },
+ {
+  "suite": "ธีม สว่าง / มืด",
+  "id": "SUP-THEME-dark",
+  "profile": "planner",
+  "page": "ทุกหน้า Supply",
+  "title": "เปิดทุกหน้า Supply ในธีม dark",
+  "expected": "ไม่มี Error",
+  "status": "PASS",
+  "actual": "errors=[]"
+ },
+ {
+  "suite": "OPS-GATE เทียบ Ops v13 (18 หน้า)",
+  "id": "OPS-GATE-director",
+  "profile": "director",
+  "page": "18 หน้า Ops",
+  "title": "หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN",
+  "expected": "ปฏิเสธ: (ไม่มี)",
+  "status": "PASS",
+  "actual": "ปฏิเสธ: (ไม่มี) · broken=[]"
+ },
+ {
+  "suite": "OPS-GATE เทียบ Ops v13 (18 หน้า)",
+  "id": "OPS-GATE-mgr-mt",
+  "profile": "mgr-mt",
+  "page": "18 หน้า Ops",
+  "title": "หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN",
+  "expected": "ปฏิเสธ: ecommerce,stockoverview",
+  "status": "PASS",
+  "actual": "ปฏิเสธ: ecommerce,stockoverview · broken=[]"
+ },
+ {
+  "suite": "OPS-GATE เทียบ Ops v13 (18 หน้า)",
+  "id": "OPS-GATE-mgr-tt",
+  "profile": "mgr-tt",
+  "page": "18 หน้า Ops",
+  "title": "หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN",
+  "expected": "ปฏิเสธ: ecommerce,stockoverview",
+  "status": "PASS",
+  "actual": "ปฏิเสธ: ecommerce,stockoverview · broken=[]"
+ },
+ {
+  "suite": "OPS-GATE เทียบ Ops v13 (18 หน้า)",
+  "id": "OPS-GATE-mgr-ecom",
+  "profile": "mgr-ecom",
+  "page": "18 หน้า Ops",
+  "title": "หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN",
+  "expected": "ปฏิเสธ: stockoverview,soRequests",
+  "status": "PASS",
+  "actual": "ปฏิเสธ: stockoverview,soRequests · broken=[]"
+ },
+ {
+  "suite": "OPS-GATE เทียบ Ops v13 (18 หน้า)",
+  "id": "OPS-GATE-sa-mt",
+  "profile": "sa-mt",
+  "page": "18 หน้า Ops",
+  "title": "หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN",
+  "expected": "ปฏิเสธ: ecommerce,stockoverview",
+  "status": "PASS",
+  "actual": "ปฏิเสธ: ecommerce,stockoverview · broken=[]"
+ },
+ {
+  "suite": "OPS-GATE เทียบ Ops v13 (18 หน้า)",
+  "id": "OPS-GATE-sa-tt",
+  "profile": "sa-tt",
+  "page": "18 หน้า Ops",
+  "title": "หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN",
+  "expected": "ปฏิเสธ: ecommerce,stockoverview",
+  "status": "PASS",
+  "actual": "ปฏิเสธ: ecommerce,stockoverview · broken=[]"
+ },
+ {
+  "suite": "OPS-GATE เทียบ Ops v13 (18 หน้า)",
+  "id": "OPS-GATE-sa-ecom",
+  "profile": "sa-ecom",
+  "page": "18 หน้า Ops",
+  "title": "หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN",
+  "expected": "ปฏิเสธ: stockoverview,soRequests",
+  "status": "PASS",
+  "actual": "ปฏิเสธ: stockoverview,soRequests · broken=[]"
+ },
+ {
+  "suite": "OPS-GATE เทียบ Ops v13 (18 หน้า)",
+  "id": "OPS-GATE-admin",
+  "profile": "admin",
+  "page": "18 หน้า Ops",
+  "title": "หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN",
+  "expected": "ปฏิเสธ: (ไม่มี)",
+  "status": "PASS",
+  "actual": "ปฏิเสธ: (ไม่มี) · broken=[]"
+ },
+ {
+  "suite": "OPS-GATE เทียบ Ops v13 (18 หน้า)",
+  "id": "OPS-GATE-finance",
+  "profile": "finance",
+  "page": "18 หน้า Ops",
+  "title": "หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN",
+  "expected": "ปฏิเสธ: ecommerce,customers",
+  "status": "PASS",
+  "actual": "ปฏิเสธ: ecommerce,customers · broken=[]"
+ },
+ {
+  "suite": "OPS-GATE เทียบ Ops v13 (18 หน้า)",
+  "id": "OPS-GATE-warehouse",
+  "profile": "warehouse",
+  "page": "18 หน้า Ops",
+  "title": "หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN",
+  "expected": "ปฏิเสธ: ecommerce,customers,soRequests,reports",
+  "status": "PASS",
+  "actual": "ปฏิเสธ: ecommerce,customers,soRequests,reports · broken=[]"
+ },
+ {
+  "suite": "OPS-GATE เทียบ Ops v13 (18 หน้า)",
+  "id": "OPS-GATE-planner",
+  "profile": "planner",
+  "page": "18 หน้า Ops",
+  "title": "หน้า Ops เปิดได้ / ถูกปฏิเสธตรงกับ Public v13 · ไม่มี Error / undefined / NaN",
+  "expected": "ปฏิเสธ: ecommerce,customers,stockoverview,soRequests",
+  "status": "PASS",
+  "actual": "ปฏิเสธ: ecommerce,customers,stockoverview,soRequests · broken=[]"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน",
+  "id": "SUP-MOBILE-director",
+  "profile": "director",
+  "page": "ทุกหน้าที่บัญชีเปิดได้",
+  "title": "ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน",
+  "expected": "width ≤ 400 · overflow = []",
+  "status": "PASS",
+  "actual": "width=390 · overflow=[]"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน",
+  "id": "SUP-MOBILE-mgr-mt",
+  "profile": "mgr-mt",
+  "page": "ทุกหน้าที่บัญชีเปิดได้",
+  "title": "ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน",
+  "expected": "width ≤ 400 · overflow = []",
+  "status": "PASS",
+  "actual": "width=390 · overflow=[]"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน",
+  "id": "SUP-MOBILE-mgr-tt",
+  "profile": "mgr-tt",
+  "page": "ทุกหน้าที่บัญชีเปิดได้",
+  "title": "ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน",
+  "expected": "width ≤ 400 · overflow = []",
+  "status": "PASS",
+  "actual": "width=390 · overflow=[]"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน",
+  "id": "SUP-MOBILE-mgr-ecom",
+  "profile": "mgr-ecom",
+  "page": "ทุกหน้าที่บัญชีเปิดได้",
+  "title": "ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน",
+  "expected": "width ≤ 400 · overflow = []",
+  "status": "PASS",
+  "actual": "width=390 · overflow=[]"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน",
+  "id": "SUP-MOBILE-sa-mt",
+  "profile": "sa-mt",
+  "page": "ทุกหน้าที่บัญชีเปิดได้",
+  "title": "ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน",
+  "expected": "width ≤ 400 · overflow = []",
+  "status": "PASS",
+  "actual": "width=390 · overflow=[]"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน",
+  "id": "SUP-MOBILE-sa-tt",
+  "profile": "sa-tt",
+  "page": "ทุกหน้าที่บัญชีเปิดได้",
+  "title": "ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน",
+  "expected": "width ≤ 400 · overflow = []",
+  "status": "PASS",
+  "actual": "width=390 · overflow=[]"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน",
+  "id": "SUP-MOBILE-sa-ecom",
+  "profile": "sa-ecom",
+  "page": "ทุกหน้าที่บัญชีเปิดได้",
+  "title": "ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน",
+  "expected": "width ≤ 400 · overflow = []",
+  "status": "PASS",
+  "actual": "width=390 · overflow=[]"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน",
+  "id": "SUP-MOBILE-admin",
+  "profile": "admin",
+  "page": "ทุกหน้าที่บัญชีเปิดได้",
+  "title": "ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน",
+  "expected": "width ≤ 400 · overflow = []",
+  "status": "PASS",
+  "actual": "width=390 · overflow=[]"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน",
+  "id": "SUP-MOBILE-finance",
+  "profile": "finance",
+  "page": "ทุกหน้าที่บัญชีเปิดได้",
+  "title": "ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน",
+  "expected": "width ≤ 400 · overflow = []",
+  "status": "PASS",
+  "actual": "width=390 · overflow=[]"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน",
+  "id": "SUP-MOBILE-warehouse",
+  "profile": "warehouse",
+  "page": "ทุกหน้าที่บัญชีเปิดได้",
+  "title": "ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน",
+  "expected": "width ≤ 400 · overflow = []",
+  "status": "PASS",
+  "actual": "width=390 · overflow=[]"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน",
+  "id": "SUP-MOBILE-planner",
+  "profile": "planner",
+  "page": "ทุกหน้าที่บัญชีเปิดได้",
+  "title": "ทุกหน้า Ops + Supply ที่เปิดได้ ไม่มี Scroll แนวนอน",
+  "expected": "width ≤ 400 · overflow = []",
+  "status": "PASS",
+  "actual": "width=390 · overflow=[]"
+ },
+ {
+  "suite": "Phase B · Data Adapter (Flow)",
+  "id": "SUP-FEED-DELIVERED (IV, not shipped)",
+  "profile": "warehouse",
+  "page": "Ops → Supply",
+  "title": "SUP-FEED-DELIVERED (IV, not shipped)",
+  "expected": "ตาม CR-01 ข้อ 6",
+  "status": "PASS",
+  "actual": ""
+ },
+ {
+  "suite": "Phase B · Data Adapter (Flow)",
+  "id": "SUP-FEED-DELIVERED (in transit)",
+  "profile": "warehouse",
+  "page": "Ops → Supply",
+  "title": "SUP-FEED-DELIVERED (in transit)",
+  "expected": "ตาม CR-01 ข้อ 6",
+  "status": "PASS",
+  "actual": "{\"sku\":\"CM-FD-005\",\"asOf\":\"2026-11-30\",\"it\":40,\"wh\":[3084,3044],\"total\":[4354,4354],\"sc\":\"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS\"}"
+ },
+ {
+  "suite": "Phase B · Data Adapter (Flow)",
+  "id": "SUP-FEED-DELIVERED (Sales In / Remaining)",
+  "profile": "warehouse",
+  "page": "Ops → Supply",
+  "title": "SUP-FEED-DELIVERED (Sales In / Remaining)",
+  "expected": "ตาม CR-01 ข้อ 6",
+  "status": "PASS",
+  "actual": "{\"salesIn\":40,\"remaining\":[356,396],\"sc\":\"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS\"}"
+ },
+ {
+  "suite": "Phase B · Data Adapter (Flow)",
+  "id": "SUP-FEED-IDEMP",
+  "profile": "warehouse",
+  "page": "Ops → Supply",
+  "title": "SUP-FEED-IDEMP",
+  "expected": "ตาม CR-01 ข้อ 6",
+  "status": "PASS",
+  "actual": "{\"replay\":{\"ok\":true,\"already\":true}}"
+ },
+ {
+  "suite": "Phase B · Data Adapter (Flow)",
+  "id": "SUP-READONLY",
+  "profile": "warehouse",
+  "page": "Ops → Supply",
+  "title": "SUP-READONLY",
+  "expected": "ตาม CR-01 ข้อ 6",
+  "status": "PASS",
+  "actual": ""
+ },
+ {
+  "suite": "Phase B · Data Adapter (Flow)",
+  "id": "SUP-CN-COND",
+  "profile": "sa-mt/warehouse",
+  "page": "Ops → Supply",
+  "title": "SUP-CN-COND",
+  "expected": "ตาม CR-01 ข้อ 6",
+  "status": "PASS",
+  "actual": ""
+ },
+ {
+  "suite": "Phase B · Data Adapter (Flow)",
+  "id": "SUP-FLOW (CN Good → WH up, consignment down)",
+  "profile": "sa-mt/finance/warehouse",
+  "page": "Ops → Supply",
+  "title": "SUP-FLOW (CN Good → WH up, consignment down)",
+  "expected": "ตาม CR-01 ข้อ 6",
+  "status": "PASS",
+  "actual": "{\"wh\":[3084,3069],\"remaining\":[356,366],\"total\":[4354,4349]}"
+ },
+ {
+  "suite": "Phase B · Data Adapter (Flow)",
+  "id": "SUP-SC-7",
+  "profile": "sa-mt/finance/warehouse",
+  "page": "Ops → Supply",
+  "title": "SUP-SC-7",
+  "expected": "ตาม CR-01 ข้อ 6",
+  "status": "PASS",
+  "actual": "{\"n\":0,\"of\":120}"
+ },
+ {
+  "suite": "Phase B · Data Adapter (Flow)",
+  "id": "SUP-SC-8",
+  "profile": "sa-mt/finance/warehouse",
+  "page": "Ops → Supply",
+  "title": "SUP-SC-8",
+  "expected": "ตาม CR-01 ข้อ 6",
+  "status": "PASS",
+  "actual": "{\"n\":0,\"of\":1}"
+ },
+ {
+  "suite": "Phase B · Data Adapter (Flow)",
+  "id": "SUP-SC-9",
+  "profile": "sa-mt/finance/warehouse",
+  "page": "Ops → Supply",
+  "title": "SUP-SC-9",
+  "expected": "ตาม CR-01 ข้อ 6",
+  "status": "PASS",
+  "actual": "{\"n\":0,\"of\":953}"
+ },
+ {
+  "suite": "Phase B · Data Adapter (Flow)",
+  "id": "selfCheck 1–9",
+  "profile": "sa-mt/finance/warehouse",
+  "page": "Ops → Supply",
+  "title": "selfCheck 1–9",
+  "expected": "ตาม CR-01 ข้อ 6",
+  "status": "PASS",
+  "actual": "{\"checks\":\"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS\"}"
+ },
+ {
+  "suite": "Phase B · Data Adapter (Flow)",
+  "id": "SUP-ANCHOR (after the flow)",
+  "profile": "sa-mt/finance/warehouse",
+  "page": "Ops → Supply",
+  "title": "SUP-ANCHOR (after the flow)",
+  "expected": "ตาม CR-01 ข้อ 6",
+  "status": "PASS",
+  "actual": "{\"diff\":[]}"
+ },
+ {
+  "suite": "Phase C · B1–B5 / F7",
+  "id": "SUP-PROP-MERGE",
+  "profile": "planner/director/mgr-mt",
+  "page": "supProposals",
+  "title": "SUP-PROP-MERGE",
+  "expected": "ตาม CR-01 Phase C",
+  "status": "PASS",
+  "actual": ""
+ },
+ {
+  "suite": "Phase C · B1–B5 / F7",
+  "id": "SUP-PROP-SELF",
+  "profile": "planner/director/mgr-mt",
+  "page": "supProposals",
+  "title": "SUP-PROP-SELF",
+  "expected": "ตาม CR-01 Phase C",
+  "status": "PASS",
+  "actual": ""
+ },
+ {
+  "suite": "Phase C · B1–B5 / F7",
+  "id": "SUP-PROP-REJECT",
+  "profile": "planner/director/mgr-mt",
+  "page": "supProposals",
+  "title": "SUP-PROP-REJECT",
+  "expected": "ตาม CR-01 Phase C",
+  "status": "PASS",
+  "actual": ""
+ },
+ {
+  "suite": "Phase C · B1–B5 / F7",
+  "id": "SUP-PROP-recall",
+  "profile": "planner/director/mgr-mt",
+  "page": "supProposals",
+  "title": "SUP-PROP-recall",
+  "expected": "ตาม CR-01 Phase C",
+  "status": "PASS",
+  "actual": ""
+ },
+ {
+  "suite": "Phase C · B1–B5 / F7",
+  "id": "SUP-PROP-quota (draft, not in this month)",
+  "profile": "planner/director/mgr-mt",
+  "page": "supProposals",
+  "title": "SUP-PROP-quota (draft, not in this month)",
+  "expected": "ตาม CR-01 Phase C",
+  "status": "PASS",
+  "actual": ""
+ },
+ {
+  "suite": "Phase C · B1–B5 / F7",
+  "id": "SUP-PROP-po (Planned)",
+  "profile": "planner/director/mgr-mt",
+  "page": "supProposals",
+  "title": "SUP-PROP-po (Planned)",
+  "expected": "ตาม CR-01 Phase C",
+  "status": "PASS",
+  "actual": ""
+ },
+ {
+  "suite": "Phase C · B1–B5 / F7",
+  "id": "SUP-PROP-downstream",
+  "profile": "planner/director/mgr-mt",
+  "page": "supProposals",
+  "title": "SUP-PROP-downstream",
+  "expected": "ตาม CR-01 Phase C",
+  "status": "PASS",
+  "actual": "{\"dec\":600}"
+ },
+ {
+  "suite": "Phase C · B1–B5 / F7",
+  "id": "SUP-ETA",
+  "profile": "planner/director/mgr-mt",
+  "page": "supCalendar",
+  "title": "SUP-ETA",
+  "expected": "ตาม CR-01 Phase C",
+  "status": "PASS",
+  "actual": "{\"history\":2}"
+ },
+ {
+  "suite": "Phase C · B1–B5 / F7",
+  "id": "SUP-ATP (Planned ignored · Confirmed / Shipped counted · ETA moves the date)",
+  "profile": "planner/director/mgr-mt",
+  "page": "SO form / order",
+  "title": "SUP-ATP (Planned ignored · Confirmed / Shipped counted · ETA moves the date)",
+  "expected": "ตาม CR-01 Phase C",
+  "status": "PASS",
+  "actual": "{\"atp0\":{\"none\":true,\"base\":161},\"atp1\":\"2026-12-15\",\"atp3\":\"2026-12-25\"}"
+ },
+ {
+  "suite": "Phase C · B1–B5 / F7",
+  "id": "SUP-ATP-MT",
+  "profile": "sa-mt",
+  "page": "SO form / order",
+  "title": "SUP-ATP-MT",
+  "expected": "ตาม CR-01 Phase C",
+  "status": "PASS",
+  "actual": "{\"order\":\"OR-UAT-MT42382\"}"
+ },
+ {
+  "suite": "Phase C · B1–B5 / F7",
+  "id": "SUP-ATP-TT",
+  "profile": "sa-tt",
+  "page": "SO form / order",
+  "title": "SUP-ATP-TT",
+  "expected": "ตาม CR-01 Phase C",
+  "status": "PASS",
+  "actual": "{\"order\":\"OR-UAT-TT43017\"}"
+ },
+ {
+  "suite": "Phase C · B1–B5 / F7",
+  "id": "SUP-ATP-EC",
+  "profile": "sa-ecom",
+  "page": "SO form / order",
+  "title": "SUP-ATP-EC",
+  "expected": "ตาม CR-01 Phase C",
+  "status": "PASS",
+  "actual": "{\"order\":\"OR-UAT-EC43598\"}"
+ },
+ {
+  "suite": "Phase C · B1–B5 / F7",
+  "id": "SUP-B2-MATCH",
+  "profile": "mgr-mt",
+  "page": "supQuota",
+  "title": "SUP-B2-MATCH",
+  "expected": "ตาม CR-01 Phase C",
+  "status": "PASS",
+  "actual": "{\"b2\":{\"fit\":72.83783783783785,\"mape\":22.646657571623464,\"cov3\":10.938285353486245},\"page\":{\"fit\":72.83783783783785,\"mape\":22.646657571623464,\"cov3\":10.938285353486245}}"
+ },
+ {
+  "suite": "Phase C · B1–B5 / F7",
+  "id": "SUP-B4",
+  "profile": "mgr-mt",
+  "page": "overview",
+  "title": "SUP-B4",
+  "expected": "ตาม CR-01 Phase C",
+  "status": "PASS",
+  "actual": ""
+ },
+ {
+  "suite": "Phase C · B1–B5 / F7",
+  "id": "SUP-B5",
+  "profile": "planner/director/mgr-mt",
+  "page": "supReview",
+  "title": "SUP-B5",
+  "expected": "ตาม CR-01 Phase C",
+  "status": "PASS",
+  "actual": ""
+ },
+ {
+  "suite": "Phase C · B1–B5 / F7",
+  "id": "selfCheck 1–9 (after Phase C)",
+  "profile": "planner/director/mgr-mt",
+  "page": "supProposals",
+  "title": "selfCheck 1–9 (after Phase C)",
+  "expected": "ตาม CR-01 Phase C",
+  "status": "PASS",
+  "actual": "{\"checks\":[]}"
+ },
+ {
+  "suite": "Phase C · B1–B5 / F7",
+  "id": "SUP-ANCHOR (after Phase C)",
+  "profile": "planner/director/mgr-mt",
+  "page": "supProposals",
+  "title": "SUP-ANCHOR (after Phase C)",
+  "expected": "ตาม CR-01 Phase C",
+  "status": "PASS",
+  "actual": "{\"diff\":[]}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (Desktop 1440px)",
+  "id": "SUP-F1-CARD",
+  "profile": "director",
+  "page": "supQuota",
+  "title": "F1 การ์ด = Achievement MTD 94.1% · Δ เทียบ MTD วันเดียวกันเดือนก่อน · บรรทัดรองสัปดาห์นี้",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"card\":\"Quota Achievement MTD | 94.1% | Sales In 180,046 / Quota 191,330 ชิ้น · สัปดาห์นี้ 48.1% | ▼ 17.7 pp | เทียบ MTD วันเดียวกันของเดือนก่อน\",\"mtd\":94.1,\"prevMtd\":111.77}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (Desktop 1440px)",
+  "id": "SUP-F1-TABLE (desktop)",
+  "profile": "director",
+  "page": "supQuota",
+  "title": "F1 ตาราง / การ์ด Account × SKU ใช้ MTD ต่อคู่",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"pairs\":953,\"mismatch\":0}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (Desktop 1440px)",
+  "id": "SUP-F1-REPORT",
+  "profile": "director",
+  "page": "supReview",
+  "title": "F1 Supply Review แสดง Achievement MTD",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": ""
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (Desktop 1440px)",
+  "id": "SUP-F4",
+  "profile": "director",
+  "page": "supOverview / supReview",
+  "title": "F4 Δ DOC สีเทา (flat)",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"overview\":\"<span class=\\\"delta flat\\\">▲ 3 วัน</span>\",\"review\":\"<span class=\\\"delta flat\\\">▲ 3 วัน</span>\"}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (Desktop 1440px)",
+  "id": "SUP-F2 (desktop)",
+  "profile": "director",
+  "page": "supConsign",
+  "title": "F2 Sales In vs Out ต่อคู่ค้า: แนวนอน < 768px / แนวตั้ง ≥ 768px",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"indexAxis\":\"x\",\"labels\":7}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (Desktop 1440px)",
+  "id": "SUP-F3 (desktop)",
+  "profile": "director",
+  "page": "supConsign",
+  "title": "F3 การ์ด 20 + โหลดเพิ่ม (ลำดับเดิม · กรองแล้วเริ่ม 20) / Desktop Pager",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"rows\":50}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (Desktop 1440px)",
+  "id": "SUP-F8-SHOW",
+  "profile": "director",
+  "page": "supConsign",
+  "title": "F8 แสดงผลนับ 52 คู่ คู่กับค่าคำนวณ",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"counts\":52,\"shown\":50,\"summary\":\"นับแล้ว 52 คู่ · ตรง 36 · ตรวจ 11 · ต่างมาก 5 · ส่วนต่างรวม -423 ชิ้น (−฿30,170)\"}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (Desktop 1440px)",
+  "id": "SUP-F8-DIFF (= counted − calculated; calculation untouched)",
+  "profile": "director",
+  "page": "supConsign",
+  "title": "F8 ส่วนต่าง = นับ − คำนวณ · ค่าคำนวณไม่ถูกเขียนทับ",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"diff\":-423,\"calcAtCount\":18826,\"lots\":18826}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (Desktop 1440px)",
+  "id": "SUP-F8-SCOPE (after AS OF / other channel → hidden)",
+  "profile": "director",
+  "page": "supConsign",
+  "title": "F8 ผลนับหลัง AS OF / นอกช่องทาง → ไม่แสดง",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": ""
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (Desktop 1440px)",
+  "id": "SUP-F8-IMPORT (schema)",
+  "profile": "director",
+  "page": "supSetup",
+  "title": "F8 Import consign_count: CSV ถูก = ผ่าน · ผิด = แจ้ง Error / Ref ไม่รู้จัก",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"bad\":[\"qty:negative:-3\",\"date:not_date:22/13/2026\"]}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (Desktop 1440px)",
+  "id": "SUP-NOLEAK-sa-mt",
+  "profile": "sa-mt",
+  "page": "overview / #/supply/*",
+  "title": "Sales Admin: ไม่มีเมนู / ลิงก์ตรง / การ์ด Supply",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"refused\":true,\"viaUrl\":true}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (Desktop 1440px)",
+  "id": "SUP-NOLEAK-sa-tt",
+  "profile": "sa-tt",
+  "page": "overview / #/supply/*",
+  "title": "Sales Admin: ไม่มีเมนู / ลิงก์ตรง / การ์ด Supply",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"refused\":true,\"viaUrl\":true}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (Desktop 1440px)",
+  "id": "SUP-NOLEAK-sa-ecom",
+  "profile": "sa-ecom",
+  "page": "overview / #/supply/*",
+  "title": "Sales Admin: ไม่มีเมนู / ลิงก์ตรง / การ์ด Supply",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"refused\":true,\"viaUrl\":true}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (Desktop 1440px)",
+  "id": "SUP-NOTAG",
+  "profile": "planner",
+  "page": "ทุกหน้า Supply + Ops 3 หน้า",
+  "title": "ไม่มีป้ายภายใน \"CR-01\" บนหน้าจอ",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"pages\":[]}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (Desktop 1440px)",
+  "id": "console errors (Phase D)",
+  "profile": "director",
+  "page": "ทุกหน้าที่เปิด",
+  "title": "ไม่มี Console error",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"errors\":[]}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (Desktop 1440px)",
+  "id": "SUP-ANCHOR (Phase D)",
+  "profile": "director",
+  "page": "supOverview",
+  "title": "Anchor + selfCheck หลัง Phase D",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"diff\":[],\"selfCheck\":\"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS\"}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "id": "SUP-F1-CARD",
+  "profile": "director",
+  "page": "supQuota",
+  "title": "F1 การ์ด = Achievement MTD 94.1% · Δ เทียบ MTD วันเดียวกันเดือนก่อน · บรรทัดรองสัปดาห์นี้",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"card\":\"Quota Achievement MTD | 94.1% | Sales In 180,046 / Quota 191,330 ชิ้น · สัปดาห์นี้ 48.1% | ▼ 17.7 pp | เทียบ MTD วันเดียวกันของเดือนก่อน\",\"mtd\":94.1,\"prevMtd\":111.77}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "id": "SUP-F1-TABLE (mobile)",
+  "profile": "director",
+  "page": "supQuota",
+  "title": "F1 ตาราง / การ์ด Account × SKU ใช้ MTD ต่อคู่",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"pairs\":953,\"mismatch\":0}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "id": "SUP-F1-REPORT",
+  "profile": "director",
+  "page": "supReview",
+  "title": "F1 Supply Review แสดง Achievement MTD",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": ""
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "id": "SUP-F4",
+  "profile": "director",
+  "page": "supOverview / supReview",
+  "title": "F4 Δ DOC สีเทา (flat)",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"overview\":\"<span class=\\\"delta flat\\\">▲ 3 วัน</span>\",\"review\":\"<span class=\\\"delta flat\\\">▲ 3 วัน</span>\"}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "id": "SUP-F2 (mobile)",
+  "profile": "director",
+  "page": "supConsign",
+  "title": "F2 Sales In vs Out ต่อคู่ค้า: แนวนอน < 768px / แนวตั้ง ≥ 768px",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"indexAxis\":\"y\",\"labels\":7}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "id": "SUP-F3 (mobile)",
+  "profile": "director",
+  "page": "supConsign",
+  "title": "F3 การ์ด 20 + โหลดเพิ่ม (ลำดับเดิม · กรองแล้วเริ่ม 20) / Desktop Pager",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"first\":20,\"afterMore\":40,\"filtered\":20}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "id": "SUP-F8-SHOW",
+  "profile": "director",
+  "page": "supConsign",
+  "title": "F8 แสดงผลนับ 52 คู่ คู่กับค่าคำนวณ",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"counts\":52,\"shown\":20,\"summary\":\"นับแล้ว 52 คู่ · ตรง 36 · ตรวจ 11 · ต่างมาก 5 · ส่วนต่างรวม -423 ชิ้น (−฿30,170)\"}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "id": "SUP-F8-DIFF (= counted − calculated; calculation untouched)",
+  "profile": "director",
+  "page": "supConsign",
+  "title": "F8 ส่วนต่าง = นับ − คำนวณ · ค่าคำนวณไม่ถูกเขียนทับ",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"diff\":-423,\"calcAtCount\":18826,\"lots\":18826}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "id": "SUP-F8-SCOPE (after AS OF / other channel → hidden)",
+  "profile": "director",
+  "page": "supConsign",
+  "title": "F8 ผลนับหลัง AS OF / นอกช่องทาง → ไม่แสดง",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": ""
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "id": "SUP-F8-IMPORT (schema)",
+  "profile": "director",
+  "page": "supSetup",
+  "title": "F8 Import consign_count: CSV ถูก = ผ่าน · ผิด = แจ้ง Error / Ref ไม่รู้จัก",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"bad\":[\"qty:negative:-3\",\"date:not_date:22/13/2026\"]}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "id": "SUP-NOLEAK-sa-mt",
+  "profile": "sa-mt",
+  "page": "overview / #/supply/*",
+  "title": "Sales Admin: ไม่มีเมนู / ลิงก์ตรง / การ์ด Supply",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"refused\":true,\"viaUrl\":true}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "id": "SUP-NOLEAK-sa-tt",
+  "profile": "sa-tt",
+  "page": "overview / #/supply/*",
+  "title": "Sales Admin: ไม่มีเมนู / ลิงก์ตรง / การ์ด Supply",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"refused\":true,\"viaUrl\":true}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "id": "SUP-NOLEAK-sa-ecom",
+  "profile": "sa-ecom",
+  "page": "overview / #/supply/*",
+  "title": "Sales Admin: ไม่มีเมนู / ลิงก์ตรง / การ์ด Supply",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"refused\":true,\"viaUrl\":true}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "id": "SUP-NOTAG",
+  "profile": "planner",
+  "page": "ทุกหน้า Supply + Ops 3 หน้า",
+  "title": "ไม่มีป้ายภายใน \"CR-01\" บนหน้าจอ",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"pages\":[]}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "id": "console errors (Phase D)",
+  "profile": "director",
+  "page": "ทุกหน้าที่เปิด",
+  "title": "ไม่มี Console error",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"errors\":[]}"
+ },
+ {
+  "suite": "Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "id": "SUP-ANCHOR (Phase D)",
+  "profile": "director",
+  "page": "supOverview",
+  "title": "Anchor + selfCheck หลัง Phase D",
+  "expected": "PASS",
+  "status": "PASS",
+  "actual": "{\"diff\":[],\"selfCheck\":\"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS\"}"
+ }
+]

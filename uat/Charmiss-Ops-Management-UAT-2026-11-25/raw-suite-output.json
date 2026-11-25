@@ -1,0 +1,652 @@
+{
+ "detail": {
+  "a": {
+   "id": "SUP-ANCHOR",
+   "pass": true,
+   "selfCheck": "refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS",
+   "diff": [],
+   "got": {
+    "stockValue": 50091183,
+    "whV": 39518371,
+    "consV": 10572812,
+    "units": "514864/136418/651282",
+    "doc": 73,
+    "sellThrough": 17.8,
+    "status": "7/2/9/98/4/+7",
+    "risk3M": "547597/4489",
+    "recall": "519974/11/7194",
+    "quotaFit": "92/107/116",
+    "mape": 13.5,
+    "bias": -4.2,
+    "fill": 93.1,
+    "achMTD": 94.1
+   }
+  },
+  "m": [
+   {
+    "id": "SUP-MENU-director",
+    "pass": true,
+    "menu": "Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Review",
+    "refused": true
+   },
+   {
+    "id": "SUP-MENU-mgr-mt",
+    "pass": true,
+    "menu": "Overview,Stock,Expiry,Consign,Calendar,Quota,Proposals,Review",
+    "refused": true
+   },
+   {
+    "id": "SUP-MENU-mgr-tt",
+    "pass": true,
+    "menu": "Overview,Stock,Expiry,Calendar,Quota,Proposals,Review",
+    "refused": true
+   },
+   {
+    "id": "SUP-MENU-mgr-ecom",
+    "pass": true,
+    "menu": "Overview,Stock,Expiry,Calendar,Quota,Proposals,Review",
+    "refused": true
+   },
+   {
+    "id": "SUP-MENU-sa-mt",
+    "pass": true,
+    "menu": "",
+    "refused": true
+   },
+   {
+    "id": "SUP-MENU-sa-tt",
+    "pass": true,
+    "menu": "",
+    "refused": true
+   },
+   {
+    "id": "SUP-MENU-sa-ecom",
+    "pass": true,
+    "menu": "",
+    "refused": true
+   },
+   {
+    "id": "SUP-MENU-admin",
+    "pass": true,
+    "menu": "Setup",
+    "refused": true
+   },
+   {
+    "id": "SUP-MENU-finance",
+    "pass": true,
+    "menu": "Calendar,Review",
+    "refused": true
+   },
+   {
+    "id": "SUP-MENU-warehouse",
+    "pass": true,
+    "menu": "Expiry,Calendar",
+    "refused": true
+   },
+   {
+    "id": "SUP-MENU-planner",
+    "pass": true,
+    "menu": "Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Review,Setup",
+    "refused": true
+   }
+  ],
+  "g": [
+   {
+    "id": "OPS-GATE-director",
+    "pass": true,
+    "denied": "",
+    "broken": []
+   },
+   {
+    "id": "OPS-GATE-mgr-mt",
+    "pass": true,
+    "denied": "ecommerce,stockoverview",
+    "broken": []
+   },
+   {
+    "id": "OPS-GATE-mgr-tt",
+    "pass": true,
+    "denied": "ecommerce,stockoverview",
+    "broken": []
+   },
+   {
+    "id": "OPS-GATE-mgr-ecom",
+    "pass": true,
+    "denied": "stockoverview,soRequests",
+    "broken": []
+   },
+   {
+    "id": "OPS-GATE-sa-mt",
+    "pass": true,
+    "denied": "ecommerce,stockoverview",
+    "broken": []
+   },
+   {
+    "id": "OPS-GATE-sa-tt",
+    "pass": true,
+    "denied": "ecommerce,stockoverview",
+    "broken": []
+   },
+   {
+    "id": "OPS-GATE-sa-ecom",
+    "pass": true,
+    "denied": "stockoverview,soRequests",
+    "broken": []
+   },
+   {
+    "id": "OPS-GATE-admin",
+    "pass": true,
+    "denied": "",
+    "broken": []
+   },
+   {
+    "id": "OPS-GATE-finance",
+    "pass": true,
+    "denied": "ecommerce,customers",
+    "broken": []
+   },
+   {
+    "id": "OPS-GATE-warehouse",
+    "pass": true,
+    "denied": "ecommerce,customers,soRequests,reports",
+    "broken": []
+   },
+   {
+    "id": "OPS-GATE-planner",
+    "pass": true,
+    "denied": "ecommerce,customers,stockoverview,soRequests",
+    "broken": []
+   }
+  ],
+  "t": [
+   {
+    "id": "SUP-THEME-light",
+    "pass": true,
+    "errors": []
+   },
+   {
+    "id": "SUP-THEME-dark",
+    "pass": true,
+    "errors": []
+   }
+  ],
+  "errs": []
+ },
+ "flow": [
+  {
+   "id": "SUP-FEED-DELIVERED (IV, not shipped)",
+   "pass": true
+  },
+  {
+   "id": "SUP-FEED-DELIVERED (in transit)",
+   "pass": true,
+   "sku": "CM-FD-005",
+   "asOf": "2026-11-30",
+   "it": 40,
+   "wh": [
+    3084,
+    3044
+   ],
+   "total": [
+    4354,
+    4354
+   ],
+   "sc": "refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS"
+  },
+  {
+   "id": "SUP-FEED-DELIVERED (Sales In / Remaining)",
+   "pass": true,
+   "salesIn": 40,
+   "remaining": [
+    356,
+    396
+   ],
+   "sc": "refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS"
+  },
+  {
+   "id": "SUP-FEED-IDEMP",
+   "pass": true,
+   "replay": {
+    "ok": true,
+    "already": true
+   }
+  },
+  {
+   "id": "SUP-READONLY",
+   "pass": true
+  },
+  {
+   "id": "SUP-CN-COND",
+   "pass": true
+  },
+  {
+   "id": "SUP-FLOW (CN Good → WH up, consignment down)",
+   "pass": true,
+   "wh": [
+    3084,
+    3069
+   ],
+   "remaining": [
+    356,
+    366
+   ],
+   "total": [
+    4354,
+    4349
+   ]
+  },
+  {
+   "id": "SUP-SC-7",
+   "pass": true,
+   "n": 0,
+   "of": 120
+  },
+  {
+   "id": "SUP-SC-8",
+   "pass": true,
+   "n": 0,
+   "of": 1
+  },
+  {
+   "id": "SUP-SC-9",
+   "pass": true,
+   "n": 0,
+   "of": 953
+  },
+  {
+   "id": "selfCheck 1–9",
+   "pass": true,
+   "checks": "refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS"
+  },
+  {
+   "id": "SUP-ANCHOR (after the flow)",
+   "pass": true,
+   "diff": []
+  }
+ ],
+ "phaseC": [
+  {
+   "id": "SUP-PROP-MERGE",
+   "pass": true
+  },
+  {
+   "id": "SUP-PROP-SELF",
+   "pass": true
+  },
+  {
+   "id": "SUP-PROP-REJECT",
+   "pass": true
+  },
+  {
+   "id": "SUP-PROP-recall",
+   "pass": true
+  },
+  {
+   "id": "SUP-PROP-quota (draft, not in this month)",
+   "pass": true
+  },
+  {
+   "id": "SUP-PROP-po (Planned)",
+   "pass": true
+  },
+  {
+   "id": "SUP-PROP-downstream",
+   "pass": true,
+   "dec": 600
+  },
+  {
+   "id": "SUP-ETA",
+   "pass": true,
+   "history": 2
+  },
+  {
+   "id": "SUP-ATP (Planned ignored · Confirmed / Shipped counted · ETA moves the date)",
+   "pass": true,
+   "atp0": {
+    "none": true,
+    "base": 161
+   },
+   "atp1": "2026-12-15",
+   "atp3": "2026-12-25"
+  },
+  {
+   "id": "SUP-ATP-MT",
+   "pass": true,
+   "order": "OR-UAT-MT42382"
+  },
+  {
+   "id": "SUP-ATP-TT",
+   "pass": true,
+   "order": "OR-UAT-TT43017"
+  },
+  {
+   "id": "SUP-ATP-EC",
+   "pass": true,
+   "order": "OR-UAT-EC43598"
+  },
+  {
+   "id": "SUP-B2-MATCH",
+   "pass": true,
+   "b2": {
+    "fit": 72.83783783783785,
+    "mape": 22.646657571623464,
+    "cov3": 10.938285353486245
+   },
+   "page": {
+    "fit": 72.83783783783785,
+    "mape": 22.646657571623464,
+    "cov3": 10.938285353486245
+   }
+  },
+  {
+   "id": "SUP-B4",
+   "pass": true
+  },
+  {
+   "id": "SUP-B5",
+   "pass": true
+  },
+  {
+   "id": "selfCheck 1–9 (after Phase C)",
+   "pass": true,
+   "checks": []
+  },
+  {
+   "id": "SUP-ANCHOR (after Phase C)",
+   "pass": true,
+   "diff": []
+  }
+ ],
+ "noleakAfterC": [
+  {
+   "id": "SUP-NOLEAK-mgr-mt",
+   "pass": true,
+   "lock": "MT",
+   "hits": []
+  },
+  {
+   "id": "SUP-NOLEAK-mgr-tt",
+   "pass": true,
+   "lock": "TT",
+   "hits": []
+  },
+  {
+   "id": "SUP-NOLEAK-mgr-ecom",
+   "pass": true,
+   "lock": "ECOM",
+   "hits": []
+  }
+ ],
+ "phaseD_desktop": [
+  {
+   "id": "SUP-F1-CARD",
+   "pass": true,
+   "card": "Quota Achievement MTD | 94.1% | Sales In 180,046 / Quota 191,330 ชิ้น · สัปดาห์นี้ 48.1% | ▼ 17.7 pp | เทียบ MTD วันเดียวกันของเดือนก่อน",
+   "mtd": 94.1,
+   "prevMtd": 111.77
+  },
+  {
+   "id": "SUP-F1-TABLE (desktop)",
+   "pass": true,
+   "pairs": 953,
+   "mismatch": 0
+  },
+  {
+   "id": "SUP-F1-REPORT",
+   "pass": true
+  },
+  {
+   "id": "SUP-F4",
+   "pass": true,
+   "overview": "<span class=\"delta flat\">▲ 3 วัน</span>",
+   "review": "<span class=\"delta flat\">▲ 3 วัน</span>"
+  },
+  {
+   "id": "SUP-F2 (desktop)",
+   "pass": true,
+   "indexAxis": "x",
+   "labels": 7
+  },
+  {
+   "id": "SUP-F3 (desktop)",
+   "pass": true,
+   "rows": 50
+  },
+  {
+   "id": "SUP-F8-SHOW",
+   "pass": true,
+   "counts": 52,
+   "shown": 50,
+   "summary": "นับแล้ว 52 คู่ · ตรง 36 · ตรวจ 11 · ต่างมาก 5 · ส่วนต่างรวม -423 ชิ้น (−฿30,170)"
+  },
+  {
+   "id": "SUP-F8-DIFF (= counted − calculated; calculation untouched)",
+   "pass": true,
+   "diff": -423,
+   "calcAtCount": 18826,
+   "lots": 18826
+  },
+  {
+   "id": "SUP-F8-SCOPE (after AS OF / other channel → hidden)",
+   "pass": true
+  },
+  {
+   "id": "SUP-F8-IMPORT (schema)",
+   "pass": true,
+   "bad": [
+    "qty:negative:-3",
+    "date:not_date:22/13/2026"
+   ]
+  },
+  {
+   "id": "SUP-NOLEAK-sa-mt",
+   "pass": true,
+   "refused": true,
+   "viaUrl": true
+  },
+  {
+   "id": "SUP-NOLEAK-sa-tt",
+   "pass": true,
+   "refused": true,
+   "viaUrl": true
+  },
+  {
+   "id": "SUP-NOLEAK-sa-ecom",
+   "pass": true,
+   "refused": true,
+   "viaUrl": true
+  },
+  {
+   "id": "SUP-NOTAG",
+   "pass": true,
+   "pages": []
+  },
+  {
+   "id": "console errors (Phase D)",
+   "pass": true,
+   "errors": []
+  },
+  {
+   "id": "SUP-ANCHOR (Phase D)",
+   "pass": true,
+   "diff": [],
+   "selfCheck": "refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS"
+  }
+ ],
+ "mobile": {
+  "phaseD": [
+   {
+    "id": "SUP-F1-CARD",
+    "pass": true,
+    "card": "Quota Achievement MTD | 94.1% | Sales In 180,046 / Quota 191,330 ชิ้น · สัปดาห์นี้ 48.1% | ▼ 17.7 pp | เทียบ MTD วันเดียวกันของเดือนก่อน",
+    "mtd": 94.1,
+    "prevMtd": 111.77
+   },
+   {
+    "id": "SUP-F1-TABLE (mobile)",
+    "pass": true,
+    "pairs": 953,
+    "mismatch": 0
+   },
+   {
+    "id": "SUP-F1-REPORT",
+    "pass": true
+   },
+   {
+    "id": "SUP-F4",
+    "pass": true,
+    "overview": "<span class=\"delta flat\">▲ 3 วัน</span>",
+    "review": "<span class=\"delta flat\">▲ 3 วัน</span>"
+   },
+   {
+    "id": "SUP-F2 (mobile)",
+    "pass": true,
+    "indexAxis": "y",
+    "labels": 7
+   },
+   {
+    "id": "SUP-F3 (mobile)",
+    "pass": true,
+    "first": 20,
+    "afterMore": 40,
+    "filtered": 20
+   },
+   {
+    "id": "SUP-F8-SHOW",
+    "pass": true,
+    "counts": 52,
+    "shown": 20,
+    "summary": "นับแล้ว 52 คู่ · ตรง 36 · ตรวจ 11 · ต่างมาก 5 · ส่วนต่างรวม -423 ชิ้น (−฿30,170)"
+   },
+   {
+    "id": "SUP-F8-DIFF (= counted − calculated; calculation untouched)",
+    "pass": true,
+    "diff": -423,
+    "calcAtCount": 18826,
+    "lots": 18826
+   },
+   {
+    "id": "SUP-F8-SCOPE (after AS OF / other channel → hidden)",
+    "pass": true
+   },
+   {
+    "id": "SUP-F8-IMPORT (schema)",
+    "pass": true,
+    "bad": [
+     "qty:negative:-3",
+     "date:not_date:22/13/2026"
+    ]
+   },
+   {
+    "id": "SUP-NOLEAK-sa-mt",
+    "pass": true,
+    "refused": true,
+    "viaUrl": true
+   },
+   {
+    "id": "SUP-NOLEAK-sa-tt",
+    "pass": true,
+    "refused": true,
+    "viaUrl": true
+   },
+   {
+    "id": "SUP-NOLEAK-sa-ecom",
+    "pass": true,
+    "refused": true,
+    "viaUrl": true
+   },
+   {
+    "id": "SUP-NOTAG",
+    "pass": true,
+    "pages": []
+   },
+   {
+    "id": "console errors (Phase D)",
+    "pass": true,
+    "errors": []
+   },
+   {
+    "id": "SUP-ANCHOR (Phase D)",
+    "pass": true,
+    "diff": [],
+    "selfCheck": "refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wms:PASS delivered:PASS quota_ops:PASS"
+   }
+  ],
+  "mobile": [
+   {
+    "id": "SUP-MOBILE-director",
+    "pass": true,
+    "width": 390,
+    "overflow": []
+   },
+   {
+    "id": "SUP-MOBILE-mgr-mt",
+    "pass": true,
+    "width": 390,
+    "overflow": []
+   },
+   {
+    "id": "SUP-MOBILE-mgr-tt",
+    "pass": true,
+    "width": 390,
+    "overflow": []
+   },
+   {
+    "id": "SUP-MOBILE-mgr-ecom",
+    "pass": true,
+    "width": 390,
+    "overflow": []
+   },
+   {
+    "id": "SUP-MOBILE-sa-mt",
+    "pass": true,
+    "width": 390,
+    "overflow": []
+   },
+   {
+    "id": "SUP-MOBILE-sa-tt",
+    "pass": true,
+    "width": 390,
+    "overflow": []
+   },
+   {
+    "id": "SUP-MOBILE-sa-ecom",
+    "pass": true,
+    "width": 390,
+    "overflow": []
+   },
+   {
+    "id": "SUP-MOBILE-admin",
+    "pass": true,
+    "width": 390,
+    "overflow": []
+   },
+   {
+    "id": "SUP-MOBILE-finance",
+    "pass": true,
+    "width": 390,
+    "overflow": []
+   },
+   {
+    "id": "SUP-MOBILE-warehouse",
+    "pass": true,
+    "width": 390,
+    "overflow": []
+   },
+   {
+    "id": "SUP-MOBILE-planner",
+    "pass": true,
+    "width": 390,
+    "overflow": []
+   }
+  ],
+  "at": "2026-11-25T10:54:34.606Z",
+  "w": 390
+ },
+ "all_desktop": {
+  "pass": 28,
+  "of": 28,
+  "failed": [],
+  "consoleErrors": []
+ }
+}

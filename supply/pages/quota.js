@@ -22,14 +22,15 @@
       let html = Pages.pageHead(M, 'nav_quota', 'q_quota') + Pages.allocNote(M);
       if (!M.rows.length) { main.innerHTML = html + `<div class="card">${U.empty(t('empty'), t('empty_hint'), 'filter')}</div>`; return; }
       const Q = Pages.quotaData(App, ui.qWin), k = Q.kpi;
-      const achPrev = M.rowsPrev ? Calc.quotaAchievement(DB, M.rowsPrev, M.mask, M.periodPrev.p0, M.periodPrev.p1) : null;
+      // CR-01 F1: the card leads with month-to-date (the weekly figure swings with MT's two-weekly deliveries); Δ = MTD at the same day of last month
+      const achM = Calc.achMtd(DB, M.rows, M.mask, M.asDn), achMPrev = Calc.achMtd(DB, M.rows, M.mask, Calc.addMonths(M.asDn, -1));
       const vs = M.kpiPrev ? t('vs_prev', { p: t(M.period.view === 'M' ? 'prev_m' : 'prev_w') }) : t('no_prev');
       const winTxt = `${U.monthLabel(Calc.monthKey(Q.months[0]))} – ${U.monthLabel(Calc.monthKey(Q.months[Q.months.length - 1]))}`;
       const mtd = Q.monthly.find(x => x.mtd);
       const biasTxt = k.bias == null ? '—' : (k.bias > 0 ? '+' : k.bias < 0 ? '−' : '') + U.n(Math.abs(k.bias), 1) + '%';
       html += `<div class="toolbar"><span class="small muted">${t('q_window')}</span>${U.seg('qWin', [[3, t('q_win3')], [6, t('q_win6')]], ui.qWin)}<span class="small muted">${U.esc(winTxt)}</span></div>
         <div class="kpis k5">
-        ${Pages.kpiCard(t('k_ach'), t('k_ach_tip'), U.pct(k.achievement, 1), t('k_sub_ach', { si: U.n(k.si), q: U.n(k.quota) }) + (M.period.view !== 'M' && mtd && mtd.q ? ' · ' + t('k_sub_ach_mtd', { p: U.pct(mtd.si / mtd.q * 100, 1) }) : ''), Pages.delta(k.achievement, achPrev, 'pp', 'up'), vs)}
+        ${Pages.kpiCard(t('k_ach_mtd'), t('k_ach_mtd_tip'), U.pct(achM, 1), (mtd ? t('k_sub_ach', { si: U.n(mtd.si), q: U.n(mtd.q) }) : '') + (M.period.view !== 'M' ? ' · ' + t('k_sub_ach_wk', { p: U.pct(k.achievement, 1) }) : ''), Pages.delta(achM, achMPrev, 'pp', 'up'), t('vs_prev_mtd'))}
         ${Pages.kpiCard(t('k_st'), t('k_st_tip'), U.pct(M.kpi.sellThrough, 1), t('k_sub_st_q'), Pages.delta(M.kpi.sellThrough, M.kpiPrev && M.kpiPrev.sellThrough, 'pp', 'up'), vs)}
         ${Pages.kpiCard(t('k_mape'), t('k_mape_tip'), U.pct(k.mape, 1), t('k_sub_mape', { n: ui.qWin }), '', winTxt)}
         ${Pages.kpiCard(t('k_bias'), t('k_bias_tip'), biasTxt, k.bias == null ? '' : t(k.bias > 0 ? 'k_sub_bias_hi' : 'k_sub_bias_lo'), '', winTxt)}
@@ -79,7 +80,7 @@
           { k: 'left', label: t('q_left'), num: true, sum: true, get: p => (p.quota || 0) - qv(DB.quotaRes, p) - qv(DB.quotaCom, p), html: p => { const x = (p.quota || 0) - qv(DB.quotaRes, p) - qv(DB.quotaCom, p); return `<span class="${x < 0 ? 'late' : ''}">${U.n(x)}</span>`; } }] : []),
         { k: 'fit', label: 'Quota Fit', num: true, get: p => p.fit, html: p => p.fit == null ? '—' : U.pct(p.fit), xl: p => p.fit == null ? '' : Math.round(p.fit) },
         { k: 'cls', label: t('col_status'), get: p => p.cls, html: p => Pages.quotaBadge(p.cls), xl: p => t('qc_' + p.cls) },
-        { k: 'ach', label: t('k_ach'), num: true, get: p => p.ach, html: p => U.pct(p.ach), xl: p => p.ach == null ? '' : Math.round(p.ach) },
+        { k: 'ach', label: t('k_ach_mtd'), num: true, get: p => p.achMtd, html: p => U.pct(p.achMtd), xl: p => p.achMtd == null ? '' : Math.round(p.achMtd) },   // CR-01 F1: MTD (MT ships every 2 weeks)
         { k: 'st', label: 'Sell-through', num: true, get: p => p.st, html: p => p.st == null ? '—' : U.pct(p.st), xl: p => p.st == null ? '' : +p.st.toFixed(1) },
         { k: 'cov', label: t('q_cov', { h: M.h + 'M' }), num: true, get: p => p.coverage, html: p => p.coverage == null ? '—' : `<span class="${p.coverage < 100 ? 'late' : ''}">${U.pct(p.coverage)}</span>`, xl: p => p.coverage == null ? '' : Math.round(p.coverage) },
         { k: 'mape', label: 'MAPE', num: true, get: p => p.mape, html: p => U.pct(p.mape), xl: p => p.mape == null ? '' : Math.round(p.mape) },
@@ -90,7 +91,7 @@
       U.table(main.querySelector('#qHost'), { key: 'quota', cols, rows, defaultSort: { key: 'acc', dir: 'asc' }, empty: t('no_events_list'),
         onRow: p => { App.ui.stockTab = 'all'; App.go('stock', { sku: p.sku }); },
         card: p => `<div class="top"><div class="cell2"><b>${U.esc(p.name)}</b><span class="sub">${U.esc(p.sku)} · ${U.esc(p.acc)}</span></div>${Pages.quotaBadge(p.cls)}</div>
-          <div class="nums"><div><span>Quota Fit</span><b>${p.fit == null ? '—' : U.pct(p.fit)}</b></div><div><span>${t('k_ach')}</span><b>${U.pct(p.ach)}</b></div><div><span>${t('q_cov', { h: M.h + 'M' })}</span><b>${p.coverage == null ? '—' : U.pct(p.coverage)}</b></div></div>` });
+          <div class="nums"><div><span>Quota Fit</span><b>${p.fit == null ? '—' : U.pct(p.fit)}</b></div><div><span>${t('k_ach_mtd_s')}</span><b>${U.pct(p.achMtd)}</b></div><div><span>${t('q_cov', { h: M.h + 'M' })}</span><b>${p.coverage == null ? '—' : U.pct(p.coverage)}</b></div></div>` });   // CR-01 F1: the phone card shows MTD too
       main.querySelector('#qXlsx').addEventListener('click', () => U.xlsx('quota-vs-actual-' + Calc.iso(M.asDn) + '.xlsx', [{ name: 'Quota', rows: U.xlRows(cols, rows) }]));
       main.querySelectorAll('[data-qtab]').forEach(b => b.addEventListener('click', () => { ui.qTab = b.dataset.qtab; App.rerender(); }));
       Pages.bindSegs(main, App);

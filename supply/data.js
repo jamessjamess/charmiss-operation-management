@@ -4,11 +4,11 @@
 (function (global) {
   'use strict';
   const t = global.St;   // CR-01: Supply translator (the global `t` belongs to the Ops shell)
-  const TABLES = ['sku_master', 'account_master', 'stock_lot', 'sales_in', 'sales_out', 'cn', 'po_inbound', 'quota'];
+  const TABLES = ['sku_master', 'account_master', 'stock_lot', 'sales_in', 'sales_out', 'cn', 'po_inbound', 'quota', 'consign_count'];   // CR-01 F8: + consign_count
   const SCHEMA = {
     sku_master: { cols: ['sku', 'name', 'brand', 'category', 'uom', 'unit_cost', 'std_price', 'shelf_life_months', 'moq', 'lead_time_days', 'safety_days', 'status'],
       required: ['sku', 'name', 'unit_cost', 'shelf_life_months', 'moq', 'lead_time_days'], num: ['unit_cost', 'std_price', 'shelf_life_months', 'moq', 'lead_time_days', 'safety_days'],
-      enums: { status: ['Active', 'NPD', 'Discontinue'] }, unique: 'sku' },
+      enums: { status: ['Active', 'NPD', 'Discontinue', 'Clearance'] }, unique: 'sku' },   // CR-01 F9: + Clearance
     account_master: { cols: ['account_id', 'name', 'channel', 'sub_channel', 'is_consignment', 'min_shelf_life_pct', 'delivery_lead_days'],
       required: ['account_id', 'name', 'channel', 'is_consignment'], num: ['min_shelf_life_pct', 'delivery_lead_days'],
       enums: { channel: ['MT', 'TT', 'ECOM'], is_consignment: ['Y', 'N'] }, unique: 'account_id' },
@@ -21,7 +21,9 @@
       refs: { sku: 'sku', account_id: 'account' } },
     po_inbound: { cols: ['po_no', 'sku', 'qty', 'order_date', 'eta_date', 'received_date', 'status', 'supplier'], required: ['po_no', 'sku', 'qty', 'eta_date', 'status'],
       num: ['qty'], dates: ['order_date', 'eta_date', 'received_date'], enums: { status: ['Planned', 'Confirmed', 'Shipped', 'Received', 'Delayed', 'Cancelled'] }, refs: { sku: 'sku' } },
-    quota: { cols: ['month', 'sku', 'account_id', 'quota_qty'], required: ['month', 'sku', 'account_id', 'quota_qty'], num: ['quota_qty'], months: ['month'], refs: { sku: 'sku', account_id: 'account' } }
+    quota: { cols: ['month', 'sku', 'account_id', 'quota_qty'], required: ['month', 'sku', 'account_id', 'quota_qty'], num: ['quota_qty'], months: ['month'], refs: { sku: 'sku', account_id: 'account' } },
+    // CR-01 F8: shelf counts at consignment accounts (e.g. 7-Eleven via merchandisers) — compared with the calculated remaining, never overwriting it
+    consign_count: { cols: ['date', 'account_id', 'sku', 'qty', 'source'], required: ['date', 'account_id', 'sku', 'qty'], num: ['qty'], dates: ['date'], refs: { sku: 'sku', account_id: 'account' } }
   };
   const isDate = v => /^\d{4}-\d{2}-\d{2}$/.test(v) && !isNaN(Date.parse(v + 'T00:00:00Z'));
   const isNum = v => v !== '' && !isNaN(+String(v).replace(/,/g, ''));

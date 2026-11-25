@@ -10,7 +10,7 @@
   const t = global.St;
   const TABLES = Data.TABLES;
   const VIEW_OF = { overview: 'supOverview', stock: 'supStock', expiry: 'supExpiry', consign: 'supConsign', calendar: 'supCalendar',
-    replen: 'supReplen', quota: 'supQuota', proposals: 'supProposals', report: 'supReview', data: 'supSetup' };
+    replen: 'supReplen', quota: 'supQuota', proposals: 'supProposals', report: 'supReview', data: 'supSetup', intake: 'supIntake' };   // CR-03 R1: + intake
   const PAGE_OF = Object.fromEntries(Object.entries(VIEW_OF).map(([p, v]) => [v, p]));
   const DEF_F = { view: 'W', ch: [], acc: [], brand: [], cat: [], q: '', rr: 'L4W', h: 3 };
   /** What the signed-in user may do — filled by supply-planning.js on every mount. */
@@ -78,6 +78,7 @@
       texts = TABLES.map(n => global.SCM_BUNDLE[n]);
     }
     const imports = await Data.Store.all();
+    if (Supply.intakeReady) await Supply.intakeReady;                    // CR-03 R1: received Sales Out reports (IndexedDB)
     App.sources = {};
     TABLES.forEach((n, k) => {
       const imp = imports[n];
@@ -90,13 +91,16 @@
   /** CR-01 Phase B: App.base = the Integrated-demo tables (CSV / bundle + imports); App.raw = App.base + the Ops feed (supply-feed.js).
       The DB is rebuilt whenever the feed key changes (any Ops save or a new WMS read) — read-only, the same state gives the same tables. */
   function buildDB() {
-    const f = typeof Supply.feed === 'function' ? Supply.feed(App.base) : null;
+    const base = typeof Supply.intakeMerge === 'function' ? Supply.intakeMerge(App.base) : App.base;   // CR-03 R1: + received Sales Out reports
+    const f = typeof Supply.feed === 'function' ? Supply.feed(base) : null;
     App.feedMeta = f ? f.meta : null;
-    App.raw = f ? f.raw : App.base;
+    App.raw = f ? f.raw : base;
+    if (typeof Supply.intakeRoll === 'function') App.raw = Supply.intakeRoll(App.raw, base);   // CR-03 R1: a report past the snapshot moves it
     App.DB = Calc.prepare(App.raw);
     App.sc = Calc.selfCheck(App.DB);
     if (typeof Supply.feedChecks === 'function') {                       // selfCheck 7–9 (Ops ↔ Supply)
       App.sc.checks = App.sc.checks.concat(Supply.feedChecks(App.DB));
+      if (typeof Supply.intakeChecks === 'function') App.sc.checks = App.sc.checks.concat(Supply.intakeChecks(App.DB));   // CR-03 (11)
       App.sc.ok = App.sc.checks.every(c => c.ok);
     }
     App.feedKey = typeof Supply.feedKey === 'function' ? Supply.feedKey() : '';
@@ -125,6 +129,7 @@
   // ------------------------------------------------------------------ URL ⇄ state
   function defaultAsOf() {
     if (App.feedMeta && App.feedMeta.hasEvents) return App.DB.maxAsOf;   // CR-01: with Ops transactions the latest AS OF includes them
+    if (App.raw && App.raw._intake && App.raw._intake.moved) return App.DB.maxAsOf;   // CR-03 R1: … and so with Sales Out reports past the snapshot
     const today = Calc.dn(new Date().toISOString().slice(0, 10));
     return Math.max(App.DB.minAsOf, Math.min(Calc.monday(today), App.DB.maxAsOf));
   }

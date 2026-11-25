@@ -1,6 +1,7 @@
 /* pages/consign.js — ฝากขาย: ของที่คู่ค้าแต่ละรายเหลือเท่าไร ขายเร็วแค่ไหน ควรเรียกคืนตัวไหน
    Row 1: 4 KPI · Row 2: Sales In vs Sales Out per account (combo, drill to one account over time)
-   Row 3: Matrix SKU × account (Remaining / DOC / Sell-through) · Row 4: recall (CN) suggestions */
+   Row 3: Matrix SKU × account (Remaining / DOC / Sell-through) · Row 4: recall (CN) suggestions
+   Row 5 (CR-01 F8): calculated remaining vs shelf count (consign_count) — side by side, the count never overwrites the calculation */
 (function (global) {
   'use strict';
   const t = global.St;   // CR-01: Supply translator (the global `t` belongs to the Ops shell)
@@ -44,6 +45,16 @@
       // Row 4 — recall list
       html += `<section class="card" id="card-rc" style="margin-top:16px"><div class="card-head"><h3>${t('c_recall')} ${U.info(t('c_recall_tip', { k: S.cnKeepDays }))}</h3>
         <div class="card-tools"><button type="button" class="btn small" id="rcXlsx">${U.icon('download')}${t('export_xlsx')}</button></div></div><div id="rcHost"></div></section>`;
+
+      // Row 5 — CR-01 F8: calculated vs counted (only pairs inside the user's scope with a count on or before AS OF)
+      const cnt = countRows(App, M);
+      if (cnt.length) {
+        const sm = cnt.reduce((x, r) => { x[r.cls]++; x.d += r.diff; x.v += r.diffV; return x; }, { ok: 0, chk: 0, big: 0, d: 0, v: 0 });
+        html += `<section class="card" id="card-cnt" style="margin-top:16px"><div class="card-head"><h3>${t('c_count')} ${U.info(t('c_count_tip'))}</h3>
+          <div class="card-tools"><button type="button" class="btn small" id="cntXlsx">${U.icon('download')}${t('export_xlsx')}</button></div></div>
+          <div class="foot-note cnt-sum" style="margin:0 0 8px">${t('k_sub_count', { n: U.n(cnt.length), ok: U.n(sm.ok), chk: U.n(sm.chk), big: U.n(sm.big), d: (sm.d > 0 ? '+' : '') + U.n(sm.d), v: U.money(sm.v) })}</div>
+          <div id="cntHost"></div></section>`;
+      }
       main.innerHTML = html;
 
       // combo chart
@@ -99,15 +110,74 @@
           <div class="act">${p.recall.to ? '→ ' + U.esc(U.maskTo(p.recall.to)) : t('clearance')} · ${U.money(p.recall.value)} · ${p.recall.reasons.map(r => t('rs_' + r)).join(', ')}</div>` });
       main.querySelector('#rcXlsx').addEventListener('click', () => U.xlsx('cn-recall-' + Calc.iso(M.asDn) + '.xlsx', [{ name: 'Recall', rows: U.xlRows(rcCols, rec) }]));
 
+      // calculated vs counted (CR-01 F8)
+      if (cnt.length) {
+        const chip = r => `<span class="st ${r.cls === 'ok' ? 's-ok' : r.cls === 'chk' ? 'reorder' : 's-err'}">${t('cnt_' + r.cls)}</span>`;
+        const sgn = x => (x > 0 ? '+' : '') + U.n(x);
+        const cntCols = [
+          { k: 'sku', label: t('col_sku'), sticky: true, get: r => r.sku, html: r => `<div class="cell2"><b title="${U.esc(r.name)}">${U.esc(r.name)}</b><span class="sub">${U.esc(r.sku)}</span></div>` },
+          { k: 'acc', label: t('col_acc'), get: r => r.acc },
+          { k: 'date', label: t('col_count_date'), get: r => r.d, html: r => U.date(r.d), xl: r => Calc.iso(r.d) },
+          { k: 'calc', label: t('col_calc'), num: true, sum: true, get: r => r.calc, html: r => U.n(r.calc) },
+          { k: 'cnt', label: t('col_counted'), num: true, sum: true, get: r => r.qty, html: r => `<b>${U.n(r.qty)}</b>` },
+          { k: 'diff', label: t('col_diff'), num: true, sum: true, get: r => r.diff, html: r => sgn(r.diff) },
+          { k: 'pct', label: t('col_diff_pct'), num: true, get: r => r.pct, html: r => r.pct == null ? '—' : (r.pct > 0 ? '+' : '') + U.pct(r.pct, 1), xl: r => r.pct == null ? '' : Math.round(r.pct * 10) / 10 },
+          { k: 'diffv', label: t('col_diff_v'), num: true, sum: true, fmt: U.money, get: r => r.diffV, html: r => U.money(r.diffV) },
+          { k: 'cls', label: t('col_status'), get: r => ({ ok: 0, chk: 1, big: 2 })[r.cls], html: chip, xl: r => t('cnt_' + r.cls) },
+          { k: 'src', label: t('col_src'), get: r => r.src }
+        ];
+        U.table(main.querySelector('#cntHost'), { key: 'cnt', cols: cntCols, rows: cnt, defaultSort: { key: 'cls', dir: 'desc' }, compact: true,
+          total: rows => t('total') + ' · ' + U.n(rows.length), onRow: r => { App.ui.stockTab = 'all'; App.go('stock', { sku: r.sku }); },
+          card: r => `<div class="top"><div class="cell2"><b>${U.esc(r.name)}</b><span class="sub">${U.esc(r.sku)} · ${U.esc(r.acc)} · ${U.date(r.d)}</span></div>${chip(r)}</div>
+            <div class="nums"><div><span>${t('col_calc')}</span><b>${U.n(r.calc)}</b></div><div><span>${t('col_counted')}</span><b>${U.n(r.qty)}</b></div><div><span>${t('col_diff')} ${sgn(r.diff)}</span><b>${r.pct == null ? '—' : (r.pct > 0 ? '+' : '') + U.pct(r.pct, 1)}</b></div></div>` });
+        main.querySelector('#cntXlsx').addEventListener('click', () => U.xlsx('consign-count-vs-calc-' + Calc.iso(M.asDn) + '.xlsx', [{ name: 'Count vs calc', rows: U.xlRows(cntCols.slice(0, 1).concat([{ label: t('col_name'), get: r => r.name }], cntCols.slice(1)), cnt) }]));
+      }
+
       Pages.bindSegs(main, App);
     }
   };
+
+  // ------------------------------------------------------------------ CR-01 F8: shelf count vs calculated remaining
+  // The latest count per SKU × account on or before AS OF, inside the page scope (SKU filters + account mask / locked channel).
+  // A count is taken at the end of its day → compared with the calculated remaining at the start of the next day.
+  // Read-only: the calculated stock (and every anchor) stays as it is; the count is only shown next to it.
+  const CNT_OK = 2, CNT_CHK = 10;   // |diff %| ≤ 2 → match · ≤ 10 → check · above → big gap
+  function countRows(App, M) {
+    const DB = App.DB, list = (App.raw && App.raw.consign_count) || [], inRows = new Set(M.rows.map(r => r.i)), last = new Map();
+    for (const r of list) {
+      const i = DB.skuIdx.get(String(r.sku || '').trim()), j = DB.accIdx.get(String(r.account_id || '').trim()), d = Calc.dn(r.date), q = Number(r.qty);
+      if (i == null || j == null || d == null || !isFinite(q) || d > M.asDn || !inRows.has(i) || !M.mask[j]) continue;
+      const k = i + '|' + j, p = last.get(k);
+      if (!p || d >= p.d) last.set(k, { i, j, d, qty: q, src: String(r.source || '').trim() });
+    }
+    return [...last.values()].map(c => {
+      const s = DB.skus[c.i], calc = Math.round(Calc.stockAt(DB, c.i, c.d + 1).cons[c.j]), diff = c.qty - calc;
+      const pct = calc > 0 ? diff / calc * 100 : (diff === 0 ? 0 : null), a = Math.abs(pct == null ? Infinity : pct);
+      return Object.assign(c, { sku: s.sku, name: s.name, acc: DB.accounts[c.j].name, calc, diff, pct, diffV: diff * s.unit_cost, cls: a <= CNT_OK ? 'ok' : a <= CNT_CHK ? 'chk' : 'big' });
+    });
+  }
 
   // ------------------------------------------------------------------ combo: bars In / Out + Remaining line (right axis)
   function inoutConfig(C, series, unit, c, big, M) {
     const v = unit === 'v', fmt = v ? U.money : U.n;
     const src = series ? series.map(p => ({ label: M.period.view === 'M' ? (() => { const [y, m] = p.month.split('-'); return I18N.month(+m - 1) + ' ' + y.slice(2); })() : U.dateShort(p.p0), si: v ? p.siV : p.si, so: v ? p.soV : p.so, rem: v ? p.remV : p.rem }))
       : C.byAcc.map(a => ({ label: a.name, si: v ? a.siV : a.si, so: v ? a.soV : a.so, rem: v ? a.remV : a.rem }));
+    // CR-01 F2: per account on a phone (< 768 px) → horizontal bars, account names on the Y axis so they never overlap
+    if (!series && !big && U.isMobile()) return {
+      type: 'bar',
+      data: { labels: src.map(x => x.label), datasets: [
+        { label: t('l_si'), data: src.map(x => x.si), backgroundColor: c.cons, borderRadius: 2, barPercentage: .8, categoryPercentage: .75, order: 2 },
+        { label: t('l_so'), data: src.map(x => x.so), backgroundColor: c.wh, borderRadius: 2, barPercentage: .8, categoryPercentage: .75, order: 2 },
+        { type: 'line', label: t('l_rem'), data: src.map(x => x.rem), xAxisID: 'x1', indexAxis: 'y', showLine: false, pointStyle: 'rectRounded', pointRadius: 6, backgroundColor: c.line, borderColor: c.line, order: 1 }
+      ] },
+      options: {
+        indexAxis: 'y', interaction: { mode: 'index', intersect: false, axis: 'y' },
+        scales: { y: { grid: { display: false }, ticks: { autoSkip: false } },
+          x: { beginAtZero: true, grid: { color: c.grid }, ticks: { callback: v ? Charts.tickMoney : Charts.tickQty, maxTicksLimit: 4 } },
+          x1: { position: 'top', beginAtZero: true, grid: { display: false }, ticks: { callback: v ? Charts.tickMoney : Charts.tickQty, maxTicksLimit: 4 } } },
+        plugins: { tooltip: { callbacks: { label: it => ' ' + it.dataset.label + ': ' + fmt(it.raw) } } }
+      }
+    };
     return {
       type: 'bar',
       data: { labels: src.map(x => x.label), datasets: [
