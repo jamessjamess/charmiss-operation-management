@@ -1,0 +1,56 @@
+/* CR-01 · Supply pages in the Ops look — appended to supply/supply.css by tools/build_css.py.
+   Neutral and brand tokens = the Ops tokens. Status colours (red / orange / purple / green / grey / black) and the chart
+   series colours are data meaning, so they stay exactly as in the SCM dashboard. */
+.sup{
+  --bg:#f3f6fb; --surface:#ffffff; --surface-2:#f6f8fb; --surface-3:#edf2f9; --border:#e2e7ef; --border-strong:#d3deed; --grid:#e9edf4;
+  --text:#233149; --text-2:#3a5375; --muted:#718096;
+  --accent:#3d82d9; --accent-hover:#2a70c8; --accent-soft:#edf4ff; --accent-text:#ffffff; --info:#397dd9; --info-soft:#edf4ff;
+  --row-hover:#f7faff; --row-sel:#eaf2ff; --shadow-sm:0 3px 12px rgba(37,53,75,.03);
+  font:14px/1.5 Inter,"Noto Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--text);
+}
+[data-theme="dark"] .sup{
+  --bg:#101321; --surface:#191e2e; --surface-2:#1f2537; --surface-3:#283044; --border:#30374b; --border-strong:#3d465d; --grid:#262d40;
+  --text:#edf1fa; --text-2:#c6d0e3; --muted:#a2adc4;
+  --accent:#8eabff; --accent-hover:#a9c0ff; --accent-soft:#22304f; --accent-text:#101a35; --info:#8eabff; --info-soft:#1d2a45;
+  --row-hover:#1c2233; --row-sel:#24304d; --shadow-sm:none;
+}
+.sup button,.sup input,.sup select,.sup textarea{font:inherit}
+
+/* Ops radius: cards / KPI / tables 9px, controls 8px */
+.sup .card,.sup .kpi,.sup .tablewrap,.sup .ccard,.sup .modal,.sup .menu-pop,.sup .msel-pop{border-radius:9px}
+.sup .card,.sup .kpi{box-shadow:var(--shadow-sm)}
+
+/* Ops buttons: white, blue-grey text, light-blue hover; primary = Ops blue */
+.sup .btn{font-weight:500;color:var(--text-2);border-color:var(--border-strong);background:var(--surface)}
+.sup .btn:hover{background:var(--accent-soft);border-color:#8cb5ee}
+.sup .btn.ghost:hover{background:var(--accent-soft)}
+[data-theme="dark"] .sup .btn:hover{border-color:#4a6aa8}
+
+/* Ops tables: pale header, small muted header text */
+.sup table.tbl thead th{background:var(--surface-2);color:#70829b;font-weight:500;font-size:11px}
+[data-theme="dark"] .sup table.tbl thead th{color:var(--muted)}
+
+/* The Supply filter bar sits inside the Ops content as a sticky card */
+.sup .topbar{border:1px solid var(--border);border-radius:9px;margin:0 0 12px;box-shadow:var(--shadow-sm)}
+.sup .tb-row{padding:10px 14px;max-width:none}
+.sup .lockchip{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border:1px dashed var(--border-strong);border-radius:8px;color:var(--text-2);background:var(--surface-2);font-weight:600;font-size:13px;white-space:nowrap}
+.sup .lockchip svg,.sup .sup-meta svg{width:14px;height:14px;flex:0 0 14px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.sup .sup-meta{display:flex;align-items:center;gap:6px 16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:0 0 14px}
+.sup .sup-meta > span{display:inline-flex;align-items:center;gap:6px}
+.sup .sup-meta .lockchip{height:auto;padding:3px 10px;font-weight:500;font-size:12px;white-space:normal}
+
+/* The Ops header already shows the page name and question: keep only the period chip from the SCM page head */
+.sup .pagehead{justify-content:flex-start}
+.sup .pagehead h1.page,.sup .pagehead .q{display:none}
+.sup .pagehead > div:first-child:empty{display:none}
+
+/* CR-01 5.3 · links to the Ops page that owns the topic */
+.sup .xlinks{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--muted);margin:-6px 0 14px}
+.sup .xlinks button{background:none;border:0;padding:0;color:var(--accent);font-weight:600;cursor:pointer}
+.sup .xlinks button:hover{text-decoration:underline}
+
+@media (max-width:767px){
+  .sup .topbar{border-radius:0;margin:0 -15px 12px;border-left:0;border-right:0}   /* Ops .content padding is 15px on phones */
+  .sup .tb-mobile{min-height:48px;padding:6px 12px}
+  .sup .tb-mobile b{font-size:14px;padding-left:3px}   /* Thai glyphs overhang the clipped box */
+}

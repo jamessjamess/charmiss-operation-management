@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "ops-management",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8782", "--bind", "127.0.0.1", "--directory", "G:/My Drive/[Charmiss] - Supply Chain Management/Charmiss - Operation Management - Web Dev"],
+      "port": 8782
+    }
+  ]
+}

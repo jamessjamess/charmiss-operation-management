@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Charmiss Operations Management</title>
+<meta name="description" content="Charmiss Operations Management — Commerce Operations (OMS + Quota) and Supply Planning in one web (static prototype, CR-01).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css?v=8.0">
+<script>
+  /* theme before first paint: light | dark | system (default) */
+  (function () { var m = 'system'; try { m = localStorage.getItem('scm.theme') || 'system'; } catch (e) {}
+    var dark = m === 'dark' || (m === 'system' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light'); })();
+</script>
+</head>
+<body>
+<!-- ดับเบิลคลิกไฟล์นี้ก็เปิดได้ (ใช้ data/mock-bundle.js) · บน GitHub Pages / local server จะอ่าน data/*.csv -->
+<div class="shell" id="shell">
+  <aside class="sidenav" id="sidenav" aria-label="Menu">
+    <div class="sn-top"><div class="logo" aria-hidden="true">C</div><div class="brand"><b id="brandTitle"></b><span id="brandSub"></span></div></div>
+    <nav class="sn-nav" id="nav"></nav>
+    <div class="sn-bottom" id="snBottom"></div>
+  </aside>
+  <div class="sn-overlay hidden" id="navOverlay"></div>
+  <div class="app-main">
+    <header class="topbar" id="topbar">
+      <div class="userbar" id="userbar"></div>
+      <div class="tb-mobile">
+        <button type="button" class="icon-btn lg" id="navOpen" aria-label="Menu"></button>
+        <b id="topTitle"></b>
+        <button type="button" class="btn" id="filterBtn"></button>
+      </div>
+      <div class="tb-row"><div class="fbar" id="fbar"></div></div>
+    </header>
+    <main id="main"><div class="loading"><div><div class="spinner"></div><span id="loadingText">กำลังโหลดข้อมูล…</span></div></div></main>
+    <footer class="appfoot" id="appfoot"></footer>
+  </div>
+</div>
+<div class="sheet-overlay hidden" id="sheetOverlay"></div>
+<div class="drawer-wrap hidden" id="drawer"><div class="drawer-overlay"></div><aside class="drawer" role="dialog" aria-modal="true"></aside></div>
+<div class="modal-wrap hidden" id="modal"><div class="drawer-overlay"></div><div class="modal" role="dialog" aria-modal="true"></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="js/i18n.js?v=8.0"></script>
+<script src="js/auth.js?v=8.0"></script>
+<script src="js/calc.js?v=8.0"></script>
+<script src="js/data.js?v=8.0"></script>
+<script src="js/ui.js?v=8.0"></script>
+<script src="js/charts.js?v=8.0"></script>
+<script src="js/pages/overview.js?v=8.0"></script>
+<script src="js/pages/stock.js?v=8.0"></script>
+<script src="js/pages/expiry.js?v=8.0"></script>
+<script src="js/pages/consign.js?v=8.0"></script>
+<script src="js/pages/calendar.js?v=8.0"></script>
+<script src="js/pages/replen.js?v=8.0"></script>
+<script src="js/pages/quota.js?v=8.0"></script>
+<script src="js/pages/report.js?v=8.0"></script>
+<script src="js/pages/settings.js?v=8.0"></script>
+<script src="js/pages/ops.js?v=8.0"></script>
+<script src="js/app.js?v=8.0"></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+sku,name,brand,category,uom,unit_cost,std_price,shelf_life_months,moq,lead_time_days,safety_days,status
+CM-FD-001,Charmiss Airy Cushion 02 Coral,Charmiss,Cushion & Foundation,pcs,126.52,449,24,2000,90,14,Active
+CM-FD-002,Charmiss Glow Skin Foundation 08 Cherry,Charmiss,Cushion & Foundation,pcs,105.76,359,24,2000,45,14,NPD
+CM-FD-003,Charmiss Matte Cover Cushion 02 Coral,Charmiss,Cushion & Foundation,pcs,120.89,409,24,2000,60,30,Active
+CM-FD-004,Charmiss Serum Foundation 08 Cherry,Charmiss,Cushion & Foundation,pcs,87.47,249,24,2000,60,14,Active
+CM-FD-005,Charmiss Airy Cushion 02 Coral,Charmiss,Cushion & Foundation,pcs,132.52,429,24,3000,105,30,Active
+CM-FD-006,Charmiss Glow Skin Foundation 08 Cherry,Charmiss,Cushion & Foundation,pcs,125.38,379,24,10000,75,30,Active
+CM-FD-007,Charmiss Matte Cover Cushion 02 Coral,Charmiss,Cushion & Foundation,pcs,139.86,459,24,5000,45,21,Active
+CM-FD-008,Charmiss Serum Foundation 08 Cherry,Charmiss,Cushion & Foundation,pcs,91.97,279,24,2000,75,30,Active
+CM-FD-009,Charmiss Airy Cushion 02 Coral,Charmiss,Cushion & Foundation,pcs,123.77,369,24,5000,105,21,Active
+CM-FD-010,Charmiss Glow Skin Foundation 08 Cherry,Charmiss,Cushion & Foundation,pcs,95.42,319,24,1000,75,30,Active
+CM-LP-001,Charmiss Glowy Lip Tint N4 Honey,Charmiss,Lip,pcs,51.99,179,30,5000,45,21,NPD
+CM-LP-002,Charmiss Velvet Matte Lip 06 Brick,Charmiss,Lip,pcs,51.87,169,30,1000,75,21,Active
+CM-LP-003,Charmiss Juicy Lip Gloss N4 Honey,Charmiss,Lip,pcs,52.92,179,30,2000,60,30,Active
+CM-LP-004,Charmiss Lip & Cheek Tint 06 Brick,Charmiss,Lip,pcs,48.5,149,30,10000,60,14,Active
+CM-LP-005,Charmiss Glowy Lip Tint N4 Honey,Charmiss,Lip,pcs,36.12,129,30,3000,60,14,Active
+CM-LP-006,Charmiss Velvet Matte Lip 06 Brick,Charmiss,Lip,pcs,40.9,119,30,3000,60,21,Active
+CM-LP-007,Charmiss Juicy Lip Gloss N4 Honey,Charmiss,Lip,pcs,43.36,149,30,2000,60,21,NPD
+CM-LP-008,Charmiss Lip & Cheek Tint 06 Brick,Charmiss,Lip,pcs,40.36,119,30,3000,90,21,Active
+CM-LP-009,Charmiss Glowy Lip Tint N4 Honey,Charmiss,Lip,pcs,44.56,149,30,2000,75,14,Active
+CM-LP-010,Charmiss Velvet Matte Lip 06 Brick,Charmiss,Lip,pcs,38.2,129,30,2000,60,21,Active
+CM-LP-011,Charmiss Juicy Lip Gloss N4 Honey,Charmiss,Lip,pcs,47.64,149,30,3000,105,14,Active
+CM-LP-012,Charmiss Lip & Cheek Tint 06 Brick,Charmiss,Lip,pcs,42.19,119,30,2000,45,21,Active
+CM-EY-001,Charmiss Slim Brow Pencil N4 Honey,Charmiss,Eye,pcs,40.81,139,36,3000,45,14,Active
+CM-EY-002,Charmiss Waterproof Liner 06 Brick,Charmiss,Eye,pcs,50.52,179,36,1000,60,21,Active
+CM-EY-003,Charmiss Curl Mascara N4 Honey,Charmiss,Eye,pcs,37.26,119,36,2000,90,21,Active
+CM-EY-004,Charmiss Mini Eye Palette 06 Brick,Charmiss,Eye,pcs,46.52,149,36,2000,60,21,Active
+CM-EY-005,Charmiss Slim Brow Pencil N4 Honey,Charmiss,Eye,pcs,44.65,149,36,2000,60,30,Active
+CM-EY-006,Charmiss Waterproof Liner 06 Brick,Charmiss,Eye,pcs,51.71,159,36,5000,60,21,Active
+CM-CH-001,Charmiss Crystal Blush 06 Brick,Charmiss,Cheek,pcs,47.46,159,36,1000,60,14,Active
+CM-CH-002,Charmiss Cream Blush N4 Honey,Charmiss,Cheek,pcs,63.32,209,36,1000,75,14,Active
+CM-CH-003,Charmiss Highlighter Stick 06 Brick,Charmiss,Cheek,pcs,61.75,209,36,10000,75,21,Active
+CM-CH-004,Charmiss Crystal Blush N4 Honey,Charmiss,Cheek,pcs,61.48,169,36,2000,45,30,Active
+CM-CH-005,Charmiss Cream Blush 06 Brick,Charmiss,Cheek,pcs,43.9,129,36,2000,45,21,Active
+CM-CH-006,Charmiss Highlighter Stick N4 Honey,Charmiss,Cheek,pcs,41.32,139,36,2000,75,30,Active
+CM-CH-007,Charmiss Crystal Blush 06 Brick,Charmiss,Cheek,pcs,52.64,159,36,1000,75,14,Active
+CM-CH-008,Charmiss Cream Blush N4 Honey,Charmiss,Cheek,pcs,58.48,199,36,5000,105,14,Active
+CM-PW-001,Charmiss Oil Control Powder 02 Coral,Charmiss,Powder,pcs,76.55,239,36,2000,90,21,Active
+CM-PW-002,Charmiss Loose Setting Powder 08 Cherry,Charmiss,Powder,pcs,64.97,229,36,2000,60,30,Active
+CM-PW-003,Charmiss Two-way Cake 02 Coral,Charmiss,Powder,pcs,55.12,179,36,2000,60,14,NPD
+CM-PW-004,Charmiss Oil Control Powder 08 Cherry,Charmiss,Powder,pcs,61.19,209,36,5000,60,14,Active
+CM-PW-005,Charmiss Loose Setting Powder 02 Coral,Charmiss,Powder,pcs,47.25,149,36,3000,45,30,Active
+CM-PW-006,Charmiss Two-way Cake 08 Cherry,Charmiss,Powder,pcs,52.45,159,36,3000,60,21,Active
+CM-SK-001,Charmiss Sunscreen SPF50 30ml,Charmiss,Skincare,pcs,102.49,359,24,3000,45,30,Active
+CM-SK-002,Charmiss Hydra Serum 30ml,Charmiss,Skincare,pcs,114.52,379,24,1000,90,14,NPD
+CM-SK-003,Charmiss Cleansing Water 30ml,Charmiss,Skincare,pcs,78.18,249,24,3000,60,14,Active
+CP-FD-001,Charmiss Pro Airy Cushion N3 Sand,Charmiss Pro,Cushion & Foundation,pcs,116.46,339,24,1000,60,21,Active
+CP-FD-002,Charmiss Pro Glow Skin Foundation 05 Peach,Charmiss Pro,Cushion & Foundation,pcs,135.86,389,24,2000,75,14,Active
+CP-FD-003,Charmiss Pro Matte Cover Cushion N3 Sand,Charmiss Pro,Cushion & Foundation,pcs,87.48,299,24,5000,45,30,Active
+CP-FD-004,Charmiss Pro Serum Foundation 05 Peach,Charmiss Pro,Cushion & Foundation,pcs,106.39,379,24,3000,60,21,Active
+CP-FD-005,Charmiss Pro Airy Cushion N3 Sand,Charmiss Pro,Cushion & Foundation,pcs,99.24,339,24,3000,90,14,Active
+CP-FD-006,Charmiss Pro Glow Skin Foundation 05 Peach,Charmiss Pro,Cushion & Foundation,pcs,94.24,269,24,2000,60,21,Active
+CP-FD-007,Charmiss Pro Matte Cover Cushion N3 Sand,Charmiss Pro,Cushion & Foundation,pcs,133.27,439,24,3000,90,21,Discontinue
+CP-FD-008,Charmiss Pro Serum Foundation 05 Peach,Charmiss Pro,Cushion & Foundation,pcs,137.21,389,24,10000,60,14,Active
+CP-LP-001,Charmiss Pro Glowy Lip Tint 07 Mauve,Charmiss Pro,Lip,pcs,53.23,179,30,1000,60,21,Active
+CP-LP-002,Charmiss Pro Velvet Matte Lip 01 Rose,Charmiss Pro,Lip,pcs,48.56,169,30,2000,45,30,Active
+CP-LP-003,Charmiss Pro Juicy Lip Gloss 07 Mauve,Charmiss Pro,Lip,pcs,42.18,119,30,3000,75,21,Active
+CP-LP-004,Charmiss Pro Lip & Cheek Tint 01 Rose,Charmiss Pro,Lip,pcs,58.59,179,30,2000,60,21,Active
+CP-EY-001,Charmiss Pro Slim Brow Pencil N3 Sand,Charmiss Pro,Eye,pcs,40.65,139,36,10000,105,14,Discontinue
+CP-EY-002,Charmiss Pro Waterproof Liner 05 Peach,Charmiss Pro,Eye,pcs,33.49,89,36,5000,75,14,Active
+CP-EY-003,Charmiss Pro Curl Mascara N3 Sand,Charmiss Pro,Eye,pcs,38.65,129,36,2000,105,21,Active
+CP-EY-004,Charmiss Pro Mini Eye Palette 05 Peach,Charmiss Pro,Eye,pcs,52.52,169,36,3000,75,14,Active
+CP-EY-005,Charmiss Pro Slim Brow Pencil N3 Sand,Charmiss Pro,Eye,pcs,44.16,129,36,5000,75,14,Active
+CP-CH-001,Charmiss Pro Crystal Blush 04 Berry,Charmiss Pro,Cheek,pcs,58.46,199,36,2000,75,21,Active
+CP-CH-002,Charmiss Pro Cream Blush N2 Natural,Charmiss Pro,Cheek,pcs,49.82,159,36,2000,75,14,Active
+CP-PW-001,Charmiss Pro Oil Control Powder 06 Brick,Charmiss Pro,Powder,pcs,51.93,159,36,2000,90,30,Active
+CP-PW-002,Charmiss Pro Loose Setting Powder N4 Honey,Charmiss Pro,Powder,pcs,75.43,239,36,2000,60,30,Active
+CP-PW-003,Charmiss Pro Two-way Cake 06 Brick,Charmiss Pro,Powder,pcs,70.54,229,36,10000,60,30,Active
+CP-PW-004,Charmiss Pro Oil Control Powder N4 Honey,Charmiss Pro,Powder,pcs,65.39,209,36,2000,45,21,Active
+CP-SK-001,Charmiss Pro Sunscreen SPF50 30ml,Charmiss Pro,Skincare,pcs,102.96,319,24,5000,60,14,Active
+CP-SK-002,Charmiss Pro Hydra Serum 30ml,Charmiss Pro,Skincare,pcs,123.63,369,24,10000,105,14,Active
+TF-LP-001,Tofu Skincare Glowy Lip Tint N4 Honey,Tofu Skincare,Lip,pcs,51.27,149,30,2000,60,14,NPD
+TF-LP-002,Tofu Skincare Velvet Matte Lip 06 Brick,Tofu Skincare,Lip,pcs,48.77,139,30,10000,45,30,Active
+TF-LP-003,Tofu Skincare Juicy Lip Gloss N4 Honey,Tofu Skincare,Lip,pcs,39.92,109,30,1000,45,14,Active
+TF-LP-004,Tofu Skincare Lip & Cheek Tint 06 Brick,Tofu Skincare,Lip,pcs,45.24,139,30,1000,105,21,Active
+TF-LP-005,Tofu Skincare Glowy Lip Tint N4 Honey,Tofu Skincare,Lip,pcs,41.95,129,30,2000,105,21,Discontinue
+TF-LP-006,Tofu Skincare Velvet Matte Lip 06 Brick,Tofu Skincare,Lip,pcs,37.91,129,30,1000,75,21,Active
+TF-SK-001,Tofu Skincare Sunscreen SPF50 30ml,Tofu Skincare,Skincare,pcs,123.0,349,24,5000,60,21,Active
+TF-SK-002,Tofu Skincare Hydra Serum 30ml,Tofu Skincare,Skincare,pcs,126.58,439,24,2000,60,21,Active
+TF-SK-003,Tofu Skincare Cleansing Water 30ml,Tofu Skincare,Skincare,pcs,85.42,239,24,5000,105,14,Active
+TF-SK-004,Tofu Skincare Sleeping Mask 30ml,Tofu Skincare,Skincare,pcs,144.16,409,24,5000,75,21,Active
+TF-SK-005,Tofu Skincare Toner Pad 30ml,Tofu Skincare,Skincare,pcs,111.06,369,24,5000,60,14,Active
+TF-SK-006,Tofu Skincare Sunscreen SPF50 50ml,Tofu Skincare,Skincare,pcs,98.82,309,24,1000,75,21,NPD
+TF-SK-007,Tofu Skincare Hydra Serum 50ml,Tofu Skincare,Skincare,pcs,113.51,389,24,10000,90,21,Active
+TF-SK-008,Tofu Skincare Cleansing Water 50ml,Tofu Skincare,Skincare,pcs,80.63,289,24,2000,105,21,Active
+TF-SK-009,Tofu Skincare Sleeping Mask 50ml,Tofu Skincare,Skincare,pcs,62.32,219,24,3000,105,14,Active
+TF-SK-010,Tofu Skincare Toner Pad 50ml,Tofu Skincare,Skincare,pcs,147.04,449,24,3000,105,14,Active
+TF-SK-011,Tofu Skincare Sunscreen SPF50 100ml,Tofu Skincare,Skincare,pcs,109.51,319,24,2000,60,14,Active
+TF-SK-012,Tofu Skincare Hydra Serum 100ml,Tofu Skincare,Skincare,pcs,73.72,239,24,1000,105,30,Active
+TF-FD-001,Tofu Skincare Airy Cushion 06 Brick,Tofu Skincare,Cushion & Foundation,pcs,107.19,349,24,10000,75,14,Active
+TF-FD-002,Tofu Skincare Glow Skin Foundation N4 Honey,Tofu Skincare,Cushion & Foundation,pcs,99.78,289,24,1000,60,21,Active
+TF-FD-003,Tofu Skincare Matte Cover Cushion 06 Brick,Tofu Skincare,Cushion & Foundation,pcs,132.35,429,24,3000,105,14,Active
+TF-CH-001,Tofu Skincare Crystal Blush N1 Ivory,Tofu Skincare,Cheek,pcs,67.2,199,36,5000,45,30,Active
+TF-CH-002,Tofu Skincare Cream Blush 03 Nude,Tofu Skincare,Cheek,pcs,46.49,129,36,2000,60,14,Active
+TF-PW-001,Tofu Skincare Oil Control Powder N3 Sand,Tofu Skincare,Powder,pcs,73.92,219,36,5000,60,21,Discontinue
+TF-EY-001,Tofu Skincare Slim Brow Pencil N4 Honey,Tofu Skincare,Eye,pcs,51.42,149,36,3000,75,30,Active
+JB-LP-001,Juicy Bloom Glowy Lip Tint 01 Rose,Juicy Bloom,Lip,pcs,41.35,119,30,2000,45,14,Active
+JB-LP-002,Juicy Bloom Velvet Matte Lip 07 Mauve,Juicy Bloom,Lip,pcs,53.58,159,30,5000,60,30,Active
+JB-LP-003,Juicy Bloom Juicy Lip Gloss 01 Rose,Juicy Bloom,Lip,pcs,56.7,199,30,10000,45,21,Active
+JB-LP-004,Juicy Bloom Lip & Cheek Tint 07 Mauve,Juicy Bloom,Lip,pcs,59.07,199,30,1000,45,21,NPD
+JB-LP-005,Juicy Bloom Glowy Lip Tint 01 Rose,Juicy Bloom,Lip,pcs,46.61,149,30,2000,105,21,Active
+JB-LP-006,Juicy Bloom Velvet Matte Lip 07 Mauve,Juicy Bloom,Lip,pcs,41.25,129,30,10000,105,21,Active
+JB-LP-007,Juicy Bloom Juicy Lip Gloss 01 Rose,Juicy Bloom,Lip,pcs,36.03,109,30,5000,45,14,Active
+JB-LP-008,Juicy Bloom Lip & Cheek Tint 07 Mauve,Juicy Bloom,Lip,pcs,53.94,149,30,5000,60,30,Active
+JB-CH-001,Juicy Bloom Crystal Blush N1 Ivory,Juicy Bloom,Cheek,pcs,40.99,139,36,10000,60,30,Active
+JB-CH-002,Juicy Bloom Cream Blush 03 Nude,Juicy Bloom,Cheek,pcs,63.34,219,36,2000,105,14,Active
+JB-CH-003,Juicy Bloom Highlighter Stick N1 Ivory,Juicy Bloom,Cheek,pcs,53.88,179,36,10000,105,21,Active
+JB-CH-004,Juicy Bloom Crystal Blush 03 Nude,Juicy Bloom,Cheek,pcs,67.8,229,36,3000,45,21,Active
+JB-CH-005,Juicy Bloom Cream Blush N1 Ivory,Juicy Bloom,Cheek,pcs,44.93,129,36,5000,105,30,Active
+JB-CH-006,Juicy Bloom Highlighter Stick 03 Nude,Juicy Bloom,Cheek,pcs,44.42,139,36,5000,45,30,Discontinue
+JB-EY-001,Juicy Bloom Slim Brow Pencil 03 Nude,Juicy Bloom,Eye,pcs,48.82,159,36,2000,90,30,Active
+JB-EY-002,Juicy Bloom Waterproof Liner N1 Ivory,Juicy Bloom,Eye,pcs,48.85,149,36,5000,75,21,Active
+JB-EY-003,Juicy Bloom Curl Mascara 03 Nude,Juicy Bloom,Eye,pcs,45.3,129,36,5000,60,30,Active
+JB-EY-004,Juicy Bloom Mini Eye Palette N1 Ivory,Juicy Bloom,Eye,pcs,54.52,179,36,2000,45,21,Active
+JB-EY-005,Juicy Bloom Slim Brow Pencil 03 Nude,Juicy Bloom,Eye,pcs,47.4,159,36,2000,60,14,Active
+JB-FD-001,Juicy Bloom Airy Cushion 08 Cherry,Juicy Bloom,Cushion & Foundation,pcs,136.36,469,24,10000,105,30,Active
+JB-FD-002,Juicy Bloom Glow Skin Foundation 02 Coral,Juicy Bloom,Cushion & Foundation,pcs,117.73,369,24,10000,75,30,Active
+JB-PW-001,Juicy Bloom Oil Control Powder N2 Natural,Juicy Bloom,Powder,pcs,46.31,129,36,3000,75,21,Active
+JB-PW-002,Juicy Bloom Loose Setting Powder 04 Berry,Juicy Bloom,Powder,pcs,72.05,209,36,3000,60,14,Active
+JB-SK-001,Juicy Bloom Sunscreen SPF50 30ml,Juicy Bloom,Skincare,pcs,73.01,219,24,1000,60,21,Active
+JB-SK-002,Juicy Bloom Hydra Serum 30ml,Juicy Bloom,Skincare,pcs,92.44,289,24,2000,60,21,Active

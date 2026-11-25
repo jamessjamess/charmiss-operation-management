@@ -1,0 +1,16 @@
+account_id,name,channel,sub_channel,is_consignment,min_shelf_life_pct,delivery_lead_days
+A01,7-Eleven,MT,CVS,Y,0.67,5
+A02,Watsons,MT,Drugstore,Y,0.6,7
+A03,Eveandboy,MT,Beauty Store,Y,0.5,7
+A04,Boots,MT,Drugstore,Y,0.6,7
+A05,Tops,MT,Supermarket,Y,0.5,5
+A06,Big C,MT,Hypermarket,Y,0.5,7
+A07,Lotus's,MT,Hypermarket,Y,0.5,7
+A08,Dealer,TT,Dealer,N,0.4,10
+A09,Wholesale,TT,Wholesale,N,0.4,10
+A10,Shopee,ECOM,Marketplace,N,0.3,2
+A11,Lazada,ECOM,Marketplace,N,0.3,2
+A12,TikTok Shop,ECOM,Social Commerce,N,0.3,2
+A13,LINE Commerce,ECOM,Social Commerce,N,0.3,2
+A14,LINE OA,ECOM,Social Commerce,N,0.3,2
+A15,Web,ECOM,Brand.com,N,0.3,2

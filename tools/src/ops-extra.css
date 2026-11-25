@@ -1,0 +1,58 @@
+/* CR-01 additions to the Ops shell — appended to style.css by tools/build_css.py */
+
+/* Sidebar grouped into modules (collapsible): CORE · SALES · PRODUCTS & QUOTA · FULFILLMENT · REPORTS & SYSTEM · AFTER-SALES ·
+   SUPPLY MONITOR · SUPPLY PLANNING · SUPPLY SETUP */
+aside .navgroups{display:flex;flex-direction:column;gap:10px;margin-top:-6px}
+aside .navgroup{display:flex;flex-direction:column;gap:2px}
+aside .navhead{display:flex;align-items:center;justify-content:space-between;width:100%;background:transparent;border:0;border-radius:6px;padding:6px 13px;color:#94a8c2;font-size:10px;font-weight:700;letter-spacing:1.5px;text-align:left;cursor:pointer}
+aside .navhead:hover{background:transparent;color:#fff}
+aside .navhead i{font-style:normal;font-size:12px;line-height:1;transition:transform .15s ease}
+aside .navgroup.collapsed .navhead i{transform:rotate(180deg)}
+aside .navgroup.collapsed nav{display:none}
+aside .navgroup + .navgroup{border-top:1px solid #33465e;padding-top:8px}
+:root[data-theme="dark"] aside .navgroup + .navgroup{border-top-color:#243049}
+@media(max-width:700px){
+  aside .navgroups{flex-direction:row;overflow-x:auto;gap:4px;margin-top:0}
+  aside .navgroup{flex-direction:row;flex:0 0 auto;align-items:center}
+  aside .navgroup + .navgroup{border-top:0;padding-top:0;border-left:1px solid #496078;padding-left:4px}
+  aside .navhead{display:none}
+  aside .navgroup.collapsed nav{display:flex}
+  aside .navgroup nav{overflow:visible}
+}
+@media (prefers-reduced-motion:reduce){aside .navhead i{transition:none}}
+
+/* Header: theme switch next to the language */
+#themeSel{max-width:190px}
+
+/* Footer: dataset in use */
+#footDataset b{color:var(--text);font-weight:600}
+
+/* Dataset dialog (Admin / Director › เริ่มชุดสาธิตใหม่) */
+.dsopt{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border:1px solid var(--line);border-radius:9px;margin:10px 0;cursor:pointer;color:var(--text)}
+.dsopt input{margin-top:4px;width:auto;flex:0 0 auto}
+.dsopt b{display:block;margin-bottom:4px}
+.dsopt small{color:var(--muted);line-height:1.6;display:block}
+.dsopt:has(input:checked){border-color:#8cb5ee;background:#f3f8ff}
+:root[data-theme="dark"] .dsopt:has(input:checked){border-color:#4a6aa8;background:#1d2a45}
+
+/* Dark theme: the sidebar stays navy, one step darker than the page */
+:root[data-theme="dark"] aside{background:#141a28;border-color:#1d2536}
+:root[data-theme="dark"] nav button:hover{background:#22304a}
+:root[data-theme="dark"] nav button.active{background:#3567b0;color:#fff}
+:root[data-theme="dark"] .sidebarfoot{border-color:#2b3a52}
+:root[data-theme="dark"] .sidebarfoot button{background:#1f2b40;border-color:#2b3a52}
+:root[data-theme="dark"] .loginart{background:radial-gradient(ellipse at 25% 10%,#24406a,#141c2c 65%)}
+
+/* Stockout Date (Supply) link inside the Ops WMS table */
+button.linkish{background:none!important;border:0!important;padding:0!important;color:var(--accent)!important;font-weight:600;cursor:pointer;white-space:nowrap}
+
+/* Supply page inside the Ops content */
+#page > .sup{min-width:0}
+
+/* Print (Supply Review → A4): only the report */
+@media print{
+  aside,main > header,.content > .banner,.content > .pagehead,.footer,#supTopbar,.sup-meta,#toast{display:none!important}
+  .shell{display:block!important}
+  .content{padding:0!important;max-width:none!important}
+  body{background:#fff!important}
+}
