@@ -90,9 +90,13 @@ function supDecorate(){
 /* bind: mount the Supply page into the shell the Ops render just drew; the reset button picks a dataset */
 const supBindBefore=bind;bind=function(){supBindBefore();if($('#reset')&&!$('#reset').disabled)$('#reset').onclick=supDatasetForm;if(Supply.isView(view)&&view!=='supProposals'&&$('#supRoot')){Supply.ctx.can=a=>fuCan(a);Supply.ctx.lockCh=supLockChannel();Supply.mount(view,{push:supPush})}else if(view==='supProposals'&&supCanVisit(view)&&location.hash!=='#/supply/proposals')history[supPush?'pushState':'replaceState'](null,'','#/supply/proposals');supPush=false};
 
-/* login: a pasted Supply link opens that page right after sign-in (or is refused by the page gate) */
+/* login: the default page is หน้าหลัก (overview) · a pasted Supply link opened in a new tab still opens that page right after sign-in
+   (or is refused by the page gate) — once per page load and never on a reload, so a hash left over from the last session does not win (CR-03) */
+let supDeepUsed=(()=>{try{return performance.getEntriesByType('navigation')[0]?.type==='reload'}catch{return false}})();
 const supLoginBefore=login;login=function(){supLoginBefore();if(typeof appVersionUI==='function')appVersionUI();   // CR-03: version on the login screen
- const b=$('#login');if(!b||!b.onclick)return;const go=b.onclick;b.onclick=()=>{const hash=location.hash,ph=Supply.parseHash(hash);go();if(ph&&session&&Supply.VIEW_OF[ph.page]){history.replaceState(null,'',hash);if(navigate(Supply.VIEW_OF[ph.page],{fromHash:true})===false)Supply.clearHash()}}};
+ const b=$('#login');if(!b||!b.onclick)return;const go=b.onclick;b.onclick=()=>{const hash=location.hash,ph=Supply.parseHash(hash),deep=ph&&!supDeepUsed;supDeepUsed=true;go();if(!session)return;
+  if(deep&&Supply.VIEW_OF[ph.page]){history.replaceState(null,'',hash);if(navigate(Supply.VIEW_OF[ph.page],{fromHash:true})===false)Supply.clearHash()}
+  else{if(ph)Supply.clearHash();if(view!=='overview')navigate('overview')}}};
 
 /* ---------------------------------------------------------------- 4 · Light / Dark / System for the whole app (one token set) */
 function supThemeMode(){const m=storage.getItem('ops.theme');return ['light','dark','system'].includes(m)?m:'system'}
@@ -115,7 +119,7 @@ async function supResetDataset(ds){
 async function supResumeAfterReset(){
  let pending=null,resume=null;try{pending=sessionStorage.getItem(SUP_PENDING);resume=JSON.parse(sessionStorage.getItem(SUP_RESUME)||'null');sessionStorage.removeItem(SUP_PENDING);sessionStorage.removeItem(SUP_RESUME)}catch{}
  if(!pending)return;
- if(resume?.session&&roles.includes(resume.session.role)){session=resume.session;view=resume.view||'overview'}
+ if(resume?.session&&roles.includes(resume.session.role)){session=resume.session;view='overview';Supply.clearHash()}   // CR-03: a fresh demo opens หน้าหลัก
  if(pending==='integrated'){try{await Supply.ensureData();supIntegrate(Supply.App.base);supWmsFromLots();if(typeof supFeedSeed==='function')supFeedSeed(Supply.App.base);seedProducts.splice(0,seedProducts.length);opsSyncProducts()}catch(err){console.error(err);render();return toast(t('dsFail'))}}
  if(session)opsAudit('dsResetEvent',t(pending==='integrated'?'dsIntegrated':'dsUat'),[],null,pending);
  persist();render();toast(t('dsDone')+' · '+t(pending==='integrated'?'dsIntegrated':'dsUat'))
@@ -188,4 +192,4 @@ function supStockoutColumn(){
 if(supDataset()==='integrated'){seedProducts.splice(0,seedProducts.length);opsSyncProducts()}
 supApplyTheme();
 render();
-supResumeAfterReset();
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',supResumeAfterReset,{once:true});else supResumeAfterReset();   // CR-03 fix: wait for the CDN libraries (Papa / XLSX / Chart) at the end of the page — a slow CDN made the Integrated reset fall back to UAT

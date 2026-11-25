@@ -741,4 +741,13 @@ button.linkish{background:none!important;border:0!important;padding:0!important;
 #modal[data-kind="appver"]{width:min(760px,calc(100vw - 32px))}
 #modal[data-kind="appver"] td{white-space:normal;vertical-align:top}
 #modal[data-kind="appver"] td:first-child,#modal[data-kind="appver"] td:nth-child(2){white-space:nowrap}
+/* CR-03 (3D): S&OP page (action log · snapshots) */
+.sop-tools{gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.sop-tools select{height:auto;min-height:36px;padding:6px 30px 6px 10px;font-size:13px;line-height:1.4;max-width:210px;width:auto}
+.sop-tools .check{display:inline-flex;align-items:center;gap:6px;font-size:13px;white-space:nowrap}
+.sop-kpis{grid-template-columns:repeat(5,minmax(0,1fr))}
+.sop-kpis strong.bad{color:#b42318}
+.banner.warn.sop-lock{margin:0 0 10px;border-color:#fec84b;background:#fffaeb;color:#93370d}
+@media (max-width:760px){.sop-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.sop-tools{justify-content:flex-start}.sop-tools select{max-width:100%}}
+@media (max-width:760px){#sopActions>.panelhead,#sopCompare>.panelhead,#sopSnaps>.panelhead{flex-wrap:wrap;gap:8px}#sopActions>.panelhead .sop-tools,#sopCompare>.panelhead .sop-tools{width:100%}}
 

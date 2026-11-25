@@ -10,9 +10,11 @@
   const t = global.St;
   const TABLES = Data.TABLES;
   const VIEW_OF = { overview: 'supOverview', stock: 'supStock', expiry: 'supExpiry', consign: 'supConsign', calendar: 'supCalendar',
-    replen: 'supReplen', quota: 'supQuota', proposals: 'supProposals', report: 'supReview', data: 'supSetup', intake: 'supIntake' };   // CR-03 R1: + intake
+    replen: 'supReplen', quota: 'supQuota', proposals: 'supProposals', report: 'supReview', data: 'supSetup', intake: 'supIntake', sop: 'supSop' };   // CR-03 R1: + intake · R7: + sop (Ops-style page)
   const PAGE_OF = Object.fromEntries(Object.entries(VIEW_OF).map(([p, v]) => [v, p]));
   const DEF_F = { view: 'W', ch: [], acc: [], brand: [], cat: [], q: '', rr: 'L4W', h: 3 };
+  const RM = ['unconstrained', 'sellout'];                                             // CR-03 R3: run-rate method (filter bar · default from the settings)
+  const rmDefault = () => RM.includes(App.S.rrMode) ? App.S.rrMode : Calc.DEFAULT_SETTINGS.rrMode;
   /** What the signed-in user may do — filled by supply-planning.js on every mount. */
   const ctx = { can: () => false, lockCh: null };
 
@@ -143,7 +145,8 @@
     let as = Calc.dn(p.get('asof'));
     as = as == null ? defaultAsOf() : Math.max(App.DB.minAsOf, Math.min(Calc.monday(as), App.DB.maxAsOf));
     App.F = { asDn: as, view: p.get('view') === 'M' ? 'M' : 'W', ch: list('ch'), acc: list('acc'), brand: list('brand'), cat: list('cat'),
-      q: p.get('q') || '', rr: ['L4W', 'L3M', 'L6M', 'W'].includes(p.get('rr')) ? p.get('rr') : App.S.rrBasis || 'L4W', h: [1, 3, 6].includes(+p.get('h')) ? +p.get('h') : 3 };
+      q: p.get('q') || '', rr: ['L4W', 'L3M', 'L6M', 'W'].includes(p.get('rr')) ? p.get('rr') : App.S.rrBasis || 'L4W', h: [1, 3, 6].includes(+p.get('h')) ? +p.get('h') : 3,
+      rm: RM.includes(p.get('rm')) ? p.get('rm') : rmDefault() };   // CR-03 R3: run-rate method
     App.ui.sku = p.get('sku') || null;
   }
   function hashFor(page) {
@@ -153,6 +156,7 @@
     ['ch', 'acc', 'brand', 'cat'].forEach(k => { if (F[k].length && !(k === 'ch' && ctx.lockCh)) p.push(k + '=' + F[k].map(encodeURIComponent).join(',')); });
     if (F.q) p.push('q=' + encodeURIComponent(F.q));
     if (F.rr !== (App.S.rrBasis || DEF_F.rr)) p.push('rr=' + F.rr);
+    if (F.rm && F.rm !== rmDefault()) p.push('rm=' + F.rm);   // CR-03 R3
     if (F.h !== DEF_F.h) p.push('h=' + F.h);
     if (App.ui.sku && page === 'stock') p.push('sku=' + encodeURIComponent(App.ui.sku));
     return '#/supply/' + page + (p.length ? '?' + p.join('&') : '');
@@ -191,6 +195,7 @@
       <div class="fld"><span class="lbl">${t('f_cat')}</span><div id="fCat"></div></div>
       <div class="fld grow"><label for="fQ">${t('f_search')}</label><input class="ctl" type="search" id="fQ" placeholder="${t('tsearch')}" autocomplete="off"></div>
       <div class="fld" title="${U.esc(t('rr_tip'))}"><label for="fRR">${t('f_rr')}</label><select class="ctl" id="fRR">${['L4W', 'L3M', 'L6M', 'W'].map(k => `<option value="${k}">${t('rr_' + k)}</option>`).join('')}</select></div>
+      <div class="fld" title="${U.esc(t('rm_tip'))}"><label for="fRM">${t('f_rm')}</label><select class="ctl" id="fRM">${RM.map(k => `<option value="${k}">${t('rmf_' + k)}</option>`).join('')}</select></div>
       <div class="fld"><span class="lbl">${t('f_h')}</span><div class="seg" id="fH">${[1, 3, 6].map(h => `<button type="button" data-v="${h}">${h}M</button>`).join('')}</div></div>
       <button type="button" class="btn ghost fclear" id="fClear">${t('clear_all')}</button>`;
     const uniq = k => [...new Set(DB.skus.map(s => s[k]))].sort();
@@ -209,6 +214,7 @@
     fbar.querySelector('#fView').addEventListener('click', e => { const b = e.target.closest('[data-v]'); if (b) App.setF({ view: b.dataset.v }); });
     fbar.querySelector('#fH').addEventListener('click', e => { const b = e.target.closest('[data-v]'); if (b) App.setF({ h: +b.dataset.v }); });
     fbar.querySelector('#fRR').addEventListener('change', e => App.setF({ rr: e.target.value }));
+    fbar.querySelector('#fRM').addEventListener('change', e => App.setF({ rm: e.target.value }));   // CR-03 R3
     const q = fbar.querySelector('#fQ');
     q.addEventListener('input', U.debounce(() => App.setF({ q: q.value.trim() }), 250));
     fbar.querySelector('#fClear').addEventListener('click', () => App.setF({ ch: [], acc: [], brand: [], cat: [], q: '' }));
@@ -227,6 +233,7 @@
     fbar.querySelectorAll('#fView button').forEach(b => b.classList.toggle('on', b.dataset.v === F.view));
     fbar.querySelectorAll('#fH button').forEach(b => b.classList.toggle('on', +b.dataset.v === F.h));
     fbar.querySelector('#fRR').value = F.rr;
+    fbar.querySelector('#fRM').value = F.rm || rmDefault();   // CR-03 R3
     const q = fbar.querySelector('#fQ'); if (document.activeElement !== q) q.value = F.q;
     if (FB.ch) FB.ch.set(F.ch);
     FB.acc.setOptions(accOptions(F.ch)); FB.acc.set(F.acc); FB.brand.set(F.brand); FB.cat.set(F.cat);

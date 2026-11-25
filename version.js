@@ -2,10 +2,13 @@
    clicking it opens the version history. Release checklist: bump APP_VERSION.number + add a history line, and set every
    ?v= in index.html to the same number so browsers load the new files. */
 const APP_VERSION={
- number:'8.1.0',
- label:{th:'CR-03 · Phase 3A',en:'CR-03 · Phase 3A'},
+ number:'8.4.0',
+ label:{th:'CR-03 · Phase 3D (ครบ CR-03)',en:'CR-03 · Phase 3D (CR-03 complete)'},
  date:'2026-11-25',
  history:[
+  ['8.4.0','2026-11-25',{th:'CR-03 Phase 3D — รอบ S&OP: Action log (คิวข้อยกเว้น · สร้างอัตโนมัติ · ปิดเองไม่ได้) · Snapshot แผน + เทียบรอบ · วันปิดรับแก้แผน · Supply Review รายเดือน 4 ส่วน · Action ค้างใน Weekly Review และการ์ดหน้าหลัก · หน้าแรกหลังล็อกอิน = หน้าหลัก ทุกบทบาท',en:'CR-03 Phase 3D — S&OP cycle: action log (exception queue · raised automatically · never closed by the system) · plan snapshots + comparison · plan lock day · monthly Supply Review in 4 parts · open actions in the weekly review and on the home card · every role lands on the home page after sign-in'}],
+  ['8.3.0','2026-11-25',{th:'CR-03 Phase 3C — Early warning ฝากขาย (WOS · Reorder gap · In-stock · Distribution gap · Swing · ของสะสม) · FVA: Quota เทียบ Naive + Tracking signal · ข้อเสนอ Quota เริ่มจาก Naive เมื่อ FVA ติดลบต่อเนื่อง',en:'CR-03 Phase 3C — consignment early warning (WOS · reorder gap · in-stock · distribution gap · swing · piling up) · FVA: quota vs naive + tracking signal · quota proposals start from naive when FVA stays negative'}],
+  ['8.2.0','2026-11-25',{th:'CR-03 Phase 3B — Run Rate ไม่นับสัปดาห์ที่ของขาด + Lost sales · กลุ่ม ABC-XYZ · Safety Stock แบบสถิติจาก Lead Time จริง · selfCheck 12',en:'CR-03 Phase 3B — run rate skipping out-of-stock weeks + lost sales · ABC-XYZ groups · statistical safety stock from actual lead times · selfCheck 12'}],
   ['8.1.0','2026-11-25',{th:'CR-03 Phase 3A — รับรายงาน Sales Out รายสัปดาห์ · Run Rate หยุดตามข้อมูลล่าสุดของแต่ละคู่ค้า · เบิกออกที่ไม่ใช่การขาย · selfCheck 10–11 · เลขเวอร์ชันในแอป',en:'CR-03 Phase 3A — weekly Sales Out intake · run rate ends at each account\'s latest data · non-sales stock issues · selfCheck 10–11 · app version shown in the app'}],
   ['8.0.0','2026-11-25',{th:'CR-01 Phase A–D — รวม Commerce Operations + Supply Planning เป็น Charmiss Operations Management',en:'CR-01 Phase A–D — Commerce Operations + Supply Planning merged into Charmiss Operations Management'}],
   ['7.0','2026-11-24',{th:'Charmiss Operations Prototype 7.0 · Public version 13 (ฐานเดิม)',en:'Charmiss Operations Prototype 7.0 · Public version 13 (the base)'}]

@@ -94,9 +94,15 @@
       </div>`;
       // CR-03 R2: non-sales issues month-to-date (AS OF), by type — they lower WH but are never Sales Out
       const oo = Calc.otherOutOf(App.DB, M.rows, M.mask, Calc.monthStart(M.asDn), M.asDn), ooT = ['pr', 'sample', 'internal', 'writeoff', 'other'];
-      html += `<section class="card" id="card-oo" style="margin-top:16px"><div class="card-head"><h3>${t('c_oo')} ${U.info(t('c_oo_tip'))}</h3><span class="muted small">${U.dateShort(Calc.monthStart(M.asDn))} – ${U.dateShort(M.asDn - 1)}</span></div>
+      // CR-03 R3: lost sales of the last 4 weeks (out-of-stock weeks × the run rate without them), largest SKUs first
+      const lostRows = M.rows.filter(r => r.lost4V > 0.5).sort((x, y) => y.lost4V - x.lost4V), lostV = lostRows.reduce((x, r) => x + r.lost4V, 0), lostQ = lostRows.reduce((x, r) => x + r.lost4Q, 0);
+      html += `<div class="grid2 even" style="margin-top:16px"><section class="card" id="card-oo"><div class="card-head"><h3>${t('c_oo')} ${U.info(t('c_oo_tip'))}</h3><span class="muted small">${U.dateShort(Calc.monthStart(M.asDn))} – ${U.dateShort(M.asDn - 1)}</span></div>
         <div class="oo-row">${ooT.map(k => { const x = oo.byType[k] || { qty: 0, value: 0 }; return `<div class="oo-item${x.qty ? '' : ' zero'}"><span>${t('oo_' + k)}</span><b>${U.n(x.qty)}</b><small>${U.money(x.value)}</small></div>`; }).join('')}
-        <div class="oo-item tot"><span>${t('oo_total')}</span><b>${U.n(oo.qty)}</b><small>${U.money(oo.value)}</small></div></div></section>`;
+        <div class="oo-item tot"><span>${t('oo_total')}</span><b>${U.n(oo.qty)}</b><small>${U.money(oo.value)}</small></div></div></section>
+        <section class="card" id="card-lost"><div class="card-head"><h3>${t('c_lost')} ${U.info(t('c_lost_tip'))}</h3><span class="muted small">${U.dateShort(M.asDn - 28)} – ${U.dateShort(M.asDn - 1)}</span></div>
+          ${lostRows.length ? `<div class="lost-head"><b>${U.money(lostV)}</b><span class="muted small">${t('lost_sub', { q: U.n(lostQ), n: U.n(lostRows.length) })}</span></div>
+          <div class="small muted" style="margin:6px 0 4px">${t('lost_top')}</div><div class="lost-list">${lostRows.slice(0, 5).map(r => `<button type="button" class="lost-item" data-go-sku="${U.esc(r.sku)}"><span class="cell2"><b>${U.esc(r.name)}</b><span class="sub">${U.esc(r.sku)} · OOS ${r.oosW13}/13</span></span><b class="tnum">${U.money(r.lost4V)}</b></button>`).join('')}</div>`
+          : U.empty(t('lost_none'), '', 'check')}</section></div>`;
       main.innerHTML = html;
 
       // bind charts

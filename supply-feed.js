@@ -120,7 +120,8 @@ function supplyFeed(base){
  const orders=db.orders.filter(o=>A.has(o.partner)&&feedShipped(o)&&feedT(o.shippedAt)<=cut&&orderDoc(o)?.invoice);
  const ids=new Set(orders.map(o=>o.id)),returns=db.returns.filter(r=>ids.has(r.orderId)&&A.has(r.partner)&&feedT(r.time)<=cut);
  const raw=Object.assign({},base);
- raw.sku_master=base.sku_master.map(s=>{const lc=opsMaster(s.sku)?.lifecycle;return lc?{...s,status:lc==='New'?'NPD':lc}:s});
+ raw.sku_master=base.sku_master.map(s=>{const m=opsMaster(s.sku),lc=m?.lifecycle,x=m&&m.safety!=null?{...s,safety_units:m.safety}:s;return lc?{...x,status:lc==='New'?'NPD':lc}:x});   // CR-03 R3: + safety_units (Ops safety) for the outright out-of-stock test
+ raw.account_master=base.account_master.map(a=>{const pt=db.partners?.find(x=>x.id===a.account_id);return pt&&pt.sales?{...a,sales:pt.sales}:a});   // CR-03 R6: + the Sales owner of the partner (FVA by Sales)
  const other=feedOtherMonths();
  raw.quota=base.quota.filter(r=>r.month!==B.month&&!(other[r.month+'|'+r.account_id+'|'+r.sku]>0)).concat(feedQuotaRows(base),Object.entries(other).map(([k,q])=>{const[month,account_id,sku]=k.split('|');return{month,sku,account_id,quota_qty:q}}));
  raw.po_inbound=feedPoRows(base,cut)||base.po_inbound;

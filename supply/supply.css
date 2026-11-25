@@ -604,4 +604,65 @@ html.lock{overflow:hidden}
 .set-pr-add input.ctl{width:80px}
 .sup-stale{margin-bottom:12px}
 @media(max-width:700px){.oo-row{grid-template-columns:repeat(2,minmax(0,1fr))}.set-pr{flex-wrap:wrap}.set-pr-list{justify-content:flex-start}}
+/* CR-03 (3B): ABC-XYZ group badge · OOS weeks · lost sales card · safety stock table · service level grid */
+.grp{display:inline-block;min-width:26px;padding:0 6px;border-radius:6px;font-size:11px;font-weight:700;text-align:center;line-height:18px;border:1px solid transparent;vertical-align:middle}
+.grp.g-A{background:#e8f1fd;color:#175cd3;border-color:#b2ccf6}
+.grp.g-B{background:#ecfdf3;color:#067647;border-color:#abefc6}
+.grp.g-C{background:#f2f4f7;color:#475467;border-color:#d0d5dd}
+.grp.g-N{background:#f4f3ff;color:#5925dc;border-color:#d9d6fe}
+.grp.g-E{background:#fef3f2;color:#b42318;border-color:#fecdca}
+[data-theme="dark"] .grp.g-A{background:#12284d;color:#84adff;border-color:#1f3f75}
+[data-theme="dark"] .grp.g-B{background:#0b2a1c;color:#75e0a7;border-color:#135437}
+[data-theme="dark"] .grp.g-C{background:#1f2533;color:#cdd5df;border-color:#344054}
+[data-theme="dark"] .grp.g-N{background:#241a4d;color:#bdb4fe;border-color:#3e2c8a}
+[data-theme="dark"] .grp.g-E{background:#3d1512;color:#fda29b;border-color:#7a271a}
+.oosw{display:inline-block;min-width:20px;padding:0 7px;border-radius:999px;background:#fef0c7;color:#93370d;font-weight:600;font-size:12px;line-height:18px;text-align:center}
+[data-theme="dark"] .oosw{background:#4e1d09;color:#fec84b}
+.grp-sel{height:32px;font-size:12px;max-width:150px;width:auto}
+.card-tools .grp-sel{height:28px}
+#card-oo .oo-row{grid-template-columns:repeat(3,minmax(0,1fr))}
+.lost-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.lost-head b{font-size:24px;font-variant-numeric:tabular-nums}
+.lost-list{display:flex;flex-direction:column;gap:4px}
+.lost-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:none;color:inherit;text-align:left;cursor:pointer;font:inherit;min-width:0;width:100%}
+.lost-item:hover{background:var(--surface-2)}
+.lost-item .cell2{min-width:0;flex:1}
+.lost-item .cell2 b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ss-tbl td:first-child{white-space:normal;color:var(--text-2)}
+.ss-tbl td{vertical-align:top}
+.ss-tbl td.num{white-space:nowrap}
+.set-sl{width:auto;margin:4px 0 6px}
+.set-sl th,.set-sl td{padding:3px 6px}
+.set-sl td .ctl{width:72px;height:28px;font-size:12px;text-align:right}
+@media(max-width:700px){#card-oo .oo-row{grid-template-columns:repeat(2,minmax(0,1fr))}.grp-sel{max-width:130px}}
+.set-stack{flex-wrap:wrap}
+.set-stack>span:first-child{flex:1 1 100%}
+.set-stack>select.ctl{flex:1 1 100%;max-width:none;width:100%}
+.set-stack .set-pr-list{flex:1 1 100%;justify-content:flex-start}
+/* CR-03 (3C): FVA colours · 6-card KPI row · early-warning tabs */
+.kpis.k6{grid-template-columns:repeat(6,minmax(0,1fr))}
+@media (max-width:1199px){.kpis.k6{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:767px){.kpis.k6{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.fva-good{color:#067647}
+.fva-bad{color:#b42318}
+[data-theme="dark"] .fva-good{color:#75e0a7}
+[data-theme="dark"] .fva-bad{color:#fda29b}
+.ew-kpis{margin-top:0}
+.ew-tabs{margin:0 0 8px;flex-wrap:wrap}
+/* CR-03 (3D): S&OP review */
+.sop-tiles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:6px 0 12px}
+.sop-tiles>div{border:1px solid var(--border);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.sop-tiles small{color:var(--text-2);font-size:12px}
+.sop-tiles b{font-size:18px;font-variant-numeric:tabular-nums}
+.sop-opts{white-space:normal;text-align:left}
+.sop-opts .chip{margin:1px 2px;display:inline-block}
+@media(max-width:900px){.sop-tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:560px){.sop-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media print{.sop-tiles{grid-template-columns:repeat(6,minmax(0,1fr))}}
+#rp-sop-gap .rp-t.sku1 td:first-child,#rp-sop-gap .rp-t.sku1 th:first-child{width:30%}
+#rp-sop-gap .rp-t td:nth-child(2),#rp-sop-gap .rp-t th:nth-child(2){width:7%}
+#rp-sop-gap .rp-t td:last-child,#rp-sop-gap .rp-t th:last-child{width:30%;text-align:left}
+.sop-opts .chip{white-space:normal;text-align:left;max-width:100%}
+#rp-actions .rp-t.date1 td:first-child,#rp-actions .rp-t.date1 th:first-child,#rp-sop-exec .rp-t.date1 td:first-child,#rp-sop-exec .rp-t.date1 th:first-child{width:32%}
+#rp-sop-demand .rp-t.date1 td:first-child,#rp-sop-demand .rp-t.date1 th:first-child{width:34%}
 

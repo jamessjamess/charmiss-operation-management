@@ -12,12 +12,12 @@
 
   /** The model with the What-if applied (Run Rate × (1 + rr%) and Lead Time + lt days) — cached per filter + What-if. */
   function whatIf(App, wi) {
-    if (!wi.rr && !wi.lt) return App.model();
-    const key = App._modelKey + '|' + wi.rr + '|' + wi.lt;
+    if (!wi.rr && !wi.lt && !wi.sl) return App.model();
+    const key = App._modelKey + '|' + wi.rr + '|' + wi.lt + '|' + (wi.sl || 0);   // CR-03 R4: + service level pp
     if (wiCache.key !== key) {
       App.model();
-      wiCache.M = Calc.computeModel(App.DB, Object.assign({}, App.F, { rrMult: 1 + wi.rr / 100, ltAdd: wi.lt }), App.S, {});
-      wiCache.key = App._modelKey + '|' + wi.rr + '|' + wi.lt;
+      wiCache.M = Calc.computeModel(App.DB, Object.assign({}, App.F, { rrMult: 1 + wi.rr / 100, ltAdd: wi.lt, slAdd: wi.sl || 0 }), App.S, {});
+      wiCache.key = key;
     }
     return wiCache.M;
   }
@@ -31,7 +31,8 @@
 
   Pages.replen = {
     render(main, App) {
-      const ui = App.ui, wi = ui.whatIf || (ui.whatIf = { rr: 0, lt: 0 }), base = App.model();
+      const ui = App.ui, wi = ui.whatIf || (ui.whatIf = { rr: 0, lt: 0, sl: 0 }), base = App.model();
+      const stat = base.S.safetyMode === 'statistical'; if (!stat) wi.sl = 0;   // CR-03 R4: the service-level slider needs the statistical safety stock
       let html = Pages.pageHead(base, 'nav_replen', 'q_replen') + Pages.allocNote(base);
       if (!base.rows.length) { main.innerHTML = html + `<div class="card">${U.empty(t('empty'), t('empty_hint'), 'filter')}</div>`; return; }
       const c = Charts.col();
@@ -41,29 +42,33 @@
         <section class="card wi-card"><div class="card-head"><h3>${t('c_whatif')} ${U.info(t('c_whatif_tip'))}</h3><button type="button" class="btn small ghost" id="wiReset">${t('wi_reset')}</button></div>
           <label class="wi-row"><span>${t('wi_rr')} <b id="wiRrV"></b></span><input type="range" id="wiRr" min="-50" max="100" step="5" value="${wi.rr}"></label>
           <label class="wi-row"><span>${t('wi_lt')} <b id="wiLtV"></b></span><input type="range" id="wiLt" min="-30" max="60" step="5" value="${wi.lt}"></label>
+          <label class="wi-row"${stat ? '' : ` title="${U.esc(t('wi_sl_off'))}"`}><span>${t('wi_sl')} <b id="wiSlV"></b></span><input type="range" id="wiSl" min="-10" max="5" step="0.5" value="${wi.sl || 0}" ${stat ? '' : 'disabled'}></label>
+          ${stat ? '' : `<div class="small muted">${t('wi_sl_off')}</div>`}
           <div id="wiSum"></div></section>
       </div>`;
       ui.rpMode = ui.rpMode || 'due';
       html += `<section class="card"><div class="card-head"><h3>${t('c_replen')} ${U.info(t('c_replen_tip', { d: base.S.coverDays }))}</h3>
-        <div class="card-tools"><span id="rpSeg"></span><button type="button" class="btn small ghost" id="rpClear">${t('rp_clear')}</button>
+        <div class="card-tools">${Pages.grpSelect('rpGrp', ui.rpGrp)}<span id="rpSeg"></span><button type="button" class="btn small ghost" id="rpClear">${t('rp_clear')}</button>
         <button type="button" class="btn small primary" id="rpXlsx">${U.icon('download')}${t('rp_export')}</button></div></div>
         <div id="wiBanner"></div><div id="rpHost"></div><div class="foot-note" id="rpFoot"></div></section>`;
       main.innerHTML = html;
 
-      const rr = main.querySelector('#wiRr'), lt = main.querySelector('#wiLt');
+      const rr = main.querySelector('#wiRr'), lt = main.querySelector('#wiLt'), sl = main.querySelector('#wiSl');
       const labels = () => {
         main.querySelector('#wiRrV').textContent = (+rr.value > 0 ? '+' : '') + rr.value + '%';
         main.querySelector('#wiLtV').textContent = (+lt.value > 0 ? '+' : '') + lt.value + ' ' + t('days');
+        main.querySelector('#wiSlV').textContent = (+sl.value > 0 ? '+' : '') + sl.value + ' pp';   // CR-03 R4
       };
-      const recalc = U.debounce(() => { wi.rr = +rr.value; wi.lt = +lt.value; results(); }, 120);
-      [rr, lt].forEach(el => el.addEventListener('input', () => { labels(); recalc(); }));
-      main.querySelector('#wiReset').addEventListener('click', () => { rr.value = 0; lt.value = 0; labels(); wi.rr = 0; wi.lt = 0; results(); });
+      const recalc = U.debounce(() => { wi.rr = +rr.value; wi.lt = +lt.value; wi.sl = stat ? +sl.value : 0; results(); }, 120);
+      [rr, lt, sl].forEach(el => el.addEventListener('input', () => { labels(); recalc(); }));
+      main.querySelector('#wiReset').addEventListener('click', () => { rr.value = 0; lt.value = 0; sl.value = 0; labels(); wi.rr = 0; wi.lt = 0; wi.sl = 0; results(); });
+      main.querySelector('#rpGrp').addEventListener('change', e => { ui.rpGrp = e.target.value; results(); });   // CR-03 R4: group filter
       main.querySelector('#rpClear').addEventListener('click', () => { edits = {}; saveEdits(); results(); });
       labels();
 
       // everything below the sliders is redrawn on every What-if change (the sliders keep their place and focus)
       function results() {
-        const W = whatIf(App, wi), active = !!(wi.rr || wi.lt);
+        const W = whatIf(App, wi), active = !!(wi.rr || wi.lt || wi.sl);   // CR-03: + service level
         const sb = summary(base), sw = summary(W);
         const row = (lab, a, b, fmt, pol) => {
           const d = b - a, cls = !active || Math.abs(d) < 0.5 ? 'flat' : (d > 0) === (pol === 'up') ? 'good' : 'bad';
@@ -73,13 +78,13 @@
           ${row(t('wi_due'), sb.due, sw.due, U.n, 'down')}${row(t('k_stockout'), sb.stockout, sw.stockout, U.n, 'down')}
           ${row(t('wi_sug'), sb.sugV, sw.sugV, U.moneyShort, 'none')}${row(t('wi_lost', { h: base.h + 'M' }), sb.lost, sw.lost, U.moneyShort, 'down')}
           ${row(t('wi_stockh', { h: base.h + 'M' }), sb.stockH, sw.stockH, U.moneyShort, 'none')}</tbody></table>`;
-        main.querySelector('#wiBanner').innerHTML = active ? `<div class="note wi-on">${U.icon('alert')}<span>${t('wi_banner', { rr: (wi.rr > 0 ? '+' : '') + wi.rr + '%', lt: (wi.lt > 0 ? '+' : '') + wi.lt })}</span></div>` : '';
+        main.querySelector('#wiBanner').innerHTML = active ? `<div class="note wi-on">${U.icon('alert')}<span>${t('wi_banner', { rr: (wi.rr > 0 ? '+' : '') + wi.rr + '%', lt: (wi.lt > 0 ? '+' : '') + wi.lt })}${wi.sl ? t('wi_banner_sl', { sl: (wi.sl > 0 ? '+' : '') + wi.sl }) : ''}</span></div>` : '';
         // chart
         const pb = Calc.projWeekly(base), pw = Calc.projWeekly(W);
         Charts.bind('wiproj', { title: t('c_wiproj'), filename: 'what-if-projection', legendHTML: legend, build: big => wiConfig(pb, pw, active, base, c, big),
           table: () => ({ cols: [t('col_week'), t('wi_base'), t('wi_whatif')], rows: pb.map((p, n) => [U.date(p.dn), Math.round(p.value), Math.round(pw[n].value)]) }) });
         // mode tabs + table
-        const cnt = m => Calc.replenList(W, m).length;
+        const cnt = m => Calc.replenList(W, m).filter(r => Pages.grpMatch(r, ui.rpGrp)).length;   // CR-03: counts follow the group filter
         main.querySelector('#rpSeg').innerHTML = U.seg('rpMode', [['due', t('rp_due') + ' · ' + cnt('due')], ['suggest', t('rp_suggest') + ' · ' + cnt('suggest')], ['all', t('f_all') + ' · ' + W.rows.length]], ui.rpMode);
         main.querySelector('#rpSeg [data-seg]').addEventListener('click', e => { const b = e.target.closest('[data-v]'); if (b) { ui.rpMode = b.dataset.v; results(); } });
         drawTable(App, W);
@@ -93,7 +98,8 @@
 
   function drawTable(App, W) {
     const DB = App.DB, host = document.getElementById('rpHost'), as = W.asDn;
-    const list = Calc.replenList(W, App.ui.rpMode);
+    const list = Calc.replenList(W, App.ui.rpMode).filter(r => Pages.grpMatch(r, App.ui.rpGrp));   // CR-03 R4: group filter
+    const ltAct = r => { const L = r.lt3; return L ? `${U.n(L.lt)} ± ${U.n(L.sd)}${L.src === 'est' ? ` <span class="est-badge">${t('lt_est')}</span>` : ''}` : '—'; };
     const cols = [
       { k: 'sku', label: t('col_sku'), sticky: true, get: r => r.sku, html: r => `<div class="cell2"><button type="button" class="link-btn" data-go-sku="${U.esc(r.sku)}"><b>${U.esc(r.name)}</b></button><span class="sub">${U.esc(r.sku)} · ${U.esc(supplierOf(DB, r.i))}</span></div>`, xl: r => r.sku },
       { k: 'status', label: t('col_status'), get: r => ({ stockout: 0, reorder: 1, overstock: 2, healthy: 3, npd: 4, inactive: 5 }[r.status]), html: r => U.badges(r, W.S), xl: r => t('st_' + r.status) },
@@ -105,12 +111,16 @@
       { k: 'pos', label: t('rp_pos'), num: true, get: r => r.totalAll + r.openPO, html: r => `<span title="${U.esc(t('rp_pos_tip', { s: U.n(r.totalAll), p: U.n(r.openPO) }))}">${U.n(r.totalAll + r.openPO)}</span>` },
       { k: 'rop', label: 'ROP', num: true, get: r => r.rop, html: r => `<span class="${r.totalAll + r.openPO <= r.rop ? 'late' : ''}">${U.n(r.rop)}</span>` },
       { k: 'lt', label: t('dr_lt'), num: true, get: r => r.lt + (W.F.ltAdd || 0), html: r => U.n(r.lt + (W.F.ltAdd || 0)) },
+      { k: 'grp', label: t('col_grp'), get: r => r.cls ? r.cls.group : '', html: r => Pages.grpBadge(r) },   // CR-03 R4 ↓
+      { k: 'sl', label: t('col_sl'), num: true, get: r => r.ss3 ? r.ss3.sl : -1, html: r => r.ss3 ? U.pct(r.ss3.sl, 1) : '<span class="muted">—</span>', xl: r => r.ss3 ? +r.ss3.sl.toFixed(1) : '' },
+      { k: 'ss', label: t('col_ss'), num: true, get: r => r.safetyQty, html: r => `${U.n(r.safetyQty)} <span class="muted">/ ${U.n(r.safety, 1)}</span>`, xl: r => Math.round(r.safetyQty) },
+      { k: 'ltact', label: t('col_ltact'), num: true, get: r => r.lt3 ? r.lt3.lt : -1, html: ltAct, xl: r => r.lt3 ? Math.round(r.lt3.lt) + ' ± ' + Math.round(r.lt3.sd) + (r.lt3.src === 'est' ? ' (est.)' : '') : '' },
       { k: 'moq', label: 'MOQ', num: true, get: r => r.moq, html: r => U.n(r.moq) },
       ...Pages.propCol(r => qtyOf(r) > 0 ? { type: 'po', sku: r.sku, qty: qtyOf(r), value: Math.round(qtyOf(r) * r.cost), detail: 'MOQ ' + r.moq + ' · LT ' + (r.lt + (W.F.ltAdd || 0)) + 'd', lt: r.lt + (W.F.ltAdd || 0), supplier: supplierOf(DB, r.i) } : null)   // CR-01 B3
     ];
     const tb = U.table(host, { key: 'rp-' + App.ui.rpMode, cols, rows: list, cardDiv: true, defaultSort: { key: 'orderby', dir: 'asc' }, empty: t('rp_empty'),
       total: rows => t('total') + ' · ' + U.n(rows.length) + ' SKU',
-      card: r => `<div class="top"><div class="cell2"><b>${U.esc(r.name)}</b><span class="sub">${U.esc(r.sku)} · MOQ ${U.n(r.moq)}</span></div>${U.badges(r, W.S)}</div>
+      card: r => `<div class="top"><div class="cell2"><b>${U.esc(r.name)}</b><span class="sub">${U.esc(r.sku)} · MOQ ${U.n(r.moq)}</span></div>${U.badges(r, W.S)} ${Pages.grpBadge(r)}</div>
         <div class="nums"><div><span>${t('col_orderby')}</span><b class="${r.orderByDn != null && r.orderByDn < as ? 'late' : ''}">${r.orderByDn == null ? '—' : U.dateShort(r.orderByDn)}</b></div>
         <div><span>ROP</span><b>${U.n(r.rop)}</b></div><div><span>${t('rp_pos')}</span><b>${U.n(r.totalAll + r.openPO)}</b></div></div>
         <div class="rp-mrow"><span>${t('rp_qty')}</span>${qtyInput(r)}<b data-val="${U.esc(r.sku)}">${U.money(qtyOf(r) * r.cost)}</b></div>` });
@@ -139,10 +149,12 @@
       const wi = App.ui.whatIf;
       const head = [[t('rp_doc_title')], [t('f_asof'), Calc.iso(as)], [t('rp_doc_made'), new Date().toLocaleString('en-GB')], ['Run Rate', W.basis + (wi.rr ? ` (What-if ${wi.rr > 0 ? '+' : ''}${wi.rr}%)` : '')],
         [t('dr_lt'), wi.lt ? `What-if ${wi.lt > 0 ? '+' : ''}${wi.lt} ${t('days')}` : t('rp_doc_lt_std')], []];
-      const hdr = ['SKU', t('col_name'), t('col_brand'), 'Supplier', t('rp_qty'), 'MOQ', 'unit_cost', t('col_value'), t('col_orderby'), t('rp_doc_eta'), t('col_status'), 'Run Rate/' + t('per_month').replace('/', ''), 'Stock + Open PO', 'ROP', t('rp_sug')];
+      const hdr = ['SKU', t('col_name'), t('col_brand'), 'Supplier', t('rp_qty'), 'MOQ', 'unit_cost', t('col_value'), t('col_orderby'), t('rp_doc_eta'), t('col_status'), 'Run Rate/' + t('per_month').replace('/', ''), 'Stock + Open PO', 'ROP', t('rp_sug'),
+        t('col_grp'), t('col_sl'), 'Safety Stock', t('col_ltact')];   // CR-03 R4
       const body = rows.map(r => [r.sku, r.name, r.brand, supplierOf(DB, r.i), qtyOf(r), r.moq, r.cost, Math.round(qtyOf(r) * r.cost * 100) / 100,
         r.orderByDn == null ? '' : Calc.iso(r.orderByDn), Calc.iso(Math.max(as, Calc.dn(new Date().toISOString().slice(0, 10))) + Math.round(r.lt + (W.F.ltAdd || 0))), t('st_' + r.status),
-        Math.round(r.rrTot * 30), Math.round(r.totalAll + r.openPO), Math.round(r.rop), r.suggestedQty]);
+        Math.round(r.rrTot * 30), Math.round(r.totalAll + r.openPO), Math.round(r.rop), r.suggestedQty,
+        r.cls ? r.cls.group : '', r.ss3 ? +r.ss3.sl.toFixed(1) : '', Math.round(r.safetyQty), r.lt3 ? Math.round(r.lt3.lt) + ' ± ' + Math.round(r.lt3.sd) + (r.lt3.src === 'est' ? ' (est.)' : '') : '']);
       const tot = ['', t('total'), '', '', rows.reduce((x, r) => x + qtyOf(r), 0), '', '', Math.round(rows.reduce((x, r) => x + qtyOf(r) * r.cost, 0) * 100) / 100];
       U.xlsx('ใบเสนอสั่งผลิต-' + Calc.iso(as) + '.xlsx', [{ name: 'ใบเสนอสั่งผลิต', rows: head.concat([hdr], body, [tot]) }]);
     };

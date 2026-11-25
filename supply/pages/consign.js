@@ -25,6 +25,16 @@
         ${Pages.kpiCard(t('k_st'), t('k_st_tip'), U.pct(k.sellThrough, 1), t('k_sub_st', { so: U.n(soQty) }), Pages.delta(k.sellThrough, kp.sellThrough, 'pp', 'up'), vs)}
         ${Pages.kpiCard(t('k_recall'), t('k_recall_tip', { d: S.consignDocHigh, s: C.stLow }), U.money(k.recallV), t('k_sub_recall', { n: U.n(k.recallN), q: U.n(rec.reduce((x, p) => x + p.recall.qty, 0)) }), Pages.delta(k.recallV, kp.recallV, 'rel', 'down'), vs)}
       </div>`;
+      // CR-03 R5: early warning per SKU × account (pre-set thresholds) — 4 cards · cumulative In vs Out + WOS · alert list · matrix metrics
+      const EW = Calc.earlyWarnOf(DB, M.rows, M.asDn, M.mask, S), ek = EW.kpi, ewMap = new Map(EW.pairs.map(x => [x.key, x]));
+      const EWp = M.rowsPrev ? Calc.earlyWarnOf(DB, M.rowsPrev, M.periodPrev.p1, M.mask, S).kpi : {};
+      const cyc = Calc.replenCycle(S, ''), cycTxt = EW.byAcc.some(a => a.cycle !== cyc) ? t('ew_cycle_mixed') : U.n(cyc);
+      html += `<div class="kpis k4 ew-kpis">
+        ${Pages.kpiCard(t('k_instock'), t('k_instock_tip', { m: S.inStockMin }), U.pct(ek.instock, 1), t('k_sub_instock', { n: U.n(ek.lowIn), m: S.inStockMin }), Pages.delta(ek.instock, EWp.instock, 'pp', 'up'), vs)}
+        ${Pages.kpiCard(t('k_wos_red'), t('k_wos_red_tip', { y: S.wosYellowX, r: S.wosRedX }), `${U.n(ek.red)}<small>${t('pairs_u')}</small>`, t('k_sub_wos', { y: U.n(ek.yellow), c: cycTxt }), Pages.delta(ek.red, EWp.red, 'abs', 'down'), vs)}
+        ${Pages.kpiCard(t('k_rgap'), t('k_rgap_tip', { x: S.reorderGapX }), `${U.n(ek.rgap)}<small>${t('pairs_u')}</small>`, t('k_sub_rgap', { d: cycTxt === U.n(cyc) ? U.n(cyc * S.reorderGapX * 7) : t('ew_cycle_mixed') }), Pages.delta(ek.rgap, EWp.rgap, 'abs', 'down'), vs)}
+        ${Pages.kpiCard(t('k_dist'), t('k_dist_tip'), `${U.n(ek.dist)}<small>${t('pairs_u')}</small>`, t('k_sub_dist', { s: U.n(ek.swing), a: U.n(ek.accum) }), Pages.delta(ek.dist, EWp.dist, 'abs', 'down'), vs)}
+      </div>`;
 
       // Row 2 — Sales In vs Sales Out
       const c = Charts.col();
@@ -33,12 +43,24 @@
       const accSel = `<select class="ctl" id="inoutAcc" aria-label="${t('f_account')}" style="height:28px;font-size:12px"><option value="">${t('all_accounts')}</option>${C.accs.map(j => `<option value="${A[j].account_id}" ${ui.inoutAcc === A[j].account_id ? 'selected' : ''}>${U.esc(A[j].name)}</option>`).join('')}</select>`;
       const legend = `<span><i style="background:${c.cons}"></i>${t('l_si')}</span><span><i style="background:${c.wh}"></i>${t('l_so')}</span><span><i class="line" style="background:${c.line}"></i>${t('l_rem')} (${t('right_axis')})</span>`;
       html += Charts.card({ id: 'inout', title: t('c_inout'), tip: t('c_inout_tip'), tools: accSel + U.seg('inoutUnit', [['v', t('u_value')], ['q', t('u_qty')]], ui.inoutUnit), legend });
+      // CR-03 R5: cumulative Sales In vs Sales Out (13 weeks) + WOS for one account (or every selected one) · the alert list
+      if (ui.ewAcc && !C.accs.some(j => A[j].account_id === ui.ewAcc)) ui.ewAcc = '';
+      const ewSel = `<select class="ctl" id="ewAcc" aria-label="${t('f_account')}" style="height:28px;font-size:12px"><option value="">${t('all_accounts')}</option>${C.accs.map(j => `<option value="${A[j].account_id}" ${ui.ewAcc === A[j].account_id ? 'selected' : ''}>${U.esc(A[j].name)}</option>`).join('')}</select>`;
+      const ewLegend = `<span><i class="line" style="background:${c.cons}"></i>${t('l_cum_si')}</span><span><i class="line" style="background:${c.wh}"></i>${t('l_cum_so')}</span><span style="color:${c.warn}"><i class="dash"></i>${t('l_wos')} (${t('right_axis')})</span>`;
+      ui.ewType = ui.ewType || 'all';
+      const EWT = ['wos', 'rgap', 'instock', 'dist', 'swing', 'accum'], ewCnt = x => EW.alerts.filter(a => a.type === x).length;
+      html += `<div class="grid2 even" style="margin-top:16px">
+        ${Charts.card({ id: 'ewcum', title: t('c_ewcum'), tip: t('c_ewcum_tip', { y: S.wosYellowX, r: S.wosRedX }), tools: ewSel, legend: ewLegend, boxClass: 'h-row3' })}
+        <section class="card" id="card-ew"><div class="card-head"><h3>${t('c_alerts')} ${U.info(t('c_alerts_tip'))}</h3><span class="muted small">${t('k_sub_alerts', { n: U.n(EW.alerts.length), p: U.n(ek.pairs) })}</span></div>
+          <div class="stabs ew-tabs">${['all'].concat(EWT).map(x => { const n = x === 'all' ? EW.alerts.length : ewCnt(x); return `<button type="button" data-ewtab="${x}" class="${ui.ewType === x ? 'on' : ''}${n ? '' : ' zero'}">${t(x === 'all' ? 'tab_all' : 'ew_' + x)}<span class="n">${U.n(n)}</span></button>`; }).join('')}</div>
+          <div id="ewHost"></div></section>
+      </div>`;
 
       // Row 3 — matrix
       ui.mxMetric = ui.mxMetric || 'rem';
       const sw = (cls, l) => `<span><i class="${cls}"></i>${l}</span>`;
       html += `<section class="card" id="card-mx" style="margin-top:16px"><div class="card-head"><h3>${t('c_matrix')} ${U.info(t('c_matrix_tip', { h: S.consignDocHigh, l: S.consignDocLow, s: C.stLow }))}</h3>
-        <div class="card-tools">${U.seg('mxMetric', [['rem', t('m_rem')], ['doc', t('m_doc')], ['st', t('m_st')]], ui.mxMetric)}<button type="button" class="btn small" id="mxXlsx">${U.icon('download')}${t('export_xlsx')}</button></div></div>
+        <div class="card-tools">${U.seg('mxMetric', [['rem', t('m_rem')], ['doc', t('m_doc')], ['st', t('m_st')], ['oos', t('m_oos')], ['wos', t('m_wos')], ['instock', t('m_instock')], ['rgap', t('m_rgap')]], ui.mxMetric)}<button type="button" class="btn small" id="mxXlsx">${U.icon('download')}${t('export_xlsx')}</button></div></div>
         <div class="legend">${sw('ps ps-out', t('ps_out'))}${sw('ps ps-low', t('ps_low', { d: S.consignDocLow }))}${sw('ps ps-high', t('ps_high', { d: S.consignDocHigh }))}<span>◆ ${t('st_expiry')}</span></div>
         <div id="mxHost"></div></section>`;
 
@@ -63,6 +85,30 @@
       Charts.bind('inout', { title: t('c_inout') + (acc ? ' · ' + acc.name : ''), filename: 'sales-in-out' + (acc ? '-' + acc.account_id : ''), legendHTML: legend,
         build: big => inoutConfig(C, series, ui.inoutUnit, c, big, M), table: () => inoutTable(C, series, ui.inoutUnit, M) });
       main.querySelector('#inoutAcc').addEventListener('change', e => { ui.inoutAcc = e.target.value; App.rerender(); });
+      // CR-03 R5
+      const ewJs = ui.ewAcc ? [DB.accIdx.get(ui.ewAcc)] : C.accs, ewS = Calc.ewSeriesOf(DB, M.rows, M.asDn, ewJs), ewA = ui.ewAcc ? A.find(a => a.account_id === ui.ewAcc) : null;
+      const ewCycle = ewA ? Calc.replenCycle(S, ewA.account_id) : null;
+      Charts.bind('ewcum', { title: t('c_ewcum') + (ewA ? ' · ' + ewA.name : ''), filename: 'sell-in-vs-sell-out' + (ewA ? '-' + ewA.account_id : ''), legendHTML: ewLegend,
+        build: big => ewConfig(ewS, c, big, ewCycle ? [ewCycle * S.wosYellowX, ewCycle * S.wosRedX] : null),
+        table: () => ({ cols: [t('col_week'), t('l_si'), t('l_so'), t('l_cum_si'), t('l_cum_so'), t('l_wos')], rows: ewS.map(w => [Calc.iso(w.dn), Math.round(w.si), Math.round(w.so), Math.round(w.cumSI), Math.round(w.cumSO), w.wos == null ? '' : +w.wos.toFixed(1)]) }) });
+      main.querySelector('#ewAcc').addEventListener('change', e => { ui.ewAcc = e.target.value; App.rerender(); });
+      main.querySelectorAll('[data-ewtab]').forEach(b => b.addEventListener('click', () => { ui.ewType = b.dataset.ewtab; App.rerender(); }));
+      const SEV = { high: 0, medium: 1, low: 2 }, sevChip = a => `<span class="st ${a.sev === 'high' ? 's-err' : a.sev === 'medium' ? 'reorder' : 's-gray'}">${t('sev_' + a.sev)}</span>`;
+      const ewVal = a => a.type === 'wos' ? (isFinite(a.val) ? U.n(a.val, 1) : '∞') + ' ' + t('weeks_u') : a.type === 'rgap' ? (isFinite(a.val) ? U.n(a.val) : '∞') + ' ' + t('days') : a.type === 'instock' ? U.pct(a.val) : a.type === 'swing' ? (a.val > 0 ? '+' : '') + U.n(a.val, 1) + ' ' + t('weeks_u') : a.type === 'accum' ? (a.val == null ? '∞' : U.n(a.val, 1)) + ' ' + t('weeks_u') : '—';
+      const ewThr = a => a.type === 'wos' ? '≥ ' + U.n(a.thr) + ' ' + t('weeks_u') : a.type === 'rgap' ? '> ' + U.n(a.thr) + ' ' + t('days') : a.type === 'instock' ? '< ' + U.n(a.thr) + '%' : a.type === 'swing' ? '± ' + U.n(a.thr) + ' ' + t('weeks_u') : a.type === 'accum' ? '> ' + U.n(a.thr) + ' ' + t('weeks_u') : t('ew_dist_rule');
+      const ewRows = ui.ewType === 'all' ? EW.alerts : EW.alerts.filter(a => a.type === ui.ewType);
+      const ewCols = [
+        { k: 'sev', label: t('col_sev'), get: a => SEV[a.sev], html: sevChip, xl: a => t('sev_' + a.sev) },
+        { k: 'type', label: t('col_type'), get: a => t('ew_' + a.type), html: a => `<div class="cell2"><b>${U.esc(t('ew_' + a.type))}</b><span class="sub">${U.esc(ewVal(a))} · ${U.esc(ewThr(a))}</span></div>`, xl: a => t('ew_' + a.type) },
+        { k: 'sku', label: t('col_sku'), get: a => a.sku, html: a => `<div class="cell2"><b title="${U.esc(a.name)}">${U.esc(a.name)}</b><span class="sub">${U.esc(a.sku)} · ${U.esc(a.acc)}</span></div>` },
+        { k: 'val', label: t('col_val'), num: true, get: a => isFinite(a.val) ? a.val : 1e9, html: ewVal, xl: ewVal },
+        { k: 'acc', label: t('col_acc'), get: a => a.acc },
+        { k: 'thr', label: t('col_thr'), get: a => a.thr, html: a => `<span class="muted">${U.esc(ewThr(a))}</span>`, xl: ewThr }
+      ];
+      U.table(main.querySelector('#ewHost'), { key: 'ew-' + ui.ewType, cols: ewCols, rows: ewRows, defaultSort: { key: 'sev', dir: 'asc' }, compact: true, empty: t('no_alerts'),
+        total: rows => t('total') + ' · ' + U.n(rows.length), onRow: a => { App.ui.stockTab = 'all'; App.go('stock', { sku: a.sku }); },
+        card: a => `<div class="top"><div class="cell2"><b>${U.esc(a.name)}</b><span class="sub">${U.esc(a.sku)} · ${U.esc(a.acc)}</span></div>${sevChip(a)}</div>
+          <div class="act">${U.esc(t('ew_' + a.type))} · ${U.esc(ewVal(a))} <span class="muted">(${U.esc(ewThr(a))})</span></div>` });
 
       // matrix
       const groups = new Map();
@@ -72,10 +118,14 @@
         g.worst = Math.min(g.worst, { out: 0, low: 1, high: 2, ok: 3 }[p.status]);
       }
       const metric = ui.mxMetric;
-      const val = p => metric === 'rem' ? p.rem : metric === 'doc' ? p.doc : p.st;
-      const fmtV = x => x == null ? '—' : metric === 'rem' ? U.n(x) : metric === 'doc' ? U.days(x) : U.pct(x);
+      const oosAny = g => { let b = 0; g.cells.forEach(p => { b |= p.oosBits || 0; }); let n = 0; while (b) { b &= b - 1; n++; } return n; };   // CR-03: weeks with any account out
+      const ewOf = p => ewMap.get(p.i + '|' + p.j) || {};   // CR-03 R5: + WOS / in-stock % / reorder gap (days)
+      const val = p => metric === 'oos' ? p.oosW : metric === 'wos' ? ewOf(p).wos : metric === 'instock' ? ewOf(p).instock : metric === 'rgap' ? ewOf(p).rgapD : metric === 'rem' ? p.rem : metric === 'doc' ? p.doc : p.st;   // CR-03 R3: + OOS weeks (13W)
+      const fmtV = x => x == null ? '—' : metric === 'wos' ? (isFinite(x) ? U.n(x, 1) : '∞') : metric === 'rgap' ? (isFinite(x) ? U.n(x) : '∞') : metric === 'oos' ? U.n(x) : metric === 'rem' ? U.n(x) : metric === 'doc' ? U.days(x) : U.pct(x);
       const cell = p => p ? `<span class="pc ps-${p.status}" title="${U.esc(`${p.acc}: ${t('m_rem')} ${U.n(p.rem)} · DOC ${U.days(p.doc)} · Sell-through ${U.pct(p.st)}${p.expiry ? ' · ' + t('st_expiry') + ' ' + U.money(p.riskV) : ''}`)}">${fmtV(val(p))}${p.expiry ? '<i class="xd">◆</i>' : ''}</span>` : '';
-      const gTot = g => metric === 'rem' ? g.rem : metric === 'doc' ? (g.rr > 0 ? g.rem / g.rr : (g.rem > 0.5 ? Infinity : null)) : (g.base > 0 ? g.so / g.base * 100 : null);
+      const ewTot = g => { let rem = 0, so4 = 0, inW = 0, allW = 0, gap = null; g.cells.forEach(p => { const e = ewOf(p); rem += e.rem || 0; so4 += e.so4 || 0; inW += e.inW || 0; allW += e.allW || 0; if (e.rgapD != null) gap = gap == null ? e.rgapD : Math.max(gap, e.rgapD); });
+        return metric === 'wos' ? (so4 > 0 ? rem / so4 : rem > 0.5 ? Infinity : null) : metric === 'instock' ? (allW ? inW / allW * 100 : null) : gap; };
+      const gTot = g => ['wos', 'instock', 'rgap'].includes(metric) ? ewTot(g) : metric === 'oos' ? oosAny(g) : metric === 'rem' ? g.rem : metric === 'doc' ? (g.rr > 0 ? g.rem / g.rr : (g.rem > 0.5 ? Infinity : null)) : (g.base > 0 ? g.so / g.base * 100 : null);
       const mxCols = [
         { k: 'sku', label: t('col_sku'), sticky: true, get: g => g.sku, html: g => `<div class="cell2"><b title="${U.esc(g.name)}">${U.esc(g.name)}</b><span class="sub">${U.esc(g.sku)}</span></div>` },
         ...C.accs.map(j => ({ k: 'a' + j, label: A[j].name, num: true, get: g => g.cells.has(j) ? val(g.cells.get(j)) : null, html: g => cell(g.cells.get(j)), cls: () => 'pcell',
@@ -155,6 +205,26 @@
       const pct = calc > 0 ? diff / calc * 100 : (diff === 0 ? 0 : null), a = Math.abs(pct == null ? Infinity : pct);
       return Object.assign(c, { sku: s.sku, name: s.name, acc: DB.accounts[c.j].name, calc, diff, pct, diffV: diff * s.unit_cost, cls: a <= CNT_OK ? 'ok' : a <= CNT_CHK ? 'chk' : 'big' });
     });
+  }
+
+  // ------------------------------------------------------------------ CR-03 R5: cumulative Sales In vs Sales Out (13 weeks) + WOS (right axis, yellow / red lines for one account)
+  function ewConfig(W, c, big, lines) {
+    return {
+      type: 'line',
+      data: { labels: W.map(w => U.dateShort(w.dn)), datasets: [
+        { label: t('l_cum_si'), data: W.map(w => w.cumSI), borderColor: c.cons, backgroundColor: Charts.alpha(c.cons, .12), fill: false, borderWidth: 2, pointRadius: big ? 3 : 2, tension: .2 },
+        { label: t('l_cum_so'), data: W.map(w => w.cumSO), borderColor: c.wh, backgroundColor: Charts.alpha(c.wh, .12), fill: false, borderWidth: 2, pointRadius: big ? 3 : 2, tension: .2 },
+        { label: t('l_wos'), data: W.map(w => w.wos == null ? null : Math.min(w.wos, 52)), yAxisID: 'y1', borderColor: c.warn, borderDash: [6, 4], borderWidth: 1.5, pointRadius: big ? 3 : 2, fill: false, tension: .2 },
+        ...(lines || []).map((v, n) => ({ label: n ? 'WOS ' + t('ew_red') : 'WOS ' + t('ew_yellow'), data: W.map(() => v), yAxisID: 'y1', borderColor: n ? c.err : c.status.reorder, borderDash: [2, 3], borderWidth: 1, pointRadius: 0, fill: false }))
+      ] },
+      options: {
+        interaction: { mode: 'index', intersect: false },
+        scales: { x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: big ? 14 : 7 } },
+          y: { beginAtZero: true, grid: { color: c.grid }, ticks: { callback: Charts.tickQty, maxTicksLimit: 6 } },
+          y1: { position: 'right', beginAtZero: true, grid: { display: false }, ticks: { maxTicksLimit: 6, callback: v => v + 'w' } } },
+        plugins: { tooltip: { callbacks: { label: it => ' ' + it.dataset.label + ': ' + (it.dataset.yAxisID === 'y1' ? U.n(it.raw, 1) + ' ' + t('weeks_u') : U.n(it.raw)) } } }
+      }
+    };
   }
 
   // ------------------------------------------------------------------ combo: bars In / Out + Remaining line (right axis)

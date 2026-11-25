@@ -11,8 +11,14 @@
     ['set_g_quota', [['fitHigh', '%'], ['fitLow', '%']]],
     ['set_g_consign', [['consignDocHigh', 'days'], ['consignDocLow', 'days'], ['stLowW', '%'], ['stLowM', '%'], ['cnKeepDays', 'days']]],
     ['set_g_inbound', [['onTimeDays', 'days']]],
-    ['set_g_cr03', [['staleW', 'w'], ['soCompleteW', 'w'], ['soLateDay', 'd']]]   // CR-03 R1 thresholds
+    ['set_g_cr03', [['staleW', 'w'], ['soCompleteW', 'w'], ['soLateDay', 'd']]],   // CR-03 R1 thresholds
+    ['set_g_abc', [['oosUnits', 'u'], ['abcA', '%'], ['abcB', '%'], ['xyzX', 'cv'], ['xyzY', 'cv'], ['npdW', 'w'], ['ltMinN', 'n']]],   // CR-03 R3 / R4 thresholds
+    ['set_g_ew', [['replenCycleW', 'w'], ['wosYellowX', 'x'], ['wosRedX', 'x'], ['reorderGapX', 'x'], ['inStockMin', '%'], ['swingW', 'w'], ['sisoGapW', 'w']]],   // CR-03 R5
+    ['set_g_fva', [['tsLimit', 'ts'], ['fvaNegM', 'm']]],   // CR-03 R6
+    ['set_g_sop', [['planLockDay', 'dom'], ['sopMoveDays', 'days']]]   // CR-03 R7 (A6)
   ];
+  const UNIT = u => ({ '%': '%', w: t('weeks_u'), d: t('day_u'), cv: 'CV', u: t('u_unit'), n: t('times_u'), x: t('x_cycle'), m: t('months_u'), ts: '', dom: t('dom_u') })[u] ?? t('days');   // CR-03
+  const SL_ROWS = ['A', 'B', 'C'], SL_COLS = ['X', 'Y', 'Z'];   // CR-03 R4: service level table
   const OO_TYPES = ['pr', 'sample', 'internal', 'writeoff', 'other'];   // CR-03 R2
   const errText = e => {
     const [code, rest] = String(e.msg).split(/:(.*)/s);
@@ -52,13 +58,23 @@
                 <label class="set-row"><span>${t('set_rrBasis')}</span><select class="ctl" name="rrBasis">${['L4W', 'L3M', 'L6M', 'W'].map(k => `<option value="${k}" ${S.rrBasis === k ? 'selected' : ''}>${t('rr_' + k)}</option>`).join('')}</select></label>
                 <label class="set-row"><span>${t('set_useQuota')}</span><input type="checkbox" name="useQuotaForSalesIn" ${S.useQuotaForSalesIn ? 'checked' : ''}></label></div>
               <div class="set-g"><h4>${t('set_g_method')}</h4>
-                <label class="set-row"><span>${t('set_rrEndMode')}<small class="muted"> · ${t('set_default')} ${t('rr_end_' + D.rrEndMode)}</small></span><select class="ctl" name="rrEndMode">${['account', 'history'].map(k => `<option value="${k}" ${S.rrEndMode === k ? 'selected' : ''}>${t('rr_end_' + k)}</option>`).join('')}</select></label>
+                <label class="set-row set-stack"><span>${t('set_rrEndMode')}<small class="muted"> · ${t('set_default')} ${t('rr_end_' + D.rrEndMode)}</small></span><select class="ctl" name="rrEndMode">${['account', 'history'].map(k => `<option value="${k}" ${S.rrEndMode === k ? 'selected' : ''}>${t('rr_end_' + k)}</option>`).join('')}</select></label>
+                <label class="set-row set-stack"><span>${t('set_rrMode')}<small class="muted"> · ${t('set_default')} ${t('rm_' + D.rrMode)}</small></span><select class="ctl" name="rrMode">${['unconstrained', 'sellout'].map(k => `<option value="${k}" ${S.rrMode === k ? 'selected' : ''}>${t('rm_' + k)}</option>`).join('')}</select></label>
+                <label class="set-row"><span>${t('set_oosEnd')}</span><input type="checkbox" name="oosEnd" ${S.oosEnd !== false ? 'checked' : ''}></label>
+                <label class="set-row set-stack"><span>${t('set_safetyMode')}<small class="muted"> · ${t('set_default')} ${t('sm_' + D.safetyMode)}</small></span><select class="ctl" name="safetyMode">${['statistical', 'days'].map(k => `<option value="${k}" ${S.safetyMode === k ? 'selected' : ''}>${t('sm_' + k)}</option>`).join('')}</select></label>
+                <label class="set-row"><span>${t('set_fvaProposal')}<small class="muted"> · ${t('set_default')} ${t(D.fvaProposal ? 'on_u' : 'off_u')}</small></span><input type="checkbox" name="fvaProposal" ${S.fvaProposal ? 'checked' : ''}></label>
                 <label class="set-row"><span>${t('set_prPlanOn')}</span><input type="checkbox" name="prPlanOn" ${S.prPlanOn ? 'checked' : ''}></label>
-                <div class="set-row set-pr"><span>${t('set_prPlan')}</span><span class="set-pr-list">${Object.entries(S.prPlan || {}).map(([k, q]) => `<span class="chip">${U.esc(k)} · ${U.n(q)} <button type="button" class="icon-btn" data-pr-del="${U.esc(k)}" aria-label="×">×</button></span>`).join('')}
+                <div class="set-row set-pr set-stack"><span>${t('set_prPlan')}</span><span class="set-pr-list">${Object.entries(S.prPlan || {}).map(([k, q]) => `<span class="chip">${U.esc(k)} · ${U.n(q)} <button type="button" class="icon-btn" data-pr-del="${U.esc(k)}" aria-label="×">×</button></span>`).join('')}
                   <span class="set-pr-add"><select class="ctl" id="prSku">${App.DB.skus.map(s => `<option value="${s.sku}">${s.sku}</option>`).join('')}</select><input class="ctl" type="number" id="prQty" min="0" step="1" placeholder="0"><button type="button" class="btn small" id="prAdd">${t('set_add')}</button></span></span></div>
                 <div class="set-row"><span></span><button type="button" class="btn small ghost" id="setLegacy">${t('set_legacy')}</button></div></div>
               ${GROUPS.map(([g, list]) => `<div class="set-g"><h4>${t(g)}</h4>${list.map(([k, u]) => `<label class="set-row"><span>${t('set_' + k)}<small class="muted"> · ${t('set_default')} ${D[k]}</small></span>
-                <span class="set-in"><input class="ctl" type="number" name="${k}" value="${S[k]}" min="0" step="1"><em>${u === '%' ? '%' : u === 'w' ? t('weeks_u') : u === 'd' ? t('day_u') : t('days')}</em></span></label>`).join('')}</div>`).join('')}
+                <span class="set-in"><input class="ctl" type="number" name="${k}" value="${S[k]}" min="0" step="${u === 'cv' ? '0.05' : u === 'ts' || u === 'x' ? '0.5' : '1'}"><em>${UNIT(u)}</em></span></label>`).join('')}</div>`).join('')}
+              <div class="set-g"><h4>${t('set_g_rc')} ${U.info(t('set_rc_tip'))}</h4>${App.DB.accounts.filter(a => a.is_consignment).map(a => `<label class="set-row"><span>${U.esc(a.name)}<small class="muted"> · ${U.esc(a.account_id)}</small></span>
+                <span class="set-in"><input class="ctl" type="number" data-rc="${U.esc(a.account_id)}" value="${(S.replenCycle || {})[a.account_id] || ''}" min="0" step="1" placeholder="${S.replenCycleW}"><em>${t('weeks_u')}</em></span></label>`).join('')}</div>
+              <div class="set-g"><h4>${t('set_g_sl')} ${U.info(t('set_sl_tip'))}</h4><table class="tbl compact set-sl"><thead><tr><th></th>${SL_COLS.map(x => `<th class="num">${x}</th>`).join('')}</tr></thead><tbody>
+                ${SL_ROWS.map(a => `<tr><th>${a}</th>${SL_COLS.map(x => `<td><input class="ctl" type="number" name="sl_${a}${x}" value="${S['sl_' + a + x]}" min="0" max="99.9" step="0.5" aria-label="${a}${x} %" title="${t('set_default')} ${D['sl_' + a + x]}%"></td>`).join('')}</tr>`).join('')}
+                <tr><th>N</th><td><input class="ctl" type="number" name="sl_N" value="${S.sl_N}" min="0" max="99.9" step="0.5" aria-label="N %" title="${t('set_default')} ${D.sl_N}%"></td><th>E</th><td><input class="ctl" type="number" name="sl_E" value="${S.sl_E}" min="0" max="99.9" step="0.5" aria-label="E %" title="${t('set_default')} ${D.sl_E}%"></td></tr></tbody></table>
+                <div class="small muted">${t('set_sl_note')}</div></div>
             </form><div class="foot-note">${t('set_note')}</div></section>
         </div>
         <section class="card" id="card-storage" style="margin-top:16px"><div class="card-head"><h3>${t('set_storage')}</h3></div><div class="tablewrap free"><table class="tbl compact"><tbody id="storageRows"><tr><td>…</td></tr></tbody></table></div></section>`;   // CR-03 (2.5)
@@ -78,32 +94,39 @@
         const next = Object.assign({}, App.S);
         let bad = '';
         form.querySelectorAll('input[type=number][name]').forEach(inp => { const v = +inp.value; if (inp.value === '' || !isFinite(v) || v < 0) bad = inp.name; else next[inp.name] = v; });   // CR-03: [name] (the PR-plan qty box is not a setting)
-        if (bad) { U.toast(t('set_bad', { k: t('set_' + bad) })); return; }
+        if (bad) { U.toast(t('set_bad', { k: /^sl_/.test(bad) ? t('set_g_sl') + ' ' + bad.slice(3) : t('set_' + bad) })); return; }
         if (next.fitLow >= next.fitHigh) { U.toast(t('set_bad_fit')); return; }
         next.rrBasis = form.rrBasis.value; next.useQuotaForSalesIn = form.useQuotaForSalesIn.checked;
         next.rrEndMode = form.rrEndMode.value; next.prPlanOn = form.prPlanOn.checked;   // CR-03
+        next.rrMode = form.rrMode.value; next.safetyMode = form.safetyMode.value; next.oosEnd = form.oosEnd.checked;   // CR-03 (3B)
+        next.fvaProposal = form.fvaProposal.checked; const rc = {};   // CR-03 (3C)
+        form.querySelectorAll('[data-rc]').forEach(inp => { const v = +inp.value; if (inp.value !== '' && v > 0) rc[inp.dataset.rc] = v; }); next.replenCycle = rc;
+        if (!(next.planLockDay >= 1 && next.planLockDay <= 28 && Number.isInteger(next.planLockDay)) || !(next.sopMoveDays >= 1)) { U.toast(t('set_bad_lock')); return; }   // CR-03 R7
+        if (!(next.replenCycleW >= 1) || !(next.wosYellowX > 0 && next.wosYellowX < next.wosRedX) || !(next.inStockMin > 0 && next.inStockMin <= 100) || !(next.tsLimit > 0) || !(next.fvaNegM >= 1 && next.fvaNegM <= 6 && Number.isInteger(next.fvaNegM))) { U.toast(t('set_bad_ew')); return; }
         if (!(next.soLateDay >= 1 && next.soLateDay <= 7)) { U.toast(t('set_bad_day')); return; }   // CR-03
-        const rrChanged = next.rrBasis !== App.S.rrBasis;
+        if (!(next.abcA > 0 && next.abcA < next.abcB && next.abcB <= 100) || !(next.xyzX > 0 && next.xyzX < next.xyzY)) { U.toast(t('set_bad_abc')); return; }   // CR-03 R4
+        if (Calc.CR3_GROUPS.some(g => !(next['sl_' + g] >= 0 && next['sl_' + g] <= 99.9)) || !(next.npdW >= 1) || !(next.ltMinN >= 2)) { U.toast(t('set_bad_sl')); return; }
+        const rrChanged = next.rrBasis !== App.S.rrBasis, rmChanged = next.rrMode !== App.S.rrMode;
         App.saveSettings(next);
-        if (rrChanged) App.setF({ rr: next.rrBasis });
+        if (rrChanged || rmChanged) App.setF(Object.assign(rrChanged ? { rr: next.rrBasis } : {}, rmChanged ? { rm: next.rrMode } : {}));
         U.toast(t('set_saved'));
       });
       // CR-03: old methods in one click (anchors of CR-01) · the PR plan edits save at once (audited by supply-intake.js)
-      main.querySelector('#setLegacy').addEventListener('click', () => { App.saveSettings(Object.assign({}, App.S, { rrEndMode: 'history', prPlanOn: false })); U.toast(t('set_saved')); });
+      main.querySelector('#setLegacy').addEventListener('click', () => { App.saveSettings(Object.assign({}, App.S, Calc.LEGACY_METHODS)); App.setF({ rm: Calc.LEGACY_METHODS.rrMode }); U.toast(t('set_saved')); });   // CR-03: every switch → CR-01
       main.querySelector('#prAdd').addEventListener('click', () => { const k = main.querySelector('#prSku').value, q = +main.querySelector('#prQty').value; if (!k || !(q >= 0)) return; const m = Object.assign({}, App.S.prPlan || {}); if (q > 0) m[k] = q; else delete m[k]; App.saveSettings(Object.assign({}, App.S, { prPlan: m })); U.toast(t('set_saved')); });
       main.querySelectorAll('[data-pr-del]').forEach(b => b.addEventListener('click', () => { const m = Object.assign({}, App.S.prPlan || {}); delete m[b.dataset.prDel]; App.saveSettings(Object.assign({}, App.S, { prPlan: m })); }));
       storageInfo(main);
-      main.querySelector('#setDefault').addEventListener('click', () => { App.saveSettings(Object.assign({}, Calc.DEFAULT_SETTINGS)); App.setF({ rr: Calc.DEFAULT_SETTINGS.rrBasis }); U.toast(t('set_saved')); });
+      main.querySelector('#setDefault').addEventListener('click', () => { App.saveSettings(Object.assign({}, Calc.DEFAULT_SETTINGS)); App.setF({ rr: Calc.DEFAULT_SETTINGS.rrBasis, rm: Calc.DEFAULT_SETTINGS.rrMode }); U.toast(t('set_saved')); });
     }
   };
 
   /** CR-03 (2.5): how much browser storage the app uses (localStorage is about 5 MB per site; IndexedDB is far larger). */
   function storageInfo(main) {
     let ls = 0; try { for (let k = 0; k < localStorage.length; k++) { const key = localStorage.key(k); ls += (key.length + (localStorage.getItem(key) || '').length) * 2; } } catch (e) { /* blocked */ }
-    const kb = b => b >= 1073741824 ? U.n(b / 1073741824, 1) + ' GB' : b >= 1048576 ? U.n(b / 1048576, 1) + ' MB' : U.n(b / 1024, 0) + ' KB', st = typeof Supply.intakeStats === 'function' ? Supply.intakeStats() : { batches: 0, rows: 0 };
+    const kb = b => b >= 1073741824 ? U.n(b / 1073741824, 1) + ' GB' : b >= 1048576 ? U.n(b / 1048576, 1) + ' MB' : U.n(b / 1024, 0) + ' KB', st = typeof Supply.intakeStats === 'function' ? Supply.intakeStats() : { batches: 0, rows: 0 }, sp = typeof Supply.sopStats === 'function' ? Supply.sopStats() : null;   // CR-03 R7: + snapshots / action log
     const draw = est => { const el = main.querySelector('#storageRows'); if (!el) return;
       el.innerHTML = `<tr><td>${t('st_ls')}</td><td class="num">${t('st_used', { u: kb(ls) })}</td></tr>
-        <tr><td>${t('st_idb')}<div class="small muted">${t('st_intake', { b: U.n(st.batches), r: U.n(st.rows) })}</div></td><td class="num">${est && est.usage != null ? t('st_used', { u: kb(est.usage) }) + (est.quota ? ' · ' + t('st_of', { q: kb(est.quota) }) : '') : '—'}</td></tr>`; };
+        <tr><td>${t('st_idb')}<div class="small muted">${t('st_intake', { b: U.n(st.batches), r: U.n(st.rows) })}${sp ? ' · ' + t('st_sop', { s: U.n(sp.snaps), sc: U.n(sp.snapCap), a: U.n(sp.acts), ac: U.n(sp.actCap) }) : ''}</div></td><td class="num">${est && est.usage != null ? t('st_used', { u: kb(est.usage) }) + (est.quota ? ' · ' + t('st_of', { q: kb(est.quota) }) : '') : '—'}</td></tr>`; };
     draw(null);
     try { navigator.storage.estimate().then(draw).catch(() => {}); } catch (e) { /* not supported */ }
   }

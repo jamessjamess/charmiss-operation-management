@@ -14,6 +14,15 @@
     if (cache.key !== key) { cache.Q = Calc.quotaOf(App.DB, M, win); cache.key = key; }
     return cache.Q;
   };
+  /** CR-03 R6: FVA (Naive vs Quota) — cached per filter + window */
+  const fcache = { key: '', F: null };
+  Pages.fvaData = (App, win) => {
+    const M = App.model(), key = App._modelKey + '|' + win;
+    if (fcache.key !== key) { fcache.F = Calc.fvaOf(App.DB, M, win, M.S); fcache.key = key; }
+    return fcache.F;
+  };
+  const fvaTxt = x => x == null ? '—' : (x > 0 ? '+' : x < 0 ? '−' : '') + U.n(Math.abs(x), 1) + ' pp';
+  Pages.tsBadge = f => !f || f.tsCls === 'ok' ? '' : `<span class="st ${f.tsCls === 'high' ? 'overstock' : 'reorder'}" title="TS ${U.n(f.ts, 1)}">${t('ts_' + f.tsCls)}</span>`;
 
   Pages.quota = {
     render(main, App) {
@@ -22,6 +31,7 @@
       let html = Pages.pageHead(M, 'nav_quota', 'q_quota') + Pages.allocNote(M);
       if (!M.rows.length) { main.innerHTML = html + `<div class="card">${U.empty(t('empty'), t('empty_hint'), 'filter')}</div>`; return; }
       const Q = Pages.quotaData(App, ui.qWin), k = Q.kpi;
+      const FV = Pages.fvaData(App, ui.qWin), fvaMap = new Map(FV.pairs.map(x => [x.i + '|' + x.j, x])), fv = FV.total;   // CR-03 R6
       // CR-01 F1: the card leads with month-to-date (the weekly figure swings with MT's two-weekly deliveries); Δ = MTD at the same day of last month
       const achM = Calc.achMtd(DB, M.rows, M.mask, M.asDn), achMPrev = Calc.achMtd(DB, M.rows, M.mask, Calc.addMonths(M.asDn, -1));
       const vs = M.kpiPrev ? t('vs_prev', { p: t(M.period.view === 'M' ? 'prev_m' : 'prev_w') }) : t('no_prev');
@@ -29,12 +39,13 @@
       const mtd = Q.monthly.find(x => x.mtd);
       const biasTxt = k.bias == null ? '—' : (k.bias > 0 ? '+' : k.bias < 0 ? '−' : '') + U.n(Math.abs(k.bias), 1) + '%';
       html += `<div class="toolbar"><span class="small muted">${t('q_window')}</span>${U.seg('qWin', [[3, t('q_win3')], [6, t('q_win6')]], ui.qWin)}<span class="small muted">${U.esc(winTxt)}</span></div>
-        <div class="kpis k5">
+        <div class="kpis k6">
         ${Pages.kpiCard(t('k_ach_mtd'), t('k_ach_mtd_tip'), U.pct(achM, 1), (mtd ? t('k_sub_ach', { si: U.n(mtd.si), q: U.n(mtd.q) }) : '') + (M.period.view !== 'M' ? ' · ' + t('k_sub_ach_wk', { p: U.pct(k.achievement, 1) }) : ''), Pages.delta(achM, achMPrev, 'pp', 'up'), t('vs_prev_mtd'))}
         ${Pages.kpiCard(t('k_st'), t('k_st_tip'), U.pct(M.kpi.sellThrough, 1), t('k_sub_st_q'), Pages.delta(M.kpi.sellThrough, M.kpiPrev && M.kpiPrev.sellThrough, 'pp', 'up'), vs)}
         ${Pages.kpiCard(t('k_mape'), t('k_mape_tip'), U.pct(k.mape, 1), t('k_sub_mape', { n: ui.qWin }), '', winTxt)}
         ${Pages.kpiCard(t('k_bias'), t('k_bias_tip'), biasTxt, k.bias == null ? '' : t(k.bias > 0 ? 'k_sub_bias_hi' : 'k_sub_bias_lo'), '', winTxt)}
         ${Pages.kpiCard(t('k_fill'), t('k_fill_tip'), U.pct(k.fillRate, 1), t('k_sub_fill', { s: U.n(k.shortSupply), o: U.n(k.shortOrder), m: U.n(k.constrained) }), '', winTxt)}
+        ${Pages.kpiCard(t('k_fva'), t('k_fva_tip'), `<span class="${fv.fva == null ? '' : fv.fva >= 0 ? 'fva-good' : 'fva-bad'}">${fvaTxt(fv.fva)}</span>`, t('k_sub_fva', { n: U.pct(fv.wapeN, 1), q: U.pct(fv.wapeQ, 1), h: U.n(fv.high), l: U.n(fv.low) }), '', winTxt)}
       </div>`;
 
       // Row 2
@@ -46,6 +57,16 @@
       html += `<div class="grid2 even">
         ${Charts.card({ id: 'qcombo', title: t('c_qcombo'), tip: t('c_qcombo_tip'), tools: U.seg('qUnit', [['v', t('u_value')], ['q', t('u_qty')]], ui.qUnit), legend: comboLegend, boxClass: 'h-row3' })}
         ${Charts.card({ id: 'qscatter', title: t('c_qscatter'), tip: t('c_qscatter_tip', { lo: S.fitLow, hi: S.fitHigh }), legend: scLegend, boxClass: 'h-row3' })}
+      </div>`;
+
+      // CR-03 R6: FVA by account / Sales / ABC-XYZ group · scatter WAPE Naive × WAPE Quota (each SKU × account)
+      ui.fvaBy = ui.fvaBy || 'acc';
+      const tsColor = { high: c.status.overstock, low: c.status.reorder, ok: c.status.healthy };
+      const fvLegend = ['high', 'low', 'ok'].map(x => `<span><i style="background:${tsColor[x]};border-radius:50%;width:9px;height:9px"></i>${t('ts_' + x)} · ${U.n(FV.pairs.filter(p => p.tsCls === x).length)}</span>`).join('') + `<span style="color:${c.muted}"><i class="dash"></i>${t('l_diag')}</span>`;
+      html += `<div class="grid2 even" style="margin-top:16px">
+        <section class="card" id="card-fva"><div class="card-head"><h3>${t('c_fva')} ${U.info(t('c_fva_tip', { l: S.tsLimit }))}</h3><div class="card-tools">${U.seg('fvaBy', [['acc', t('fva_by_acc')], ['sales', t('fva_by_sales')], ['group', t('fva_by_group')]], ui.fvaBy)}</div></div>
+          <div id="fvaHost"></div><div class="foot-note">${t('fva_note', { m: U.esc(winTxt), l: S.tsLimit })}</div></section>
+        ${Charts.card({ id: 'qfva', title: t('c_fva_scatter'), tip: t('c_fva_scatter_tip'), legend: fvLegend, boxClass: 'h-row3' })}
       </div>`;
 
       // Row 3
@@ -66,6 +87,23 @@
       Charts.bind('qscatter', { title: t('c_qscatter'), filename: 'quota-fit-scatter', legendHTML: scLegend, build: big => scatterConfig(pts, colorOf, S, c, big),
         table: () => ({ cols: [t('col_sku'), t('col_acc'), 'Quota Fit %', 'Sell-through %', t('col_status')], rows: pts.map(p => [p.sku, p.acc, Math.round(p.fit), +p.st.toFixed(1), t('qc_' + p.cls)]) }) });
 
+      // CR-03 R6
+      const fvRows = ui.fvaBy === 'sales' ? FV.bySales : ui.fvaBy === 'group' ? FV.byGroup : FV.byAcc;
+      U.table(main.querySelector('#fvaHost'), { key: 'fva-' + ui.fvaBy, rows: fvRows, compact: true, defaultSort: { key: 'fva', dir: 'asc' }, empty: t('no_events_list'),
+        cols: [
+          { k: 'key', label: t('fva_by_' + ui.fvaBy), sticky: true, get: g => g.key, html: g => `<b>${U.esc(g.key)}</b>` },
+          { k: 'n', label: t('col_pairs'), num: true, get: g => g.n, html: g => U.n(g.n) },
+          { k: 'wn', label: t('col_wape_n'), num: true, get: g => g.wapeN, html: g => U.pct(g.wapeN, 1), xl: g => g.wapeN == null ? '' : +g.wapeN.toFixed(1) },
+          { k: 'wq', label: t('col_wape_q'), num: true, get: g => g.wapeQ, html: g => U.pct(g.wapeQ, 1), xl: g => g.wapeQ == null ? '' : +g.wapeQ.toFixed(1) },
+          { k: 'fva', label: t('col_fva'), num: true, get: g => g.fva, html: g => `<b class="${g.fva == null ? '' : g.fva >= 0 ? 'fva-good' : 'fva-bad'}">${fvaTxt(g.fva)}</b>`, xl: g => g.fva == null ? '' : +g.fva.toFixed(1) },
+          { k: 'ts', label: t('col_ts_cnt'), num: true, get: g => g.high + g.low, html: g => `${g.high ? `<span class="st overstock" title="${U.esc(t('ts_high'))}">↑ ${U.n(g.high)}</span> ` : ''}${g.low ? `<span class="st reorder" title="${U.esc(t('ts_low'))}">↓ ${U.n(g.low)}</span>` : ''}${!g.high && !g.low ? '<span class="muted">—</span>' : ''}`, xl: g => g.high + ' / ' + g.low }
+        ],
+        card: g => `<div class="top"><div class="cell2"><b>${U.esc(g.key)}</b><span class="sub">${U.n(g.n)} ${t('col_pairs')} · ${t('ts_high')} ${U.n(g.high)} · ${t('ts_low')} ${U.n(g.low)}</span></div><b class="${g.fva == null ? '' : g.fva >= 0 ? 'fva-good' : 'fva-bad'}">${fvaTxt(g.fva)}</b></div>
+          <div class="nums"><div><span>${t('col_wape_n')}</span><b>${U.pct(g.wapeN, 1)}</b></div><div><span>${t('col_wape_q')}</span><b>${U.pct(g.wapeQ, 1)}</b></div></div>` });
+      const fvPts = FV.pairs.filter(x => x.wapeN != null);
+      Charts.bind('qfva', { title: t('c_fva_scatter'), filename: 'fva-scatter', legendHTML: fvLegend, build: big => fvaConfig(fvPts, tsColor, c, big),
+        table: () => ({ cols: [t('col_sku'), t('col_acc'), 'Sales', t('col_wape_n'), t('col_wape_q'), t('col_fva'), 'Tracking signal'], rows: fvPts.map(x => [x.sku, x.acc, x.sales, +x.wapeN.toFixed(1), +x.wapeQ.toFixed(1), +x.fva.toFixed(1), +x.ts.toFixed(2)]) }) });
+
       const mk = Calc.monthKey(M.asDn), opsMonth = DB.quotaRes && DB.quotaRes.some(m => m.has(mk));   // CR-01: the AS OF month is the one Ops manages
       const qv = (T, p) => { const a = T[p.i] && T[p.i].get(mk); return a ? a[p.j] : 0; };
       const cols = [
@@ -84,14 +122,22 @@
         { k: 'st', label: 'Sell-through', num: true, get: p => p.st, html: p => p.st == null ? '—' : U.pct(p.st), xl: p => p.st == null ? '' : +p.st.toFixed(1) },
         { k: 'cov', label: t('q_cov', { h: M.h + 'M' }), num: true, get: p => p.coverage, html: p => p.coverage == null ? '—' : `<span class="${p.coverage < 100 ? 'late' : ''}">${U.pct(p.coverage)}</span>`, xl: p => p.coverage == null ? '' : Math.round(p.coverage) },
         { k: 'mape', label: 'MAPE', num: true, get: p => p.mape, html: p => U.pct(p.mape), xl: p => p.mape == null ? '' : Math.round(p.mape) },
+        { k: 'fva', label: t('col_fva'), num: true, get: p => (fvaMap.get(p.i + '|' + p.j) || {}).fva, html: p => { const f = fvaMap.get(p.i + '|' + p.j); return f && f.fva != null ? `<span class="${f.fva >= 0 ? 'fva-good' : 'fva-bad'}">${fvaTxt(f.fva)}</span>` : '—'; },
+          xl: p => { const f = fvaMap.get(p.i + '|' + p.j); return f && f.fva != null ? +f.fva.toFixed(1) : ''; } },   // CR-03 R6
+        { k: 'ts', label: 'Tracking signal', num: true, get: p => (fvaMap.get(p.i + '|' + p.j) || {}).ts, html: p => { const f = fvaMap.get(p.i + '|' + p.j); return f ? `${U.n(f.ts, 1)} ${Pages.tsBadge(f)}` : '—'; },
+          xl: p => { const f = fvaMap.get(p.i + '|' + p.j); return f ? +f.ts.toFixed(2) + (f.tsCls !== 'ok' ? ' ' + t('ts_' + f.tsCls) : '') : ''; } },
         // CR-01 B3: next-month quota = the pair's sell-out run rate × days of next month (a Quota Fit of 100 %)
-        ...Pages.propCol(p => { const nm = Calc.addMonths(Calc.monthStart(M.asDn), 1), rr = p.expected / Calc.daysInMonth(M.asDn); return rr > 0 ? { type: 'quota', sku: p.sku, account: p.accId, period: Calc.monthKey(nm), qty: Math.round(rr * Calc.daysInMonth(nm)), detail: 'fit ' + (p.fit == null ? '—' : Math.round(p.fit) + '%') } : null; }),
+        // CR-03 R6 (switch fvaProposal): FVA below 0 in each of the last fvaNegM months → start from Naive (Run Rate L3M × days) and say why
+        ...Pages.propCol(p => { const nm = Calc.addMonths(Calc.monthStart(M.asDn), 1), rr = p.expected / Calc.daysInMonth(M.asDn), f = fvaMap.get(p.i + '|' + p.j);
+          if (S.fvaProposal && f && f.negRun && f.naiveNext > 0) return { type: 'quota', sku: p.sku, account: p.accId, period: Calc.monthKey(nm), qty: Math.round(f.naiveNext), detail: t('fva_prop_reason', { n: S.fvaNegM, f: fvaTxt(f.fva) }) };
+          return rr > 0 ? { type: 'quota', sku: p.sku, account: p.accId, period: Calc.monthKey(nm), qty: Math.round(rr * Calc.daysInMonth(nm)), detail: 'fit ' + (p.fit == null ? '—' : Math.round(p.fit) + '%') } : null; }),
         { k: 'bias', label: 'Bias', num: true, get: p => p.bias, html: p => p.bias == null ? '—' : (p.bias > 0 ? '+' : '') + U.pct(p.bias), xl: p => p.bias == null ? '' : Math.round(p.bias) }
       ];
       U.table(main.querySelector('#qHost'), { key: 'quota', cols, rows, defaultSort: { key: 'acc', dir: 'asc' }, empty: t('no_events_list'),
         onRow: p => { App.ui.stockTab = 'all'; App.go('stock', { sku: p.sku }); },
         card: p => `<div class="top"><div class="cell2"><b>${U.esc(p.name)}</b><span class="sub">${U.esc(p.sku)} · ${U.esc(p.acc)}</span></div>${Pages.quotaBadge(p.cls)}</div>
-          <div class="nums"><div><span>Quota Fit</span><b>${p.fit == null ? '—' : U.pct(p.fit)}</b></div><div><span>${t('k_ach_mtd_s')}</span><b>${U.pct(p.achMtd)}</b></div><div><span>${t('q_cov', { h: M.h + 'M' })}</span><b>${p.coverage == null ? '—' : U.pct(p.coverage)}</b></div></div>` });   // CR-01 F1: the phone card shows MTD too
+          <div class="nums"><div><span>Quota Fit</span><b>${p.fit == null ? '—' : U.pct(p.fit)}</b></div><div><span>${t('k_ach_mtd_s')}</span><b>${U.pct(p.achMtd)}</b></div><div><span>${t('q_cov', { h: M.h + 'M' })}</span><b>${p.coverage == null ? '—' : U.pct(p.coverage)}</b></div></div>
+          ${(() => { const f = fvaMap.get(p.i + '|' + p.j); return f && f.fva != null ? `<div class="act">FVA <b class="${f.fva >= 0 ? 'fva-good' : 'fva-bad'}">${fvaTxt(f.fva)}</b> ${Pages.tsBadge(f)}</div>` : ''; })()}` });   // CR-03 R6   // CR-01 F1: the phone card shows MTD too
       main.querySelector('#qXlsx').addEventListener('click', () => U.xlsx('quota-vs-actual-' + Calc.iso(M.asDn) + '.xlsx', [{ name: 'Quota', rows: U.xlRows(cols, rows) }]));
       main.querySelectorAll('[data-qtab]').forEach(b => b.addEventListener('click', () => { ui.qTab = b.dataset.qtab; App.rerender(); }));
       Pages.bindSegs(main, App);
@@ -116,6 +162,21 @@
         plugins: { tooltip: { filter: it => it.raw != null, callbacks: { title: it => { const x = X[it[0].dataIndex]; return U.monthLabel(Calc.monthKey(x.m0)) + (x.mtd ? ' · MTD' : x.future ? ' · Plan' : ''); },
           label: it => ' ' + it.dataset.label + ': ' + fmt(it.raw), footer: it => { const x = X[it[0].dataIndex]; return !x.future && x.q ? t('k_ach') + ' ' + U.pct(x.si / x.q * 100, 1) : ''; } } },
           vLines: { lines: [{ index: iNow, label: 'MTD', color: c.muted }] } }
+      }
+    };
+  }
+  /** CR-03 R6: WAPE Naive (x) × WAPE Quota (y) per SKU × account — below the diagonal the quota beats Naive · colour = tracking signal */
+  function fvaConfig(pts, tsColor, c, big) {
+    const cap = 100, cl = v => Math.min(cap, v);
+    const ds = ['high', 'low', 'ok'].map(k => ({ label: t('ts_' + k), data: pts.filter(p => p.tsCls === k).map(p => ({ x: cl(p.wapeN), y: cl(p.wapeQ), p })),
+      backgroundColor: Charts.alpha(tsColor[k], .65), borderColor: tsColor[k], pointRadius: big ? 4.5 : 3, pointHoverRadius: 6 }));
+    ds.push({ type: 'line', label: t('l_diag'), data: [{ x: 0, y: 0 }, { x: cap, y: cap }], borderColor: c.muted, borderDash: [5, 4], borderWidth: 1, pointRadius: 0, fill: false });
+    return {
+      type: 'scatter', data: { datasets: ds },
+      options: {
+        scales: { x: { min: 0, max: cap, grid: { color: c.grid }, title: { display: true, text: t('col_wape_n') + ' % (' + t('q_cap', { n: cap }) + ')' }, ticks: { callback: v => v + '%' } },
+          y: { min: 0, max: cap, grid: { color: c.grid }, title: { display: true, text: t('col_wape_q') + ' %' }, ticks: { callback: v => v + '%' } } },
+        plugins: { tooltip: { filter: it => it.raw && it.raw.p, callbacks: { label: it => { const p = it.raw.p; return ` ${p.sku} · ${p.acc} — Naive ${U.pct(p.wapeN, 1)} · Quota ${U.pct(p.wapeQ, 1)} · FVA ${fvaTxt(p.fva)} · TS ${U.n(p.ts, 1)}`; } } } }
       }
     };
   }

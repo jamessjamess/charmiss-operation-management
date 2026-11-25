@@ -1,4 +1,4 @@
-# Charmiss Operations Management (Charmiss Ops) — v8.1.0
+# Charmiss Operations Management (Charmiss Ops) — v8.4.0
 
 เว็บเดียวที่รวม **Commerce Operations** (OMS + Quota · ระบบบันทึก) กับ **Supply Planning** (ระบบวิเคราะห์และวางแผน) ตาม `Document/CR-01`
 HTML + CSS + Vanilla JS · static (ไม่มี Backend) · ข้อมูลจำลองทั้งหมด · Deploy แบบ static ได้ (GitHub Pages)
@@ -17,26 +17,26 @@ HTML + CSS + Vanilla JS · static (ไม่มี Backend) · ข้อมู�
 | C | B1 ATP · B2 แผงอนุมัติ Quota · B3 ข้อเสนอ Supply · B4 การ์ด Supply Alert · B5 Review + งานค้าง · F7 ETA | ✅ เสร็จ |
 | D | F1 Achievement MTD · F2 กราฟแนวนอนบนมือถือ · F3 โหลดเพิ่ม 20 · F4 DOC Δ สีเทา · F8 นับจริงฝากขาย · UAT ทั้งหมด · README ฉบับเต็ม | ✅ เสร็จ |
 
-**CR-03 — ยกระดับ Supply Planning ตามแนวปฏิบัติที่ดี** (`Document/CR-03 - Supply Planning Best Practice Upgrade.md`)
+**CR-03 — ยกระดับ Supply Planning ตามแนวปฏิบัติที่ดี** (`Document/CR-03 - Supply Planning Best Practice Upgrade.md`) — **ปิดแล้ว 25 พ.ย. 2026 (v8.4.0)**
 
 | Phase | ขอบเขต | สถานะ |
 |---|---|---|
-| 3A ข้อมูล | R1 รับรายงาน Sales Out + Run Rate ตามข้อมูลจริง · R2 เบิกออกที่ไม่ใช่การขาย · selfCheck 10–11 · เลขเวอร์ชันในแอป | ✅ เสร็จ — รอตรวจ |
-| 3B สูตร | R3 Run Rate ปรับช่วงของขาด (OOS) · R4 ABC-XYZ + Safety Stock แบบสถิติ · selfCheck 12 | รอ |
-| 3C วิเคราะห์ | R5 Early Warning ฝากขาย · R6 FVA | รอ |
-| 3D กระบวนการ | R7 รอบ S&OP: Snapshot แผน + Action log · Supply Review รายเดือน 4 ส่วน · README + UAT ทั้งชุด | รอ |
+| 3A ข้อมูล | R1 รับรายงาน Sales Out + Run Rate ตามข้อมูลจริง · R2 เบิกออกที่ไม่ใช่การขาย · selfCheck 10–11 · เลขเวอร์ชันในแอป | ✅ เสร็จ (v8.1.0) |
+| 3B สูตร | R3 Run Rate ปรับช่วงของขาด (OOS) + Lost sales · R4 ABC-XYZ + Safety Stock แบบสถิติ · selfCheck 12 | ✅ เสร็จ (v8.2.0) |
+| 3C วิเคราะห์ | R5 Early Warning ฝากขาย · R6 FVA + Tracking signal · ข้อเสนอ Quota เริ่มจาก Naive | ✅ เสร็จ (v8.3.0) |
+| 3D กระบวนการ | R7 รอบ S&OP: Action log + Snapshot แผน + วันปิดรับแก้แผน · Supply Review รายเดือน 4 ส่วน · README + UAT ทั้งชุด | ✅ เสร็จ (v8.4.0) |
 
 รายงาน UAT: `uat/Charmiss-Ops-Management-UAT-2026-11-25/` (HTML + CSV + JSON + ภาพหน้าจอ รูปแบบเดียวกับรายงาน UAT เดิม)
 
 ## เปิดใช้งาน
 - ดับเบิลคลิก `index.html` (หน้า Supply อ่าน `data/mock-bundle.js`) หรือรัน `python -m http.server` ในโฟลเดอร์นี้ (อ่าน `data/*.csv`)
-- หน้า Login: เลือกบทบาท → "จำลอง Single Sign-On" (Manager / Sales Admin เลือกฝ่ายเพิ่ม)
-- ลิงก์ตรงหน้า Supply แชร์ได้: `index.html#/supply/stock?asof=2026-11-23&view=M&ch=MT&rr=L3M&h=6&sku=CM-FD-001` → หลังล็อกอินจะเปิดหน้านั้น (ถ้าไม่มีสิทธิ์จะถูกปฏิเสธ)
+- หน้า Login: เลือกบทบาท → "จำลอง Single Sign-On" (Manager / Sales Admin เลือกฝ่ายเพิ่ม) → **เปิดหน้าหลักทุกบทบาท** (v8.4.0 · เดิม v13 Director / Manager เปิดสินค้าคงคลังและโควตา) · เริ่มชุดสาธิตใหม่ก็กลับมาหน้าหลัก
+- ลิงก์ตรงหน้า Supply แชร์ได้: `index.html#/supply/stock?asof=2026-11-23&view=M&ch=MT&rr=L3M&h=6&sku=CM-FD-001` → เปิดลิงก์ในแท็บใหม่ แล้วล็อกอินครั้งแรกจะเปิดหน้านั้น (ถ้าไม่มีสิทธิ์จะถูกปฏิเสธ) · การโหลดหน้าซ้ำ / ล็อกอินครั้งถัดไปกลับหน้าหลัก
 
 ## เลขเวอร์ชันของแอป (CR-03)
 - ตั้งที่เดียว: `version.js` (`APP_VERSION.number` + ประวัติแต่ละรุ่น) · แสดงที่ **Sidebar ล่าง** (ใต้ปุ่มเริ่มชุดสาธิตใหม่) · **Footer** ของทุกหน้า · **หน้า Login** — กดเลขเวอร์ชันเพื่อดูประวัติรุ่น
-- ตอนออกรุ่นใหม่: เปลี่ยน `APP_VERSION.number` + เพิ่มบรรทัดประวัติ และเปลี่ยน `?v=` ทุกตัวใน `index.html` เป็นเลขนั้น (ต่อท้ายได้ เช่น `8.1.0-3a4` — ต้องไม่ซ้ำค่าที่เคยใช้ ให้เบราว์เซอร์โหลดไฟล์ใหม่)
-- ลำดับรุ่น: 7.0 (Ops v13) → **8.0.0** CR-01 ครบ A–D → **8.1.0** CR-03 Phase 3A
+- ตอนออกรุ่นใหม่: เปลี่ยน `APP_VERSION.number` + เพิ่มบรรทัดประวัติ และเปลี่ยน `?v=` ทุกตัวใน `index.html` เป็นเลขนั้น (ต่อท้ายได้ เช่น `8.4.0-3d4` — ต้องไม่ซ้ำค่าที่เคยใช้ ให้เบราว์เซอร์โหลดไฟล์ใหม่)
+- ลำดับรุ่น: 7.0 (Ops v13) → **8.0.0** CR-01 ครบ A–D → **8.1.0** CR-03 Phase 3A → **8.2.0** CR-03 Phase 3B → **8.3.0** CR-03 Phase 3C → **8.4.0** CR-03 Phase 3D (ครบ CR-03)
 
 ## เมนู (Sidebar จัดเป็นกลุ่ม Module พับ/กางได้)
 
@@ -53,6 +53,8 @@ HTML + CSS + Vanilla JS · static (ไม่มี Backend) · ข้อมู�
 | SUPPLY MONITOR | ภาพรวม Supply · Stock & Projection · เสี่ยงหมดอายุ · ฝากขาย (Consignment) · ของเข้า & CN Calendar |
 | SUPPLY PLANNING | วางแผนสั่งผลิต · Quota vs Actual · ข้อเสนอ Supply (Phase C) · Supply Review (Weekly/Monthly) |
 | SUPPLY SETUP | ข้อมูล & ตั้งค่า Supply · รับรายงาน Sales Out (CR-03) |
+
+SUPPLY PLANNING มีเมนู **รอบ S&OP · Action log** (CR-03 R7) ต่อจาก Supply Review — Director / Planner / Manager ทุกฝ่าย
 
 - Global Filter ของ Supply (AS OF, VIEW BY, Channel, คู่ค้า, Brand, Category, ค้นหา, Run Rate, Horizon) อยู่เฉพาะหน้า Supply เป็นแถบติดด้านบน · มือถือเป็น Bottom sheet
 - ชื่อที่แยกตาม 5.2: Ops "สต็อกสำรอง/Safety stock" → **Safety Units (Ecom)** · Supply "Safety" ใน Drawer → **Safety Days (ROP)** · "รายงาน" ของ SCM → **Supply Review** · "ภาพรวม" → **ภาพรวม Supply**
@@ -207,16 +209,150 @@ HTML + CSS + Vanilla JS · static (ไม่มี Backend) · ข้อมู�
 - **วิธีใหม่** (`rrEndMode = account`): ใน Phase 3A ตัวเลขชุดใหม่ = ชุดเดิม ทุกค่า (บนชุดสาธิตที่เพิ่งเริ่ม ทุกคู่ค้ามีข้อมูลถึงสัปดาห์ 16 พ.ย. เท่ากัน จุดหยุดจึงตรงกัน) — Anchor ชุดใหม่ที่ต่างจริงจะเริ่มใน 3B (R3 / R4)
 - หลังรับรายงาน 7-Eleven สัปดาห์ 23 พ.ย. + เบิก PR + แทนที่ / ลบชุด Watsons: AS OF 23 พ.ย. ยังตรงทุกค่า ทั้งสองวิธี
 
+## CR-03 Phase 3B — สูตร (R3 · R4 · selfCheck 12)
+
+ทุกสูตรใหม่อยู่ใน `supply/calc.js` เป็นฟังก์ชันใหม่ที่มี `// CR-03` — สูตรเดิมยังอยู่ และสวิตช์เป็นตัวเลือก · `Calc.LEGACY_METHODS` = ทุกสวิตช์กลับเป็นวิธี CR-01
+
+### R3 Run Rate ไม่นับสัปดาห์ที่ของขาด — สวิตช์ `rrMode` (`unconstrained` ใหม่ · `sellout` เดิม)
+- **สัปดาห์ที่ของขาด (OOS)** ต่อ SKU × คู่ค้า (`Calc.oosOf`):
+  - ฝากขาย: Remaining ต้นสัปดาห์ ≤ `oosUnits` (0) หรือ < ยอดขาย 1 วัน (เฉลี่ย 26 สัปดาห์ก่อนหน้า)
+  - ขายขาด / Ecom: WH พร้อมขาย (WH − Safety units ของ Ops) ต้นสัปดาห์ ≤ 0
+  - **เพิ่มจากเอกสาร — `oosEnd` (เปิดเป็นค่าเริ่มต้น ปิดได้):** สัปดาห์ที่ของหมดก่อนสิ้นสัปดาห์ (ต้นสัปดาห์ถัดไปถึงเส้นเดียวกัน) ก็นับเป็นของขาด — เกณฑ์ต้นสัปดาห์อย่างเดียวพลาดสัปดาห์ที่ของหมดกลางสัปดาห์ (เช่น CM-FD-003 สัปดาห์ 12 ต.ค. ขาย 0 แต่ต้นสัปดาห์ยังมีของ)
+  - นับเฉพาะคู่ที่มียอดขายใน 26 สัปดาห์ก่อนหน้า (สินค้าที่ยังไม่วางขายไม่ใช่ของขาด)
+- **Run Rate (Unconstrained)** (`Calc.runRateU`) = Σ Sales Out สัปดาห์ที่มีของ ÷ จำนวนสัปดาห์ที่มีของ · ใช้ได้ทุก Basis (L4W / L3M / L6M / Weighted) และจุดหยุดเดียวกับ R1
+  - สัปดาห์ที่มีของน้อยกว่า 2 → ขยายย้อนหลังทีละ 4 สัปดาห์ (สูงสุด 26) · ยังไม่พอ → Sell-out เดิม
+  - **ไม่ต่ำกว่า Sell-out** — ความต้องการจริงไม่น้อยกว่ายอดที่ขายได้ (สัปดาห์ที่ของขาดบางสัปดาห์ยังขายได้มากหลังของเข้า)
+  - หน้าต่างที่ไม่มีสัปดาห์ของขาด → เท่า Sell-out เป๊ะ (ชุดสาธิต: 902 คู่เท่าเดิม · 41 คู่สูงขึ้น · 10 คู่เท่าเดิมเพราะเพดานล่าง · ไม่มีคู่ที่ต่ำลง)
+- **Lost sales** ต่อ SKU × คู่ค้า = max(0, Run Rate × วันที่ของขาด − Sales Out ของสัปดาห์เหล่านั้น) × ราคาสุทธิของคู่ค้า — 13 สัปดาห์ (คอลัมน์) · 4 สัปดาห์ (การ์ดภาพรวม)
+- **สวิตช์:** ตั้งค่า Supply › Run Rate และ Filter bar › **วิธี Run Rate** (ลิงก์มี `rm=` เมื่อไม่ตรงค่าตั้ง)
+- **แสดงผล:**
+  - Stock & Projection: คอลัมน์ **สัปดาห์ OOS (13W)** + **Lost sales 13W**
+  - Drawer SKU: กราฟ **Sales Out รายสัปดาห์ 26 สัปดาห์** (สัปดาห์ที่ของขาด = แท่งแดง · เส้น Run Rate ไม่นับช่วงของขาด)
+  - ภาพรวม Supply: การ์ด **Lost sales 4 สัปดาห์ล่าสุด** (รวม + 5 SKU ที่เสียมากสุด → เปิด Drawer)
+  - ฝากขาย: Matrix เพิ่ม Metric **สัปดาห์ OOS (13W)** (รวม = สัปดาห์ที่มีคู่ค้าใดคู่ค้าหนึ่งขาด)
+
+### R4 ABC-XYZ + Safety Stock แบบสถิติ — สวิตช์ `safetyMode` (`statistical` ใหม่ · `days` เดิม)
+- **ABC** (`Calc.abcxyzOf`, คำนวณใหม่ทุก AS OF): มูลค่า Sales Out 52 สัปดาห์ (ต้นทุน) ทุกคู่ค้า เรียงมาก → น้อย · SKU ที่สะสมก่อนหน้า < 80% = **A** · < 95% = **B** · ที่เหลือ **C** (SKU ที่คร่อมเส้นอยู่กลุ่มบน) · N / E ไม่ร่วมจัดอันดับ → A + B + C = 100%
+- **XYZ:** CV ของความต้องการรายสัปดาห์ 26 สัปดาห์ (ทุกคู่ค้า) · ≤ 0.5 **X** · ≤ 1.0 **Y** · อื่น ๆ **Z** · เมื่อเปิด R3 สัปดาห์ที่ของขาดของคู่ค้า (และสัปดาห์หลังข้อมูลล่าสุดของคู่ค้านั้น) ใช้ค่าเฉลี่ยสัปดาห์ที่มีของของคู่นั้น
+- **N** = ขายมาน้อยกว่า 8 สัปดาห์ · **E** = Clearance / Discontinue
+- **Lead Time จริง** (`Calc.leadTimeOf`): PO ที่รับแล้วก่อน AS OF (order_date → received_date) — SKU รับ ≥ 3 ครั้ง ใช้ของ SKU · ไม่ถึงใช้ของ Supplier · ยังไม่ถึงใช้ `lead_time_days` + σLT = 0 พร้อมป้าย **LT ประมาณ** (ชุดสาธิต: SKU 87 · Supplier 25 · ประมาณ 8)
+- **SS = Z × √(LT × σd² + d² × σLT²)** (`Calc.safetyStatOf`) · Z จาก Service level ของกลุ่ม (ตารางข้อ 7.2 · N 95% · E 0% = ไม่ตั้ง) · d = Run Rate ต่อวัน (ทั้ง SKU ตามวิธี Run Rate ที่เลือก) · σd = SD รายสัปดาห์ ÷ √7 · ไม่มี Run Rate → SS 0
+- **ใช้ SS แทน Run Rate × Safety Days:** ROP = d × LT + SS · Order-by = Stockout − LT − SS (วัน) − Delivery · สถานะ Stockout Risk · **Suggested Qty = d × (LT + 90) + SS − (Stock + Open PO)** ปัด MOQ (สูตรเดิมไม่มี Safety) · LT ที่ใช้ = LT จริง (What-if Lead Time ยังบวกได้)
+- **แสดงผล:**
+  - ป้ายกลุ่ม (เช่น `AX`) ในตาราง Stock, Drawer, วางแผนสั่งผลิต (และการ์ดมือถือ) · ตัวกรองกลุ่ม (A / B / C / X / Y / Z / N / E) ที่ Stock และวางแผนสั่งผลิต
+  - Drawer: ตาราง **ที่มาของ Safety Stock** (กลุ่ม · Service level · Z · d · σd · LT + ที่มา · σLT · SS ชิ้น / วัน · ROP) — วิธีเดิมแสดง Run Rate × Safety Days
+  - วางแผนสั่งผลิต: คอลัมน์ **กลุ่ม · Service level · SS (ชิ้น / วัน) · LT จริง ± σ** (มีใน Excel ด้วย) · What-if เพิ่ม **Service level ±pp** (−10 ถึง +5 · ใช้ได้เมื่อเลือก Safety Stock แบบสถิติ)
+
+### selfCheck (12)
+ABC ที่ AS OF ล่าสุด: มูลค่ากลุ่ม A + B + C = 100% · SKU ทุกตัวมีกลุ่ม — รายละเอียดแสดงจำนวน / สัดส่วนแต่ละกลุ่ม (ชุดสาธิต: A 48 · 80.1% / B 34 · 15.1% / C 27 · 4.7% / N 6 / E 5)
+
+### ข้อมูล & ตั้งค่า Supply (เพิ่มใน 3B)
+- วิธีคำนวณ: **Run Rate** (ใหม่ / เดิม) · **นับสัปดาห์ที่ของหมดก่อนสิ้นสัปดาห์** · **Safety Stock** (ใหม่ / เดิม) · ปุ่ม **"ใช้วิธีเดิมทั้งหมด"** ตั้งทั้ง 4 สวิตช์ + Filter bar กลับเป็น CR-01
+- กลุ่ม **ของขาด · ABC-XYZ · Lead Time:** Remaining ที่ถือว่าขาด 0 · A 80% · B 95% · X 0.5 · Y 1.0 · N 8 สัปดาห์ · LT จริง ≥ 3 ครั้ง
+- ตาราง **Service level** 3 × 3 + N + E · ทุกค่าแก้ได้และบันทึก Audit
+- ค่าเริ่มต้นหลัง Approve (A2): **วิธีใหม่เปิด** — ผู้ใช้ที่เคยบันทึกตั้งค่าไว้ก่อน 8.2.0 ได้วิธีใหม่เช่นกัน (ค่าที่ไม่เคยบันทึกใช้ค่าเริ่มต้น)
+
+### Anchor (AS OF 23 พ.ย. 2026 · Weekly · L4W · 3M · ไม่กรอง)
+- **วิธีเดิมทั้งหมด** (`SupUAT.anchors()`): ตัวเลข CR-01 ข้อ 2.3 ตรงทุกค่า
+- **วิธีใหม่ทั้งหมด** (ค่าเริ่มต้น · `SupUAT.anchors('new')`):
+
+| ตัวเลข | วิธีเดิม (CR-01) | วิธีใหม่ (3B) |
+|---|---|---|
+| มูลค่า Stock / หน่วย WH / ฝากขาย / รวม | ฿50,091,183 · 514,864 / 136,418 / 651,282 | เท่าเดิม (Stock ไม่ขึ้นกับ Run Rate) |
+| Sell-through · MAPE · Bias · Fill Rate · Achievement MTD | 17.8% · 13.5% · −4.2% · 93.1% · 94.1% | เท่าเดิม |
+| DOC | 73 วัน | **70 วัน** |
+| สถานะ เสี่ยงขาด / สั่งผลิต / ค้าง / ปกติ / NPD (+ หมดอายุ) | 7 / 2 / 9 / 98 / 4 (+7) | **6 / 4 / 7 / 99 / 4 (+7)** |
+| At-risk 3M | ฿547,597 (4,489 ชิ้น) | **฿726,866 (7,265 ชิ้น)** |
+| แนะนำเรียกคืน | ฿519,974 · 11 คู่ · 7,194 ชิ้น | เท่าเดิม |
+| Quota Fit | 92% (107/116) | **95% (110/116)** |
+| Lost sales 4W / 13W · SKU ที่มีสัปดาห์ขาด | — | **฿2,020,669 / ฿3,071,760 · 21 SKU** |
+| ABC-XYZ A / B / C / N / E | — | **48 / 34 / 27 / 6 / 5** |
+| Safety Stock รวม | 186,227 ชิ้น (Run Rate × Safety Days) | **167,765 ชิ้น** |
+| มูลค่า Suggested Qty รวม | ฿24,964,590 | **฿42,971,040** (รวม SS + LT จริง) |
+
+## CR-03 Phase 3C — วิเคราะห์ (R5 · R6)
+
+R5 / R6 เป็นมุมมองใหม่ ไม่แทนสูตรเดิม — Anchor CR-01 ไม่เปลี่ยน · จุดเดียวที่เปลี่ยนพฤติกรรมเดิมคือค่าเริ่มต้นของข้อเสนอ Quota (B3) จึงมีสวิตช์ `fvaProposal` (อยู่ใน `Calc.LEGACY_METHODS`)
+
+### R5 Early Warning ฝากขาย (`Calc.earlyWarnOf` · หน้าฝากขาย)
+คิดต่อ SKU × คู่ค้าฝากขาย (คู่ค้าที่เลือก) ด้วยเกณฑ์ที่ตั้งไว้ · รอบเติมของ (`replenCycleW`) ค่าเริ่มต้น 2 สัปดาห์ แก้รายคู่ค้าได้ (A4)
+
+| ตัวชี้วัด | นิยาม | แจ้งเมื่อ |
+|---|---|---|
+| WOS | Remaining ÷ Sales Out เฉลี่ย 4 สัปดาห์ (ถึงข้อมูลล่าสุดของคู่ค้า) | ≥ รอบ × 4 เหลือง · ≥ รอบ × 5 แดง (มีของไม่มีขาย = แดง) |
+| Reorder gap | วันนับจากสัปดาห์ Sales In ล่าสุด (คู่ที่ Run Rate > 0) | > รอบ × 2 สัปดาห์ |
+| In-stock rate | สัปดาห์ (13 ล่าสุด) ที่มีของต้นสัปดาห์ — คู่ที่วางขายอยู่ (Sales In / Quota ใน 26 สัปดาห์) นับจากสัปดาห์หลังส่งของครั้งแรก | < 90% |
+| Distribution gap | วางขายอยู่ · Remaining = 0 · ไม่มี Quota เหลือเดือนนี้ (Quota − จอง − หัก หรือ Quota − Sales In MTD) · ไม่มีออเดอร์เปิด (ระหว่างขนส่ง / จอง SO) | มี |
+| WOS แกว่ง | WOS เปลี่ยนจากสัปดาห์ก่อน (ไม่มีขาย = 52) | > ± 3 สัปดาห์ |
+| ของสะสม | Σ Sales In − Σ Sales Out 13 สัปดาห์ | > 4 สัปดาห์ของ Sales Out |
+
+- **แสดงผล:** การ์ด 4 ใบ (In-stock rate · คู่ที่ WOS แดง · Reorder gap เกิน · Distribution gap) · กราฟ **Sales In สะสม vs Sales Out สะสม 13 สัปดาห์** + เส้น WOS (เลือกคู่ค้า → เส้นเกณฑ์เหลือง / แดง) · ตาราง **การแจ้งเตือนล่วงหน้า** (กรองตามประเภท · ความรุนแรง สูง / กลาง / ต่ำ) · Matrix เพิ่ม Metric WOS / In-stock % / Reorder gap
+- **คีย์การแจ้งเตือน** `ประเภท|SKU|คู่ค้า` — 1 คู่ × 1 ประเภท = 1 รายการ คำนวณซ้ำได้ชุดเดิม · Phase 3D นำเข้า Action log โดยไม่ซ้ำจนกว่าจะปิด
+- **ชุดสาธิต (AS OF 23 พ.ย.):** 481 คู่ · In-stock 98.8% (9 คู่ต่ำกว่า 90%) · WOS แดง 12 / เหลือง 18 · Reorder gap 23 · Distribution gap 0 · แกว่ง 22 · ของสะสม 20 · รวม 104 รายการ
+
+### R6 FVA — Quota ช่วยให้แผนดีขึ้นไหม (`Calc.fvaOf` · หน้า Quota vs Actual)
+- **Naive** = Run Rate L3M ณ วันที่ 1 ของเดือน (ไม่นับสัปดาห์ของขาดเมื่อเปิด R3) × วันในเดือน · **ค่าจริง** = Sales Out ของเดือน · คู่-เดือนที่ Quota หรือค่าจริง > 0 (ชุดเดียวกับ MAPE)
+- **WAPE** = Σ|F − A| ÷ Σ A (3 / 6 เดือนตามตัวเลือกหน้าต่าง) · **FVA = WAPE(Naive) − WAPE(Quota)** (pp · บวก = Quota แม่นกว่า) · WAPE(Quota) 3 เดือน = MAPE เดิมของหน้า (ตรวจใน UAT)
+- **Tracking signal** = Σ(Quota − Actual) ÷ MAD 6 เดือน · |TS| > 4 → ป้าย **ตั้งสูงประจำ / ตั้งต่ำประจำ**
+- **แสดงผล:** การ์ด FVA (pp) · ตาราง FVA แยกตาม **คู่ค้า / Sales** (ฟิลด์ `sales` ของ partner master ใน Ops ส่งผ่าน Feed) **/ กลุ่ม ABC-XYZ** · Scatter WAPE Naive × WAPE Quota ต่อคู่ + เส้นทแยง · ตารางคู่เพิ่มคอลัมน์ FVA + Tracking signal (มีป้าย)
+- **NOLEAK:** Manager เห็นเฉพาะคู่ค้าและ Sales ของฝ่ายตัวเอง (คิดจากคู่ค้าที่ Mask แล้ว)
+- **ข้อเสนอ Quota (B3) — สวิตช์ `fvaProposal`:** คู่ที่ FVA รายเดือนติดลบ 3 เดือนติด → ค่าเริ่มต้น = Naive (Run Rate L3M × วันของเดือนถัดไป) พร้อมเหตุผลในข้อเสนอ · ปิดสวิตช์ / คู่อื่น → ค่าเดิมของ CR-01 (Run Rate × วัน)
+- **ชุดสาธิต (3 เดือน ส.ค.–ต.ค.):** WAPE Naive 13.5% · Quota 13.5% · FVA +0.0 pp · ตั้งสูงประจำ 114 คู่ · ตั้งต่ำประจำ 252 คู่ · FVA ติดลบ 3 เดือนติด 145 คู่
+
+### ข้อมูล & ตั้งค่า Supply (เพิ่มใน 3C)
+- วิธีคำนวณ: **ข้อเสนอ Quota เริ่มจาก Naive เมื่อ FVA ติดลบต่อเนื่อง** (ใหม่ เปิด · ปุ่ม "ใช้วิธีเดิมทั้งหมด" ปิด)
+- กลุ่ม **Early warning ฝากขาย:** รอบเติมเริ่มต้น 2 สัปดาห์ · WOS เหลือง × 4 · แดง × 5 · Reorder gap × 2 · In-stock 90% · แกว่ง 3 สัปดาห์ · ของสะสม 4 สัปดาห์
+- กลุ่ม **FVA · Tracking signal:** |TS| > 4 · FVA ติดลบ 3 เดือน
+- **รอบเติมของรายคู่ค้า** (ว่าง = ค่าเริ่มต้น) · ทุกค่าแก้ได้และบันทึก Audit
+
+### Anchor ชุดใหม่ (เพิ่มใน 3C · วิธีใหม่ทั้งหมด · `SupUAT.anchors('new')`)
+Early warning `98.8 / 12 / 18 / 23 / 0 / 22 / 20 / 104` (In-stock % / WOS แดง / เหลือง / Reorder gap / Distribution gap / แกว่ง / ของสะสม / รายการ) · FVA 3M `13.5 / 13.5 / 0.0` (WAPE Naive / Quota / FVA) · Tracking signal `114 / 252 / 145` (ตั้งสูง / ตั้งต่ำ / FVA ติดลบ 3 เดือน) · ตัวเลขอื่นเท่ากับ 3B
+
+## CR-03 Phase 3D — กระบวนการ (R7 รอบ S&OP) — `supply-sop.js`
+
+### Action log (คิวข้อยกเว้น) — Supply Planning › **รอบ S&OP · Action log** (`#/supply/sop`)
+- **ที่มาอัตโนมัติ** (คำนวณที่ AS OF ล่าสุด ทุกคู่ค้า): Early warning ของ R5 ทุกประเภท · สถานะเสี่ยงขาด / ต้องสั่งผลิต / เสี่ยงหมดอายุ · ข้อมูล Sales Out ค้างเกินเกณฑ์ (R1) · ข้อเสนอ B3 ที่รออนุมัติ — **เพิ่มเองได้** (จากที่ประชุม)
+- **1 เงื่อนไข = 1 รายการ** (คีย์ `ประเภท|SKU|คู่ค้า`) และไม่สร้างซ้ำจนกว่าจะปิด · ปิดในสัปดาห์ AS OF ไหน ถ้าเงื่อนไขยังอยู่จะขึ้นใหม่สัปดาห์ถัดไป
+- **ฟิลด์:** ประเภท · SKU / คู่ค้า · ความรุนแรง (สูง / กลาง / ต่ำ) · เจ้าของ (+ ผู้ร่วม) · วันครบกำหนด (สูง 3 วัน · กลาง 7 · ต่ำ 14) · สถานะ · ลิงก์ไปหน้าที่เกี่ยวข้อง · บันทึก · ประวัติ
+- **สถานะ:** เปิด → รับทราบ → ทำแล้ว / ไม่ทำ (ต้องมีเหตุผล) · ย้อนกลับไม่ได้ · **ปิดเองอัตโนมัติไม่ได้** — เงื่อนไขหายไปจะขึ้นป้าย "เงื่อนไขหายแล้ว" และปุ่ม "เงื่อนไขหายแล้ว — ยืนยันปิด"
+- **เจ้าของเริ่มต้น (A7):** ฝากขาย / Quota / ข้อมูลขาด = Manager ของฝ่าย · ต้องสั่งผลิต / เสี่ยงขาด = Planner · หมดอายุ = Planner + Manager ของฝ่ายที่ของเสี่ยงอยู่ · ข้อเสนอ = เจ้าของข้อเสนอ
+- **NOLEAK:** Manager เห็นและทำได้เฉพาะรายการของฝ่ายตัวเอง (หรือที่ตัวเองเป็นเจ้าของ) · Director / Planner เห็นทั้งหมด · Manager เพิ่มรายการได้เฉพาะคู่ค้าของฝ่าย
+- **Audit:** ทุกการเปลี่ยนสถานะ (`sopActionEvent` ก่อน / หลัง) · บันทึก · เพิ่มเอง · สร้างอัตโนมัติ (สรุปต่อรอบ) ลงประวัติการทำงานของ Ops
+- **การ์ด B4** หน้าหลัก Ops เพิ่ม **"Action ของฉันที่เกินกำหนด"** (กดแล้วเปิดหน้าโดยกรองเฉพาะของฉัน)
+- **เพดาน 2,000 รายการ** (ลบรายการที่ปิดเก่าสุดก่อน) · เก็บใน Ops data (localStorage)
+
+### Snapshot แผน (แท็บ Snapshot แผน)
+- ปุ่ม **ปิดรอบแผน** (Planner / Director · สิทธิ์ใหม่ `supply.sop.close`) บันทึก: AS OF · Projection Total ต่อ SKU เดือน 1–6 · Stockout Date · สถานะ · Safety Stock · Quota ต่อ SKU × คู่ค้า (เดือน AS OF + 3 เดือน) · PO เปิด · ข้อเสนอที่ยังเปิด · Action ที่เปิด · ตั้งค่าที่ใช้
+- **เทียบรอบ** (เลือกได้ 2 รอบ): SKU ที่ Stockout Date เปลี่ยนเกิน 14 วัน (ตั้งได้) · Quota ที่เปลี่ยน (Manager เห็นเฉพาะคู่ค้าของฝ่าย) · PO ที่เลื่อน / เพิ่ม / ไม่อยู่ในแผนแล้ว
+- เก็บใน IndexedDB **สูงสุด 12 รอบ** (รอบเก่าสุดถูกลบ) · Export JSON (Planner / Director) · การ์ดพื้นที่ข้อมูลแสดง Snapshot x / 12 และ Action log x / 2,000
+- "Reset to Mock" ของตาราง Supply ไม่ลบ Snapshot · เริ่มชุดสาธิตใหม่ = เริ่มโดยไม่มี Snapshot
+
+### วันปิดรับแก้แผน (A6 — วันที่ 20 · ตั้งได้ในหน้าตั้งค่า)
+- หลังวันปิดรับแก้แผน การสร้างข้อเสนอ Quota เดือนถัดไป และการส่ง Quota Draft เดือนถัดไป → **คำเตือน** + บันทึก `sopLockEvent` + ป้ายในประวัติข้อเสนอ · แผง Quota Draft แสดงแถบเตือน (ไม่บล็อก)
+
+### Supply Review
+- **Monthly = 4 ส่วนตามขั้น S&OP:**
+  1. **Demand review** — Sales Out vs Quota รายเดือน · FVA 3M + คู่ค้าที่ FVA แย่สุด · Lost sales 4W / 13W + SKU สูงสุด · ข้อมูล Sales Out ที่ยังขาด / ส่งช้า (4 สัปดาห์)
+  2. **Supply review** — กลุ่ม A: DOS ตอนนี้ และ DOS 1M / 3M / 6M ตาม Projection · Safety Stock ตามกลุ่ม · เสี่ยงขาด / สั่งผลิต · PO ใน 30 วัน · PO ที่ช้า
+  3. **Pre-S&OP gap** (`Calc.sopGapOf`) — ต่อ SKU เดือน 1–3: Demand = แผน Sales In ของเดือน (Quota ฝากขาย / Run Rate) · Supply = WH ยกมา + PO ที่ ETA ในเดือน + CN Good · ติดลบ = ขาด · ทางเลือก: เร่ง PO ที่มาช้ากว่า · โยกของจากคู่ค้าที่ค้าง (รายการเรียกคืน) · ปรับ Quota (Fit เกิน) · สั่งผลิต
+  4. **Exec summary** — KPI 6 ตัว (มูลค่า Stock · DOC · SKU เสี่ยงขาด · At-risk · Achievement MTD · FVA) · การตัดสินใจที่ต้องการ (ข้อเสนอรออนุมัติ · SKU ขาดเดือนแรก · Action สูงที่เปิด · Action ที่เงื่อนไขหายแล้ว) · วันปิดรับแก้แผน · Action ค้างจากรอบก่อน
+- **Weekly** คงรูปแบบเดิม + ส่วน **Action ค้าง** · Export JSON / Excel มี Action และ Pre-S&OP gap
+
+### แก้บั๊กเดิมระหว่างทดสอบ 3D
+- เริ่มชุดสาธิต Integrated ใหม่ตอนที่ CDN โหลดช้า → ระบบตกไปเป็นชุด UAT (`Papa is not defined` เพราะการ resume เริ่มก่อน Library ที่ท้ายหน้า) — แก้ให้ resume รอ `DOMContentLoaded` (`supply-planning.js`)
+
 ## ธีม (CR-01 ข้อ 4)
 ธีม Ops (Sidebar กรมท่า · ปุ่มฟ้า · Card ขาว) ทั้งระบบ + **สว่าง / มืด / ตามระบบ** ที่ Header (`localStorage['ops.theme']`) · โหมดมืดของ Ops สร้างจากกฎสีของธีมสว่างโดย `tools/build_css.py` · สีสถานะ (แดง/ส้ม/ม่วง/เขียว/เทา/ดำ) และสีกราฟของ Supply คงเดิม · ปีเป็น ค.ศ.
 
 ## Anchor (Integrated demo · AS OF 23 พ.ย. 2026 · Weekly · L4W · 3M · ไม่กรอง) — ตรงทุกค่า
+ตัวเลขชุดนี้คือ **วิธีเดิมทั้งหมด** (ปุ่ม "ใช้วิธีเดิมทั้งหมด") · ตั้งแต่ v8.2.0 ค่าเริ่มต้นเป็นวิธีใหม่ — Anchor ชุดใหม่อยู่ในหัวข้อ CR-03 Phase 3B
 มูลค่า Stock ฿50,091,183 (WH ฿39,518,371 · ฝากขาย ฿10,572,812) · หน่วย 514,864 / 136,418 / 651,282 · DOC 73 วัน · Sell-through 17.8% · สถานะ 7 / 2 / 9 / 98 / 4 (+ หมดอายุ 7) · At-risk 3M ฿547,597 (4,489 ชิ้น) · แนะนำเรียกคืน ฿519,974 (11 คู่, 7,194 ชิ้น) · Quota Fit 92% (107/116) · MAPE 13.5% · Bias −4.2% · Fill Rate 93.1% · Achievement MTD 94.1% (การ์ด F1 แสดงค่านี้) · selfCheck PASS ทั้ง 8 ข้อ (5 ข้อเดิม + 7–9 ของ Ops ↔ Supply) + modelCheck
 
 ## การทดสอบ
 `tools/uat-supply.js` — รันใน DevTools ของหน้าเว็บ (หรือแทรก `<script src="tools/uat-supply.js">`) แล้วเรียก `await SupUAT.all()`
 
-**ผลล่าสุด (25 พ.ย. 2026 · build 8.0-phaseD5): 103 / 103 ผ่าน** — all() 28/28 · flow() 12/12 · phaseC() 17/17 · NOLEAK หลังมีข้อเสนอ 3/3 · phaseD() Desktop 16/16 + 390px 16/16 · mobile() 11/11 · ไม่มี Console error
+**ผลล่าสุด (25 พ.ย. 2026 · v8.4.0 build 8.4.0-3d10): 172 / 172 ผ่าน** — phase3D() 20/20 · phase3C() 15/15 · phase3B() 14/14 · phase3A() 20/20 · all() 28/28 · flow() 12/12 · phaseC() 17/17 · NOLEAK หลังมีข้อเสนอ 3/3 · phaseD() Desktop 16/16 + 390px 16/16 · mobile() 11/11 · ไม่มี Console error · รายงาน `uat/CR-03-UAT-2026-11-25/` (สร้างด้วย `python tools/make_uat_report_cr03.py uat/CR-03-UAT-2026-11-25/raw-results.txt`)
+(ก่อนหน้า: v8.0 103 / 103 · v8.1.0 + phase3A 20/20 · v8.2.0 137 / 137 · v8.3.0 152 / 152)
 
 | ชุด | ตรวจอะไร |
 |---|---|
@@ -226,6 +362,9 @@ HTML + CSS + Vanilla JS · static (ไม่มี Backend) · ข้อมู�
 | SUP-THEME-{light,dark} | ทุกหน้า Supply ไม่มี Error |
 | OPS-GATE-{11 บัญชี} | ทุกหน้า Ops เปิดได้/ถูกปฏิเสธ **ตรงกับเว็บต้นฉบับ v13** และไม่มี Error / "undefined" |
 | SUP-MOBILE (`SupUAT.mobile()`) | ตั้ง Viewport 390px ก่อน — ทุกหน้าไม่ล้นแนวนอน |
+| **CR-03 3D** `SupUAT.phase3D()` (Integrated demo ที่เพิ่งเริ่ม · Desktop) | CR3-3D-VERSION · CR3-LEGACY · CR3-ANCHOR-NEW · CR3-MENU-SOP · CR3-ACTION-AUTO (1 ต่อเงื่อนไข · ซิงก์ซ้ำไม่เพิ่ม · เจ้าของ A7) · CR3-ACTION-FLOW (รับทราบ → ทำแล้ว · ไม่ทำต้องมีเหตุผล · ย้อนไม่ได้ · Audit ก่อน / หลัง) · CR3-ACTION-NOCLOSE (เงื่อนไขหาย → ป้าย · ยังเปิด · ยืนยันปิด) · CR3-ACTION-MANUAL · CR3-ACTION-NOLEAK · CR3-ACTION-B4 · CR3-SNAPSHOT (PO เลื่อน 60 วัน · Stockout Date เปลี่ยน · Quota เปลี่ยน · หน้าเทียบรอบ) · CR3-SNAPSHOT-CAP (12 รอบ · IndexedDB · Export) · CR3-LOCK · CR3-REVIEW-MONTHLY · CR3-REVIEW-WEEKLY · CR3-GAP (คำนวณมือ) · CR3-STORAGE · selfCheck · Console error |
+| **CR-03 3C** `SupUAT.phase3C()` (Integrated demo ที่เพิ่งเริ่ม · Desktop) | CR3-3C-VERSION · CR3-LEGACY · CR3-ANCHOR-NEW (รวม EW / FVA) · CR3-EW (WOS / Reorder gap / In-stock / แกว่ง / ของสะสม คำนวณมือจาก Array รายสัปดาห์ · 1 คู่ × 1 ประเภท · คำนวณซ้ำได้คีย์เดิม) · CR3-EW-DIST (ไม่มีของ + ไม่มี Quota เหลือ → แจ้ง) · CR3-EW-VIEW · CR3-EW-CYCLE (รอบเติมรายคู่ค้า · Audit) · CR3-FVA (คำนวณมือ 2 คู่) · CR3-FVA-MAPE · CR3-FVA-VIEW · CR3-FVA-NOLEAK (Manager MT / TT) · CR3-B3-NAIVE (เปิด → Naive + เหตุผล · ปิด → ค่า CR-01) · CR3-SETTINGS-3C · selfCheck · Console error |
+| **CR-03 3B** `SupUAT.phase3B()` (Integrated demo ที่เพิ่งเริ่ม · Desktop) | CR3-3B-VERSION · CR3-LEGACY (ทุกสวิตช์เดิม → Anchor CR-01) · CR3-ANCHOR-NEW (ทุกสวิตช์ใหม่ → Anchor ชุดใหม่) · CR3-DEFAULTS (A2 · สวิตช์ใน Filter bar + ลิงก์) · CR3-OOS (คู่ที่ขาด ≥ เดิม · ไม่ขาด = เดิมเป๊ะ · Lost sales เฉพาะคู่ที่ขาด) · CR3-OOS-VIEW (คอลัมน์ · Drawer · การ์ด · Matrix) · CR3-ABCXYZ (เส้น 80 / 95% · N · E จาก Clearance · SS 0) · CR3-ABC-FILTER · CR3-SS (คำนวณมือ 3 SKU: LT ของ SKU / Supplier / ประมาณ + ป้าย) · CR3-SL-WHATIF · CR3-SETTINGS (เกณฑ์ + Audit · ปุ่มวิธีเดิม) · CR3-SC-12 · selfCheck 1–12 · Console error |
 | **CR-03 3A** `SupUAT.phase3A()` (Integrated demo ที่เพิ่งเริ่ม · Desktop) | CR3-VERSION · CR3-LEGACY (วิธีเดิม → Anchor CR-01) · CR3-ANCHOR-NEW · CR3-SO-INTAKE-ERRORS (ทุกกติกาบอกบรรทัด · นำเข้าไม่ได้) · CR3-SO-INTAKE-MAP · CR3-SO-INTAKE (เติมต่อท้าย · Snapshot เลื่อน · ตารางความครบ) · CR3-RR-END (เฉพาะคู่ของ 7-Eleven ขยับ · วิธีเดิมไม่ขยับ) · CR3-STALE · CR3-SO-INTAKE-DUP (XLSX · ข้าม / แทนที่ / ลบชุด) · CR3-OTHER-OUT-APPROVAL (ห้ามอนุมัติเอง · ต้องมีสิทธิ์ · ปฏิเสธต้องมีเหตุผล) · CR3-OTHER-OUT (WH −100 · Sales Out / Run Rate ไม่เปลี่ยน · WMS ตรง) · CR3-OTHER-OUT-VIEW · CR3-PRPLAN · CR3-SC-10 / 11 · CR3-AUDIT · CR3-MENU-INTAKE · CR3-ANCHOR-AFTER · Console error |
 | **Phase D** `SupUAT.phaseD()` (Integrated demo · รันทั้ง Desktop และ 390px) | SUP-F1-CARD (94.1% · Δ vs MTD เดือนก่อน · บรรทัดสัปดาห์) · SUP-F1-TABLE (ตาราง/การ์ด = MTD ต่อคู่) · SUP-F1-REPORT · SUP-F2 (แนวนอนบนมือถือ / แนวตั้งบน Desktop) · SUP-F3 (20 → 40 ลำดับเดิม · กรองแล้วเริ่ม 20 · Desktop มี Pager) · SUP-F4 (Δ DOC สีเทา) · SUP-F8-SHOW / DIFF / SCOPE / IMPORT · SUP-NOLEAK-sa-{mt,tt,ecom} · SUP-NOTAG (ไม่มีคำว่า CR-01 บนหน้าจอ) · Console error · Anchor |
 | **Phase C** `SupUAT.phaseC()` (Integrated demo) | SUP-PROP-MERGE · SUP-PROP-SELF · SUP-PROP-REJECT · SUP-PROP-recall / quota / po · ปลายทาง → Done + Quota เดือนถัดไปถึง Supply · SUP-ETA (ประวัติ / เหตุผล) · ATP (Planned ไม่นับ · Confirmed / Shipped นับ · ETA เลื่อน → วันที่เลื่อน) · SUP-ATP-MT / TT (ฟอร์ม SO) / Ecom (หน้าออเดอร์) ไม่ปลดบล็อก · SUP-B2-MATCH · SUP-B4 · SUP-B5 · selfCheck 1–9 · Anchor ที่ AS OF 23 พ.ย. |
@@ -233,7 +372,9 @@ HTML + CSS + Vanilla JS · static (ไม่มี Backend) · ข้อมู�
 
 > ชุด UAT 943 ข้อของ Ops เดิมรันซ้ำไม่ได้ (ไม่มี Source / Harness / fixture) — ใช้ OPS-GATE เทียบกับเว็บต้นฉบับแทน (11 บัญชี × 18 หน้า เปิดได้ / ถูกปฏิเสธตรงกับ v13 ทุกช่อง)
 
-ลำดับรันที่ใช้ทำรายงาน: เริ่ม Integrated demo ใหม่ → `all()` + `phaseD()` (Desktop) → Viewport 390px: `phaseD()` + `mobile()` → เริ่มใหม่ → `flow()` → เริ่มใหม่ → `phaseC()` → `noleak()` ทั้ง 3 ฝ่าย (หลังมีข้อเสนอแล้ว)
+ลำดับรันที่ใช้ทำรายงาน: เริ่ม Integrated demo ใหม่ → `phase3C()` → เริ่มใหม่ → `phase3B()` → เริ่มใหม่ → `all()` + `phaseD()` (Desktop) → Viewport 390px: `phaseD()` + `mobile()` → เริ่มใหม่ → `flow()` → เริ่มใหม่ → `phaseC()` → `noleak()` ทั้ง 3 ฝ่าย (หลังมีข้อเสนอแล้ว) → เริ่มใหม่ → `phase3A()`
+
+`phase3C()` / `phase3D()` รันบน Integrated demo ที่เพิ่งเริ่มเช่นกัน · `SupUAT.anchors()` ตรวจตัวเลข CR-01 ด้วยวิธีเดิมทุกสวิตช์ (ไม่ขึ้นกับค่าที่ตั้งไว้) · `SupUAT.anchors('new')` ตรวจ Anchor ชุดใหม่ · ภาพหน้าจอ 3A–3D: `uat/CR-03-Phase-3A-screenshots/` … `uat/CR-03-Phase-3D-screenshots/` · **รายงาน UAT ทั้งชุดของ CR-03:** `uat/CR-03-UAT-2026-11-25/` (HTML + CSV + JSON)
 
 ## โครงไฟล์
 ```
@@ -246,6 +387,7 @@ supply-actions.js          ใหม่ (Phase C) — B1 ATP · B2 แผง Quo
 version.js                 ใหม่ (CR-03) — เลขเวอร์ชันของแอป + ประวัติรุ่น (Sidebar · Footer · Login)
 supply-intake.js           ใหม่ (CR-03 R1) — รับรายงาน Sales Out · ตารางแปลงรหัส · ความครบ · ป้ายข้อมูลค้าง · Audit การตั้งค่า
 ops-stock-issue.js         ใหม่ (CR-03 R2) — เบิกออก (ไม่ใช่การขาย) · สิทธิ์ stock.issue.approve
+supply-sop.js              ใหม่ (CR-03 R7) — รอบ S&OP: Action log · Snapshot แผน + เทียบรอบ · วันปิดรับแก้แผน · การ์ด B4
 supply/host.js             ใหม่ — รันหน้า Supply ใน Shell ของ Ops (Filter, URL, โหลดข้อมูล, สิทธิ์ Export)
 supply/*.js, supply/pages/*.js   SCM v3.3 (แก้เฉพาะจุดที่มี CR-01 — calc.js: Adapter / F5 / F9 / F1)
 supply/supply.css          GENERATED — CSS ของ SCM อยู่ใต้ .sup + Token ของ Ops
@@ -270,6 +412,9 @@ _archive/                  งานรอบก่อน (สร้าง Ops �
 - `ui.js` / `charts.js` id ของ overlay เป็น `supDrawer` / `supModal` / `supToast` · กราฟอ่านสีจาก `.sup` · `U.maskTo()` / `U.foreignAcc()` (NOLEAK)
 - `pages/stock.js` Drawer ของผู้ใช้ที่ล็อกฝ่ายแสดงเฉพาะคู่ค้าและ Lot ของฝ่าย (Lot ที่ WH × สัดส่วนที่ปันให้) · `pages/consign.js` ปลายทางเรียกคืนผ่าน `U.maskTo()` · `pages/report.js` Export JSON ไม่แนบ Commentary ฝ่ายอื่น
 - `calc.js` แก้เฉพาะ Adapter / F5 / F9 ใน Phase B (ดูหัวข้อ Data Adapter) และ F1 `achMtd()` ใน Phase D (`reportOf` · `quotaOf` ต่อคู่) · Phase A มีแค่บรรทัดผูก `t`
+- CR-03 3B: `calc.js` ฟังก์ชันใหม่ `oosOf` · `runRateU` · `cr3Oos` · `soWeeksOf` · `abcxyzOf` · `leadTimeOf` · `zOf` · `safetyStatOf` · selfCheck (12) · `skuRow` เลือกสูตรตามสวิตช์ · `host.js` Filter bar วิธี Run Rate (`rm=`) · `pages/stock.js` (คอลัมน์ · ตัวกรองกลุ่ม · Drawer) · `pages/replen.js` · `pages/overview.js` · `pages/consign.js` · `pages/settings.js` · `supply-feed.js` ส่ง Safety units ของ Ops (`safety_units`)
+- CR-03 3D: `supply-sop.js` (ใหม่ · Action log · Snapshot · วันปิดรับแก้แผน · B4 · `Supply.sopInfo`) · `calc.js` ฟังก์ชันใหม่ `sopGapOf` · `planSnapshotOf` · `comparePlans` · `pages/report.js` (Monthly 4 ส่วน · Weekly + Action ค้าง · Export) · `pages/settings.js` (วันปิดรับแก้แผน · การ์ดพื้นที่ข้อมูล) · `host.js` (`#/supply/sop`)
+- CR-03 3C: `calc.js` ฟังก์ชันใหม่ `earlyWarnOf` · `ewSeriesOf` · `replenCycle` · `fvaOf` · `prepare` อ่าน `sales` ของคู่ค้า · `pages/consign.js` (การ์ด · กราฟสะสม · การแจ้งเตือน · Matrix) · `pages/quota.js` (การ์ด FVA · ตาราง · Scatter · คอลัมน์ · ข้อเสนอ Naive) · `pages/settings.js` · `supply-feed.js` ส่ง `sales` จาก partner master
 - `host.js` (Phase B) `App.base` = ตาราง Integrated demo · `App.raw` = base + Feed · สร้าง DB ใหม่เมื่อ Ops เปลี่ยน (Feed key) · selfCheck รวมข้อ 7–9
 - `pages/overview.js` · `stock.js` · `quota.js` (Phase B) ระหว่างขนส่ง (การ์ด / กราฟชั้นที่ 3 / คอลัมน์) · คอลัมน์ จอง (SO) / หักแล้ว / คงเหลือ ของเดือนที่ Ops ดูแล
 - Phase D: `pages/quota.js` (F1 การ์ด / ตาราง / การ์ดมือถือ) · `pages/report.js` (F1 ป้าย · F4) · `pages/overview.js` (F4) · `pages/consign.js` (F2 · F8) · `ui.js` (F3 ใน `U.table`) · `data.js` (ตาราง `consign_count` · สถานะ Clearance)
