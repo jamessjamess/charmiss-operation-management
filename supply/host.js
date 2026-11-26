@@ -145,7 +145,7 @@
     let as = Calc.dn(p.get('asof'));
     as = as == null ? defaultAsOf() : Math.max(App.DB.minAsOf, Math.min(Calc.monday(as), App.DB.maxAsOf));
     App.F = { asDn: as, view: p.get('view') === 'M' ? 'M' : 'W', ch: list('ch'), acc: list('acc'), brand: list('brand'), cat: list('cat'),
-      q: p.get('q') || '', rr: ['L4W', 'L3M', 'L6M', 'W'].includes(p.get('rr')) ? p.get('rr') : App.S.rrBasis || 'L4W', h: [1, 3, 6].includes(+p.get('h')) ? +p.get('h') : 3,
+      q: p.get('q') || '', rr: Calc.RR_BASES.includes(p.get('rr')) ? p.get('rr') : App.S.rrBasis || 'L4W', h: [1, 3, 6].includes(+p.get('h')) ? +p.get('h') : 3,
       rm: RM.includes(p.get('rm')) ? p.get('rm') : rmDefault() };   // CR-03 R3: run-rate method
     App.ui.sku = p.get('sku') || null;
   }

@@ -101,6 +101,8 @@
         <div class="oo-item tot"><span>${t('oo_total')}</span><b>${U.n(oo.qty)}</b><small>${U.money(oo.value)}</small></div></div></section>
         <section class="card" id="card-lost"><div class="card-head"><h3>${t('c_lost')} ${U.info(t('c_lost_tip'))}</h3><span class="muted small">${U.dateShort(M.asDn - 28)} – ${U.dateShort(M.asDn - 1)}</span></div>
           ${lostRows.length ? `<div class="lost-head"><b>${U.money(lostV)}</b><span class="muted small">${t('lost_sub', { q: U.n(lostQ), n: U.n(lostRows.length) })}</span></div>
+          <div class="small muted lost-how">${t('lost_how')}</div>
+          <div class="lost-split">${[['lost_at_acc', 'lost_at_acc_do', 'lost4C'], ['lost_at_wh', 'lost_at_wh_do', 'lost4W']].map(([k, d, f]) => { const v = M.rows.reduce((x, r) => x + ((r[f] || [0, 0])[1]), 0), q = M.rows.reduce((x, r) => x + ((r[f] || [0, 0])[0]), 0); return `<div class="lost-part" data-lost-part="${f}"><span>${t(k)}</span><b class="tnum">${U.money(v)}</b><small>${U.n(Math.round(q))} ${t('lost_pcs')} · ${t(d)}</small></div>`; }).join('')}</div>
           <div class="small muted" style="margin:6px 0 4px">${t('lost_top')}</div><div class="lost-list">${lostRows.slice(0, 5).map(r => `<button type="button" class="lost-item" data-go-sku="${U.esc(r.sku)}"><span class="cell2"><b>${U.esc(r.name)}</b><span class="sub">${U.esc(r.sku)} · OOS ${r.oosW13}/13</span></span><b class="tnum">${U.money(r.lost4V)}</b></button>`).join('')}</div>`
           : U.empty(t('lost_none'), '', 'check')}</section></div>`;
       main.innerHTML = html;

@@ -2,10 +2,11 @@
    clicking it opens the version history. Release checklist: bump APP_VERSION.number + add a history line, and set every
    ?v= in index.html to the same number so browsers load the new files. */
 const APP_VERSION={
- number:'8.4.0',
- label:{th:'CR-03 · Phase 3D (ครบ CR-03)',en:'CR-03 · Phase 3D (CR-03 complete)'},
+ number:'8.5.0',
+ label:{th:'CR-04 · หน้าหลัก Command Center + เมนูใหม่ + รวมปัญหาที่พบ',en:'CR-04 · Home command center + menu order + fix list'},
  date:'2026-11-25',
  history:[
+  ['8.5.0','2026-11-25',{th:'CR-04 — หน้าหลักแบบ Command Center ตามบทบาท (งานของฉัน · ตัวเลขหลัก · สายงานภาพเดียว · 14 วันข้างหน้า) · เมนูเรียงตามลำดับงาน · หน้าคำสั่งซื้อแท็บชั้นเดียว 8 ขั้น · ตัวกรองแถวเดียว + ช่วงวันที่ 7 หน้า · การ์ดลูกค้า · รอบแผนปรับได้ (ดูย้อนหลังอ่านอย่างเดียว · เลื่อนรอบ) · SKU 360 · วิธีคาดการณ์ (Trend / อัตโนมัติ) · ยอดขายที่เสียโอกาส · ป้าย ABC-XYZ เป็นคำ · ปรับยอดฝากขายจากผลนับ · วันที่ ค.ศ. ทุกหน้า',en:'CR-04 — role-based home command center (my work · key numbers · flow strip · next 14 days) · menu in work order · one row of 8 order stages · one-row filter bar + date range on 7 pages · customer cards · adjustable plan period (read-only past view · roll) · SKU 360 · forecast methods (trend / automatic) · lost sales wording · ABC-XYZ in words · consignment count adjustment · Gregorian dates everywhere'}],
   ['8.4.0','2026-11-25',{th:'CR-03 Phase 3D — รอบ S&OP: Action log (คิวข้อยกเว้น · สร้างอัตโนมัติ · ปิดเองไม่ได้) · Snapshot แผน + เทียบรอบ · วันปิดรับแก้แผน · Supply Review รายเดือน 4 ส่วน · Action ค้างใน Weekly Review และการ์ดหน้าหลัก · หน้าแรกหลังล็อกอิน = หน้าหลัก ทุกบทบาท',en:'CR-03 Phase 3D — S&OP cycle: action log (exception queue · raised automatically · never closed by the system) · plan snapshots + comparison · plan lock day · monthly Supply Review in 4 parts · open actions in the weekly review and on the home card · every role lands on the home page after sign-in'}],
   ['8.3.0','2026-11-25',{th:'CR-03 Phase 3C — Early warning ฝากขาย (WOS · Reorder gap · In-stock · Distribution gap · Swing · ของสะสม) · FVA: Quota เทียบ Naive + Tracking signal · ข้อเสนอ Quota เริ่มจาก Naive เมื่อ FVA ติดลบต่อเนื่อง',en:'CR-03 Phase 3C — consignment early warning (WOS · reorder gap · in-stock · distribution gap · swing · piling up) · FVA: quota vs naive + tracking signal · quota proposals start from naive when FVA stays negative'}],
   ['8.2.0','2026-11-25',{th:'CR-03 Phase 3B — Run Rate ไม่นับสัปดาห์ที่ของขาด + Lost sales · กลุ่ม ABC-XYZ · Safety Stock แบบสถิติจาก Lead Time จริง · selfCheck 12',en:'CR-03 Phase 3B — run rate skipping out-of-stock weeks + lost sales · ABC-XYZ groups · statistical safety stock from actual lead times · selfCheck 12'}],

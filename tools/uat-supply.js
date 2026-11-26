@@ -18,15 +18,15 @@
   const SUP = ['supOverview', 'supStock', 'supExpiry', 'supConsign', 'supCalendar', 'supReplen', 'supQuota', 'supProposals', 'supReview', 'supSop', 'supSetup', 'supIntake'];   // CR-03: + Intake · + S&OP
   /* CR-01 7.3 — the expected Supply menu per profile (CR-03: + Intake for Director / Manager MT (view) / Planner / Admin) */
   const EXPECT = {
-    director: 'Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Review,Sop,Intake',
-    'mgr-mt': 'Overview,Stock,Expiry,Consign,Calendar,Quota,Proposals,Review,Sop,Intake', 'mgr-tt': 'Overview,Stock,Expiry,Calendar,Quota,Proposals,Review,Sop',
-    'mgr-ecom': 'Overview,Stock,Expiry,Calendar,Quota,Proposals,Review,Sop', 'sa-mt': '', 'sa-tt': '', 'sa-ecom': '',
-    admin: 'Setup,Intake', finance: 'Calendar,Review', warehouse: 'Expiry,Calendar', planner: 'Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Review,Sop,Setup,Intake'   // CR-03 R7: + Sop
+    director: 'Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Sop,Review,Intake',
+    'mgr-mt': 'Overview,Stock,Expiry,Consign,Calendar,Quota,Proposals,Sop,Review,Intake', 'mgr-tt': 'Overview,Stock,Expiry,Calendar,Quota,Proposals,Sop,Review',
+    'mgr-ecom': 'Overview,Stock,Expiry,Calendar,Quota,Proposals,Sop,Review', 'sa-mt': '', 'sa-tt': '', 'sa-ecom': '',
+    admin: 'Intake,Setup', finance: 'Calendar,Review', warehouse: 'Expiry,Calendar', planner: 'Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Sop,Review,Intake,Setup'   // CR-03 R7: + Sop · CR-04 R1: menu order (S&OP before Review · Intake in DATA · Setup in ADMIN)
   };
   const ANCHOR = { stockValue: 50091183, whV: 39518371, consV: 10572812, units: '514864/136418/651282', doc: 73, sellThrough: 17.8,
     status: '7/2/9/98/4/+7', risk3M: '547597/4489', recall: '519974/11/7194', quotaFit: '92/107/116', mape: 13.5, bias: -4.2, fill: 93.1, achMTD: 94.1 };
   /* CR-03 (3B): every new method — R1 run-rate end per account · R3 run rate without out-of-stock weeks · R4 statistical safety stock (+ the R3 / R4 figures) */
-  const NEW_METHODS = { rrEndMode: 'account', rrMode: 'unconstrained', safetyMode: 'statistical', prPlanOn: false, fvaProposal: true };
+  const NEW_METHODS = { rrEndMode: 'account', rrMode: 'unconstrained', safetyMode: 'statistical', prPlanOn: false, fvaProposal: true, countAdjustOn: true };   // CR-04: + countAdjustOn (default on)
   const ANCHOR_NEW = Object.assign({}, ANCHOR, { doc: 70, status: '6/4/7/99/4/+7', risk3M: '726866/7265', quotaFit: '95/110/116',
     lost4: 2020669, lost13: 3071760, oosSku: 21, abc: '48/34/27/6/5', ssUnits: 167765, sugValue: 42971040,
     /* CR-03 (3C) */ ew: '98.8/12/18/23/0/22/20/104', fva3: '13.5/13.5/0.0', ts: '114/252/145' });
@@ -408,6 +408,7 @@
      CR3-OTHER-OUT-* · CR3-PRPLAN · CR3-SC-10/11 · CR3-AUDIT · CR3-MENU-* · CR3-ANCHOR-AFTER */
   async function phase3A() {
     const res = [], App = global.App, Calc = global.Calc, step = (id, pass, info) => res.push(Object.assign({ id, pass: !!pass }, info || {}));
+    if (global.SupUAT._proto() === 'file:') return [{ id: 'CR3-3A', pass: false, info: 'run via http server (python -m http.server)' }];   // CR-04 I9: the sample files are read with fetch
     if (global.supDataset() !== 'integrated' || !db.feedBase) return [{ id: 'CR3-3A', pass: false, info: 'needs a fresh Integrated demo' }];
     const before = errors.length, setS = patch => App.saveSettings(Object.assign({}, App.S, patch));
     const rrAll = (D, mode, as) => { D.rrEndMode = mode; return D.skus.map(s => D.accounts.map(a => Calc.runRate(D, s.i, a.j, as == null ? D.maxAsOf : as, 'L4W'))); };
@@ -549,7 +550,7 @@
     const card = (document.querySelector('#card-lost') || {}).innerText || '', lost4 = App.model().rows.reduce((x, r) => x + r.lost4V, 0);
     global.navigate('supConsign'); await wait(1200); const seg = document.querySelector('[data-seg="mxMetric"] [data-v="oos"]'); seg && seg.click(); await wait(500);
     const mxOk = !!seg && App.ui.mxMetric === 'oos' && /\d/.test((document.querySelector('#mxHost') || {}).innerText || ''); App.ui.mxMetric = 'rem';
-    step('CR3-OOS-VIEW (stock columns · drawer · overview card · matrix)', /OOS/.test(ths) && /Lost sales/.test(ths) && /กลุ่ม|Group/.test(ths) && drOk && oosMarked && card.includes(global.U.money(lost4)) && mxOk, { sku: rOos.sku, card: card.slice(0, 60) });
+    step('CR3-OOS-VIEW (stock columns · drawer · overview card · matrix)', /OOS/.test(ths) && /Lost sales|ยอดขายที่เสียโอกาส/.test(ths) && /กลุ่ม|Group/.test(ths) && drOk && oosMarked && card.includes(global.U.money(lost4)) && mxOk, { sku: rOos.sku, card: card.slice(0, 60) });
     // 5) R4 ABC-XYZ: shares · the line at 80 / 95 % · NPD → N · Discontinue / Clearance → E (SS 0)
     const C = Calc.abcxyzOf(App.DB, as, App.S), T = C.tot, ranked = C.rows.filter(r => r.abc).sort((a, b) => b.value - a.value);
     const lastA = ranked.filter(r => r.abc === 'A').pop(), firstB = ranked.find(r => r.abc === 'B'), firstC = ranked.find(r => r.abc === 'C');
@@ -563,9 +564,9 @@
       { groups: [T.A.n, T.B.n, T.C.n, T.N.n, T.E.n].join('/'), shares: [T.A.share, T.B.share, T.C.share].map(x => x.toFixed(1)).join('/'), clearanceSku: clSku });
     // 6) group filter on Stock and Replen
     global.navigate('supStock'); await wait(1000); const gs = document.querySelector('#grpF'); gs.value = 'E'; gs.dispatchEvent(new Event('change')); await wait(500);
-    const shownE = [...document.querySelectorAll('#supRoot table.tbl tbody tr .grp, #supRoot .clist .grp')].map(x => x.innerText), nE = App.model().rows.filter(r => r.cls && r.cls.group === 'E').length;
+    const shownE = [...document.querySelectorAll('#supRoot table.tbl tbody tr .grp, #supRoot .clist .grp')].map(x => x.dataset.grp || x.innerText), nE = App.model().rows.filter(r => r.cls && r.cls.group === 'E').length;
     App.ui.grp = ''; global.navigate('supReplen'); await wait(1200); const rg = document.querySelector('#rpGrp'); App.ui.rpMode = 'all'; rg.value = 'B'; rg.dispatchEvent(new Event('change')); await wait(500);
-    const rpGrps = [...document.querySelectorAll('#rpHost .grp')].map(x => x.innerText); App.ui.rpGrp = '';
+    const rpGrps = [...document.querySelectorAll('#rpHost .grp')].map(x => x.dataset.grp || x.innerText); App.ui.rpGrp = '';
     step('CR3-ABC-FILTER (Stock E · Replen B)', shownE.length === nE && shownE.every(g => g === 'E') && rpGrps.length > 0 && rpGrps.every(g => g[0] === 'B'), { stockE: shownE.length, replenB: rpGrps.length });
     // 7) R4 safety stock by hand — 3 SKUs: own lead time · supplier lead time · estimated lead time (no out-of-stock week in the XYZ window, so σ is plain)
     const Mh = Calc.computeModel(App.DB, { asDn: as, view: 'W', ch: [], acc: [], brand: [], cat: [], q: '', rr: 'L4W', h: 3, rm: 'unconstrained' }, App.S, {}), Dh = App.DB, wEh = Dh.wk(as);
@@ -723,7 +724,8 @@
     await login('planner'); global.navigate('supSop'); await wait(1500);
     const D = App.DB, S = App.S, as = global.Supply.defaultAsOf(), M = Calc.computeModel(D, { asDn: as, view: 'W', ch: [], acc: [], brand: [], cat: [], q: '', rr: S.rrBasis || 'L4W', h: 3 }, S, {}), E = Calc.earlyWarnOf(D, M.rows, as, M.mask, S);
     const open = acts().filter(isOpen), keys = open.filter(a => a.key).map(a => a.key), uniq = new Set(keys).size === keys.length;
-    const want = E.alerts.length + M.rows.filter(r => r.status === 'stockout' || r.status === 'reorder').length + M.rows.filter(r => r.expiry).length;
+    const want = E.alerts.length + M.rows.filter(r => r.status === 'stockout' || r.status === 'reorder').length + M.rows.filter(r => r.expiry).length
+      + D.skus.filter((x, i) => { const T = Calc.skuTrend(D, i, as, null); return T.ok && T.down && T.level > 0; }).length;   // CR-04 R9: + one "ขาลงต่อเนื่อง" action per declining SKU
     const n0 = acts().length; sopSync(true); const n1 = acts().length;
     const ew = open.find(a => a.type.startsWith('ew_')), so = open.find(a => a.type === 'stockout'), ex = open.find(a => a.type === 'expiry' && a.ch);
     const owners = ew && ew.owner === 'mgr-mt' && so && so.owner === 'planner' && (!ex || (ex.owner === 'planner' && ex.coOwner === 'mgr-' + ex.ch.toLowerCase()));
@@ -817,11 +819,328 @@
       { results: list.map(r => ({ id: r.id, pass: !!r.pass, info: JSON.stringify(Object.fromEntries(Object.entries(r).filter(([k]) => k !== 'id' && k !== 'pass'))).slice(0, 400) })) });
     localStorage.setItem('uat.cr03', JSON.stringify(o)); return list.filter(r => r.pass).length + '/' + list.length;
   }
+  /* ---------------------------------------------------------------- CR-04 · SupUAT.cr04() (fresh Integrated demo · 1440 px; run again at 390 px for the
+     mobile checks) and SupUAT.cr04data() (changes the data: count adjustment + plan-period roll — run last, then start a fresh demo) */
+  const num = s => { const m = String(s == null ? '' : s).replace(/,/g, '').match(/-?\d+(\.\d+)?/); return m ? +m[0] : NaN; };
+  async function homeReady() { for (let k = 0; k < 40; k++) { if (view === 'overview' && !document.querySelector('.hm-card.skel') && !(document.querySelector('#hmAlert') && !document.querySelector('#hmAlert').children.length)) return; await wait(200); } }
+  const cardVal = id => num(document.querySelector(`[data-hm-card="${id}"] strong`)?.innerText);
+  async function supReady(v) { global.navigate(v); for (let k = 0; k < 50 && !(document.querySelector('#main') && document.querySelector('#main').children.length && global.App.DB && global.App.F); k++) await wait(200); await wait(400); }
+  async function supF() { for (let k = 0; k < 50 && !(global.App.F && global.App.DB); k++) await wait(200); }
+  async function cr04() {
+    const res = [], App = global.App, Calc = global.Calc, St = global.St, step = (id, pass, info) => res.push(Object.assign({ id, pass: !!pass }, info || {}));
+    if (global.supDataset() !== 'integrated' || !db.feedBase) return [{ id: 'CR4', pass: false, info: 'needs a fresh Integrated demo' }];
+    const before = errors.length, W = innerWidth, phone = W <= 700, today = opsDay();
+    try { localStorage.removeItem('ops.navCollapsed'); localStorage.removeItem('ops.navOpened'); } catch (e) { /* storage blocked */ }
+
+    // CR4-LANDING — every profile lands on หน้าหลัก · a deep link (first sign-in of a page load) still opens its page, once
+    const land = [];
+    for (const [r, u] of PROFILES) { await login(r, u); land.push((u || r) + ':' + view); }
+    global.logoutForUserSwitch(); global.render(); await wait(80);
+    history.replaceState(null, '', location.pathname + '#/supply/quota'); supDeepUsed = false; await login('manager', 'mgr-mt'); await wait(300); const deepSup = view;
+    global.logoutForUserSwitch(); global.render(); await wait(80);
+    history.replaceState(null, '', location.pathname + '#customers?d=7d'); supDeepUsed = false; await login('director'); await wait(200); const deepOps = view + ':' + global.ofbState('customers').d;
+    await login('director'); const again = view;
+    step('CR4-LANDING', land.every(x => x.endsWith(':overview')) && deepSup === 'supQuota' && deepOps === 'customers:7d' && again === 'overview', { land: land.filter(x => !x.endsWith(':overview')), deepSup, deepOps, again });
+
+    // CR4-MENU-ORDER · CR4-GATE
+    const ORDER = CR4_NAV.map(g => g[0]), mo = [];
+    for (const [r, u] of PROFILES) {
+      await login(r, u); const groups = [...document.querySelectorAll('aside .navgroup')].map(g => g.dataset.group);
+      const okOrder = groups.every((g, k) => k === 0 || ORDER.indexOf(groups[k - 1]) < ORDER.indexOf(g)), homeFirst = groups[0] === 'home' && !document.querySelector('aside .navgroup[data-group="home"] .navhead');
+      const closed = ['data', 'admin'].every(g => { const el = document.querySelector(`aside .navgroup[data-group="${g}"]`); return !el || el.classList.contains('collapsed'); });
+      mo.push({ who: u || r, ok: okOrder && homeFirst && closed, groups: groups.join('>') });
+    }
+    await login('admin'); global.navigate('audit'); await wait(80); const curOpen = !document.querySelector('aside .navgroup[data-group="admin"]').classList.contains('collapsed');
+    const m = await menu(), g = await opsGate();
+    step('CR4-MENU-ORDER', mo.every(x => x.ok) && curOpen && m.every(x => x.pass), { bad: mo.filter(x => !x.ok), curOpen, ids: m.filter(x => !x.pass).map(x => x.id) });
+    step('CR4-GATE', g.every(x => x.pass) && m.every(x => x.pass), { fail: g.filter(x => !x.pass).map(x => x.id + ' ' + x.denied + ' ' + (x.broken || []).join(',')) });
+
+    // CR4-HOME-ROLE — the R2-3 cards per role · Warehouse / ERP no sales or E-commerce · nothing the role cannot act on
+    const EXP = { director: 'netMtd,backlog,stock,stockout,expiry,lost', 'mgr-mt': 'salesMtd,quotaLeft,backlog,instock,fva', 'mgr-tt': 'salesMtd,quotaLeft,backlog,stockout,fva', 'mgr-ecom': 'salesMtd,quotaLeft,backlog,stockout,fva',
+      'sa-mt': 'ordersToday,payWait,blocked,quotaLeft', 'sa-tt': 'ordersToday,payWait,blocked,quotaLeft', 'sa-ecom': 'ordersToday,payWait,blocked,quotaLeft', warehouse: 'manifest,returns,issue,po7,lot90', finance: 'payCheck,sla,cn,ivcn',
+      planner: 'soComplete,actions,propWait,order30,poDelay,sc', admin: 'sc,storage,ds' };
+    const hr = [];
+    for (const [r, u] of PROFILES) {
+      await login(r, u); await homeReady(); const p = document.querySelector('#page'), ids = [...p.querySelectorAll('.hm-card')].map(c => c.dataset.hmCard).join(',');
+      const salesTxt = /ยอดขาย|Net sales|ออเดอร์วันนี้|Orders today/.test([...p.querySelectorAll('.hm-card small')].map(x => x.innerText).join('|'));
+      const ecom = !!p.querySelector('.ecom-home-panel'), more = !!p.querySelector('.hm-more'), canProp = Object.values(PROP).some(x => global.fuCan(x.perm)), propItem = !!p.querySelector('.sup-b4-item[data-b4-go="supProposals"]');
+      const dead = [...p.querySelectorAll('.hm-card:not([disabled]),.sup-b4-item:not([disabled])')].filter(c => { const v = (c.getAttribute('data-hm-go') || c.getAttribute('data-b4-go') || '').split('|')[0].split(':')[0]; return v && !global.workCanVisit(v); }).length;
+      const noSales = ['warehouse', 'finance'].includes(r);
+      hr.push({ who: u || r, ids, ok: ids === EXP[u || r] && (!noSales || (!salesTxt && !ecom && !more)) && (canProp || !propItem) && dead === 0 });
+    }
+    step('CR4-HOME-ROLE', hr.every(x => x.ok), { bad: hr.filter(x => !x.ok) });
+
+    // CR4-HOME-MATCH — every home number = the source page (same function, same filter) · ≥ 12 numbers, Ops + Supply
+    const mt = [], cmp = (k, home, page, tol) => mt.push({ k, home, page, ok: isFinite(home) && isFinite(page) && Math.abs(home - page) <= (tol == null ? 0.5 : tol) });
+    await login('director'); await homeReady();
+    const H = { netMtd: cardVal('netMtd'), backlog: cardVal('backlog'), stock: cardVal('stock'), stockout: cardVal('stockout'), expiry: cardVal('expiry'), lost: cardVal('lost'), alertOut: num(document.querySelector('.sup-b4-item[data-b4-go="supStock:stockout"] b')?.innerText) };
+    global.navigate('workQueue'); await wait(150); cmp('backlog = งานค้าง (ทั้งหมด)', H.backlog, num(document.querySelector('.fu-kpis .panel h2')?.innerText));
+    const rs = global.ofbState('reports'); rs.d = 'custom'; rs.from = today.slice(0, 8) + '01'; rs.to = today; global.navigate('reports'); await wait(150); cmp('net MTD = รายงาน', H.netMtd, Math.round(global.opsReportData().net));
+    global.ofbReset('reports'); await supReady('supOverview'); const M0 = App.model();
+    cmp('Stock value', H.stock, Math.round(M0.kpi.stockValue)); cmp('SKU stockout', H.stockout, M0.statusCount.stockout); cmp('Supply Alert stockout', H.alertOut, M0.statusCount.stockout);
+    cmp('Expiry 3M', H.expiry, Math.round(M0.kpi.riskBy[1][1])); cmp('Lost sales 4W', H.lost, Math.round(M0.rows.reduce((x, r) => x + (r.lost4V || 0), 0)));
+    await login('manager', 'mgr-mt'); await homeReady(); const HM = { ql: cardVal('quotaLeft'), ins: cardVal('instock'), fva: cardVal('fva') };
+    global.navigate('allocation'); await wait(250);
+    const qPanel = [...document.querySelectorAll('#page .panel')].find(s => [...s.querySelectorAll('th')].some(th => th.innerText.trim() === t('workQuotaLeft')));
+    cmp('Quota left = สินค้าคงคลังและโควตา', HM.ql, qPanel ? [...qPanel.querySelectorAll('tbody tr')].reduce((x, tr) => x + num(tr.children[1]?.innerText), 0) : NaN);
+    await supReady('supConsign'); const MC = App.model(); cmp('In-stock rate (MT)', HM.ins, Math.round(Calc.earlyWarnOf(App.DB, MC.rows, MC.asDn, MC.mask, MC.S).kpi.instock * 10) / 10, 0.05);
+    await supReady('supQuota'); const fv = global.Pages.fvaData(App, 3).total; cmp('FVA (MT)', HM.fva, Math.round(fv.fva * 10) / 10, 0.05);
+    await login('planner'); await homeReady(); const HP = { prop: cardVal('propWait'), delay: cardVal('poDelay') };
+    cmp('Proposals waiting', HP.prop, global.props().filter(p => p.status === 'submitted' && global.propVisible(p)).length);
+    await supReady('supCalendar'); cmp('PO delayed', HP.delay, Calc.inboundOf(App.DB, App.model()).kpi.delayN);
+    await login('warehouse'); await homeReady(); const HW = cardVal('manifest'); global.navigate('workQueue'); await wait(150); cmp('Handover to confirm = งานค้างและส่งมอบ', HW, num(document.querySelectorAll('.fu-kpis .panel h2')[2]?.innerText));
+    await login('finance'); await homeReady(); cmp('IV − CN today', cardVal('ivcn'), Math.round(global.orgTodaySales()));
+    step('CR4-HOME-MATCH', mt.length >= 12 && mt.every(x => x.ok), { n: mt.length, bad: mt.filter(x => !x.ok) });
+
+    // CR4-FLOW-STRIP — each Order → Cash box = the order tab it opens · Supply PO 14 days = the calendar function
+    await login('director'); await homeReady(); const fl = [];
+    for (const k of ['confirm', 'pay', 'docs', 'pick']) {
+      await login('director'); await homeReady(); const b = document.querySelector(`[data-flow="order"] [data-flow-step="${k}"]`), v = num(b?.querySelector('b')?.innerText); b?.click(); await wait(150);
+      const sel = document.querySelector('[data-cr4-tab].selected'); fl.push({ k, home: v, tab: sel?.dataset.cr4Tab, page: num(sel?.querySelector('b')?.innerText), ok: view === 'orders' && sel?.dataset.cr4Tab === k && num(sel?.querySelector('b')?.innerText) === v });
+    }
+    await login('director'); await homeReady(); const poBox = num(document.querySelector('[data-flow="supply"] [data-flow-step="po"] b')?.innerText);
+    document.querySelector('[data-flow="supply"] [data-flow-step="po"]')?.click(); await wait(800); await supF(); await wait(300); const MI = App.model(), poPage = Calc.inboundOf(App.DB, MI).po.filter(p => p.open && p.day >= MI.asDn && p.day < MI.asDn + 14).length;
+    step('CR4-FLOW-STRIP', fl.every(x => x.ok) && poBox === poPage && view === 'supCalendar', { fl: fl.filter(x => !x.ok), poBox, poPage });
+
+    // CR4-MYWORK — one item per source, only for the role that acts on it · creator never sees their own approval · sorted · opens the item
+    await login('planner'); await supReady('supOverview'); const M1 = App.model(), sku1 = M1.rows[5].sku;
+    const pr = global.supPropose({ type: 'po', sku: sku1, qty: 400, lt: 20 }); global.supPropAct(pr.prop.id, 'submit');
+    const act = global.sopAdd({ title: 'UAT CR-04 my work', sku: sku1, acc: 'A01', sev: 'high', owner: 'mgr-mt' }); const a = global.sopActs().find(x => x.id === act.id); if (a) { a.due = Date.now() - 2 * 864e5; global.persist(); }
+    await homeReady(); const plannerSeesOwn = !!document.querySelector(`#page [data-prop-open="${pr.prop.id}"]`);
+    await login('warehouse'); const isku = App.DB.skus.map(s => s.sku).find(s => global.issueFreeOk(s, 10, 'pr')) || App.DB.skus[2].sku, iq = global.issueRequest({ type: 'pr', sku: isku, qty: 10, ref: 'UAT-CR4-' + Date.now(), reason: 'UAT CR-04' }); await homeReady(); const whSeesOwn = !!document.querySelector('#page .hm-witem[data-hm-src="approve"]') && [...document.querySelectorAll('#page .hm-witem')].some(x => x.innerText.includes(iq.issue?.id || '¤'));
+    const mtOrder = db.orders.find(o => partner(o.partner)?.type === 'MT' && global.liveOrder(o) && !global.orderDoc(o));
+    if (mtOrder) { const l = global.getOrderLines(mtOrder)[0]; mtOrder.quotaCheck = { pass: false, rows: [{ sku: l.sku, need: l.qty, quota: 0, used: 0, left: 0, short: l.qty, pass: false }], time: Date.now(), actor: 'uat' }; global.persist(); }
+    const hmIds = () => [...document.querySelectorAll('#page .hm-witem')].map(x => (x.getAttribute('data-prop-open') || x.getAttribute('data-sop-open') || x.getAttribute('data-hm-order') || x.getAttribute('data-hm-go') || '') + '|' + x.innerText.replace(/\s+/g, ' '));
+    await login('director'); await homeReady(); hmShowAll = true; global.render(); await homeReady(); const dir = hmIds();
+    const sorted = (D => D.work.every((w, k) => k === 0 || D.work[k - 1].sev < w.sev || (D.work[k - 1].sev === w.sev && (D.work[k - 1].due ?? 9e15) <= (w.due ?? 9e15))))(global.homeData());
+    const dirProp = dir.some(x => x.startsWith(pr.prop.id + '|')), dirIssue = dir.some(x => x.includes(iq.issue?.id || '¤'));
+    document.querySelector(`#page [data-prop-open="${pr.prop.id}"]`)?.click(); await wait(200); const opened = !!document.querySelector('#modal[open]') && document.querySelector('#modal').innerText.includes(pr.prop.id); if (document.querySelector('#modal[open]')) document.querySelector('#modal').close();
+    hmShowAll = false;
+    await login('manager', 'mgr-mt'); await homeReady(); hmShowAll = true; global.render(); await homeReady(); const mtW = hmIds(), mtAct = mtW.some(x => x.startsWith(act.id + '|')); hmShowAll = false;
+    await login('manager', 'mgr-tt'); await homeReady(); const ttAct = hmIds().some(x => x.startsWith(act.id + '|'));
+    await login('salesAdmin', 'sa-mt'); await homeReady(); hmShowAll = true; global.render(); await homeReady(); const saMt = mtOrder ? hmIds().some(x => x.startsWith(mtOrder.id + '|') && x.includes(t('hmW_blocked'))) : true; hmShowAll = false;
+    await login('salesAdmin', 'sa-tt'); await homeReady(); const saTt = mtOrder ? hmIds().some(x => x.startsWith(mtOrder.id + '|')) : false;
+    step('CR4-MYWORK', dirProp && !plannerSeesOwn && dirIssue && !whSeesOwn && mtAct && !ttAct && saMt && !saTt && sorted && opened, { dirProp, plannerSeesOwn, dirIssue, whSeesOwn, mtAct, ttAct, saMt, saTt, sorted, opened });
+
+    // CR4-NOLEAK — the home page of every department-scoped profile (same rule as noleak())
+    const nl = [];
+    for (const [r, u] of PROFILES.filter(([r]) => ['manager', 'salesAdmin'].includes(r))) {
+      await login(r, u); await homeReady(); document.querySelectorAll('#page details').forEach(d => d.open = true); await wait(50);
+      const own = { MT: 'MT', TT: 'TT', Ecom: 'ECOM' }[global.orgSessionGroup()], foreign = App.DB.accounts.filter(x => x.channel !== own).map(x => x.name).filter(x => x.length > 3), txt = document.querySelector('#page').innerText;
+      const hits = foreign.filter(x => word(x).test(txt)).concat(['MT', 'TT', 'ECOM'].filter(c => c !== own && word(c).test(txt)));
+      nl.push({ who: u, hits });
+    }
+    step('CR4-NOLEAK', nl.every(x => !x.hits.length), { hits: nl.filter(x => x.hits.length) });
+
+    // CR4-DATASET — UAT seed: no Supply number on the home page, a box instead · Integrated: the numbers
+    await login('director'); await homeReady(); const integ = !!document.querySelector('[data-hm-card="stock"]') && !!document.querySelector('#page .sup-b4') && !document.querySelector('.hm-supinfo');
+    const keepDs = db.dataset; db.dataset = 'uat'; global.render(); await wait(300);
+    const pg = document.querySelector('#page'), uat = !pg.querySelector('[data-hm-card="stock"],[data-hm-card="expiry"],[data-hm-card="lost"]') && !pg.querySelector('.sup-b4') && !pg.querySelector('[data-flow="supply"]') && !!pg.querySelector('.hm-supinfo [data-hm-ds]') && !/AS OF/.test(pg.querySelector('.hm-head')?.innerText || '');
+    db.dataset = keepDs; global.render(); await global.Supply.ensureData(); await homeReady();
+    step('CR4-DATASET', integ && uat, { integ, uat });
+
+    // CR4-ALERT-GRID — every row of the Supply Alert is full (no empty cell, no lone card next to space) at this width
+    const ag = [];
+    for (const [r, u] of [['director'], ['manager', 'mgr-mt'], ['warehouse'], ['planner']]) {
+      await login(r, u); await homeReady(); const row = document.querySelector('#page .sup-b4-row'); if (!row) { ag.push({ who: u || r, ok: true, none: true }); continue; }
+      const c = +row.dataset.cols || 1, rowsBy = {}; [...row.children].forEach(x => { const top = Math.round(x.offsetTop); const sp = +(String(x.style.gridColumn).match(/span (\d+)/) || [, 1])[1]; rowsBy[top] = (rowsBy[top] || 0) + sp; });
+      ag.push({ who: u || r, cols: c, rows: Object.values(rowsBy), ok: Object.values(rowsBy).every(s => s === c) });
+    }
+    step('CR4-ALERT-GRID', ag.every(x => x.ok), { width: W, ag });
+
+    // CR4-HEIGHT — Director home (ดูเพิ่ม folded): ≤ 1,800 px at 1440 · ≤ 3,400 px at 390
+    await login('director'); await homeReady(); await wait(300); const hgt = document.documentElement.scrollHeight, lim = W >= 1200 ? 1800 : W <= 420 ? 3400 : null;
+    step('CR4-HEIGHT', lim == null || hgt <= lim, { width: W, height: hgt, limit: lim });
+
+    // CR4-SCOPE01 — "เสนอ" on the phone cards of Replenishment / Consignment / Quota vs Actual (desktop: the table column)
+    await login('planner'); const sc = [];
+    for (const v of ['supReplen', 'supConsign', 'supQuota']) { await supReady(v); await wait(300); const btns = document.querySelectorAll(phone ? '#main .cc-prop [data-propose], #main td [data-propose]' : '#main [data-propose]'); sc.push({ v, n: btns.length }); }
+    let made = null; { await supReady('supReplen'); await wait(300); const b = document.querySelector(phone ? '#main .cc-prop [data-propose]' : '#main [data-propose]'); const n0 = global.props().length; document.querySelector('#toast').textContent = ''; b?.click(); await wait(200); made = global.props().length - n0 === 1 || /SPR-/.test(document.querySelector('#toast').textContent) ? 1 : 0; }
+    step('CR4-SCOPE01', sc.every(x => x.n > 0) && made === 1, { phone, sc, made });
+
+    // CR4-ORDER-TABS
+    await login('director'); global.navigate('orders'); await wait(150); global.ofbState('orders').d = 'all'; global.ofbApply('orders'); await wait(100);
+    const tabs = [...document.querySelectorAll('[data-cr4-tab]')], cnt = Object.fromEntries(tabs.map(b => [b.dataset.cr4Tab, num(b.querySelector('b').innerText)]));
+    const sumOk = CR4_STAGES.reduce((x, k) => x + cnt[k], 0) === cnt.all, ot = [];
+    for (const k of CR4_TABS) { document.querySelector(`[data-cr4-tab="${k}"]`).click(); await wait(80); ot.push({ k, ok: document.querySelector('#cr4StageHead')?.innerText === t('st_' + k) && global.filteredDetailedOrders().every(o => k === 'all' || global.cr4OrderStage(o) === k) && global.filteredDetailedOrders().length === cnt[k] }); }
+    global.navigate('payments'); await wait(80); const payTab = document.querySelector('[data-cr4-tab].selected')?.dataset.cr4Tab;
+    global.navigate('shipping'); await wait(80); const shipTab = document.querySelector('[data-cr4-tab].selected')?.dataset.cr4Tab;
+    await login('finance'); global.navigate('orders'); await wait(80); const erpTab = document.querySelector('[data-cr4-tab].selected')?.dataset.cr4Tab;
+    await login('warehouse'); global.navigate('orders'); await wait(80); const whTab = document.querySelector('[data-cr4-tab].selected')?.dataset.cr4Tab;
+    step('CR4-ORDER-TABS', tabs.length === 8 && sumOk && ot.every(x => x.ok) && payTab === 'pay' && shipTab === 'pick' && erpTab === 'pay' && whTab === 'pick' && !document.querySelector('.work-family-tabs'), { n: tabs.length, sumOk, bad: ot.filter(x => !x.ok).map(x => x.k), payTab, shipTab, erpTab, whTab });
+
+    // CR4-FILTER — one bar on 7 pages · presets · chips · column sort · URL · bottom sheet on a phone · options only in scope
+    await login('director'); const bars = [];
+    for (const v of ['orders', 'customers', 'documents', 'workQueue', 'returns', 'reports', 'audit']) { if (v === 'workQueue') fuTab = 'queue'; global.navigate(v); await wait(120); bars.push(v + ':' + document.querySelectorAll('#page .ofb').length); }
+    const ad = (d, k) => { const x = new Date(d + 'T12:00:00Z'); x.setUTCDate(x.getUTCDate() + k); return x.toISOString().slice(0, 10); }, me = ym => new Date(Date.UTC(+ym.slice(0, 4), +ym.slice(5, 7), 0, 12)).toISOString().slice(0, 10);
+    const ym = today.slice(0, 7), pm = new Date(Date.UTC(+ym.slice(0, 4), +ym.slice(5, 7) - 2, 1, 12)).toISOString().slice(0, 7), pp = global.cr4PlanPeriod();
+    const presetsOk = JSON.stringify(['today', '7d', '30d', 'month', 'lastMonth', 'plan'].map(global.cr4Preset)) === JSON.stringify([[today, today], [ad(today, -6), today], [ad(today, -29), today], [ym + '-01', me(ym)], [pm + '-01', me(pm)], [pp + '-01', me(pp)]]);
+    global.navigate('orders'); await wait(100); const so = global.ofbState('orders'); so.d = 'plan'; so.type = 'MT'; so.q = 'OR'; global.ofbApply('orders'); await wait(100);
+    const chips2 = document.querySelectorAll('.ofb-chip').length, urlOk = /type=MT/.test(location.hash) && /q=OR/.test(location.hash);
+    document.querySelector('[data-ofb-chip="q"]')?.click(); await wait(100); const chips1 = document.querySelectorAll('.ofb-chip').length;
+    document.querySelector('[data-ofb-clear]')?.click(); await wait(100); const chips0 = document.querySelectorAll('.ofb-chip').length;
+    global.ofbState('orders').d = 'all'; global.ofbApply('orders'); await wait(80);
+    document.querySelector('[data-ofb-sort="total"]')?.click(); await wait(80); const t1 = global.filteredDetailedOrders().map(o => orderSum(o)); const desc = t1.every((x, k) => k === 0 || t1[k - 1] >= x);
+    document.querySelector('[data-ofb-sort="total"]')?.click(); await wait(80); const t2 = global.filteredDetailedOrders().map(o => orderSum(o)); const asc = t2.every((x, k) => k === 0 || t2[k - 1] <= x);
+    let sheet = null; if (phone) { document.querySelector('[data-ofb-sheet="orders"]')?.click(); await wait(80); sheet = !!document.querySelector('#cr4Pop.sheet'); global.cr4PopClose(); }
+    await login('salesAdmin', 'sa-mt'); global.navigate('orders'); await wait(100); const dl = [...document.querySelectorAll('#ofbPl-orders option')].map(o => o.value), mtNames = db.partners.filter(global.visiblePartner).map(p => p.name);
+    const scopeOk = dl.every(x => mtNames.includes(x)) && !db.partners.filter(p => !global.visiblePartner(p)).some(p => dl.includes(p.name));
+    step('CR4-FILTER', bars.every(x => x.endsWith(':1')) && presetsOk && chips2 === 2 && chips1 === 1 && chips0 === 0 && urlOk && desc && asc && (phone ? sheet : true) && scopeOk, { bars, presetsOk, chips: [chips2, chips1, chips0], urlOk, desc, asc, sheet, scopeOk });
+
+    // CR4-CUSTOMER-CARDS — cards = a hand count of the orders in scope · spend = Σ the table column · the range changes them · a card filters · shared phone
+    await login('director'); global.navigate('customers'); await wait(150);
+    const cs = global.ofbState('customers'), [ca, cb] = global.cr4Range(cs), inR = o => { const d = dateKey(o.time); return (!ca || d >= ca) && (!cb || d <= cb); };
+    const os = global.scopedOrders().filter(inR), cust = new Set(os.map(o => o.customer + '|' + o.phone)), live = os.filter(o => o.status !== 'cancelled');
+    const spendHand = live.reduce((x, o) => x + global.orderTotals(o).total - (db.returns || []).filter(r => r.orderId === o.id && r.status === 'credited').reduce((s, r) => s + (r.creditAmount || 0), 0), 0);
+    const card = k => num(document.querySelector(`[data-cu-card="${k}"] strong`)?.innerText), colSum = [...document.querySelectorAll('[data-cu-spend]')].reduce((x, td) => x + +td.dataset.cuSpend, 0);
+    const c1 = { total: card('total'), spend: card('spend'), aov: card('aov') };
+    const handOk = c1.total === cust.size && Math.abs(c1.spend - spendHand) < 0.02 && Math.abs(colSum - spendHand) < 0.02 && Math.abs(c1.aov - (live.length ? spendHand / live.length : 0)) < 0.02;
+    cs.d = 'lastMonth'; global.ofbApply('customers'); await wait(100); const changed = card('total') !== c1.total || card('spend') !== c1.spend;
+    global.ofbReset('customers'); global.ofbApply('customers'); await wait(80); document.querySelector('[data-cu-card="quiet"]')?.click(); await wait(100);
+    const quietRows = document.querySelectorAll('.cu-table tbody tr').length, quietCard = card('quiet'); document.querySelector('[data-cu-card="quiet"]')?.click(); await wait(80);
+    const dup = [...document.querySelectorAll('.cu-table tbody tr')].filter(tr => tr.querySelector('.cu-dup')).map(tr => tr.querySelector('b').innerText);
+    step('CR4-CUSTOMER-CARDS', handOk && changed && quietRows === quietCard && dup.includes('Demo Beauty Co.') && dup.includes('Demo MT Quota Check'), { c1, spendHand: Math.round(spendHand * 100) / 100, colSum: Math.round(colSum * 100) / 100, customers: cust.size, changed, quietRows, quietCard, dup });
+
+    // CR4-PLAN-PERIOD — the chip only where the plan period is used · another period = read-only · back · one shared value
+    await login('director'); const chip = {};
+    for (const v of ['overview', 'orders', 'allocation', 'reports', 'supQuota', 'supProposals', 'supSop', 'customers', 'audit', 'access']) { global.navigate(v); await wait(v.startsWith('sup') ? 900 : 120); chip[v] = !!document.querySelector('main .content > .banner .pp-chip'); }
+    const chipOk = ['overview', 'orders', 'allocation', 'reports', 'supQuota', 'supProposals', 'supSop'].every(v => chip[v]) && ['customers', 'audit', 'access'].every(v => !chip[v]);
+    global.navigate('allocation'); await wait(150); const pair = db.allocations.find(x => x.status === 'approved' && (!x.month || x.month === FEED_MONTH)), qNow = pair ? global.quotaFor(pair.partner, pair.sku) : 0;
+    cr4ViewPeriod = global.cr4AddMonth(global.cr4PP(), -1); global.render(); await wait(150);
+    const ro = { bar: !!document.querySelector('.pp-bar'), btns: [...document.querySelectorAll('#page button.primary')].every(b => b.disabled), refuse: global.opsCheck() === t('ppReadOnly'), quota: pair ? global.quotaFor(pair.partner, pair.sku) : 0, preset: global.cr4Preset('plan')[0].slice(0, 7) };
+    document.querySelector('[data-pp-back]')?.click(); await wait(120);
+    const back = { bar: !document.querySelector('.pp-bar'), check: global.opsCheck() == null, quota: pair ? global.quotaFor(pair.partner, pair.sku) : 0 };
+    step('CR4-PLAN-PERIOD', chipOk && ro.bar && ro.btns && ro.refuse && ro.quota === 0 && ro.preset === global.cr4AddMonth(global.cr4PP(), -1) && back.bar && back.check && back.quota === qNow && FEED_MONTH === global.cr4PP(), { chip, ro, back, FEED_MONTH, pp: global.cr4PP() });
+
+    // CR4-DATE-FORMAT — no Buddhist year and no mm/dd/yyyy on any Ops page of the 11 accounts
+    const df = [], BE = /\d{1,2}[\/\s.][^\s\d]{0,6}[\/\s.]?25[6-7]\d\b|\b\d{1,2}\/\d{1,2}\/25[6-7]\d\b/, MDY = /\b\d{1,2}\/\d{1,2}\/\d{4}\b/;
+    for (const [r, u] of PROFILES) { await login(r, u); for (const v of OPS) { if (global.navigate(v) === false) continue; await wait(40); const p = document.querySelector('#page'), tx = p ? p.innerText : ''; const vis = p ? [...p.querySelectorAll('input[type="date"]')].length : 0; if (BE.test(tx) || MDY.test(tx) || vis) df.push((u || r) + ':' + v + (vis ? ' (date input)' : '') + ' ' + ((tx.match(BE) || tx.match(MDY) || [''])[0])); } }
+    step('CR4-DATE-FORMAT', df.length === 0, { bad: df.slice(0, 12), helper: global.fmtDate('2026-11-25') + ' / ' + (lang === 'th' ? 'TH' : 'EN') });
+
+    // CR4-SKU-SEARCH — old Ops code · barcode · partner code · name → the SKU · "เลือก 1 SKU" → SKU 360 (shareable) · same numbers as the drawer
+    await login('planner'); await supReady('supOverview');
+    global.inCfg('A01').map['UAT-PC-001'] = 'JB-FD-001'; const pmB = (db.productMaster || []).find(p => p.barcode && App.DB.skuIdx.has(p.sku));
+    const sr = { alias: global.cr4SkuSearch('11021').includes('JB-FD-001'), partner: global.cr4SkuSearch('UAT-PC-001').includes('JB-FD-001'), barcode: pmB ? global.cr4SkuSearch(String(pmB.barcode)).includes(pmB.sku) : null, name: global.cr4SkuSearch(App.DB.skus[0].name.slice(0, 12)).includes(App.DB.skus[0].sku) };
+    delete global.inCfg('A01').map['UAT-PC-001'];
+    const fq = document.querySelector('#fQ'); fq.value = '11021'; fq.dispatchEvent(new Event('input')); await wait(80); document.querySelector('.ta-box [data-ta-one="JB-FD-001"]')?.click(); await wait(1200);
+    const s360 = { h1: document.querySelector('#main .pagehead h1')?.innerText, hash: location.hash, inline: !!document.querySelector('#s360Body .dr-head') };
+    const R = App.model().rows.find(r => r.sku === 'JB-FD-001'), kp = [...document.querySelectorAll('.s360-kpis .kpi .v')].map(x => x.innerText.trim());
+    const sameNums = R && kp[0] === (R.stockoutDn == null ? '—' : global.U.date(R.stockoutDn)) && num(kp[2]) === Math.round(R.rop);
+    App.setF({ q: '' }); await wait(600);
+    step('CR4-SKU-SEARCH', sr.alias && sr.partner && sr.barcode !== false && sr.name && s360.h1 === St('s360') && /q=JB-FD-001/.test(s360.hash) && s360.inline && sameNums, { sr, s360, kp });
+
+    // CR4-PORTFOLIO — several SKUs: ฿ only · SKUs expected out / below ROP per week = a hand count from each SKU's projection (3 weeks)
+    await supReady('supOverview'); const MP = App.model(), qBtn = document.querySelector('[data-unit="projUnit"] [data-v="q"]');
+    const hand = k => { let o = 0, l = 0; for (const r of MP.rows) { if (!r._p || !(r.rrTot > 0)) continue; const v = r._p.totA[Math.min(r._p.totA.length - 1, 7 * k - 1)]; if (v < 0.5) o++; else if (v < r.rop) l++; } return o + '/' + l; };
+    const pfw = [1, 8, 20].map(k => { const b = document.querySelector(`[data-pf="${k}"]`); return { k, page: b ? b.dataset.pfOut + '/' + b.dataset.pfLow : '', hand: hand(k) }; });
+    step('CR4-PORTFOLIO', App.ui.projUnit === 'v' && qBtn && qBtn.disabled && pfw.every(x => x.page === x.hand), { pfw, projUnit: App.ui.projUnit });
+
+    // CR4-RR-UX — 6 methods + "skip out-of-stock" · the chip names the method · the popover example = runRate · old links (rr= · rm=)
+    document.querySelector('.fc-chip')?.click(); await wait(100); const pop = document.querySelector('#cr4Pop');
+    const radios = pop ? pop.querySelectorAll('input[name="fcM"]').length : 0, skip = !!(pop && pop.querySelector('#fcSkip')), chipTxt = document.querySelector('.fc-chip')?.innerText || '';
+    const exName = (pop?.querySelector('.fc-ex .small')?.innerText || ''), exRows = [...(pop?.querySelectorAll('.fc-tbl tbody tr') || [])].map(tr => num(tr.children[1]?.innerText));
+    const Mx = App.model(), xr = Mx.rows.slice().sort((p, q) => q.rrSel - p.rrSel)[0], u = (App.F.rm || App.S.rrMode) === 'unconstrained';
+    const hand2 = Calc.RR_BASES.map(b => { let x = 0; for (let j = 0; j < App.DB.accounts.length; j++) if (Mx.mask[j]) x += u ? Calc.runRateU(App.DB, xr.i, j, Mx.asDn, b, Mx.S) : Calc.runRate(App.DB, xr.i, j, Mx.asDn, b); return Math.round(x * 7 * 10) / 10; });
+    global.cr4PopClose();
+    history.replaceState(null, '', location.pathname + '#/supply/stock?rr=L3M&rm=sellout'); global.navigate('supStock'); await wait(1200); const link = App.F.rr + '/' + App.F.rm;
+    App.setF({ rr: App.S.rrBasis || 'L4W', rm: App.S.rrMode }); await wait(500);
+    step('CR4-RR-UX', radios === 6 && skip && chipTxt.includes(St('fc_' + (App.S.rrBasis || 'L4W'))) && exName.includes(xr.sku) && exRows.every((v, k) => Math.abs(v - hand2[k]) <= 0.11) && link === 'L3M/sellout', { radios, skip, chipTxt, exRows, hand2, link });
+
+    // CR4-TREND — synthetic series (−3 % / week · flat · steep fall · steep rise · 10 weeks) + the "declining" action, one per SKU
+    const T = Calc.trendOf, dec = Array.from({ length: 26 }, (x, k) => 1000 * Math.pow(0.97, k)), avg = a => a.reduce((x, y) => x + y, 0) / a.length;
+    const tDec = T(dec), tFlat = T(Array(26).fill(500)), tFall = T(Array.from({ length: 26 }, (x, k) => Math.max(0, 1000 - 60 * k))), tRise = T(Array.from({ length: 26 }, (x, k) => 100 + 100 * k)), tShort = T(Array(10).fill(50));
+    const trOk = { dec: avg(Array.from(tDec.f).slice(0, 13)) < avg(dec.slice(13)), flat: Math.abs(avg(Array.from(tFlat.f).slice(0, 13)) - 500) < 5, neg: Array.from(tFall.f).every(x => x >= 0), cap: Array.from(tRise.f).every(x => x <= tRise.level * 1.5 + 1e-6 && x >= tRise.level * 0.5 - 1e-6), short: tShort.ok === false, down: tDec.down === true };
+    let fb = null; { const D = App.DB, as = App.model().asDn, wE = D.wk(as); outer: for (let i = 0; i < D.skus.length; i++) for (let j = 0; j < D.accounts.length; j++) { const f = D.firstSale[i][j]; if (f >= 0 && wE - f >= 1 && wE - f < 12) { const r = Calc.trendRate(D, i, j, as, null, false); fb = { sku: D.skus[i].sku, short: r.short, same: Math.abs(r.rate - Calc.runRate(D, i, j, as, 'L3M')) < 1e-9 }; break outer; } } }
+    global.sopSync(true); const trActs = global.sopActs().filter(a => a.type === 'trend' && (a.status === 'open' || a.status === 'ack')), trSkus = App.DB.skus.filter((s, i) => { const x = Calc.skuTrend(App.DB, i, global.Supply.defaultAsOf(), null); return x.ok && x.down && x.level > 0; }).map(s => s.sku);
+    const oneEach = new Set(trActs.map(a => a.sku)).size === trActs.length && trSkus.every(s => trActs.some(a => a.sku === s));
+    step('CR4-TREND', Object.values(trOk).every(Boolean) && (!fb || (fb.short && fb.same)) && oneEach, { trOk, fallback: fb, actions: trActs.length, declining: trSkus.length });
+
+    // CR4-AUTO — the back-test by hand for 2 SKUs = autoPick · the method kept = the lowest WAPE · share of each method (README)
+    const D2 = App.DB, as2 = App.model().asDn, wE2 = D2.wk(as2), au = [];
+    for (const i of D2.skus.map((s, i) => i).filter(i => D2.accounts.some((a, j) => D2.firstSale[i][j] >= 0 && D2.firstSale[i][j] < wE2 - 30)).slice(0, 2)) {
+      const hw = {}; for (const mth of Calc.AUTO_SET) { let err = 0, actl = 0; for (let k = 0; k < 8; k++) { const o = wE2 - 4 - k; if (o < 13) continue; let F = 0, A = 0; for (let j = 0; j < D2.accounts.length; j++) { F += Calc.runRate(D2, i, j, D2.startDn + 7 * o, mth) * 28; for (let w = o; w < o + 4; w++) A += D2.so[i][j][w]; } err += Math.abs(F - A); actl += A; } hw[mth] = actl > 0 ? err / actl * 100 : null; }
+      const ap = Calc.autoPick(D2, i, as2, null, false), best = Calc.AUTO_SET.filter(x => hw[x] != null).sort((p, q) => hw[p] - hw[q])[0];
+      au.push({ sku: D2.skus[i].sku, ok: Calc.AUTO_SET.every(x => (hw[x] == null && ap.wape[x] == null) || Math.abs(hw[x] - ap.wape[x]) < 1e-6) && ap.pick === best, pick: ap.pick, wape: hw });
+    }
+    const share = {}; D2.skus.forEach((s, i) => { const p = Calc.autoPick(D2, i, as2, null, false).pick; share[p] = (share[p] || 0) + 1; });
+    step('CR4-AUTO', au.length === 2 && au.every(x => x.ok), { au, share });
+
+    // CR4-LOST-LABEL — TH: no "Lost sales" left on the pages · the two parts add up to the old total
+    const keepLang = lang; global.setLang('th'); await supReady('supOverview'); const ovTxt = document.querySelector('#main').innerText;
+    const parts = [...document.querySelectorAll('[data-lost-part] b')].map(b => num(b.innerText)), tot = num(document.querySelector('#card-lost .lost-head b')?.innerText);
+    await supReady('supStock'); const stTxt = document.querySelector('#main').innerText; await supReady('supReview'); const rvTxt = document.querySelector('#main').innerText;
+    if (keepLang !== 'th') global.setLang(keepLang);
+    step('CR4-LOST-LABEL', !/Lost sales/i.test(ovTxt + stTxt + rvTxt) && parts.length === 2 && Math.abs(parts[0] + parts[1] - tot) <= 1, { parts, tot });
+
+    // CR4-CONTROLS — VIEW BY / Horizon only where they act · none on Stock & Projection · values stay · (i) lists what changes
+    const vis = sel => { const f = document.querySelector(sel)?.closest('.fld'); return !!f && getComputedStyle(f).display !== 'none'; }, ctl = {};
+    await supReady('supOverview'); App.setF({ view: 'M', h: 6 }); await wait(300);
+    for (const v of ['supOverview', 'supStock', 'supExpiry', 'supConsign', 'supCalendar', 'supReplen', 'supQuota', 'supReview']) { await supReady(v); ctl[v] = (vis('#fView') ? 'V' : '') + (vis('#fH') ? 'H' : ''); }
+    await supReady('supOverview'); const kept = App.F.view === 'M' && App.F.h === 6, info = !!document.querySelector('#fbar #fView')?.closest('.fld')?.querySelector('.info') && !!document.querySelector('#fbar #fH')?.closest('.fld')?.querySelector('.info');
+    App.setF({ view: 'W', h: 3 }); await wait(300);
+    const ctlOk = ctl.supOverview === 'VH' && ctl.supStock === '' && ctl.supExpiry === 'H' && ctl.supConsign === 'V' && ctl.supCalendar === 'H' && ctl.supReplen === '' && ctl.supQuota === 'VH' && ctl.supReview === 'V';
+    step('CR4-CONTROLS', ctlOk && kept && info, { ctl, kept, info });
+
+    // CR4-ABC-LABEL — words in every table (short on a phone) · Σ matrix = the A–C SKUs · a cell filters
+    await supReady('supStock'); const badge = document.querySelector('#main .grp-w'), shown = badge ? (phone ? badge.querySelector('.gs') : badge.querySelector('.gl')).innerText : '';
+    await supReady('supReplen'); await wait(300); const MR = App.model(), mxSum = [...document.querySelectorAll('#card-abcmx [data-mx]')].reduce((x, b) => x + +b.dataset.mxN, 0), ac = MR.rows.filter(r => r.cls && r.cls.group && r.cls.group.length === 2).length;
+    const cellB = document.querySelector('#card-abcmx [data-mx="AX"]'); cellB?.click(); await wait(400); const filt = App.ui.rpGrp === 'AX' && Calc.replenList(App.model(), App.ui.rpMode).filter(r => global.Pages.grpMatch(r, 'AX')).every(r => r.cls.group === 'AX');
+    App.ui.rpGrp = ''; App.rerender(); await wait(200);
+    step('CR4-ABC-LABEL', /ขาย|Top|Mid|Low|สินค้าใหม่|New|เลิกขาย|Clearance|หลัก|รอง|น้อย/.test(shown) && !/^[ABC][XYZ]$/.test(shown.trim()) && mxSum === ac && filt, { shown, mxSum, ac, filt });
+
+    // CR4-ANCHOR-STAY · CR4-FILE-PROTOCOL · console
+    const a1 = await anchors(), a2 = await anchors('new');
+    step('CR4-ANCHOR-STAY', a1.pass && a2.pass, { old: a1.diff, new: a2.diff });
+    const keepP = global.SupUAT._proto; global.SupUAT._proto = () => 'file:'; const fp = await phase3A(); global.SupUAT._proto = keepP;
+    step('CR4-FILE-PROTOCOL', fp.length === 1 && fp[0].pass === false && /http server/.test(fp[0].info || ''), { got: fp[0] });
+    step('CR4-CONSOLE', errors.length === before, { errors: errors.slice(before) });
+    await login('director');
+    return res;
+  }
+
+  /* CR4-COUNT-ADJ · CR4-ROLLOVER — they change the data (run last; start a fresh Integrated demo afterwards) */
+  async function cr04data() {
+    const res = [], App = global.App, Calc = global.Calc, step = (id, pass, info) => res.push(Object.assign({ id, pass: !!pass }, info || {}));
+    if (global.supDataset() !== 'integrated' || !db.feedBase) return [{ id: 'CR4-DATA', pass: false, info: 'needs a fresh Integrated demo' }];
+    const before = errors.length;
+    // I8-c — request (reason required) → approve (Director / Manager MT, never the requester) → only that pair's remaining moves · WMS / quota untouched · switch off → CR-01 anchors
+    await login('planner'); if (App.S.countAdjustOn === false) App.saveSettings(Object.assign({}, App.S, { countAdjustOn: true }));   // the default (an earlier "use old methods" test may have saved it off)
+    await supReady('supConsign'); for (let k = 0; k < 50 && !document.querySelector('#cntHost [data-ca-req]'); k++) await wait(200);
+    const reqs = [...document.querySelectorAll('#cntHost [data-ca-req]')].map(b => JSON.parse(b.dataset.caReq));
+    if (reqs.length < 2) step('CR4-COUNT-ADJ', false, { info: 'needs two count pairs above 5 %', n: reqs.length });
+    else {
+      const v = reqs[0], o = reqs[1], DB = App.DB, i = DB.skuIdx.get(v.sku), j = DB.accIdx.get(v.account), d = Calc.dn(v.date), i2 = DB.skuIdx.get(o.sku), j2 = DB.accIdx.get(o.account), d2 = Calc.dn(o.date);
+      const rem0 = Calc.stockAt(DB, i, d + 1).cons[j], other0 = Calc.stockAt(DB, i2, d2 + 1).cons[j2], wms0 = JSON.stringify(db.wmsSnapshot.rows), q0 = global.quotaFor(v.account, v.sku);
+      const noReason = global.caRequest(Object.assign({}, v, { reason: '' })), r1 = global.caRequest(Object.assign({}, v, { reason: 'UAT shelf count' }));
+      const plannerApprove = global.caDecide(r1.x.id, true);
+      await login('director'); const r2 = global.caRequest(Object.assign({}, o, { reason: 'UAT own' })), own = global.caDecide(r2.x.id, true);
+      await login('manager', 'mgr-mt'); const ok = global.caDecide(r1.x.id, true), rej = global.caDecide(r2.x.id, false, 'UAT keep');
+      await global.Supply.ensureData(); await supReady('supOverview'); const DB2 = App.DB;
+      const rem1 = Calc.stockAt(DB2, i, d + 1).cons[j], other1 = Calc.stockAt(DB2, i2, d2 + 1).cons[j2], wms1 = JSON.stringify(db.wmsSnapshot.rows), q1 = global.quotaFor(v.account, v.sku);
+      const audit = db.logs.some(l => l.event === 'caEventOk' && l.ref.startsWith(r1.x.id)), sc3 = (App.sc.checks.find(c => c.id === 'reconcile') || {}).ok;
+      App.saveSettings(Object.assign({}, App.S, { countAdjustOn: false })); App.model(); const remOff = Calc.stockAt(App.DB, i, d + 1).cons[j];
+      const an = await anchors(); App.saveSettings(Object.assign({}, App.S, { countAdjustOn: true })); App.model();
+      step('CR4-COUNT-ADJ', noReason.ok === false && r1.ok && plannerApprove.ok === false && own.error === 'caOwn' && ok.ok && rej.ok && Math.abs(rem1 - v.counted) < 0.5 && Math.abs(other1 - other0) < 0.5 && wms1 === wms0 && q1 === q0 && audit && sc3 && Math.abs(remOff - rem0) < 0.5 && an.pass,
+        { pair: v.account + '·' + v.sku, rem0: Math.round(rem0), rem1: Math.round(rem1), counted: v.counted, other: [Math.round(other0), Math.round(other1)], plannerApprove: plannerApprove.error, own: own.error, audit, sc3, remOff: Math.round(remOff), anchors: an.pass });
+    }
+    // I8-b — roll the plan period: next month's quota is current · used starts at 0 · feed / Supply on the new month · selfCheck · AS OF 23 Nov keeps the anchors
+    await login('director'); await global.Supply.ensureData(); const old = global.cr4PP(), plan = global.ppRollPlan(), r = await global.ppRoll();
+    const row = plan.plan[0], qNew = row ? global.quotaFor(row.account_id, row.sku) : null, used = row ? global.consumedFor(row.account_id, row.sku) : null;
+    await global.Supply.ensureData(); await supReady('supOverview'); const DB3 = App.DB, i3 = row ? DB3.skuIdx.get(row.sku) : null, j3 = row ? DB3.accIdx.get(row.account_id) : null, sq = row && DB3.quota[i3].get(plan.next) ? DB3.quota[i3].get(plan.next)[j3] : null;
+    global.navigate('orders'); await wait(150); const chipTxt = document.querySelector('.pp-chip')?.innerText || '', planPreset = global.cr4Preset('plan')[0].slice(0, 7);
+    const scOk = App.sc.ok, an2 = await anchors(), denied = (await login('manager', 'mgr-mt'), await global.ppRoll());
+    step('CR4-ROLLOVER', r.ok && db.planPeriod === plan.next && FEED_MONTH === plan.next && db.feedBase.month === plan.next && row && qNew === Math.round(+row.quota_qty) && used === 0 && Math.abs(sq - qNew) < 0.5 && chipTxt.includes(fmtMonth(plan.next)) && planPreset === plan.next && scOk && an2.pass && denied.ok === false && db.logs.some(l => l.event === 'ppRollEvent'),
+      { old, next: plan.next, seeded: plan.plan.length, approved: plan.appr.length, qNew, used, supplyQuota: sq, chipTxt, scOk, sc: App.sc.checks.filter(c => !c.ok).map(c => c.id), anchors: an2.pass, denied: denied.error });
+    step('CR4-DATA-CONSOLE', errors.length === before, { errors: errors.slice(before) });
+    return res;
+  }
+
   global.SupUAT = {
     keep, menu, noleak, anchors, theme, errors,
-    opsGate, mobile, flow, phaseC, phaseD, phase3A, phase3B, phase3C, phase3D,
+    opsGate, mobile, flow, phaseC, phaseD, phase3A, phase3B, phase3C, phase3D, cr04, cr04data, login,   // CR-04
+    _proto: () => location.protocol,   // CR-04 I9: the page protocol (a test can pretend file://)
     async all() {
-      const out = [].concat(await anchors(), await menu(), await noleak('mgr-mt'), await noleak('mgr-tt'), await noleak('mgr-ecom'), await theme(), await opsGate());
+      const out = [].concat(await anchors(), await menu(), await noleak('mgr-mt'), await noleak('mgr-tt'), await noleak('mgr-ecom'), await theme(), await opsGate(), await cr04());   // CR-04: + cr04()
       return { pass: out.filter(r => r.pass).length, of: out.length, failed: out.filter(r => !r.pass), consoleErrors: errors.slice(), results: out };   // CR-03: + every result (UAT report)
     }
   };

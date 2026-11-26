@@ -1,0 +1,2602 @@
+[
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-LANDING",
+  "status": "PASS",
+  "detail": "{\"land\":[],\"deepSup\":\"supQuota\",\"deepOps\":\"customers:7d\",\"again\":\"overview\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-MENU-ORDER",
+  "status": "PASS",
+  "detail": "{\"bad\":[],\"curOpen\":true,\"ids\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-GATE",
+  "status": "PASS",
+  "detail": "{\"fail\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-HOME-ROLE",
+  "status": "PASS",
+  "detail": "{\"bad\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-HOME-MATCH",
+  "status": "PASS",
+  "detail": "{\"n\":14,\"bad\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-FLOW-STRIP",
+  "status": "PASS",
+  "detail": "{\"fl\":[],\"poBox\":16,\"poPage\":16}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-MYWORK",
+  "status": "PASS",
+  "detail": "{\"dirProp\":true,\"plannerSeesOwn\":false,\"dirIssue\":true,\"whSeesOwn\":false,\"mtAct\":true,\"ttAct\":false,\"saMt\":true,\"saTt\":false,\"sorted\":true,\"opened\":true}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-NOLEAK",
+  "status": "PASS",
+  "detail": "{\"hits\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-DATASET",
+  "status": "PASS",
+  "detail": "{\"integ\":true,\"uat\":true}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-ALERT-GRID",
+  "status": "PASS",
+  "detail": "{\"width\":1440,\"ag\":[{\"who\":\"director\",\"cols\":3,\"rows\":[3,3],\"ok\":true},{\"who\":\"mgr-mt\",\"cols\":2,\"rows\":[2,2],\"ok\":true},{\"who\":\"warehouse\",\"cols\":1,\"rows\":[1],\"ok\":true},{\"who\":\"planner\",\"cols\":2,\"rows\":[2,2],\"ok\":true}]}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-HEIGHT",
+  "status": "PASS",
+  "detail": "{\"width\":1440,\"height\":1773,\"limit\":1800}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-SCOPE01",
+  "status": "PASS",
+  "detail": "{\"phone\":false,\"sc\":[{\"v\":\"supReplen\",\"n\":11},{\"v\":\"supConsign\",\"n\":11},{\"v\":\"supQuota\",\"n\":50}],\"made\":1}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-ORDER-TABS",
+  "status": "PASS",
+  "detail": "{\"n\":8,\"sumOk\":true,\"bad\":[],\"payTab\":\"pay\",\"shipTab\":\"pick\",\"erpTab\":\"pay\",\"whTab\":\"pick\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-FILTER",
+  "status": "PASS",
+  "detail": "{\"bars\":[\"orders:1\",\"customers:1\",\"documents:1\",\"workQueue:1\",\"returns:1\",\"reports:1\",\"audit:1\"],\"presetsOk\":true,\"chips\":[2,1,0],\"urlOk\":true,\"desc\":true,\"asc\":true,\"sheet\":null,\"scopeOk\":true}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-CUSTOMER-CARDS",
+  "status": "PASS",
+  "detail": "{\"c1\":{\"total\":6,\"spend\":60931.15,\"aov\":10155.19},\"spendHand\":60931.15,\"colSum\":60931.15,\"customers\":6,\"changed\":true,\"quietRows\":0,\"quietCard\":0,\"dup\":[\"Demo MT Quota Check\",\"Demo Beauty Co.\"]}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-PLAN-PERIOD",
+  "status": "PASS",
+  "detail": "{\"chip\":{\"overview\":true,\"orders\":true,\"allocation\":true,\"reports\":true,\"supQuota\":true,\"supProposals\":true,\"supSop\":true,\"customers\":false,\"audit\":false,\"access\":false},\"ro\":{\"bar\":true,\"btns\":true,\"refuse\":true,\"quota\":0,\"preset\":\"2026-10\"},\"back\":{\"bar\":true,\"check\":true,\"quota\":100},\"FEED_MONTH\":\"2026-11\",\"pp\":\"2026-11\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-DATE-FORMAT",
+  "status": "PASS",
+  "detail": "{\"bad\":[],\"helper\":\"25 พ.ย. 2026 / TH\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-SKU-SEARCH",
+  "status": "PASS",
+  "detail": "{\"sr\":{\"alias\":true,\"partner\":true,\"barcode\":true,\"name\":true},\"s360\":{\"h1\":\"SKU 360\",\"hash\":\"#/supply/overview?q=JB-FD-001\",\"inline\":true},\"kp\":[\"15 มิ.ย. 2027\",\"14 ม.ค. 2027\",\"51,191\",\"2,525.3\"]}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-PORTFOLIO",
+  "status": "PASS",
+  "detail": "{\"pfw\":[{\"k\":1,\"page\":\"1/72\",\"hand\":\"1/72\"},{\"k\":8,\"page\":\"3/50\",\"hand\":\"3/50\"},{\"k\":20,\"page\":\"13/86\",\"hand\":\"13/86\"}],\"projUnit\":\"v\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-RR-UX",
+  "status": "PASS",
+  "detail": "{\"radios\":6,\"skip\":true,\"chipTxt\":\"คาดการณ์: ล่าสุด 4 สัปดาห์ · ไม่นับช่วงของขาด ▾\",\"exRows\":[2525.3,2354.6,2222.5,2413.5,2626.4,2626.4],\"hand2\":[2525.3,2354.6,2222.5,2413.5,2626.4,2626.4],\"link\":\"L3M/sellout\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-TREND",
+  "status": "PASS",
+  "detail": "{\"trOk\":{\"dec\":true,\"flat\":true,\"neg\":true,\"cap\":true,\"short\":true,\"down\":true},\"fallback\":{\"sku\":\"CM-LP-007\",\"short\":true,\"same\":true},\"actions\":1,\"declining\":1}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-AUTO",
+  "status": "PASS",
+  "detail": "{\"au\":[{\"sku\":\"CM-FD-001\",\"ok\":true,\"pick\":\"L3M\",\"wape\":{\"L4W\":10.451227604512276,\"L3M\":7.887975771187448,\"W\":8.810763445799944,\"TR\":9.601728255401135}},{\"sku\":\"CM-FD-003\",\"ok\":true,\"pick\":\"L4W\",\"wape\":{\"L4W\":30.449029126213595,\"L3M\":43.36445108289769,\"W\":36.018530619865565,\"TR\":32.430399023914276}}],\"share\":{\"L3M\":31,\"L4W\":45,\"TR\":27,\"W\":17}}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-LOST-LABEL",
+  "status": "PASS",
+  "detail": "{\"parts\":[100277,1920392],\"tot\":2020669}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-CONTROLS",
+  "status": "PASS",
+  "detail": "{\"ctl\":{\"supOverview\":\"VH\",\"supStock\":\"\",\"supExpiry\":\"H\",\"supConsign\":\"V\",\"supCalendar\":\"H\",\"supReplen\":\"\",\"supQuota\":\"VH\",\"supReview\":\"V\"},\"kept\":true,\"info\":true}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-ABC-LABEL",
+  "status": "PASS",
+  "detail": "{\"shown\":\"ขายหลัก · สม่ำเสมอ\",\"mxSum\":109,\"ac\":109,\"filt\":true}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-ANCHOR-STAY",
+  "status": "PASS",
+  "detail": "{\"old\":[],\"new\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-FILE-PROTOCOL",
+  "status": "PASS",
+  "detail": "{\"got\":{\"id\":\"CR3-3A\",\"pass\":false,\"info\":\"run via http server (python -m http.server)\"}}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่ Desktop 1440px (ความสูงหน้าหลัก Director ≤ 1,800px)",
+  "key": "cr04-1440",
+  "id": "CR4-CONSOLE",
+  "status": "PASS",
+  "detail": "{\"errors\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:45:37.711Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-LANDING",
+  "status": "PASS",
+  "detail": "{\"land\":[],\"deepSup\":\"supQuota\",\"deepOps\":\"customers:7d\",\"again\":\"overview\"}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-MENU-ORDER",
+  "status": "PASS",
+  "detail": "{\"bad\":[],\"curOpen\":true,\"ids\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-GATE",
+  "status": "PASS",
+  "detail": "{\"fail\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-HOME-ROLE",
+  "status": "PASS",
+  "detail": "{\"bad\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-HOME-MATCH",
+  "status": "PASS",
+  "detail": "{\"n\":14,\"bad\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-FLOW-STRIP",
+  "status": "PASS",
+  "detail": "{\"fl\":[],\"poBox\":16,\"poPage\":16}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-MYWORK",
+  "status": "PASS",
+  "detail": "{\"dirProp\":true,\"plannerSeesOwn\":false,\"dirIssue\":true,\"whSeesOwn\":false,\"mtAct\":true,\"ttAct\":false,\"saMt\":true,\"saTt\":false,\"sorted\":true,\"opened\":true}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-NOLEAK",
+  "status": "PASS",
+  "detail": "{\"hits\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-DATASET",
+  "status": "PASS",
+  "detail": "{\"integ\":true,\"uat\":true}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-ALERT-GRID",
+  "status": "PASS",
+  "detail": "{\"width\":390,\"ag\":[{\"who\":\"director\",\"cols\":1,\"rows\":[1,1,1,1,1],\"ok\":true},{\"who\":\"mgr-mt\",\"cols\":1,\"rows\":[1,1,1,1],\"ok\":true},{\"who\":\"warehouse\",\"cols\":1,\"rows\":[1],\"ok\":true},{\"who\":\"planner\",\"cols\":1,\"rows\":[1,1,1,1],\"ok\":true}]}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-HEIGHT",
+  "status": "PASS",
+  "detail": "{\"width\":390,\"height\":3078,\"limit\":3400}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-SCOPE01",
+  "status": "PASS",
+  "detail": "{\"phone\":true,\"sc\":[{\"v\":\"supReplen\",\"n\":11},{\"v\":\"supConsign\",\"n\":11},{\"v\":\"supQuota\",\"n\":20}],\"made\":1}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-ORDER-TABS",
+  "status": "PASS",
+  "detail": "{\"n\":8,\"sumOk\":true,\"bad\":[],\"payTab\":\"pay\",\"shipTab\":\"pick\",\"erpTab\":\"pay\",\"whTab\":\"pick\"}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-FILTER",
+  "status": "PASS",
+  "detail": "{\"bars\":[\"orders:1\",\"customers:1\",\"documents:1\",\"workQueue:1\",\"returns:1\",\"reports:1\",\"audit:1\"],\"presetsOk\":true,\"chips\":[2,1,0],\"urlOk\":true,\"desc\":true,\"asc\":true,\"sheet\":true,\"scopeOk\":true}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-CUSTOMER-CARDS",
+  "status": "PASS",
+  "detail": "{\"c1\":{\"total\":6,\"spend\":60931.15,\"aov\":10155.19},\"spendHand\":60931.15,\"colSum\":60931.15,\"customers\":6,\"changed\":true,\"quietRows\":0,\"quietCard\":0,\"dup\":[\"Demo MT Quota Check\",\"Demo Beauty Co.\"]}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-PLAN-PERIOD",
+  "status": "PASS",
+  "detail": "{\"chip\":{\"overview\":true,\"orders\":true,\"allocation\":true,\"reports\":true,\"supQuota\":true,\"supProposals\":true,\"supSop\":true,\"customers\":false,\"audit\":false,\"access\":false},\"ro\":{\"bar\":true,\"btns\":true,\"refuse\":true,\"quota\":0,\"preset\":\"2026-10\"},\"back\":{\"bar\":true,\"check\":true,\"quota\":100},\"FEED_MONTH\":\"2026-11\",\"pp\":\"2026-11\"}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-DATE-FORMAT",
+  "status": "PASS",
+  "detail": "{\"bad\":[],\"helper\":\"25 พ.ย. 2026 / TH\"}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-SKU-SEARCH",
+  "status": "PASS",
+  "detail": "{\"sr\":{\"alias\":true,\"partner\":true,\"barcode\":true,\"name\":true},\"s360\":{\"h1\":\"SKU 360\",\"hash\":\"#/supply/overview?q=JB-FD-001\",\"inline\":true},\"kp\":[\"15 มิ.ย. 2027\",\"14 ม.ค. 2027\",\"51,191\",\"2,525.3\"]}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-PORTFOLIO",
+  "status": "PASS",
+  "detail": "{\"pfw\":[{\"k\":1,\"page\":\"1/72\",\"hand\":\"1/72\"},{\"k\":8,\"page\":\"3/50\",\"hand\":\"3/50\"},{\"k\":20,\"page\":\"13/86\",\"hand\":\"13/86\"}],\"projUnit\":\"v\"}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-RR-UX",
+  "status": "PASS",
+  "detail": "{\"radios\":6,\"skip\":true,\"chipTxt\":\"คาดการณ์: ล่าสุด 4 สัปดาห์ · ไม่นับช่วงของขาด ▾\",\"exRows\":[2525.3,2354.6,2222.5,2413.5,2626.4,2626.4],\"hand2\":[2525.3,2354.6,2222.5,2413.5,2626.4,2626.4],\"link\":\"L3M/sellout\"}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-TREND",
+  "status": "PASS",
+  "detail": "{\"trOk\":{\"dec\":true,\"flat\":true,\"neg\":true,\"cap\":true,\"short\":true,\"down\":true},\"fallback\":{\"sku\":\"CM-LP-007\",\"short\":true,\"same\":true},\"actions\":1,\"declining\":1}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-AUTO",
+  "status": "PASS",
+  "detail": "{\"au\":[{\"sku\":\"CM-FD-001\",\"ok\":true,\"pick\":\"L3M\",\"wape\":{\"L4W\":10.451227604512276,\"L3M\":7.887975771187448,\"W\":8.810763445799944,\"TR\":9.601728255401135}},{\"sku\":\"CM-FD-003\",\"ok\":true,\"pick\":\"L4W\",\"wape\":{\"L4W\":30.449029126213595,\"L3M\":43.36445108289769,\"W\":36.018530619865565,\"TR\":32.430399023914276}}],\"share\":{\"L3M\":31,\"L4W\":45,\"TR\":27,\"W\":17}}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-LOST-LABEL",
+  "status": "PASS",
+  "detail": "{\"parts\":[100277,1920392],\"tot\":2020669}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-CONTROLS",
+  "status": "PASS",
+  "detail": "{\"ctl\":{\"supOverview\":\"VH\",\"supStock\":\"\",\"supExpiry\":\"H\",\"supConsign\":\"V\",\"supCalendar\":\"H\",\"supReplen\":\"\",\"supQuota\":\"VH\",\"supReview\":\"V\"},\"kept\":true,\"info\":true}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-ABC-LABEL",
+  "status": "PASS",
+  "detail": "{\"shown\":\"หลัก·สม่ำเสมอ\",\"mxSum\":109,\"ac\":109,\"filt\":true}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-ANCHOR-STAY",
+  "status": "PASS",
+  "detail": "{\"old\":[],\"new\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-FILE-PROTOCOL",
+  "status": "PASS",
+  "detail": "{\"got\":{\"id\":\"CR3-3A\",\"pass\":false,\"info\":\"run via http server (python -m http.server)\"}}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดใหม่ ที่มือถือ 390px (ปุ่มเสนอบนการ์ด · Bottom sheet · ป้ายย่อ · ความสูง ≤ 3,400px)",
+  "key": "cr04-390",
+  "id": "CR4-CONSOLE",
+  "status": "PASS",
+  "detail": "{\"errors\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:53:00.077Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 Supply Alert ไม่มีการ์ดค้างเดี่ยว ที่ 1024px",
+  "key": "grid-1024",
+  "id": "CR4-ALERT-GRID (1024px)",
+  "status": "PASS",
+  "detail": "{\"width\":1024,\"ag\":[{\"who\":\"director\",\"cols\":3,\"rows\":[3,3],\"ok\":true},{\"who\":\"mgr-mt\",\"cols\":4,\"rows\":[4],\"ok\":true},{\"who\":\"warehouse\",\"cols\":1,\"rows\":[1],\"ok\":true},{\"who\":\"planner\",\"cols\":4,\"rows\":[4],\"ok\":true}]}",
+  "width": 1024,
+  "at": "2026-11-25T23:53:11.958Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-04 ชุดที่เปลี่ยนข้อมูล · ปรับยอดฝากขายจากผลนับ (I8-c) · เลื่อนรอบแผน (I8-b)",
+  "key": "cr04data",
+  "id": "CR4-COUNT-ADJ",
+  "status": "PASS",
+  "detail": "{\"pair\":\"A01·CM-CH-008\",\"rem0\":487,\"rem1\":433,\"counted\":433,\"other\":[137,137],\"plannerApprove\":\"caDenied\",\"own\":\"caOwn\",\"audit\":true,\"sc3\":true,\"remOff\":487,\"anchors\":true}",
+  "width": 1440,
+  "at": "2026-11-25T23:58:43.499Z",
+  "build": "8.5.0-c10"
+ },
+ {
+  "suite": "CR-04 ชุดที่เปลี่ยนข้อมูล · ปรับยอดฝากขายจากผลนับ (I8-c) · เลื่อนรอบแผน (I8-b)",
+  "key": "cr04data",
+  "id": "CR4-ROLLOVER",
+  "status": "PASS",
+  "detail": "{\"old\":\"2026-11\",\"next\":\"2026-12\",\"seeded\":910,\"approved\":0,\"qNew\":144,\"used\":0,\"supplyQuota\":144,\"chipTxt\":\"รอบแผน: ธ.ค. 2026 ▾\",\"scOk\":true,\"sc\":[],\"anchors\":true,\"denied\":\"ppRollDenied\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:58:43.499Z",
+  "build": "8.5.0-c10"
+ },
+ {
+  "suite": "CR-04 ชุดที่เปลี่ยนข้อมูล · ปรับยอดฝากขายจากผลนับ (I8-c) · เลื่อนรอบแผน (I8-b)",
+  "key": "cr04data",
+  "id": "CR4-DATA-CONSOLE",
+  "status": "PASS",
+  "detail": "{\"errors\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:58:43.499Z",
+  "build": "8.5.0-c10"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "SUP-ANCHOR",
+  "status": "PASS",
+  "detail": "{\"selfCheck\":\"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS\",\"diff\":[],\"got\":{\"stockValue\":50091183,\"whV\":39518371,\"consV\":10572812,\"units\":\"514864/136418/651282\",\"doc\":73,\"sellThrough\":17.8,\"status\":\"7/2/9/98/4/+7\",\"risk3M\":\"547597/4489\",\"recall\":\"519974/11/7194\",\"quotaFit\":\"92/107/116\",\"mape\":13.5,\"bias\":-4.2,\"fill\":93.1,\"achMTD\":94.1}}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "SUP-MENU-director",
+  "status": "PASS",
+  "detail": "{\"menu\":\"Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Sop,Review,Intake\",\"refused\":true}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "SUP-MENU-mgr-mt",
+  "status": "PASS",
+  "detail": "{\"menu\":\"Overview,Stock,Expiry,Consign,Calendar,Quota,Proposals,Sop,Review,Intake\",\"refused\":true}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "SUP-MENU-mgr-tt",
+  "status": "PASS",
+  "detail": "{\"menu\":\"Overview,Stock,Expiry,Calendar,Quota,Proposals,Sop,Review\",\"refused\":true}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "SUP-MENU-mgr-ecom",
+  "status": "PASS",
+  "detail": "{\"menu\":\"Overview,Stock,Expiry,Calendar,Quota,Proposals,Sop,Review\",\"refused\":true}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "SUP-MENU-sa-mt",
+  "status": "PASS",
+  "detail": "{\"menu\":\"\",\"refused\":true}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "SUP-MENU-sa-tt",
+  "status": "PASS",
+  "detail": "{\"menu\":\"\",\"refused\":true}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "SUP-MENU-sa-ecom",
+  "status": "PASS",
+  "detail": "{\"menu\":\"\",\"refused\":true}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "SUP-MENU-admin",
+  "status": "PASS",
+  "detail": "{\"menu\":\"Intake,Setup\",\"refused\":true}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "SUP-MENU-finance",
+  "status": "PASS",
+  "detail": "{\"menu\":\"Calendar,Review\",\"refused\":true}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "SUP-MENU-warehouse",
+  "status": "PASS",
+  "detail": "{\"menu\":\"Expiry,Calendar\",\"refused\":true}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "SUP-MENU-planner",
+  "status": "PASS",
+  "detail": "{\"menu\":\"Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Sop,Review,Intake,Setup\",\"refused\":true}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "SUP-NOLEAK-mgr-mt",
+  "status": "PASS",
+  "detail": "{\"lock\":\"MT\",\"hits\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "SUP-NOLEAK-mgr-tt",
+  "status": "PASS",
+  "detail": "{\"lock\":\"TT\",\"hits\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "SUP-NOLEAK-mgr-ecom",
+  "status": "PASS",
+  "detail": "{\"lock\":\"ECOM\",\"hits\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "SUP-THEME-light",
+  "status": "PASS",
+  "detail": "{\"errors\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "SUP-THEME-dark",
+  "status": "PASS",
+  "detail": "{\"errors\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "OPS-GATE-director",
+  "status": "PASS",
+  "detail": "{\"denied\":\"\",\"broken\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "OPS-GATE-mgr-mt",
+  "status": "PASS",
+  "detail": "{\"denied\":\"ecommerce,stockoverview\",\"broken\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "OPS-GATE-mgr-tt",
+  "status": "PASS",
+  "detail": "{\"denied\":\"ecommerce,stockoverview\",\"broken\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "OPS-GATE-mgr-ecom",
+  "status": "PASS",
+  "detail": "{\"denied\":\"stockoverview,soRequests\",\"broken\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "OPS-GATE-sa-mt",
+  "status": "PASS",
+  "detail": "{\"denied\":\"ecommerce,stockoverview\",\"broken\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "OPS-GATE-sa-tt",
+  "status": "PASS",
+  "detail": "{\"denied\":\"ecommerce,stockoverview\",\"broken\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "OPS-GATE-sa-ecom",
+  "status": "PASS",
+  "detail": "{\"denied\":\"stockoverview,soRequests\",\"broken\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "OPS-GATE-admin",
+  "status": "PASS",
+  "detail": "{\"denied\":\"\",\"broken\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "OPS-GATE-finance",
+  "status": "PASS",
+  "detail": "{\"denied\":\"ecommerce,customers\",\"broken\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "OPS-GATE-warehouse",
+  "status": "PASS",
+  "detail": "{\"denied\":\"ecommerce,customers,soRequests,reports\",\"broken\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "OPS-GATE-planner",
+  "status": "PASS",
+  "detail": "{\"denied\":\"ecommerce,customers,stockoverview,soRequests\",\"broken\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-LANDING",
+  "status": "PASS",
+  "detail": "{\"land\":[],\"deepSup\":\"supQuota\",\"deepOps\":\"customers:7d\",\"again\":\"overview\"}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-MENU-ORDER",
+  "status": "PASS",
+  "detail": "{\"bad\":[],\"curOpen\":true,\"ids\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-GATE",
+  "status": "PASS",
+  "detail": "{\"fail\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-HOME-ROLE",
+  "status": "PASS",
+  "detail": "{\"bad\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-HOME-MATCH",
+  "status": "PASS",
+  "detail": "{\"n\":14,\"bad\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-FLOW-STRIP",
+  "status": "PASS",
+  "detail": "{\"fl\":[],\"poBox\":16,\"poPage\":16}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-MYWORK",
+  "status": "PASS",
+  "detail": "{\"dirProp\":true,\"plannerSeesOwn\":false,\"dirIssue\":true,\"whSeesOwn\":false,\"mtAct\":true,\"ttAct\":false,\"saMt\":true,\"saTt\":false,\"sorted\":true,\"opened\":true}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-NOLEAK",
+  "status": "PASS",
+  "detail": "{\"hits\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-DATASET",
+  "status": "PASS",
+  "detail": "{\"integ\":true,\"uat\":true}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-ALERT-GRID",
+  "status": "PASS",
+  "detail": "{\"width\":1156,\"ag\":[{\"who\":\"director\",\"cols\":2,\"rows\":[2,2,2],\"ok\":true},{\"who\":\"mgr-mt\",\"cols\":2,\"rows\":[2,2],\"ok\":true},{\"who\":\"warehouse\",\"cols\":1,\"rows\":[1],\"ok\":true},{\"who\":\"planner\",\"cols\":2,\"rows\":[2,2],\"ok\":true}]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-HEIGHT",
+  "status": "PASS",
+  "detail": "{\"width\":1156,\"height\":1954,\"limit\":null}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-SCOPE01",
+  "status": "PASS",
+  "detail": "{\"phone\":false,\"sc\":[{\"v\":\"supReplen\",\"n\":11},{\"v\":\"supConsign\",\"n\":11},{\"v\":\"supQuota\",\"n\":50}],\"made\":1}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-ORDER-TABS",
+  "status": "PASS",
+  "detail": "{\"n\":8,\"sumOk\":true,\"bad\":[],\"payTab\":\"pay\",\"shipTab\":\"pick\",\"erpTab\":\"pay\",\"whTab\":\"pick\"}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-FILTER",
+  "status": "PASS",
+  "detail": "{\"bars\":[\"orders:1\",\"customers:1\",\"documents:1\",\"workQueue:1\",\"returns:1\",\"reports:1\",\"audit:1\"],\"presetsOk\":true,\"chips\":[2,1,0],\"urlOk\":true,\"desc\":true,\"asc\":true,\"sheet\":null,\"scopeOk\":true}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-CUSTOMER-CARDS",
+  "status": "PASS",
+  "detail": "{\"c1\":{\"total\":6,\"spend\":60931.15,\"aov\":10155.19},\"spendHand\":60931.15,\"colSum\":60931.15,\"customers\":6,\"changed\":true,\"quietRows\":0,\"quietCard\":0,\"dup\":[\"Demo MT Quota Check\",\"Demo Beauty Co.\"]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-PLAN-PERIOD",
+  "status": "PASS",
+  "detail": "{\"chip\":{\"overview\":true,\"orders\":true,\"allocation\":true,\"reports\":true,\"supQuota\":true,\"supProposals\":true,\"supSop\":true,\"customers\":false,\"audit\":false,\"access\":false},\"ro\":{\"bar\":true,\"btns\":true,\"refuse\":true,\"quota\":0,\"preset\":\"2026-10\"},\"back\":{\"bar\":true,\"check\":true,\"quota\":100},\"FEED_MONTH\":\"2026-11\",\"pp\":\"2026-11\"}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-DATE-FORMAT",
+  "status": "PASS",
+  "detail": "{\"bad\":[],\"helper\":\"25 พ.ย. 2026 / TH\"}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-SKU-SEARCH",
+  "status": "PASS",
+  "detail": "{\"sr\":{\"alias\":true,\"partner\":true,\"barcode\":true,\"name\":true},\"s360\":{\"h1\":\"SKU 360\",\"hash\":\"#/supply/overview?q=JB-FD-001\",\"inline\":true},\"kp\":[\"15 มิ.ย. 2027\",\"14 ม.ค. 2027\",\"51,191\",\"2,525.3\"]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-PORTFOLIO",
+  "status": "PASS",
+  "detail": "{\"pfw\":[{\"k\":1,\"page\":\"1/72\",\"hand\":\"1/72\"},{\"k\":8,\"page\":\"3/50\",\"hand\":\"3/50\"},{\"k\":20,\"page\":\"13/86\",\"hand\":\"13/86\"}],\"projUnit\":\"v\"}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-RR-UX",
+  "status": "PASS",
+  "detail": "{\"radios\":6,\"skip\":true,\"chipTxt\":\"คาดการณ์: ล่าสุด 4 สัปดาห์ · ไม่นับช่วงของขาด ▾\",\"exRows\":[2525.3,2354.6,2222.5,2413.5,2626.4,2626.4],\"hand2\":[2525.3,2354.6,2222.5,2413.5,2626.4,2626.4],\"link\":\"L3M/sellout\"}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-TREND",
+  "status": "PASS",
+  "detail": "{\"trOk\":{\"dec\":true,\"flat\":true,\"neg\":true,\"cap\":true,\"short\":true,\"down\":true},\"fallback\":{\"sku\":\"CM-LP-007\",\"short\":true,\"same\":true},\"actions\":1,\"declining\":1}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-AUTO",
+  "status": "PASS",
+  "detail": "{\"au\":[{\"sku\":\"CM-FD-001\",\"ok\":true,\"pick\":\"L3M\",\"wape\":{\"L4W\":10.451227604512276,\"L3M\":7.887975771187448,\"W\":8.810763445799944,\"TR\":9.601728255401135}},{\"sku\":\"CM-FD-003\",\"ok\":true,\"pick\":\"L4W\",\"wape\":{\"L4W\":30.449029126213595,\"L3M\":43.36445108289769,\"W\":36.018530619865565,\"TR\":32.430399023914276}}],\"share\":{\"L3M\":31,\"L4W\":45,\"TR\":27,\"W\":17}}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-LOST-LABEL",
+  "status": "PASS",
+  "detail": "{\"parts\":[100277,1920392],\"tot\":2020669}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-CONTROLS",
+  "status": "PASS",
+  "detail": "{\"ctl\":{\"supOverview\":\"VH\",\"supStock\":\"\",\"supExpiry\":\"H\",\"supConsign\":\"V\",\"supCalendar\":\"H\",\"supReplen\":\"\",\"supQuota\":\"VH\",\"supReview\":\"V\"},\"kept\":true,\"info\":true}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-ABC-LABEL",
+  "status": "PASS",
+  "detail": "{\"shown\":\"ขายหลัก · สม่ำเสมอ\",\"mxSum\":109,\"ac\":109,\"filt\":true}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-ANCHOR-STAY",
+  "status": "PASS",
+  "detail": "{\"old\":[],\"new\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-FILE-PROTOCOL",
+  "status": "PASS",
+  "detail": "{\"got\":{\"id\":\"CR3-3A\",\"pass\":false,\"info\":\"run via http server (python -m http.server)\"}}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "all(): Anchor CR-01 · เมนูตามสิทธิ์ · NOLEAK ×3 · ธีม · OPS-GATE + ชุด CR-04 (รันที่ความกว้างหน้าต่าง 1156px)",
+  "key": "all",
+  "id": "CR4-CONSOLE",
+  "status": "PASS",
+  "detail": "{\"errors\":[]}",
+  "width": 1156,
+  "at": "2026-11-25T23:42:40.022Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-3D-VERSION",
+  "status": "PASS",
+  "detail": "{\"foot\":\"Charmiss Operations Management · v8.5.0\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-LEGACY (every switch old → CR-01 anchors)",
+  "status": "PASS",
+  "detail": "{\"diff\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-ANCHOR-NEW (every switch new → README anchors)",
+  "status": "PASS",
+  "detail": "{\"diff\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-MENU-SOP",
+  "status": "PASS",
+  "detail": "{\"seen\":{\"director\":true,\"planner\":true,\"mgr-tt\":true,\"sa-mt\":false,\"finance\":false,\"warehouse\":false,\"admin\":false}}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-ACTION-AUTO (one per condition · no duplicate · owners A7)",
+  "status": "PASS",
+  "detail": "{\"open\":122,\"want\":122,\"again\":0,\"ew\":\"mgr-mt\",\"stockout\":\"planner\",\"expiry\":[\"planner\",\"mgr-mt\"]}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-ACTION-FLOW (ack → done · reason for not done · no going back · audit)",
+  "status": "PASS",
+  "detail": "{\"audit\":3}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-ACTION-NOCLOSE (condition gone → flagged, still open · confirm close)",
+  "status": "PASS",
+  "detail": "{\"open\":30,\"flagged\":30,\"after\":29}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-ACTION-MANUAL (Planner · Manager own department only)",
+  "status": "PASS",
+  "detail": "{\"tt\":\"sopBadAcc\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-ACTION-NOLEAK (Manager MT / TT see own department · cannot work others)",
+  "status": "PASS",
+  "detail": "{\"mt\":107,\"tt\":0}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-ACTION-B4 (home card · my overdue → the page)",
+  "status": "PASS",
+  "detail": "{\"b4\":1}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-SNAPSHOT (close · PO moved + Stockout Date > 14 days · quota change · compare on the page)",
+  "status": "PASS",
+  "detail": "{\"sku\":\"CM-FD-001\",\"po\":\"PO2609-0003\",\"so\":75,\"poCh\":1}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-SNAPSHOT-CAP (12 cycles · IndexedDB · export)",
+  "status": "PASS",
+  "detail": "{\"kept\":12,\"stored\":12}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-LOCK (after day 20 → warning + audit · lock day 28 → none)",
+  "status": "PASS",
+  "detail": "{\"today\":26,\"a\":true}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-REVIEW-MONTHLY (demand · supply · pre-S&OP gap · exec summary)",
+  "status": "PASS",
+  "detail": "{\"parts\":[true,true,true,true],\"tiles\":6}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-REVIEW-WEEKLY (format kept + open actions)",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-GAP (month 1 by hand · options)",
+  "status": "PASS",
+  "detail": "{\"hand\":{\"sku\":\"CM-FD-003\",\"gap\":-5125,\"app\":-5125},\"rows\":13}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-STORAGE (snapshots 12 · action log 2,000 shown)",
+  "status": "PASS",
+  "detail": "{\"text\":\"พื้นที่ข้อมูลในเบราว์เซอร์ localStorage — ข้อมูล Ops + ตั้งค่า (เพดานประมาณ 5 MB) ใช้ 688 KB IndexedDB — ไฟล์นำเข้า + Sales Out ที่รับ Sales Out ที่รับ: 0 ไฟล์ · 0 แถว · Snapshot แผน 12 / 12 รอบ · Act\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "selfCheck 1–12",
+  "status": "PASS",
+  "detail": "{\"failed\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "CR3-DEFAULT-PAGE (sign-in → หน้าหลัก · link in a new tab → that page once)",
+  "status": "PASS",
+  "detail": "{\"land\":[\"director:overview\",\"mgr-mt:overview\",\"planner:overview\"],\"deep\":\"supQuota\",\"again\":\"overview\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3D · รอบ S&OP (ทดสอบย้อนหลัง)",
+  "key": "phase3D",
+  "id": "console errors (3D)",
+  "status": "PASS",
+  "detail": "{\"errors\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:12.024Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3C · Early warning · FVA (ทดสอบย้อนหลัง)",
+  "key": "phase3C",
+  "id": "CR3-3C-VERSION",
+  "status": "PASS",
+  "detail": "{\"foot\":\"Charmiss Operations Management · v8.5.0\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:56.939Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3C · Early warning · FVA (ทดสอบย้อนหลัง)",
+  "key": "phase3C",
+  "id": "CR3-LEGACY (every switch old → CR-01 anchors)",
+  "status": "PASS",
+  "detail": "{\"diff\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:56.939Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3C · Early warning · FVA (ทดสอบย้อนหลัง)",
+  "key": "phase3C",
+  "id": "CR3-ANCHOR-NEW (every switch new → README anchors incl. 3C)",
+  "status": "PASS",
+  "detail": "{\"diff\":[],\"got\":{\"ew\":\"98.8/12/18/23/0/22/20/104\",\"fva3\":\"13.5/13.5/0.0\",\"ts\":\"114/252/145\"}}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:56.939Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3C · Early warning · FVA (ทดสอบย้อนหลัง)",
+  "key": "phase3C",
+  "id": "CR3-EW (WOS · reorder gap · in-stock · swing · piling up by hand · one alert per pair × type)",
+  "status": "PASS",
+  "detail": "{\"pairs\":{\"wos\":\"CM-FD-010 @ Eveandboy\",\"rgap\":\"CP-FD-007 @ Watsons\",\"instock\":\"CP-FD-007 @ Watsons\",\"swing\":\"CM-FD-004 @ Eveandboy\",\"accum\":\"CM-FD-003 @ Boots\"},\"kpi\":{\"instock\":98.81512741438078,\"inW\":6088,\"allW\":6161,\"red\":12,\"yellow\":18,\"rgap\":23,\"lowIn\":9,\"dist\":0,\"swing\":22,\"accum\":20,\"alerts\":104,\"pairs\":481}}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:56.939Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3C · Early warning · FVA (ทดสอบย้อนหลัง)",
+  "key": "phase3C",
+  "id": "CR3-EW-DIST (no stock + no quota left + no open order → gap)",
+  "status": "PASS",
+  "detail": "{\"pair\":\"CP-FD-007 @ Watsons\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:56.939Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3C · Early warning · FVA (ทดสอบย้อนหลัง)",
+  "key": "phase3C",
+  "id": "CR3-EW-VIEW (4 cards · cumulative chart · alerts · matrix WOS / in-stock / gap)",
+  "status": "PASS",
+  "detail": "{\"cards\":4,\"matrix\":[true,true,true]}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:56.939Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3C · Early warning · FVA (ทดสอบย้อนหลัง)",
+  "key": "phase3C",
+  "id": "CR3-EW-CYCLE (Tops cycle 1 week → more red at Tops only · audit)",
+  "status": "PASS",
+  "detail": "{\"topsRed\":[2,21]}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:56.939Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3C · Early warning · FVA (ทดสอบย้อนหลัง)",
+  "key": "phase3C",
+  "id": "CR3-FVA (2 pairs by hand · WAPE naive / quota · FVA · tracking signal)",
+  "status": "PASS",
+  "detail": "{\"hand\":[{\"sku\":\"JB-FD-001\",\"acc\":\"7-Eleven\",\"wN\":5.33,\"wQ\":5.33,\"fva\":0,\"ts\":-4.83,\"ok\":true},{\"sku\":\"JB-CH-003\",\"acc\":\"Shopee\",\"wN\":12.34,\"wQ\":23.33,\"fva\":-10.99,\"ts\":-6,\"ok\":true}]}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:56.939Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3C · Early warning · FVA (ทดสอบย้อนหลัง)",
+  "key": "phase3C",
+  "id": "CR3-FVA-MAPE (WAPE quota 3M = MAPE on the page)",
+  "status": "PASS",
+  "detail": "{\"wapeQ\":13.483212623031687,\"mape\":13.483212623031674,\"fva\":0.017674086705863346}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:56.939Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3C · Early warning · FVA (ทดสอบย้อนหลัง)",
+  "key": "phase3C",
+  "id": "CR3-FVA-VIEW (card · by account / Sales / group · scatter · pair FVA + tracking signal)",
+  "status": "PASS",
+  "detail": "{\"segs\":{\"acc\":true,\"sales\":true,\"group\":true}}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:56.939Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3C · Early warning · FVA (ทดสอบย้อนหลัง)",
+  "key": "phase3C",
+  "id": "CR3-FVA-NOLEAK (Manager MT / TT · Sales owners of the own department only)",
+  "status": "PASS",
+  "detail": "{\"mt\":[],\"tt\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:56.939Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3C · Early warning · FVA (ทดสอบย้อนหลัง)",
+  "key": "phase3C",
+  "id": "CR3-B3-NAIVE (negative FVA 3 months → Naive + reason · switch off → CR-01 quantity)",
+  "status": "PASS",
+  "detail": "{\"pair\":\"JB-FD-001 @ Watsons\",\"on\":[958,\"FVA ติดลบ 3 เดือนติด (FVA −2.9 pp) → เริ่มจาก Naive = Run Rate L3M × วันของเดือน\"],\"off\":[1094,\"fit 87%\"]}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:56.939Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3C · Early warning · FVA (ทดสอบย้อนหลัง)",
+  "key": "phase3C",
+  "id": "CR3-SETTINGS-3C (R5 / R6 thresholds · cycle per account · old-method button)",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:56.939Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3C · Early warning · FVA (ทดสอบย้อนหลัง)",
+  "key": "phase3C",
+  "id": "selfCheck 1–12",
+  "status": "PASS",
+  "detail": "{\"failed\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:56.939Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3C · Early warning · FVA (ทดสอบย้อนหลัง)",
+  "key": "phase3C",
+  "id": "console errors (3C)",
+  "status": "PASS",
+  "detail": "{\"errors\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:33:56.939Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3B · Run Rate OOS · ABC-XYZ · Safety Stock (ทดสอบย้อนหลัง)",
+  "key": "phase3B",
+  "id": "CR3-3B-VERSION",
+  "status": "PASS",
+  "detail": "{\"foot\":\"Charmiss Operations Management · v8.5.0\"}",
+  "width": 914,
+  "at": "2026-11-25T23:36:06.569Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3B · Run Rate OOS · ABC-XYZ · Safety Stock (ทดสอบย้อนหลัง)",
+  "key": "phase3B",
+  "id": "CR3-LEGACY (every switch old → CR-01 anchors)",
+  "status": "PASS",
+  "detail": "{\"diff\":[],\"selfCheck\":\"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS\"}",
+  "width": 914,
+  "at": "2026-11-25T23:36:06.569Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3B · Run Rate OOS · ABC-XYZ · Safety Stock (ทดสอบย้อนหลัง)",
+  "key": "phase3B",
+  "id": "CR3-ANCHOR-NEW (every switch new → README anchors)",
+  "status": "PASS",
+  "detail": "{\"diff\":[],\"got\":{\"stockValue\":50091183,\"whV\":39518371,\"consV\":10572812,\"units\":\"514864/136418/651282\",\"doc\":70,\"sellThrough\":17.8,\"status\":\"6/4/7/99/4/+7\",\"risk3M\":\"726866/7265\",\"recall\":\"519974/11/7194\",\"quotaFit\":\"95/110/116\",\"mape\":13.5,\"bias\":-4.2,\"fill\":93.1,\"achMTD\":94.1,\"lost4\":2020669,\"lost13\":3071760,\"oosSku\":21,\"abc\":\"48/34/27/6/5\",\"ssUnits\":167765,\"sugValue\":42971040,\"ew\":\"98.8/12/18/23/0/22/20/104\",\"fva3\":\"13.5/13.5/0.0\",\"ts\":\"114/252/145\"}}",
+  "width": 914,
+  "at": "2026-11-25T23:36:06.569Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3B · Run Rate OOS · ABC-XYZ · Safety Stock (ทดสอบย้อนหลัง)",
+  "key": "phase3B",
+  "id": "CR3-DEFAULTS (A2 new on · filter switch)",
+  "status": "PASS",
+  "detail": "{\"rrNew\":9106,\"rrOld\":8708}",
+  "width": 914,
+  "at": "2026-11-25T23:36:06.569Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3B · Run Rate OOS · ABC-XYZ · Safety Stock (ทดสอบย้อนหลัง)",
+  "key": "phase3B",
+  "id": "CR3-OOS (R3 · up where out of stock · same where not · lost sales)",
+  "status": "PASS",
+  "detail": "{\"same\":902,\"up\":41,\"equalFloor\":10,\"down\":0,\"example\":\"CM-FD-003 @ Shopee: 251.5 → 284.3/wk\",\"lost13\":3071760}",
+  "width": 914,
+  "at": "2026-11-25T23:36:06.569Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3B · Run Rate OOS · ABC-XYZ · Safety Stock (ทดสอบย้อนหลัง)",
+  "key": "phase3B",
+  "id": "CR3-OOS-VIEW (stock columns · drawer · overview card · matrix)",
+  "status": "PASS",
+  "detail": "{\"sku\":\"TF-SK-003\",\"card\":\"ยอดขายที่เสียโอกาส (ของขาด) · 4 สัปดาห์ล่าสุด\\n26 ต.ค. – 22 พ\"}",
+  "width": 914,
+  "at": "2026-11-25T23:36:06.569Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3B · Run Rate OOS · ABC-XYZ · Safety Stock (ทดสอบย้อนหลัง)",
+  "key": "phase3B",
+  "id": "CR3-ABCXYZ (A ≤ 80 % line · B ≤ 95 % · N · E · SS 0 for E)",
+  "status": "PASS",
+  "detail": "{\"groups\":\"48/34/27/6/5\",\"shares\":\"80.1/15.1/4.7\",\"clearanceSku\":\"CM-FD-001\"}",
+  "width": 914,
+  "at": "2026-11-25T23:36:06.569Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3B · Run Rate OOS · ABC-XYZ · Safety Stock (ทดสอบย้อนหลัง)",
+  "key": "phase3B",
+  "id": "CR3-ABC-FILTER (Stock E · Replen B)",
+  "status": "PASS",
+  "detail": "{\"stockE\":5,\"replenB\":34}",
+  "width": 914,
+  "at": "2026-11-25T23:36:06.569Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3B · Run Rate OOS · ABC-XYZ · Safety Stock (ทดสอบย้อนหลัง)",
+  "key": "phase3B",
+  "id": "CR3-SS (3 SKUs by hand · actual vs estimated LT)",
+  "status": "PASS",
+  "detail": "{\"hand\":[{\"sku\":\"CM-FD-006\",\"src\":\"sku\",\"group\":\"AX\",\"z\":2.0537,\"d\":251.21,\"sdD\":77.73,\"lt\":74,\"sdLT\":1.7,\"ss\":1638,\"app\":1638,\"rop\":20228,\"appRop\":20228},{\"sku\":\"CM-FD-001\",\"src\":\"supplier\",\"group\":\"AX\",\"z\":2.0537,\"d\":46.18,\"sdD\":20.35,\"lt\":68.8,\"sdLT\":19.2,\"ss\":1852,\"app\":1853,\"rop\":5030,\"appRop\":5031},{\"sku\":\"JB-LP-006\",\"src\":\"est\",\"group\":\"CX\",\"z\":1.6449,\"d\":9.11,\"sdD\":5.44,\"lt\":105,\"sdLT\":0,\"ss\":92,\"app\":92,\"rop\":1048,\"appRop\":1048}],\"estBadge\":true}",
+  "width": 914,
+  "at": "2026-11-25T23:36:06.569Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3B · Run Rate OOS · ABC-XYZ · Safety Stock (ทดสอบย้อนหลัง)",
+  "key": "phase3B",
+  "id": "CR3-SL-WHATIF (+1 pp more SS · −5 pp less · slider off with safety days)",
+  "status": "PASS",
+  "detail": "{\"ss\":[122578,167765,187459]}",
+  "width": 914,
+  "at": "2026-11-25T23:36:06.569Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3B · Run Rate OOS · ABC-XYZ · Safety Stock (ทดสอบย้อนหลัง)",
+  "key": "phase3B",
+  "id": "CR3-SETTINGS (threshold + audit · old-method button)",
+  "status": "PASS",
+  "detail": "{\"A70\":35,\"A80\":48}",
+  "width": 914,
+  "at": "2026-11-25T23:36:06.569Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3B · Run Rate OOS · ABC-XYZ · Safety Stock (ทดสอบย้อนหลัง)",
+  "key": "phase3B",
+  "id": "CR3-SC-12 (ABC = 100 % · every SKU grouped)",
+  "status": "PASS",
+  "detail": "{\"detail\":\"A 48 · 80.1% / B 34 · 15.1% / C 27 · 4.7% / N 6 / E 5\"}",
+  "width": 914,
+  "at": "2026-11-25T23:36:06.569Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3B · Run Rate OOS · ABC-XYZ · Safety Stock (ทดสอบย้อนหลัง)",
+  "key": "phase3B",
+  "id": "selfCheck 1–12",
+  "status": "PASS",
+  "detail": "{\"failed\":[]}",
+  "width": 914,
+  "at": "2026-11-25T23:36:06.569Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3B · Run Rate OOS · ABC-XYZ · Safety Stock (ทดสอบย้อนหลัง)",
+  "key": "phase3B",
+  "id": "console errors (3B)",
+  "status": "PASS",
+  "detail": "{\"errors\":[]}",
+  "width": 914,
+  "at": "2026-11-25T23:36:06.569Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-VERSION",
+  "status": "PASS",
+  "detail": "{\"foot\":\"Charmiss Operations Management · v8.5.0\",\"side\":\"Charmiss Ops v8.5.0 · 2026-11-25\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-LEGACY (old methods → CR-01 anchors)",
+  "status": "PASS",
+  "detail": "{\"diff\":[],\"selfCheck\":\"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-ANCHOR-NEW (R1 new · 3A gives the same numbers)",
+  "status": "PASS",
+  "detail": "{\"diff\":[],\"got\":{\"stockValue\":50091183,\"whV\":39518371,\"consV\":10572812,\"units\":\"514864/136418/651282\",\"doc\":73,\"sellThrough\":17.8,\"status\":\"7/2/9/98/4/+7\",\"risk3M\":\"547597/4489\",\"recall\":\"519974/11/7194\",\"quotaFit\":\"92/107/116\",\"mape\":13.5,\"bias\":-4.2,\"fill\":93.1,\"achMTD\":94.1}}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-SO-INTAKE-ERRORS",
+  "status": "PASS",
+  "detail": "{\"errors\":\"4:ve_future 5:ve_date 6:ve_sku 7:ve_neg 8:ve_qty\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-SO-INTAKE-MAP",
+  "status": "PASS",
+  "detail": "{\"rows\":55,\"code\":\"71100377\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-SO-INTAKE (append)",
+  "status": "PASS",
+  "detail": "{\"batch\":\"SOI-49807470\",\"rows\":55,\"snapshot\":\"2026-11-30\",\"A01\":\"ok\",\"A02\":\"pending\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-RR-END (only 7-Eleven moves · old method does not move)",
+  "status": "PASS",
+  "detail": "{\"moved7Eleven\":54,\"movedOther\":0,\"movedOldMethod\":0}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-STALE",
+  "status": "PASS",
+  "detail": "{\"banner\":\"ข้อมูล Sales Out ค้าง (เกิน 0 สัปดาห์ก่อน AS OF): Watsons ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Eveandboy ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Boots ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Tops ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Big C ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Lotus's ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Dealer ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Wholesale ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Shopee ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Lazada ข้อมูล Sales Out ค้าง 1 สัปดาห์ · TikTok Shop ข้อมูล Sales Out ค้าง 1 สัปดาห์\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-SO-INTAKE-DUP (xlsx · skip / replace / remove)",
+  "status": "PASS",
+  "detail": "{\"dup\":113,\"skip\":[0,113],\"replace\":113,\"fileQty\":10844,\"baseQty\":10855}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-OTHER-OUT-APPROVAL",
+  "status": "PASS",
+  "detail": "{\"ownApprove\":\"issueSelf\",\"reject\":\"issueNeedReason\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-OTHER-OUT (WH −100 · Sales Out and run rate unchanged)",
+  "status": "PASS",
+  "detail": "{\"sku\":\"TF-FD-001\",\"wh\":[19751,19651],\"wms\":19651}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-OTHER-OUT-VIEW (waterfall bar + month card)",
+  "status": "PASS",
+  "detail": "{\"wfOO\":100}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-PRPLAN (switch prPlanOn · 1-month total)",
+  "status": "PASS",
+  "detail": "{\"off\":17431.78571428571,\"on\":14474.906864183004,\"off2\":17431.78571428571}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-SC-10 (WH flow incl. other_out)",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-SC-11 (Sales Out keys unique)",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "selfCheck 1–11",
+  "status": "PASS",
+  "detail": "{\"failed\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-AUDIT",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-MENU-INTAKE (MT view only · TT refused)",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "CR3-ANCHOR-AFTER (AS OF 23 Nov · both methods)",
+  "status": "PASS",
+  "detail": "{\"diff\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-03 3A · Sales Out intake · เบิกออก (ทดสอบย้อนหลัง)",
+  "key": "phase3A",
+  "id": "console errors (3A)",
+  "status": "PASS",
+  "detail": "{\"errors\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:37:12.419Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (Desktop)",
+  "key": "phaseD-desktop",
+  "id": "SUP-F1-CARD",
+  "status": "PASS",
+  "detail": "{\"card\":\"Quota Achievement MTD   94.1%   Sales In 180,046 / Quota 191,330 ชิ้น · สัปดาห์นี้ 48.1%   ▼ 17.7 pp   เทียบ MTD วันเดียวกันของเดือนก่อน\",\"mtd\":94.1,\"prevMtd\":111.77}",
+  "width": 1440,
+  "at": "2026-11-25T23:46:34.753Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (Desktop)",
+  "key": "phaseD-desktop",
+  "id": "SUP-F1-TABLE (desktop)",
+  "status": "PASS",
+  "detail": "{\"pairs\":953,\"mismatch\":0}",
+  "width": 1440,
+  "at": "2026-11-25T23:46:34.753Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (Desktop)",
+  "key": "phaseD-desktop",
+  "id": "SUP-F1-REPORT",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:46:34.753Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (Desktop)",
+  "key": "phaseD-desktop",
+  "id": "SUP-F4",
+  "status": "PASS",
+  "detail": "{\"overview\":\"<span class=\\\"delta flat\\\">▲ 3 วัน</span>\",\"review\":\"<span class=\\\"delta flat\\\">▲ 3 วัน</span>\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:46:34.753Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (Desktop)",
+  "key": "phaseD-desktop",
+  "id": "SUP-F2 (desktop)",
+  "status": "PASS",
+  "detail": "{\"indexAxis\":\"x\",\"labels\":7}",
+  "width": 1440,
+  "at": "2026-11-25T23:46:34.753Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (Desktop)",
+  "key": "phaseD-desktop",
+  "id": "SUP-F3 (desktop)",
+  "status": "PASS",
+  "detail": "{\"rows\":50}",
+  "width": 1440,
+  "at": "2026-11-25T23:46:34.753Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (Desktop)",
+  "key": "phaseD-desktop",
+  "id": "SUP-F8-SHOW",
+  "status": "PASS",
+  "detail": "{\"counts\":52,\"shown\":50,\"summary\":\"นับแล้ว 52 คู่ · ตรง 36 · ตรวจ 11 · ต่างมาก 5 · ส่วนต่างรวม -423 ชิ้น (−฿30,170)\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:46:34.753Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (Desktop)",
+  "key": "phaseD-desktop",
+  "id": "SUP-F8-DIFF (= counted − calculated; calculation untouched)",
+  "status": "PASS",
+  "detail": "{\"diff\":-423,\"calcAtCount\":18826,\"lots\":18826}",
+  "width": 1440,
+  "at": "2026-11-25T23:46:34.753Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (Desktop)",
+  "key": "phaseD-desktop",
+  "id": "SUP-F8-SCOPE (after AS OF / other channel → hidden)",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:46:34.753Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (Desktop)",
+  "key": "phaseD-desktop",
+  "id": "SUP-F8-IMPORT (schema)",
+  "status": "PASS",
+  "detail": "{\"bad\":[\"qty:negative:-3\",\"date:not_date:22/13/2026\"]}",
+  "width": 1440,
+  "at": "2026-11-25T23:46:34.753Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (Desktop)",
+  "key": "phaseD-desktop",
+  "id": "SUP-NOLEAK-sa-mt",
+  "status": "PASS",
+  "detail": "{\"refused\":true,\"viaUrl\":true}",
+  "width": 1440,
+  "at": "2026-11-25T23:46:34.753Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (Desktop)",
+  "key": "phaseD-desktop",
+  "id": "SUP-NOLEAK-sa-tt",
+  "status": "PASS",
+  "detail": "{\"refused\":true,\"viaUrl\":true}",
+  "width": 1440,
+  "at": "2026-11-25T23:46:34.753Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (Desktop)",
+  "key": "phaseD-desktop",
+  "id": "SUP-NOLEAK-sa-ecom",
+  "status": "PASS",
+  "detail": "{\"refused\":true,\"viaUrl\":true}",
+  "width": 1440,
+  "at": "2026-11-25T23:46:34.753Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (Desktop)",
+  "key": "phaseD-desktop",
+  "id": "SUP-NOTAG",
+  "status": "PASS",
+  "detail": "{\"pages\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:46:34.753Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (Desktop)",
+  "key": "phaseD-desktop",
+  "id": "console errors (Phase D)",
+  "status": "PASS",
+  "detail": "{\"errors\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:46:34.753Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (Desktop)",
+  "key": "phaseD-desktop",
+  "id": "SUP-ANCHOR (Phase D)",
+  "status": "PASS",
+  "detail": "{\"diff\":[],\"selfCheck\":\"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:46:34.753Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "key": "phaseD-390",
+  "id": "SUP-F1-CARD",
+  "status": "PASS",
+  "detail": "{\"card\":\"Quota Achievement MTD   94.1%   Sales In 180,046 / Quota 191,330 ชิ้น · สัปดาห์นี้ 48.1%   ▼ 17.7 pp   เทียบ MTD วันเดียวกันของเดือนก่อน\",\"mtd\":94.1,\"prevMtd\":111.77}",
+  "width": 390,
+  "at": "2026-11-25T23:49:21.509Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "key": "phaseD-390",
+  "id": "SUP-F1-TABLE (mobile)",
+  "status": "PASS",
+  "detail": "{\"pairs\":953,\"mismatch\":0}",
+  "width": 390,
+  "at": "2026-11-25T23:49:21.509Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "key": "phaseD-390",
+  "id": "SUP-F1-REPORT",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 390,
+  "at": "2026-11-25T23:49:21.509Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "key": "phaseD-390",
+  "id": "SUP-F4",
+  "status": "PASS",
+  "detail": "{\"overview\":\"<span class=\\\"delta flat\\\">▲ 3 วัน</span>\",\"review\":\"<span class=\\\"delta flat\\\">▲ 3 วัน</span>\"}",
+  "width": 390,
+  "at": "2026-11-25T23:49:21.509Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "key": "phaseD-390",
+  "id": "SUP-F2 (mobile)",
+  "status": "PASS",
+  "detail": "{\"indexAxis\":\"y\",\"labels\":7}",
+  "width": 390,
+  "at": "2026-11-25T23:49:21.509Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "key": "phaseD-390",
+  "id": "SUP-F3 (mobile)",
+  "status": "PASS",
+  "detail": "{\"first\":20,\"afterMore\":40,\"filtered\":20}",
+  "width": 390,
+  "at": "2026-11-25T23:49:21.509Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "key": "phaseD-390",
+  "id": "SUP-F8-SHOW",
+  "status": "PASS",
+  "detail": "{\"counts\":52,\"shown\":20,\"summary\":\"นับแล้ว 52 คู่ · ตรง 36 · ตรวจ 11 · ต่างมาก 5 · ส่วนต่างรวม -423 ชิ้น (−฿30,170)\"}",
+  "width": 390,
+  "at": "2026-11-25T23:49:21.509Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "key": "phaseD-390",
+  "id": "SUP-F8-DIFF (= counted − calculated; calculation untouched)",
+  "status": "PASS",
+  "detail": "{\"diff\":-423,\"calcAtCount\":18826,\"lots\":18826}",
+  "width": 390,
+  "at": "2026-11-25T23:49:21.509Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "key": "phaseD-390",
+  "id": "SUP-F8-SCOPE (after AS OF / other channel → hidden)",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 390,
+  "at": "2026-11-25T23:49:21.509Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "key": "phaseD-390",
+  "id": "SUP-F8-IMPORT (schema)",
+  "status": "PASS",
+  "detail": "{\"bad\":[\"qty:negative:-3\",\"date:not_date:22/13/2026\"]}",
+  "width": 390,
+  "at": "2026-11-25T23:49:21.509Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "key": "phaseD-390",
+  "id": "SUP-NOLEAK-sa-mt",
+  "status": "PASS",
+  "detail": "{\"refused\":true,\"viaUrl\":true}",
+  "width": 390,
+  "at": "2026-11-25T23:49:21.509Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "key": "phaseD-390",
+  "id": "SUP-NOLEAK-sa-tt",
+  "status": "PASS",
+  "detail": "{\"refused\":true,\"viaUrl\":true}",
+  "width": 390,
+  "at": "2026-11-25T23:49:21.509Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "key": "phaseD-390",
+  "id": "SUP-NOLEAK-sa-ecom",
+  "status": "PASS",
+  "detail": "{\"refused\":true,\"viaUrl\":true}",
+  "width": 390,
+  "at": "2026-11-25T23:49:21.509Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "key": "phaseD-390",
+  "id": "SUP-NOTAG",
+  "status": "PASS",
+  "detail": "{\"pages\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:49:21.509Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "key": "phaseD-390",
+  "id": "console errors (Phase D)",
+  "status": "PASS",
+  "detail": "{\"errors\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:49:21.509Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase D · F1–F4 / F8 (มือถือ 390px)",
+  "key": "phaseD-390",
+  "id": "SUP-ANCHOR (Phase D)",
+  "status": "PASS",
+  "detail": "{\"diff\":[],\"selfCheck\":\"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS\"}",
+  "width": 390,
+  "at": "2026-11-25T23:49:21.509Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน (11 บัญชี · ทุกหน้า)",
+  "key": "mobile-390",
+  "id": "SUP-MOBILE-director",
+  "status": "PASS",
+  "detail": "{\"width\":390,\"overflow\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:50:38.961Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน (11 บัญชี · ทุกหน้า)",
+  "key": "mobile-390",
+  "id": "SUP-MOBILE-mgr-mt",
+  "status": "PASS",
+  "detail": "{\"width\":390,\"overflow\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:50:38.961Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน (11 บัญชี · ทุกหน้า)",
+  "key": "mobile-390",
+  "id": "SUP-MOBILE-mgr-tt",
+  "status": "PASS",
+  "detail": "{\"width\":390,\"overflow\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:50:38.961Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน (11 บัญชี · ทุกหน้า)",
+  "key": "mobile-390",
+  "id": "SUP-MOBILE-mgr-ecom",
+  "status": "PASS",
+  "detail": "{\"width\":390,\"overflow\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:50:38.961Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน (11 บัญชี · ทุกหน้า)",
+  "key": "mobile-390",
+  "id": "SUP-MOBILE-sa-mt",
+  "status": "PASS",
+  "detail": "{\"width\":390,\"overflow\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:50:38.961Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน (11 บัญชี · ทุกหน้า)",
+  "key": "mobile-390",
+  "id": "SUP-MOBILE-sa-tt",
+  "status": "PASS",
+  "detail": "{\"width\":390,\"overflow\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:50:38.961Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน (11 บัญชี · ทุกหน้า)",
+  "key": "mobile-390",
+  "id": "SUP-MOBILE-sa-ecom",
+  "status": "PASS",
+  "detail": "{\"width\":390,\"overflow\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:50:38.961Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน (11 บัญชี · ทุกหน้า)",
+  "key": "mobile-390",
+  "id": "SUP-MOBILE-admin",
+  "status": "PASS",
+  "detail": "{\"width\":390,\"overflow\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:50:38.961Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน (11 บัญชี · ทุกหน้า)",
+  "key": "mobile-390",
+  "id": "SUP-MOBILE-finance",
+  "status": "PASS",
+  "detail": "{\"width\":390,\"overflow\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:50:38.961Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน (11 บัญชี · ทุกหน้า)",
+  "key": "mobile-390",
+  "id": "SUP-MOBILE-warehouse",
+  "status": "PASS",
+  "detail": "{\"width\":390,\"overflow\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:50:38.961Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "มือถือ 390px ไม่ล้นแนวนอน (11 บัญชี · ทุกหน้า)",
+  "key": "mobile-390",
+  "id": "SUP-MOBILE-planner",
+  "status": "PASS",
+  "detail": "{\"width\":390,\"overflow\":[]}",
+  "width": 390,
+  "at": "2026-11-25T23:50:38.961Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase B · Data Adapter (Flow)",
+  "key": "flow",
+  "id": "SUP-FEED-DELIVERED (IV, not shipped)",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:47:08.655Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase B · Data Adapter (Flow)",
+  "key": "flow",
+  "id": "SUP-FEED-DELIVERED (in transit)",
+  "status": "PASS",
+  "detail": "{\"sku\":\"CM-FD-005\",\"asOf\":\"2026-11-30\",\"it\":40,\"wh\":[3084,3044],\"total\":[4354,4354],\"sc\":\"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:47:08.655Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase B · Data Adapter (Flow)",
+  "key": "flow",
+  "id": "SUP-FEED-DELIVERED (Sales In / Remaining)",
+  "status": "PASS",
+  "detail": "{\"salesIn\":40,\"remaining\":[356,396],\"sc\":\"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:47:08.655Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase B · Data Adapter (Flow)",
+  "key": "flow",
+  "id": "SUP-FEED-IDEMP",
+  "status": "PASS",
+  "detail": "{\"replay\":{\"ok\":true,\"already\":true}}",
+  "width": 1440,
+  "at": "2026-11-25T23:47:08.655Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase B · Data Adapter (Flow)",
+  "key": "flow",
+  "id": "SUP-READONLY",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:47:08.655Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase B · Data Adapter (Flow)",
+  "key": "flow",
+  "id": "SUP-CN-COND",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:47:08.655Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase B · Data Adapter (Flow)",
+  "key": "flow",
+  "id": "SUP-FLOW (CN Good → WH up, consignment down)",
+  "status": "PASS",
+  "detail": "{\"wh\":[3084,3069],\"remaining\":[356,366],\"total\":[4354,4349]}",
+  "width": 1440,
+  "at": "2026-11-25T23:47:08.655Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase B · Data Adapter (Flow)",
+  "key": "flow",
+  "id": "SUP-SC-7",
+  "status": "PASS",
+  "detail": "{\"n\":0,\"of\":120}",
+  "width": 1440,
+  "at": "2026-11-25T23:47:08.655Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase B · Data Adapter (Flow)",
+  "key": "flow",
+  "id": "SUP-SC-8",
+  "status": "PASS",
+  "detail": "{\"n\":0,\"of\":1}",
+  "width": 1440,
+  "at": "2026-11-25T23:47:08.655Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase B · Data Adapter (Flow)",
+  "key": "flow",
+  "id": "SUP-SC-9",
+  "status": "PASS",
+  "detail": "{\"n\":0,\"of\":953}",
+  "width": 1440,
+  "at": "2026-11-25T23:47:08.655Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase B · Data Adapter (Flow)",
+  "key": "flow",
+  "id": "selfCheck 1–9",
+  "status": "PASS",
+  "detail": "{\"checks\":\"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:47:08.655Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase B · Data Adapter (Flow)",
+  "key": "flow",
+  "id": "SUP-ANCHOR (after the flow)",
+  "status": "PASS",
+  "detail": "{\"diff\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:47:08.655Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-PROP-MERGE",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-PROP-SELF",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-PROP-REJECT",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-PROP-recall",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-PROP-quota (draft, not in this month)",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-PROP-po (Planned)",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-PROP-downstream",
+  "status": "PASS",
+  "detail": "{\"dec\":600}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-ETA",
+  "status": "PASS",
+  "detail": "{\"history\":2}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-ATP (Planned ignored · Confirmed / Shipped counted · ETA moves the date)",
+  "status": "PASS",
+  "detail": "{\"atp0\":{\"none\":true,\"base\":161},\"atp1\":\"2026-12-16\",\"atp3\":\"2026-12-26\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-ATP-MT",
+  "status": "PASS",
+  "detail": "{\"order\":\"OR-UAT-MT63476\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-ATP-TT",
+  "status": "PASS",
+  "detail": "{\"order\":\"OR-UAT-TT64026\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-ATP-EC",
+  "status": "PASS",
+  "detail": "{\"order\":\"OR-UAT-EC64593\"}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-B2-MATCH",
+  "status": "PASS",
+  "detail": "{\"b2\":{\"fit\":72.83783783783785,\"mape\":22.646657571623464,\"cov3\":10.53893331445063},\"page\":{\"fit\":72.83783783783785,\"mape\":22.646657571623464,\"cov3\":10.53893331445063}}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-B4",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-B5",
+  "status": "PASS",
+  "detail": "{}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "selfCheck 1–9 (after Phase C)",
+  "status": "PASS",
+  "detail": "{\"checks\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-ANCHOR (after Phase C)",
+  "status": "PASS",
+  "detail": "{\"diff\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-NOLEAK-mgr-mt (after proposals)",
+  "status": "PASS",
+  "detail": "{\"lock\":\"MT\",\"hits\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-NOLEAK-mgr-tt (after proposals)",
+  "status": "PASS",
+  "detail": "{\"lock\":\"TT\",\"hits\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ },
+ {
+  "suite": "CR-01 Phase C · B1–B5 / F7 + NOLEAK ×3 หลังมีข้อเสนอ",
+  "key": "phaseC",
+  "id": "SUP-NOLEAK-mgr-ecom (after proposals)",
+  "status": "PASS",
+  "detail": "{\"lock\":\"ECOM\",\"hits\":[]}",
+  "width": 1440,
+  "at": "2026-11-25T23:48:19.666Z",
+  "build": "8.5.0-c9"
+ }
+]

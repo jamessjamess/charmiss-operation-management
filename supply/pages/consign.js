@@ -174,7 +174,8 @@
           { k: 'pct', label: t('col_diff_pct'), num: true, get: r => r.pct, html: r => r.pct == null ? '—' : (r.pct > 0 ? '+' : '') + U.pct(r.pct, 1), xl: r => r.pct == null ? '' : Math.round(r.pct * 10) / 10 },
           { k: 'diffv', label: t('col_diff_v'), num: true, sum: true, fmt: U.money, get: r => r.diffV, html: r => U.money(r.diffV) },
           { k: 'cls', label: t('col_status'), get: r => ({ ok: 0, chk: 1, big: 2 })[r.cls], html: chip, xl: r => t('cnt_' + r.cls) },
-          { k: 'src', label: t('col_src'), get: r => r.src }
+          { k: 'src', label: t('col_src'), get: r => r.src },
+          ...(Pages.cntAdjCol ? Pages.cntAdjCol(M) : [])   // CR-04 I8-c: ขอปรับยอดตามผลนับ
         ];
         U.table(main.querySelector('#cntHost'), { key: 'cnt', cols: cntCols, rows: cnt, defaultSort: { key: 'cls', dir: 'desc' }, compact: true,
           total: rows => t('total') + ' · ' + U.n(rows.length), onRow: r => { App.ui.stockTab = 'all'; App.go('stock', { sku: r.sku }); },

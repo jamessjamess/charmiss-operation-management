@@ -1,4 +1,4 @@
-# Charmiss Operations Management (Charmiss Ops) — v8.4.0
+# Charmiss Operations Management (Charmiss Ops) — v8.5.0
 
 เว็บเดียวที่รวม **Commerce Operations** (OMS + Quota · ระบบบันทึก) กับ **Supply Planning** (ระบบวิเคราะห์และวางแผน) ตาม `Document/CR-01`
 HTML + CSS + Vanilla JS · static (ไม่มี Backend) · ข้อมูลจำลองทั้งหมด · Deploy แบบ static ได้ (GitHub Pages)
@@ -26,37 +26,39 @@ HTML + CSS + Vanilla JS · static (ไม่มี Backend) · ข้อมู�
 | 3C วิเคราะห์ | R5 Early Warning ฝากขาย · R6 FVA + Tracking signal · ข้อเสนอ Quota เริ่มจาก Naive | ✅ เสร็จ (v8.3.0) |
 | 3D กระบวนการ | R7 รอบ S&OP: Action log + Snapshot แผน + วันปิดรับแก้แผน · Supply Review รายเดือน 4 ส่วน · README + UAT ทั้งชุด | ✅ เสร็จ (v8.4.0) |
 
-รายงาน UAT: `uat/Charmiss-Ops-Management-UAT-2026-11-25/` (HTML + CSV + JSON + ภาพหน้าจอ รูปแบบเดียวกับรายงาน UAT เดิม)
+**CR-04 — หน้าหลักแบบ Command Center + จัดลำดับเมนูใหม่ + รวมปัญหาที่พบ** (`Document/CR-04 - Home Command Center, Menu Order and Fix List.md`) — **ปิดแล้ว 26 พ.ย. 2026 (v8.5.0) · ทำรอบเดียวครบทุกข้อ (R1–R12 · I1–I10) · ไม่มีข้อที่ต้องถอยกลับ** · การเปลี่ยนต่อจากนี้ (เช่น Open issues OI-1–OI-3) ต้องเปิด CR ใหม่ — รายละเอียดในหัวข้อ CR-04 ด้านล่าง · รายงาน UAT `uat/CR-04-UAT-2026-11-26/`
+
+รายงาน UAT CR-01: `uat/Charmiss-Ops-Management-UAT-2026-11-25/` (HTML + CSV + JSON + ภาพหน้าจอ รูปแบบเดียวกับรายงาน UAT เดิม)
 
 ## เปิดใช้งาน
 - ดับเบิลคลิก `index.html` (หน้า Supply อ่าน `data/mock-bundle.js`) หรือรัน `python -m http.server` ในโฟลเดอร์นี้ (อ่าน `data/*.csv`)
+- **ชุดทดสอบ `SupUAT.phase3A()` ต้องรันผ่าน HTTP** (`python -m http.server 8782` แล้วเปิด `http://localhost:8782/index.html`) เพราะอ่านไฟล์ตัวอย่างด้วย `fetch` — เปิดแบบ `file://` จะได้ผล `run via http server (python -m http.server)` แทน Error (CR-04 I9)
 - หน้า Login: เลือกบทบาท → "จำลอง Single Sign-On" (Manager / Sales Admin เลือกฝ่ายเพิ่ม) → **เปิดหน้าหลักทุกบทบาท** (v8.4.0 · เดิม v13 Director / Manager เปิดสินค้าคงคลังและโควตา) · เริ่มชุดสาธิตใหม่ก็กลับมาหน้าหลัก
+- ลิงก์ตรงหน้า Ops ที่มีตัวกรองแชร์ได้เช่นกัน (CR-04 R4): `index.html#orders?d=7d&type=MT` · `#customers?d=lastMonth` · `#payments` (แท็บรอชำระ) · `#shipping` (แท็บรอจัดส่ง)
 - ลิงก์ตรงหน้า Supply แชร์ได้: `index.html#/supply/stock?asof=2026-11-23&view=M&ch=MT&rr=L3M&h=6&sku=CM-FD-001` → เปิดลิงก์ในแท็บใหม่ แล้วล็อกอินครั้งแรกจะเปิดหน้านั้น (ถ้าไม่มีสิทธิ์จะถูกปฏิเสธ) · การโหลดหน้าซ้ำ / ล็อกอินครั้งถัดไปกลับหน้าหลัก
 
 ## เลขเวอร์ชันของแอป (CR-03)
 - ตั้งที่เดียว: `version.js` (`APP_VERSION.number` + ประวัติแต่ละรุ่น) · แสดงที่ **Sidebar ล่าง** (ใต้ปุ่มเริ่มชุดสาธิตใหม่) · **Footer** ของทุกหน้า · **หน้า Login** — กดเลขเวอร์ชันเพื่อดูประวัติรุ่น
 - ตอนออกรุ่นใหม่: เปลี่ยน `APP_VERSION.number` + เพิ่มบรรทัดประวัติ และเปลี่ยน `?v=` ทุกตัวใน `index.html` เป็นเลขนั้น (ต่อท้ายได้ เช่น `8.4.0-3d4` — ต้องไม่ซ้ำค่าที่เคยใช้ ให้เบราว์เซอร์โหลดไฟล์ใหม่)
-- ลำดับรุ่น: 7.0 (Ops v13) → **8.0.0** CR-01 ครบ A–D → **8.1.0** CR-03 Phase 3A → **8.2.0** CR-03 Phase 3B → **8.3.0** CR-03 Phase 3C → **8.4.0** CR-03 Phase 3D (ครบ CR-03)
+- ลำดับรุ่น: 7.0 (Ops v13) → **8.0.0** CR-01 ครบ A–D → **8.1.0** CR-03 Phase 3A → **8.2.0** CR-03 Phase 3B → **8.3.0** CR-03 Phase 3C → **8.4.0** CR-03 Phase 3D (ครบ CR-03) → **8.5.0** CR-04 (หน้าหลัก Command Center · เมนูใหม่ · รวมปัญหาที่พบ)
 
-## เมนู (Sidebar จัดเป็นกลุ่ม Module พับ/กางได้)
+## เมนู (Sidebar จัดเป็นกลุ่ม Module พับ/กางได้) — ลำดับใหม่ตาม CR-04 R1
 
-ชื่อและลำดับเมนู Ops ทั้ง 14 รายการเหมือนเดิม (CR-01 5.1) แค่แทรกหัวกลุ่ม · กลุ่มที่ไม่มีเมนูที่เห็นได้จะไม่แสดง · กลุ่มของหน้าที่เปิดอยู่จะกางเสมอ · สถานะพับจำไว้ใน `localStorage['ops.navCollapsed']` · บนมือถือ (≤700px) ทุกกลุ่มเรียงเป็นแถบเลื่อนแนวนอนแถวเดียว
+เรียงตามเส้นทางงาน ขาย → ส่ง → หลังการขาย → สต็อก → วางแผน → รายงาน → ข้อมูลหลัก → ระบบ (แทน CR-01 5.1) · id / ชื่อ / สิทธิ์ของทุกหน้าเหมือนเดิม · กลุ่มที่ไม่มีเมนูที่เห็นได้จะไม่แสดง · กลุ่มของหน้าที่เปิดอยู่จะกางเสมอ · DATA และ ADMIN พับเป็นค่าเริ่มต้น (กางแล้วจำใน `localStorage['ops.navOpened']`) · การพับที่ผู้ใช้ตั้งเองจำใน `localStorage['ops.navCollapsed']` · บนมือถือ (≤700px) ทุกกลุ่มเรียงเป็นแถบเลื่อนแนวนอนแถวเดียวตามลำดับใหม่
 
-| กลุ่ม | เมนู |
-|---|---|
-| CORE | หน้าหลัก |
-| SALES | คำสั่งซื้อและการชำระเงิน · ฝ่าย E-commerce · ลูกค้า |
-| PRODUCTS & QUOTA | รายการสินค้า · สินค้าคงคลังและโควตา · คู่ค้าและพื้นที่ขาย |
-| FULFILLMENT | เปิด SO · MT/TT · งานค้างและส่งมอบ · เอกสารและระบบเชื่อมต่อ |
-| REPORTS & SYSTEM | รายงาน · บัญชีและสิทธิ์ SSO · ประวัติการทำงาน |
-| AFTER-SALES | คืนสินค้า / Credit Note |
-| SUPPLY MONITOR | ภาพรวม Supply · Stock & Projection · เสี่ยงหมดอายุ · ฝากขาย (Consignment) · ของเข้า & CN Calendar |
-| SUPPLY PLANNING | วางแผนสั่งผลิต · Quota vs Actual · ข้อเสนอ Supply (Phase C) · Supply Review (Weekly/Monthly) |
-| SUPPLY SETUP | ข้อมูล & ตั้งค่า Supply · รับรายงาน Sales Out (CR-03) |
+| # | กลุ่ม | เมนู |
+|---|---|---|
+| 1 | — | หน้าหลัก (ไม่มีหัวกลุ่ม) |
+| 2 | SALES | คำสั่งซื้อและการชำระเงิน · ฝ่าย E-commerce · ลูกค้า |
+| 3 | FULFILLMENT | เปิด SO · MT/TT · งานค้างและส่งมอบ · คืนสินค้า / Credit Note |
+| 4 | INVENTORY & QUOTA | สินค้าคงคลังและโควตา |
+| 5 | SUPPLY MONITOR | ภาพรวม Supply · Stock & Projection · เสี่ยงหมดอายุ · ฝากขาย (Consignment) · ของเข้า & CN Calendar |
+| 6 | SUPPLY PLANNING | วางแผนสั่งผลิต · Quota vs Actual · ข้อเสนอ Supply · รอบ S&OP · Action log · Supply Review |
+| 7 | REPORTS | รายงาน |
+| 8 | DATA | รายการสินค้า · คู่ค้าและพื้นที่ขาย · รับรายงาน Sales Out · เอกสารและระบบเชื่อมต่อ |
+| 9 | ADMIN | บัญชีและสิทธิ์ SSO · ประวัติการทำงาน · ข้อมูล & ตั้งค่า Supply |
 
-SUPPLY PLANNING มีเมนู **รอบ S&OP · Action log** (CR-03 R7) ต่อจาก Supply Review — Director / Planner / Manager ทุกฝ่าย
-
-- Global Filter ของ Supply (AS OF, VIEW BY, Channel, คู่ค้า, Brand, Category, ค้นหา, Run Rate, Horizon) อยู่เฉพาะหน้า Supply เป็นแถบติดด้านบน · มือถือเป็น Bottom sheet
+- Global Filter ของ Supply (AS OF, VIEW BY, Channel, คู่ค้า, Brand, Category, ค้นหา SKU, ดูความเสี่ยงภายใน) อยู่เฉพาะหน้า Supply เป็นแถบติดด้านบน · มือถือเป็น Bottom sheet · CR-04: VIEW BY / ความเสี่ยงภายใน แสดงเฉพาะหน้าที่มีผล (R11) · วิธีคาดการณ์ (Run Rate) ย้ายไปเป็นชิปหัวหน้า (R8)
 - ชื่อที่แยกตาม 5.2: Ops "สต็อกสำรอง/Safety stock" → **Safety Units (Ecom)** · Supply "Safety" ใน Drawer → **Safety Days (ROP)** · "รายงาน" ของ SCM → **Supply Review** · "ภาพรวม" → **ภาพรวม Supply**
 - ลิงก์ข้ามหน้า (5.3): Stock & Projection → สินค้าคงคลังและโควตา (สต็อก "ตอนนี้") · Quota vs Actual → สินค้าคงคลังและโควตา (อนุมัติ/จัดสรร, หน้านี้ไม่มีปุ่มแก้ Quota) · Calendar → คืนสินค้า / CN · Supply Review → งานค้างและส่งมอบ · Ops › Actual จาก WMS เพิ่มคอลัมน์ **Stockout Date (Supply)** กดแล้วเปิด Projection ของ SKU
 
@@ -341,6 +343,85 @@ Early warning `98.8 / 12 / 18 / 23 / 0 / 22 / 20 / 104` (In-stock % / WOS แด
 ### แก้บั๊กเดิมระหว่างทดสอบ 3D
 - เริ่มชุดสาธิต Integrated ใหม่ตอนที่ CDN โหลดช้า → ระบบตกไปเป็นชุด UAT (`Papa is not defined` เพราะการ resume เริ่มก่อน Library ที่ท้ายหน้า) — แก้ให้ resume รอ `DOMContentLoaded` (`supply-planning.js`)
 
+## CR-04 — หน้าหลัก Command Center + เมนูใหม่ + รวมปัญหาที่พบ (v8.5.0) — ปิดแล้ว 26 พ.ย. 2026
+
+`Document/CR-04 - Home Command Center, Menu Order and Fix List.md` · ไฟล์ใหม่ `cr04-core.js` · `cr04-nav.js` · `cr04-home.js` · `cr04-lists.js` · `cr04-period.js` · `cr04-supply.js` · `cr04-ops.js` (ครอบฟังก์ชันเดิมแบบโมดูลอื่นของ Ops · โหลดท้ายสุด)
+
+| ข้อ | ทำอะไร | ที่ไหน |
+|---|---|---|
+| R1 เมนู | เรียงตามลำดับงาน: หน้าหลัก → SALES → FULFILLMENT → INVENTORY & QUOTA → SUPPLY MONITOR → SUPPLY PLANNING → REPORTS → DATA → ADMIN · id / ชื่อ / สิทธิ์เดิม · DATA / ADMIN พับเป็นค่าเริ่มต้น (กางแล้วจำใน `ops.navOpened`) · กลุ่มของหน้าปัจจุบันกางเสมอ | `cr04-nav.js` |
+| R2 หน้าหลัก | หัวหน้า (ทักทาย · ฝ่าย · เวลาข้อมูล) · **งานของฉัน** 7 รายการ + ดูทั้งหมด (เรียงความรุนแรง → วันครบกำหนด · ชิปต่อแหล่ง · กดแล้วเปิดรายการนั้น) · **ตัวเลขหลัก** ตามบทบาท (R2-3) · **สายงานภาพเดียว** Order → Cash / Supply · Supply Alert + **14 วันข้างหน้า** · **ดูเพิ่ม** (พับ) · ระบบที่เชื่อมต่อย้ายไป Admin (หน้าหลัก Admin + บัญชีและสิทธิ์) · UAT seed แสดงกล่อง "ข้อมูล Supply ใช้ชุด Integrated demo" แทนตัวเลข Supply · Supply Alert ซ่อนการ์ดที่ทำไม่ได้ + Grid ไม่มีช่องค้าง · โลโก้ / Breadcrumb กลับหน้าหลัก | `homeData(profile)` ใน `cr04-home.js` รวมผลจากฟังก์ชันเดิมเท่านั้น |
+| R3 คำสั่งซื้อ | แท็บชั้นเดียว 8 ขั้น (`cr4OrderStage` — ทุกออเดอร์อยู่ขั้นเดียว) · ตารางมี Badge ชำระ · จัดส่ง · เอกสาร + คอลัมน์ "งานถัดไป" (`orderActionPlan` เดิม) · `#payments` → รอชำระ / ตรวจชำระ · `#shipping` → รอจัดส่ง · ERP เปิดที่รอชำระ · Warehouse ที่รอจัดส่ง | `cr04-lists.js` |
+| R4 ตัวกรอง | `opsFilterBar` แถวเดียว: ค้นหา · ช่วงวันที่ (Date Range Picker ทางลัด 6 ปุ่ม + ปฏิทิน 2 เดือน) · ช่องทาง · คู่ค้า (พิมพ์ค้นหา) · ตัวกรองเพิ่มเติม (n) · ชิปลบทีละตัว / ล้างทั้งหมด / พบ n รายการ · เรียงด้วยหัวคอลัมน์ · จำใน URL (`#orders?type=MT&d=7d`) + sessionStorage · มือถือเป็น Bottom sheet · ใช้กับ 7 หน้า: คำสั่งซื้อ · ลูกค้า · เอกสาร · งานค้าง · คืนสินค้า · รายงาน · ประวัติการทำงาน | `cr04-lists.js` |
+| R5 ลูกค้า | การ์ด 5 ใบ (ลูกค้าทั้งหมด + ใหม่ · ยอดซื้อรวม + Δ ช่วงก่อน · AOV · ซื้อซ้ำ 90 วัน · ลูกค้าเงียบ > 60 วัน) กดแล้วกรองตาราง · คอลัมน์ช่องทางหลัก + AOV · ป้าย "เบอร์ซ้ำ" · ยอด = `orderTotals` − CN ที่ออกแล้ว | `cr04-lists.js` |
+| R6 รอบแผน | `db.planPeriod` เป็นค่ากลาง (`FEED_MONTH` ตามค่านี้ · Quota ของ Ops · ตรวจ SO · "รอบแผนนี้") · ชิป "รอบแผน: พ.ย. 2026 ▾" เฉพาะ หน้าหลัก / คำสั่งซื้อ / สินค้าคงคลังและโควตา / เปิด SO / รายงาน / Quota vs Actual / ข้อเสนอ Supply / รอบ S&OP · ดูรอบอื่น = อ่านอย่างเดียว (แถบเตือน · ปุ่มบันทึกปิด · `opsCheck()` ปฏิเสธทุกการเขียน) · Quota vs Actual แสดงตารางของเดือนนั้น (AS OF ไม่เปลี่ยน) | `cr04-period.js` |
+| R7 SKU | ค้นหา SKU แบบ Typeahead (รหัส Supply · รหัส Ops เดิม เช่น 11021 → JB-FD-001 · Barcode · รหัสคู่ค้า · ชื่อ) · "เลือก 1 SKU" → **SKU 360** ในภาพรวม Supply (ลิงก์แชร์ได้ `#/supply/overview?q=JB-FD-001` · ใช้ Drawer เดิมวาดในหน้า) · หลาย SKU: กราฟ Projection เป็น ฿ เท่านั้น + กราฟ **จำนวน SKU ที่คาดว่าจะขาด / ต่ำกว่า ROP รายสัปดาห์** (26 สัปดาห์ จาก `projectSku` เดิม · กดแท่งเห็นรายชื่อ) · Drawer มีปุ่ม "ดู SKU นี้" | `cr04-supply.js` |
+| R8 Run Rate | "ยอดขายเฉลี่ย (Run Rate)" · ตัวเลือกเดียว **วิธีคาดการณ์** 6 แบบ + ช่อง "ไม่นับช่วงของขาด" · ย้ายจาก Filter bar ไปเป็นชิปหัวหน้า "คาดการณ์: … ▾" (Popover มีคำอธิบาย + ตัวอย่างจาก SKU จริง) · Drawer / SKU 360 มีตารางยอดขายเฉลี่ยทุกวิธี · ลิงก์เดิม `rr=` / `rm=` ใช้ได้ | `cr04-supply.js` · `host.js` |
+| R9 Trend / อัตโนมัติ | `Calc.trendOf` (OLS 26 สัปดาห์ · หน่วง φ 0.95 · ไม่ติดลบ · เพดาน ±50% · ข้อมูล < 12 สัปดาห์ → เฉลี่ย 3 เดือน + ป้าย) · `Calc.trendRate` · `Calc.autoPick` (ทดสอบย้อนหลัง 8 จุด เลือก WAPE ต่ำสุดต่อ SKU) · `projectSku` รับค่ารายสัปดาห์ (`rrW`) · คอลัมน์ "แนวโน้ม / เดือน" ▲ / ▼ + ป้าย **ขาลงต่อเนื่อง** (≤ −5% / เดือน และ R² ≥ 0.3) → Action 1 รายการต่อ SKU · ค่าเริ่มต้นยังเป็นวิธีเดิม (D12) | `calc.js` (`// CR-04`) |
+| R10 Lost sales | ชื่อใหม่ "ยอดขายที่เสียโอกาส (ของขาด)" ทุกจุด + คำอธิบายใต้ตัวเลข · การ์ดแยก **ขาดที่คู่ค้า** (เติมของ / ปรับ Quota) กับ **ขาดที่คลังเรา** (สั่งผลิต / เร่ง PO) — สองส่วนรวม = ค่าเดิม | `calc.js` (`lost4C` / `lost4W`) · `overview.js` |
+| R11 ตัวควบคุม | VIEW BY เฉพาะ ภาพรวม · ฝากขาย · Quota vs Actual · Supply Review · "ดูความเสี่ยงภายใน" เฉพาะ ภาพรวม · หมดอายุ · Calendar · Quota vs Actual · Stock & Projection ไม่มีทั้งสอง · (i) บอกตัวเลขที่เปลี่ยน · ค่าใน URL ไม่หาย | `cr04-supply.js` + CSS |
+| R12 ABC-XYZ | ป้ายเป็นคำ ("ขายหลัก · สม่ำเสมอ" · มือถือ "หลัก·สม่ำเสมอ") · Tooltip บอกเป้าระดับบริการ / Safety Stock / รอบทบทวน · ตาราง 3 × 3 ในภาพรวม Supply และวางแผนสั่งผลิต (จำนวน SKU · มูลค่า · ระดับบริการ · กดเพื่อกรอง) · ตัวกรอง "กลุ่มสินค้า (ความสำคัญ × ความแน่นอน)" | `cr04-supply.js` |
+| I8-a | มือถือ: การ์ดของ วางแผนสั่งผลิต / ฝากขาย (แนะนำเรียกคืน) / Quota vs Actual มีปุ่ม "เสนอ" — ฟอร์มเดียวกับ Desktop | `cr04-ops.js` |
+| I8-b | **เลื่อนรอบแผนเป็นเดือนถัดไป** (Director / Admin · Integrated demo) จากชิปรอบแผน: หน้าต่างสรุปผลกระทบ → Quota เดือนใหม่เป็นรอบปัจจุบัน · "ใช้ไป" เริ่ม 0 · Feed / Supply ใช้เดือนใหม่ · Audit | `cr04-period.js` |
+| I8-c | **ปรับยอดฝากขายตามผลนับ (F8)**: ปุ่ม "ขอปรับยอดตามผลนับ" ที่คู่ที่ต่าง > 5% → คำขอ (เหตุผลบังคับ) → อนุมัติ Director / Manager MT (ผู้ขออนุมัติเองไม่ได้) → ตาราง `consign_adjust` → Supply ปรับ Remaining ของคู่นั้นนับจากวันถัดจากวันนับ · ไม่แตะ WMS / Quota · Audit · สวิตช์ `countAdjustOn` (เปิด) · selfCheck 3 รวมรายการปรับ | `cr04-ops.js` · `calc.js` |
+| I9 | `phase3A()` เปิดแบบ `file://` → คืน `{ pass:false, info:'run via http server (python -m http.server)' }` แทน Error | `tools/uat-supply.js` |
+| I10 | วันที่ทั้งระบบ DD MMM YYYY แบบ ค.ศ. ผ่าน Helper เดียว (`fmtDate` · `fmtRange`) · `toLocaleDateString('th-TH')` เดิมแสดง ค.ศ. · ช่องวันที่ในฟอร์มและ AS OF ใช้ปฏิทินเดียวกัน | `cr04-core.js` · `cr04-lists.js` |
+
+### หน้าหลักตามบทบาท (ตัวเลขหลัก R2-3)
+
+| บทบาท | การ์ด |
+|---|---|
+| Director | ยอดขายสุทธิ MTD (+ Achievement MTD) · ออเดอร์ค้าง / เกินกำหนด · มูลค่า Stock + DOC · SKU เสี่ยงขาด · At-risk หมดอายุ 3M · ยอดขายที่เสียโอกาส 4W |
+| Manager | ยอดขาย MTD ฝ่าย (+ Achievement) · Quota คงเหลือเดือนนี้ · ออเดอร์ค้างของฝ่าย · In-stock rate (MT) / SKU เสี่ยงขาดที่กระทบฝ่าย (TT · Ecom) · FVA ของฝ่าย |
+| Sales Admin | ออเดอร์วันนี้ · รอชำระ / ตรวจชำระ · SO ถูกบล็อก · Quota คงเหลือเดือนนี้ |
+| Warehouse | ใบส่งมอบรอยืนยัน · รับคืนรอตรวจ · คำขอเบิกออก (รอ / อนุมัติแล้ววันนี้) · PO เข้า 7 วัน · Lot หมดอายุ ≤ 90 วันใน WH |
+| ERP | รอตรวจชำระ · SO / IV รอ SLA · CN รอออก · IV − CN วันนี้ |
+| Planner | ความครบ Sales Out สัปดาห์ล่าสุด · Action เปิด / เกินกำหนด · ข้อเสนอรออนุมัติ · SKU เสี่ยงขาด / สั่งผลิต 30 วัน · PO Delayed · selfCheck |
+| Admin | selfCheck · พื้นที่ข้อมูลในเบราว์เซอร์ · ชุดข้อมูล · ระบบที่เชื่อมต่อ |
+
+ความสูงหน้าหลัก Director: 1,773px ที่ 1440 (≤ 1,800) · 2,989px ที่ 390 (≤ 3,400) เมื่อ "ดูเพิ่ม" พับ
+
+### Anchor (AS OF 23 พ.ย. 2026 · Weekly · 3M · ไม่กรอง · วิธีใหม่ CR-03 ทุกสวิตช์ · เปลี่ยนแค่วิธีคาดการณ์)
+
+| ตัวเลข | ล่าสุด 4 สัปดาห์ (ค่าเริ่มต้น) | แนวโน้ม (Trend) | อัตโนมัติ |
+|---|---|---|---|
+| มูลค่า Stock | ฿50,091,183 | ฿50,091,183 | ฿50,091,183 |
+| DOC | 70 วัน | 68 วัน | 71 วัน |
+| สถานะ เสี่ยงขาด / สั่งผลิต / ค้าง / ปกติ / NPD (+ หมดอายุ) | 6 / 4 / 7 / 99 / 4 (+7) | 6 / 7 / 6 / 97 / 4 (+7) | 6 / 6 / 7 / 97 / 4 (+7) |
+| At-risk 3M | ฿726,866 (7,265) | ฿631,836 (5,331) | ฿634,615 (5,386) |
+| Quota Fit | 95% (110/116) | 94% (109/116) | 98% (114/116) |
+| ยอดขายที่เสียโอกาส 4W | ฿2,020,669 | ฿2,151,663 | ฿1,608,488 |
+| Safety Stock · มูลค่า Suggested Qty | 167,765 · ฿42,971,040 | 170,705 · ฿44,843,320 | 164,842 · ฿38,938,860 |
+| ยอดขายเฉลี่ยรวม (ชิ้น / สัปดาห์) | 63,742 | 65,600 | 62,377 |
+
+"อัตโนมัติ" เลือกวิธี (120 SKU): ล่าสุด 4 สัปดาห์ 45 · เฉลี่ย 3 เดือน 31 · แนวโน้ม 27 · ผสม 50 / 30 / 20 17 · SKU "ขาลงต่อเนื่อง" 1 (→ Action 1 รายการ) — ใช้ตัดสินใจเปลี่ยนค่าเริ่มต้นภายหลัง (D12)
+`SupUAT.anchors()` (วิธีเดิม = CR-01) และ `anchors('new')` ไม่เปลี่ยน
+
+### CR-04 Decisions
+- **D1–D14** ตามเอกสาร CR-04 ข้อ 8 ทุกข้อ
+- **DC-1** ERP เห็นการ์ด "IV − CN วันนี้" ตาม R2-3 (ยอดเอกสาร ERP) แต่ไม่เห็นการ์ดยอดขาย · แผง E-commerce · "ดูเพิ่ม"
+- **DC-2** "รอบประชุม S&OP" ใน 14 วันข้างหน้า = วันปิดรับแก้แผน (วันที่ 20) — ปิดรอบในหน้ารอบ S&OP วันนั้น ไม่มีค่าตั้งวันประชุมแยก
+- **DC-3** PO / CN ใน 14 วันข้างหน้า นับจาก AS OF ของ Supply (ปฏิทินเดียวกับหน้าของเข้า) · วันปิดรับแก้แผนนับจากวันนี้
+- **DC-4** หน้ารายงานเริ่มที่ "วันนี้" (ปิดยอด IV − CN รายวันเหมือนเดิม) · หน้ารายการอื่นเริ่ม "รอบแผนนี้" (D8) · งานค้างเริ่ม "ทุกวันที่"
+- **DC-5** แถบสายงาน Order → Cash นับทุกออเดอร์ในสิทธิ์ และกดแล้วเปิดหน้าคำสั่งซื้อที่ "ทุกวันที่" ให้ตัวเลขตรงกับแท็บ
+- **DC-6** ลูกค้าทั้งหมด = ลูกค้าที่มีออเดอร์ในช่วง (รวมที่ยกเลิก) · ยอดซื้อรวม / AOV ไม่รวมยกเลิก และหัก CN ที่ออกแล้ว
+- **DC-7** Trend: Run Rate = ค่าเฉลี่ย 13 สัปดาห์ข้างหน้าของเส้นแนวโน้ม ÷ 7 · Projection / Stockout Date ใช้ค่ารายสัปดาห์ (ดู OI-1)
+- **DC-8** อัตโนมัติเลือกจาก 4 วิธี (4 สัปดาห์ · 3 เดือน · ผสม · แนวโน้ม) ตามสวิตช์ "ไม่นับช่วงของขาด" ที่ใช้อยู่
+- **DC-9** ป้ายขาลงต่อเนื่องคิดจาก Sales Out รวมทุกคู่ค้าของ SKU → Action ประเภทใหม่ "ขาลงต่อเนื่อง · ทบทวนการสั่งผลิต / พิจารณาเรียกคืน" (เจ้าของ Planner)
+- **DC-10** ผู้ขอปรับยอดฝากขาย: Planner / Director / Manager MT · ผู้อนุมัติ Director / Manager MT (D6) ที่ไม่ใช่ผู้ขอ
+- **DC-11** `Calc.LEGACY_METHODS` เพิ่ม `countAdjustOn: false` — "ใช้วิธีเดิมทั้งหมด" และ `anchors()` ได้ตัวเลข CR-01 แม้มีรายการปรับ
+- **DC-12** เลื่อนรอบแผน: Quota ของเดือนใหม่ = แผน Supply (`quota.csv`) ทุกคู่ที่ยังไม่มี Quota อนุมัติใน Ops เดือนนั้น · Quota ของบัญชี Supply ที่ไม่มีเดือนได้เดือนเดิม · ช่องทาง Ops-only (Direct / Social) คงเดิม · เอกสารของรอบเดิมไม่นับเป็น "ใช้ไป"
+- **DC-13** ช่อง AS OF ของ Supply และช่องวันที่ในฟอร์ม Ops ใช้ปฏิทินเดียวกัน (โหมดวันเดียว) แสดง DD MMM YYYY · ค่าที่ส่งยังเป็น ISO
+- **DC-14** รหัส ABC-XYZ เก็บใน Tooltip / `data-grp` / Export · ตัวกรองกลุ่มมี A / B / C · X / Y / Z และ 9 ช่อง
+- **DC-15** ชุดทดสอบเดิมที่ปรับเฉพาะค่าคาดหวังตาม CR-04: `EXPECT` (ลำดับเมนู R1) · CR3-ACTION-AUTO (+ Action ขาลงต่อเนื่อง R9) · CR3-OOS-VIEW (ชื่อคอลัมน์ R10) · CR3-ABC-FILTER (อ่านรหัสกลุ่มจาก `data-grp` R12) · `NEW_METHODS` เพิ่ม `countAdjustOn: true` (ปุ่ม "ใช้วิธีเดิมทั้งหมด" ปิดสวิตช์นี้ตาม DC-11 — ต้องเปิดกลับเมื่อใช้วิธีใหม่)
+
+### CR-04 Open issues
+- **OI-1 (R9)** ROP / Safety Stock / Suggested Qty ของวิธี Trend ใช้ค่าเฉลี่ย 13 สัปดาห์ของเส้นแนวโน้ม (ค่าคงที่) ส่วน Projection / Stockout Date ใช้ค่ารายสัปดาห์ — ให้ ROP ใช้ค่ารายสัปดาห์ต้องแก้สูตร Safety Stock ของ CR-03 · เสนอทำใน CR ถัดไปเพื่อไม่ให้ Anchor เปลี่ยน
+- **OI-2 (R9)** ไม่นับสัปดาห์โปรโมชั่น: เตรียมฟิลด์ `DB.promo` แล้ว แต่ยังไม่มีแหล่งข้อมูล (ต้องมีตาราง promo SKU × คู่ค้า × สัปดาห์)
+- **OI-3 (I10)** ช่องวันที่ในฟอร์ม (หมดอายุ Lot · ETA PO · กำหนดเสร็จ) เป็นปุ่มเปิดปฏิทิน — ช่องบังคับไม่ใช้การเตือนของเบราว์เซอร์แล้ว ใช้การตรวจของฟังก์ชันบันทึกเดิม (ยังปฏิเสธค่าว่าง)
+- **PROD-01** ตัวกรอง (sessionStorage) · คำขอปรับยอดฝากขาย · รอบแผน อยู่ในเบราว์เซอร์ — ต้องย้ายไประบบกลางเมื่อเชื่อมระบบจริง
+- ไม่มีข้อที่ต้องถอยกลับ — ทุก Req ของ CR-04 ทำครบ
+
 ## ธีม (CR-01 ข้อ 4)
 ธีม Ops (Sidebar กรมท่า · ปุ่มฟ้า · Card ขาว) ทั้งระบบ + **สว่าง / มืด / ตามระบบ** ที่ Header (`localStorage['ops.theme']`) · โหมดมืดของ Ops สร้างจากกฎสีของธีมสว่างโดย `tools/build_css.py` · สีสถานะ (แดง/ส้ม/ม่วง/เขียว/เทา/ดำ) และสีกราฟของ Supply คงเดิม · ปีเป็น ค.ศ.
 
@@ -351,11 +432,15 @@ Early warning `98.8 / 12 / 18 / 23 / 0 / 22 / 20 / 104` (In-stock % / WOS แด
 ## การทดสอบ
 `tools/uat-supply.js` — รันใน DevTools ของหน้าเว็บ (หรือแทรก `<script src="tools/uat-supply.js">`) แล้วเรียก `await SupUAT.all()`
 
-**ผลล่าสุด (25 พ.ย. 2026 · v8.4.0 build 8.4.0-3d10): 172 / 172 ผ่าน** — phase3D() 20/20 · phase3C() 15/15 · phase3B() 14/14 · phase3A() 20/20 · all() 28/28 · flow() 12/12 · phaseC() 17/17 · NOLEAK หลังมีข้อเสนอ 3/3 · phaseD() Desktop 16/16 + 390px 16/16 · mobile() 11/11 · ไม่มี Console error · รายงาน `uat/CR-03-UAT-2026-11-25/` (สร้างด้วย `python tools/make_uat_report_cr03.py uat/CR-03-UAT-2026-11-25/raw-results.txt`)
+**ผลล่าสุด (26 พ.ย. 2026 · v8.5.0 build 8.5.0-c9 / c10): 260 / 260 ผ่าน** — `cr04()` 1440px 28/28 · 390px 28/28 · Supply Alert 1024px 1/1 · `cr04data()` 3/3 · `all()` 56/56 (รวม `cr04()`) · ทดสอบย้อนหลัง: `phase3D()` 20/20 · `phase3C()` 15/15 · `phase3B()` 14/14 · `phase3A()` 20/20 · `phaseD()` Desktop 16/16 + 390px 16/16 · `mobile()` 11/11 · `flow()` 12/12 · `phaseC()` + NOLEAK ×3 20/20 · ไม่มี Console error · `anchors()` / `anchors('new')` ตรงทุกค่า · รายงาน `uat/CR-04-UAT-2026-11-26/` (HTML + CSV + JSON) · ภาพหน้าหลัก 11 บทบาท × Desktop / มือถือ `uat/CR-04-screenshots/`
+
+ผล CR-03 (25 พ.ย. 2026 · v8.4.0 build 8.4.0-3d10): 172 / 172 ผ่าน — phase3D() 20/20 · phase3C() 15/15 · phase3B() 14/14 · phase3A() 20/20 · all() 28/28 · flow() 12/12 · phaseC() 17/17 · NOLEAK หลังมีข้อเสนอ 3/3 · phaseD() Desktop 16/16 + 390px 16/16 · mobile() 11/11 · ไม่มี Console error · รายงาน `uat/CR-03-UAT-2026-11-25/` (สร้างด้วย `python tools/make_uat_report_cr03.py uat/CR-03-UAT-2026-11-25/raw-results.txt`)
 (ก่อนหน้า: v8.0 103 / 103 · v8.1.0 + phase3A 20/20 · v8.2.0 137 / 137 · v8.3.0 152 / 152)
 
 | ชุด | ตรวจอะไร |
 |---|---|
+| **CR-04** `SupUAT.cr04()` (Integrated demo ที่เพิ่งเริ่ม · รันที่ 1440 และ 390px · อยู่ใน `all()`) | CR4-LANDING · CR4-MENU-ORDER · CR4-GATE · CR4-HOME-ROLE · CR4-HOME-MATCH (14 ตัวเลข Ops + Supply = หน้าต้นทาง) · CR4-FLOW-STRIP · CR4-MYWORK · CR4-NOLEAK · CR4-DATASET · CR4-ALERT-GRID · CR4-HEIGHT · CR4-SCOPE01 · CR4-ORDER-TABS · CR4-FILTER · CR4-CUSTOMER-CARDS · CR4-PLAN-PERIOD · CR4-DATE-FORMAT (11 บัญชี × 18 หน้า) · CR4-SKU-SEARCH · CR4-PORTFOLIO · CR4-RR-UX · CR4-TREND · CR4-AUTO · CR4-LOST-LABEL · CR4-CONTROLS · CR4-ABC-LABEL · CR4-ANCHOR-STAY · CR4-FILE-PROTOCOL · Console error |
+| **CR-04 ข้อมูล** `SupUAT.cr04data()` (รันท้ายสุด · เปลี่ยนข้อมูล) | CR4-COUNT-ADJ (ขอ → อนุมัติ → Remaining คู่นั้น = ผลนับ · คู่อื่น / WMS / Quota ไม่เปลี่ยน · อนุมัติเองไม่ได้ · ปิดสวิตช์ → Anchor เดิม) · CR4-ROLLOVER (Quota เดือนใหม่ · ใช้ไป 0 · Feed / Supply เดือนใหม่ · selfCheck · Anchor AS OF 23 พ.ย.) |
 | SUP-ANCHOR | ตัวเลข 2.3 ทุกค่า + selfCheck + modelCheck |
 | SUP-MENU-{11 บัญชี} | เมนู Supply ตาม 7.3 + ลิงก์ตรงที่ไม่มีสิทธิ์ถูกปฏิเสธ |
 | SUP-NOLEAK-mgr-{mt,tt,ecom} | ทุกหน้า Supply + Label กราฟ + Drawer SKU ไม่มีชื่อคู่ค้า/ช่องทางฝ่ายอื่น |
@@ -372,7 +457,9 @@ Early warning `98.8 / 12 / 18 / 23 / 0 / 22 / 20 / 104` (In-stock % / WOS แด
 
 > ชุด UAT 943 ข้อของ Ops เดิมรันซ้ำไม่ได้ (ไม่มี Source / Harness / fixture) — ใช้ OPS-GATE เทียบกับเว็บต้นฉบับแทน (11 บัญชี × 18 หน้า เปิดได้ / ถูกปฏิเสธตรงกับ v13 ทุกช่อง)
 
-ลำดับรันที่ใช้ทำรายงาน: เริ่ม Integrated demo ใหม่ → `phase3C()` → เริ่มใหม่ → `phase3B()` → เริ่มใหม่ → `all()` + `phaseD()` (Desktop) → Viewport 390px: `phaseD()` + `mobile()` → เริ่มใหม่ → `flow()` → เริ่มใหม่ → `phaseC()` → `noleak()` ทั้ง 3 ฝ่าย (หลังมีข้อเสนอแล้ว) → เริ่มใหม่ → `phase3A()`
+ลำดับรันของ CR-04 (`tools/uat-run.js` เก็บผลแต่ละชุด · `python tools/make_uat_report_cr04.py uat/CR-04-UAT-2026-11-26/raw-results.txt`): เริ่มใหม่ก่อนทุกชุด → `phase3D()` · `phase3C()` · `phase3B()` · `phase3A()` · `all()` (รวม `cr04()`) · `cr04()` ที่ 1440 · `phaseD()` · `flow()` · `phaseC()` → Viewport 390px: `phaseD()` · `mobile()` · `cr04()` → ท้ายสุด `cr04data()`
+
+ลำดับรันของ CR-03: เริ่ม Integrated demo ใหม่ → `phase3C()` → เริ่มใหม่ → `phase3B()` → เริ่มใหม่ → `all()` + `phaseD()` (Desktop) → Viewport 390px: `phaseD()` + `mobile()` → เริ่มใหม่ → `flow()` → เริ่มใหม่ → `phaseC()` → `noleak()` ทั้ง 3 ฝ่าย (หลังมีข้อเสนอแล้ว) → เริ่มใหม่ → `phase3A()`
 
 `phase3C()` / `phase3D()` รันบน Integrated demo ที่เพิ่งเริ่มเช่นกัน · `SupUAT.anchors()` ตรวจตัวเลข CR-01 ด้วยวิธีเดิมทุกสวิตช์ (ไม่ขึ้นกับค่าที่ตั้งไว้) · `SupUAT.anchors('new')` ตรวจ Anchor ชุดใหม่ · ภาพหน้าจอ 3A–3D: `uat/CR-03-Phase-3A-screenshots/` … `uat/CR-03-Phase-3D-screenshots/` · **รายงาน UAT ทั้งชุดของ CR-03:** `uat/CR-03-UAT-2026-11-25/` (HTML + CSV + JSON)
 
@@ -385,6 +472,13 @@ supply-feed.js             ใหม่ (Phase B) — Data Adapter Ops → Suppl
 supply-planning.js         ใหม่ — เมนูกลุ่ม · Planner · supply.* · Page gate · ธีม · ชุดสาธิต · ลิงก์ข้ามหน้า
 supply-actions.js          ใหม่ (Phase C) — B1 ATP · B2 แผง Quota · B3 ข้อเสนอ Supply · B4 Supply Alert · B5 · F7 แก้ PO
 version.js                 ใหม่ (CR-03) — เลขเวอร์ชันของแอป + ประวัติรุ่น (Sidebar · Footer · Login)
+cr04-core.js               ใหม่ (CR-04) — วันที่ DD MMM YYYY (fmtDate · fmtRange) · ขั้นของออเดอร์ (cr4OrderStage) · รอบแผน (cr4PP)
+cr04-nav.js                ใหม่ (CR-04 R1) — ลำดับเมนู + กลุ่มพับเริ่มต้น
+cr04-home.js               ใหม่ (CR-04 R2) — หน้าหลัก Command Center · homeData(profile)
+cr04-lists.js              ใหม่ (CR-04 R3–R5 · I10) — opsFilterBar + Date Range Picker · แท็บคำสั่งซื้อ 8 ขั้น · การ์ดลูกค้า · ช่องวันที่
+cr04-period.js             ใหม่ (CR-04 R6 · I8-b) — รอบแผนค่ากลาง · ดูรอบอื่นอ่านอย่างเดียว · เลื่อนรอบ
+cr04-supply.js             ใหม่ (CR-04 R7–R12) — SKU Typeahead · SKU 360 · Portfolio · ชิปวิธีคาดการณ์ · ป้าย ABC-XYZ + Matrix · ตัวควบคุมตามหน้า
+cr04-ops.js                ใหม่ (CR-04 I8-a · I8-c) — ปุ่มเสนอบนการ์ดมือถือ · ปรับยอดฝากขายจากผลนับ
 supply-intake.js           ใหม่ (CR-03 R1) — รับรายงาน Sales Out · ตารางแปลงรหัส · ความครบ · ป้ายข้อมูลค้าง · Audit การตั้งค่า
 ops-stock-issue.js         ใหม่ (CR-03 R2) — เบิกออก (ไม่ใช่การขาย) · สิทธิ์ stock.issue.approve
 supply-sop.js              ใหม่ (CR-03 R7) — รอบ S&OP: Action log · Snapshot แผน + เทียบรอบ · วันปิดรับแก้แผน · การ์ด B4
@@ -396,7 +490,9 @@ data/*.csv · mock-bundle.js  ตาราง Supply 9 ตาราง (Integrat
 tools/generate_mock.py     สร้างข้อมูล (+ ร้าน Ecom 3 ร้าน · + consign_count จาก random stream แยก → 8 ตารางเดิมเหมือนเดิมทุกไบต์)
 uat/                       รายงาน UAT ของ CR-01
 tools/build_css.py · tools/src/   สร้าง style.css / supply/supply.css จากต้นฉบับ
-tools/uat-supply.js        ชุดตรวจในเบราว์เซอร์ (all · flow · phaseC · phaseD · mobile · noleak)
+tools/uat-supply.js        ชุดตรวจในเบราว์เซอร์ (all · flow · phaseC · phaseD · mobile · noleak · phase3A–3D · cr04 · cr04data)
+tools/uat-run.js           ตัวรันชุดตรวจของ CR-04 (เก็บผลเป็นข้อความย่อ ใช้ทำรายงาน)
+tools/make_uat_report_cr04.py  รายงาน UAT ของ CR-04
 tools/make_intake_samples.py  ไฟล์ตัวอย่าง Sales Out (data/samples/)
 tools/build_uat_report.py  สร้างรายงาน UAT (HTML / CSV / JSON) จาก uat/<โฟลเดอร์>/results.json + screenshots/
 _archive/                  งานรอบก่อน (สร้าง Ops ใหม่จาก Spec) — เก็บไว้อ้างอิง ลบได้
@@ -414,6 +510,7 @@ _archive/                  งานรอบก่อน (สร้าง Ops �
 - `calc.js` แก้เฉพาะ Adapter / F5 / F9 ใน Phase B (ดูหัวข้อ Data Adapter) และ F1 `achMtd()` ใน Phase D (`reportOf` · `quotaOf` ต่อคู่) · Phase A มีแค่บรรทัดผูก `t`
 - CR-03 3B: `calc.js` ฟังก์ชันใหม่ `oosOf` · `runRateU` · `cr3Oos` · `soWeeksOf` · `abcxyzOf` · `leadTimeOf` · `zOf` · `safetyStatOf` · selfCheck (12) · `skuRow` เลือกสูตรตามสวิตช์ · `host.js` Filter bar วิธี Run Rate (`rm=`) · `pages/stock.js` (คอลัมน์ · ตัวกรองกลุ่ม · Drawer) · `pages/replen.js` · `pages/overview.js` · `pages/consign.js` · `pages/settings.js` · `supply-feed.js` ส่ง Safety units ของ Ops (`safety_units`)
 - CR-03 3D: `supply-sop.js` (ใหม่ · Action log · Snapshot · วันปิดรับแก้แผน · B4 · `Supply.sopInfo`) · `calc.js` ฟังก์ชันใหม่ `sopGapOf` · `planSnapshotOf` · `comparePlans` · `pages/report.js` (Monthly 4 ส่วน · Weekly + Action ค้าง · Export) · `pages/settings.js` (วันปิดรับแก้แผน · การ์ดพื้นที่ข้อมูล) · `host.js` (`#/supply/sop`)
+- CR-04: `calc.js` (`// CR-04`) ฟังก์ชันใหม่ `trendOf` · `trendRate` · `autoPick` · `skuTrend` · `runRate` / `runRateU` รับ `TR` / `AUTO` · `projectSku` รับค่ารายสัปดาห์ (`rrW`) · Lost sales แยก `lost4C` / `lost4W` · ตาราง `consign_adjust` (`DB.adj` · `stockAt` · selfCheck 3) · ค้นหา SKU ด้วยรหัสอื่น (`s.alt`) · `pages/overview.js` (การ์ด Lost sales แยก 2 ส่วน) · `pages/stock.js` (คอลัมน์แนวโน้ม) · `pages/consign.js` (คอลัมน์ขอปรับยอด) · `pages/settings.js` (Trend / อัตโนมัติ · สวิตช์ countAdjustOn) · `host.js` (`rr=TR|AUTO`) · `supply-feed.js` (`FEED_MONTH` ตาม `db.planPeriod`)
 - CR-03 3C: `calc.js` ฟังก์ชันใหม่ `earlyWarnOf` · `ewSeriesOf` · `replenCycle` · `fvaOf` · `prepare` อ่าน `sales` ของคู่ค้า · `pages/consign.js` (การ์ด · กราฟสะสม · การแจ้งเตือน · Matrix) · `pages/quota.js` (การ์ด FVA · ตาราง · Scatter · คอลัมน์ · ข้อเสนอ Naive) · `pages/settings.js` · `supply-feed.js` ส่ง `sales` จาก partner master
 - `host.js` (Phase B) `App.base` = ตาราง Integrated demo · `App.raw` = base + Feed · สร้าง DB ใหม่เมื่อ Ops เปลี่ยน (Feed key) · selfCheck รวมข้อ 7–9
 - `pages/overview.js` · `stock.js` · `quota.js` (Phase B) ระหว่างขนส่ง (การ์ด / กราฟชั้นที่ 3 / คอลัมน์) · คอลัมน์ จอง (SO) / หักแล้ว / คงเหลือ ของเดือนที่ Ops ดูแล

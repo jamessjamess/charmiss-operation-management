@@ -55,7 +55,7 @@
           <section class="card"><div class="card-head"><h3>${t('set_title')}</h3><div class="card-tools"><button type="button" class="btn small ghost" id="setDefault">${t('set_defaults')}</button><button type="button" class="btn small primary" id="setSave">${t('set_save')}</button></div></div>
             <form id="setForm" class="set-form" onsubmit="return false">
               <div class="set-g"><h4>${t('set_g_rr')}</h4>
-                <label class="set-row"><span>${t('set_rrBasis')}</span><select class="ctl" name="rrBasis">${['L4W', 'L3M', 'L6M', 'W'].map(k => `<option value="${k}" ${S.rrBasis === k ? 'selected' : ''}>${t('rr_' + k)}</option>`).join('')}</select></label>
+                <label class="set-row"><span>${t('set_rrBasis')}</span><select class="ctl" name="rrBasis">${Calc.RR_BASES.map(k => `<option value="${k}" ${S.rrBasis === k ? 'selected' : ''}>${t('rr_' + k)}</option>`).join('')}</select></label>
                 <label class="set-row"><span>${t('set_useQuota')}</span><input type="checkbox" name="useQuotaForSalesIn" ${S.useQuotaForSalesIn ? 'checked' : ''}></label></div>
               <div class="set-g"><h4>${t('set_g_method')}</h4>
                 <label class="set-row set-stack"><span>${t('set_rrEndMode')}<small class="muted"> · ${t('set_default')} ${t('rr_end_' + D.rrEndMode)}</small></span><select class="ctl" name="rrEndMode">${['account', 'history'].map(k => `<option value="${k}" ${S.rrEndMode === k ? 'selected' : ''}>${t('rr_end_' + k)}</option>`).join('')}</select></label>
@@ -64,6 +64,7 @@
                 <label class="set-row set-stack"><span>${t('set_safetyMode')}<small class="muted"> · ${t('set_default')} ${t('sm_' + D.safetyMode)}</small></span><select class="ctl" name="safetyMode">${['statistical', 'days'].map(k => `<option value="${k}" ${S.safetyMode === k ? 'selected' : ''}>${t('sm_' + k)}</option>`).join('')}</select></label>
                 <label class="set-row"><span>${t('set_fvaProposal')}<small class="muted"> · ${t('set_default')} ${t(D.fvaProposal ? 'on_u' : 'off_u')}</small></span><input type="checkbox" name="fvaProposal" ${S.fvaProposal ? 'checked' : ''}></label>
                 <label class="set-row"><span>${t('set_prPlanOn')}</span><input type="checkbox" name="prPlanOn" ${S.prPlanOn ? 'checked' : ''}></label>
+                <label class="set-row"><span>${t('set_countAdjustOn')}<small class="muted"> · ${t('set_default')} ${t(D.countAdjustOn ? 'on_u' : 'off_u')}</small></span><input type="checkbox" name="countAdjustOn" ${S.countAdjustOn !== false ? 'checked' : ''}></label>
                 <div class="set-row set-pr set-stack"><span>${t('set_prPlan')}</span><span class="set-pr-list">${Object.entries(S.prPlan || {}).map(([k, q]) => `<span class="chip">${U.esc(k)} · ${U.n(q)} <button type="button" class="icon-btn" data-pr-del="${U.esc(k)}" aria-label="×">×</button></span>`).join('')}
                   <span class="set-pr-add"><select class="ctl" id="prSku">${App.DB.skus.map(s => `<option value="${s.sku}">${s.sku}</option>`).join('')}</select><input class="ctl" type="number" id="prQty" min="0" step="1" placeholder="0"><button type="button" class="btn small" id="prAdd">${t('set_add')}</button></span></span></div>
                 <div class="set-row"><span></span><button type="button" class="btn small ghost" id="setLegacy">${t('set_legacy')}</button></div></div>
@@ -100,6 +101,7 @@
         next.rrEndMode = form.rrEndMode.value; next.prPlanOn = form.prPlanOn.checked;   // CR-03
         next.rrMode = form.rrMode.value; next.safetyMode = form.safetyMode.value; next.oosEnd = form.oosEnd.checked;   // CR-03 (3B)
         next.fvaProposal = form.fvaProposal.checked; const rc = {};   // CR-03 (3C)
+        if (form.countAdjustOn) next.countAdjustOn = form.countAdjustOn.checked;   // CR-04 I8-c
         form.querySelectorAll('[data-rc]').forEach(inp => { const v = +inp.value; if (inp.value !== '' && v > 0) rc[inp.dataset.rc] = v; }); next.replenCycle = rc;
         if (!(next.planLockDay >= 1 && next.planLockDay <= 28 && Number.isInteger(next.planLockDay)) || !(next.sopMoveDays >= 1)) { U.toast(t('set_bad_lock')); return; }   // CR-03 R7
         if (!(next.replenCycleW >= 1) || !(next.wosYellowX > 0 && next.wosYellowX < next.wosRedX) || !(next.inStockMin > 0 && next.inStockMin <= 100) || !(next.tsLimit > 0) || !(next.fvaNegM >= 1 && next.fvaNegM <= 6 && Number.isInteger(next.fvaNegM))) { U.toast(t('set_bad_ew')); return; }

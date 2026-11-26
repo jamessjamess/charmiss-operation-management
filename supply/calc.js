@@ -24,7 +24,9 @@
     overstockDoc: 180,     // DOC > 180 days → Overstock
     reorderWindow: 30,     // Order-by Date within 30 days → Reorder Now
     expiryWindow: 180,     // Expiry Risk badge looks 180 days ahead
-    projectionDays: 365,   // daily projection length (stockout dates beyond it are extrapolated)
+    projectionDays: 365,
+    trendPhi: 0.95, trendCap: 50, trendMinW: 12,
+    countAdjustOn: true,   // CR-04 I8-c: approved consignment count adjustments (consign_adjust) move the account's remaining from the day after the count   // CR-04 R9: damped trend φ per week · max change ±% within 26 weeks · weeks of data needed   // daily projection length (stockout dates beyond it are extrapolated)
     useQuotaForSalesIn: true, // WH → consignment plan = Quota of the month (else Sell-out Run Rate)
     rrBasis: 'L4W',
     // Phase 2 — consignment & inbound
@@ -68,9 +70,77 @@
   };
   const CR3_GROUPS = ['AX', 'AY', 'AZ', 'BX', 'BY', 'BZ', 'CX', 'CY', 'CZ', 'N', 'E'];   // CR-03 R4
   /** CR-03: every method switch set to its CR-01 behaviour ("ใช้วิธีเดิมทั้งหมด") — the CR-01 anchors come back exactly. */
-  const LEGACY_METHODS = { rrEndMode: 'history', prPlanOn: false, rrMode: 'sellout', safetyMode: 'days', fvaProposal: false };
+  const LEGACY_METHODS = { rrEndMode: 'history', prPlanOn: false, rrMode: 'sellout', safetyMode: 'days', fvaProposal: false, countAdjustOn: false };   // CR-04: + countAdjustOn
   const STATUS_ORDER = ['stockout', 'reorder', 'overstock', 'healthy', 'npd', 'inactive'];
   const RR_WEIGHTS = { L4W: [[4, 1]], L3M: [[13, 1]], L6M: [[26, 1]], W: [[4, 0.5], [13, 0.3], [26, 0.2]] };
+  const RR_BASES = ['L4W', 'L3M', 'L6M', 'W', 'TR', 'AUTO'];   // CR-04 R8 / R9: + Trend · Auto
+  // ------------------------------------------------------------------ CR-04 R9: trend (damped OLS) + automatic method per SKU
+  const TREND = { phi: 0.95, cap: 50, minW: 12, n: 26, ahead: 13, H: 53 };
+  const AUTO_SET = ['L4W', 'L3M', 'W', 'TR'];
+  /** CR-04 R9: damped linear trend of a weekly series (null = a week left out: out of stock / promotion).
+      OLS of the usable weeks against time → level at the last week · forecast h weeks ahead = level + slope × Σ φ^k (k = 1..h),
+      never below 0, kept within ± cap % of the level · fewer than minW usable weeks → not ok (the caller falls back to 3 months).
+      pctM = slope × 4.345 ÷ mean (per month) · down = "ขาลงต่อเนื่อง" (≤ −5 % per month and R² ≥ 0.3). */
+  function trendOf(ys, opt) {
+    const o = Object.assign({}, TREND, opt || {}), pts = [];
+    ys.forEach((y, k) => { if (y != null && isFinite(y)) pts.push([k, +y]); });
+    if (pts.length < o.minW) return { ok: false, n: pts.length };
+    const N = pts.length; let mx = 0, my = 0; for (const [x, y] of pts) { mx += x; my += y; } mx /= N; my /= N;
+    let sxy = 0, sxx = 0, syy = 0; for (const [x, y] of pts) { sxy += (x - mx) * (y - my); sxx += (x - mx) * (x - mx); syy += (y - my) * (y - my); }
+    const b = sxx > 0 ? sxy / sxx : 0, a = my - b * mx, level = Math.max(0, a + b * (ys.length - 1)), r2 = sxx > 0 && syy > 0 ? sxy * sxy / (sxx * syy) : 0;
+    const lo = level * (1 - o.cap / 100), hi = level * (1 + o.cap / 100), f = new Float64Array(o.H);
+    let cum = 0, d = 1;
+    for (let h = 0; h < o.H; h++) { d *= o.phi; cum += d; f[h] = Math.max(0, Math.min(hi, Math.max(lo, level + b * cum))); }
+    const pctM = my > 0 ? b * 4.345 / my * 100 : 0;
+    return { ok: true, n: N, a, b, level, r2, pctM, f, down: pctM <= -5 && r2 >= 0.3 };
+  }
+  function trendOpt(DB) { const S = DB._trS || DEFAULT_SETTINGS; return { phi: +S.trendPhi || TREND.phi, cap: S.trendCap == null ? TREND.cap : +S.trendCap, minW: +S.trendMinW || TREND.minW }; }
+  /** the weekly Sales Out of one SKU × account that the trend reads: up to 26 weeks before the run-rate end, out-of-stock weeks left out (rrMode unconstrained) */
+  function trendSeries(DB, i, j, asDn, S, u) {
+    const cap = u ? rrCap(DB, j) : (DB.rrEndMode === 'account' && DB.rrEndA ? DB.rrEndA[j] : DB.rrEndW);
+    const wEnd = clamp(Math.min(DB.wk(asDn), cap ?? Infinity), 0, DB.nWeeks), f = DB.firstSale[i][j];
+    if (f < 0 || f >= wEnd) return null;
+    const so = DB.so[i][j], fl = u ? oosOf(DB, i, S).flags[j] : null, promo = DB.promo && DB.promo[i] && DB.promo[i][j], ys = [];   // promo: field reserved (no data yet)
+    for (let w = Math.max(f, wEnd - TREND.n); w < wEnd; w++) ys.push((fl && fl[w]) || (promo && promo[w]) ? null : so[w]);
+    return ys;
+  }
+  /** CR-04 R9: Trend run rate per day = the mean of the next 13 weeks of the damped forecast ÷ 7 (too little data → 3-month average + flag). */
+  function trendRate(DB, i, j, asDn, S, u) {
+    const C = DB._tr || (DB._tr = new Map()), key = i + '|' + j + '|' + asDn + '|' + (u ? 'u' + ((S && S.oosUnits) || 0) + (S && S.oosEnd === false ? '' : 'e') : '');
+    let r = C.get(key); if (r) return r;
+    const ys = trendSeries(DB, i, j, asDn, S, u), T = ys ? trendOf(ys, trendOpt(DB)) : { ok: false, n: 0 };
+    if (!T.ok) r = { rate: u ? runRateU(DB, i, j, asDn, 'L3M', S) : runRate(DB, i, j, asDn, 'L3M'), short: true, T };
+    else { let x = 0; for (let k = 0; k < TREND.ahead; k++) x += T.f[k]; r = { rate: x / TREND.ahead / 7, short: false, T }; }
+    C.set(key, r); return r;
+  }
+  /** CR-04 R9: "อัตโนมัติ" — back-test 8 points (each forecasting the next 4 weeks of the SKU, every account) and keep the method with the lowest WAPE. */
+  function autoPick(DB, i, asDn, S, u) {
+    const C = DB._auto || (DB._auto = new Map()), key = i + '|' + asDn + '|' + (u ? 'u' : '');
+    let r = C.get(key); if (r) return r;
+    const nA = DB.accounts.length, wE = clamp(DB.wk(asDn), 0, DB.nWeeks), wape = {}, pts = [];
+    for (let k = 0; k < 8; k++) { const o = wE - 4 - k; if (o >= 13) pts.push(o); }
+    for (const m of AUTO_SET) {
+      let err = 0, act = 0;
+      for (const o of pts) {
+        const oDn = DB.startDn + 7 * o; let F = 0, A = 0;
+        for (let j = 0; j < nA; j++) { F += (u ? runRateU(DB, i, j, oDn, m, S) : runRate(DB, i, j, oDn, m)) * 28; for (let w = o; w < o + 4; w++) A += DB.so[i][j][w]; }
+        err += Math.abs(F - A); act += A;
+      }
+      wape[m] = act > 0 ? err / act * 100 : null;
+    }
+    let pick = 'L3M', best = Infinity;
+    for (const m of AUTO_SET) if (wape[m] != null && wape[m] < best - 1e-9) { best = wape[m]; pick = m; }
+    r = { pick, wape, points: pts.length }; C.set(key, r); return r;
+  }
+  /** CR-04 R9: the trend of one SKU (selected accounts, weekly Sales Out) for the ▲ / ▼ % per month indicator and the "ขาลงต่อเนื่อง" badge */
+  function skuTrend(DB, i, asDn, mask) {
+    const C = DB._skuTr || (DB._skuTr = new Map()), key = i + '|' + asDn + '|' + (mask ? Array.from(mask, x => x ? 1 : 0).join('') : '*');
+    let r = C.get(key); if (r) return r;
+    const wEnd = clamp(Math.min(DB.wk(asDn), DB.rrEndW ?? Infinity), 0, DB.nWeeks), ys = [];
+    let f = Infinity; for (let j = 0; j < DB.accounts.length; j++) if ((!mask || mask[j]) && DB.firstSale[i][j] >= 0) f = Math.min(f, DB.firstSale[i][j]);
+    if (isFinite(f)) for (let w = Math.max(f, wEnd - TREND.n); w < wEnd; w++) { let x = 0; for (let j = 0; j < DB.accounts.length; j++) if (!mask || mask[j]) x += DB.so[i][j][w]; ys.push(x); }
+    r = trendOf(ys, trendOpt(DB)); C.set(key, r); return r;
+  }
 
   // ------------------------------------------------------------------ date helpers
   function dn(iso) {                       // 'YYYY-MM-DD' → day number (null when blank / invalid)
@@ -207,12 +277,19 @@
       const q = num(r.qty); if (q <= 0) return;
       oo[i].push({ dn: d, j, qty: q, type: String(r.type || 'other').trim(), ref: r.ref || '', lot: r.lot || '' });
     });
+    // CR-04 I8-c: approved shelf-count adjustments of a consignment account (± units, effective the day after the count)
+    const adj = skus.map(() => []);
+    (raw.consign_adjust || []).forEach((r, k) => {
+      const i = skuIdx.get(String(r.sku || '').trim()), j = accIdx.get(String(r.account_id || '').trim()), d = dn(r.date), q = Number(r.qty);
+      if (i == null || j == null || d == null || !isFinite(q)) { refErr('consign_adjust', k + 2); return; }
+      if (q) adj[i].push({ dn: d + 1, j, qty: q, ref: r.ref || '' });
+    });
     po.forEach(l => l.sort((a, b) => (a.eta ?? 0) - (b.eta ?? 0)));
     cn.forEach(l => l.sort((a, b) => a.dn - b.dn));
 
     return { skus, accounts, skuIdx, accIdx, startDn, snapDn, nWeeks, wk, so, soV, si, siV, cumSO, cumSI, firstSale, price, lots, po, cn, quota, issues,
       quotaRes, quotaCom, it, hasIT: it.some(l => l.length > 0), rrEndW, historyEndDn: hEnd,   // CR-01
-      oo, hasOO: oo.some(l => l.length > 0), rrEndA, lastSOW, rrEndMode: 'history',   // CR-03: other_out · per-account run-rate end (mode set by computeModel)
+      oo, hasOO: oo.some(l => l.length > 0), adj, hasAdj: adj.some(l => l.length > 0), adjOn: true, rrEndA, lastSOW, rrEndMode: 'history',   // CR-04 I8-c: + adj   // CR-03: other_out · per-account run-rate end (mode set by computeModel)
       minAsOf: startDn + 28, maxAsOf: snapDn };
   }
 
@@ -231,6 +308,8 @@
     const nA = DB.accounts.length, cons = new Float64Array(nA);
     let wh = 0;
     for (const L of DB.lots[i]) { if (L.j < 0) wh += L.qty; else cons[L.j] += L.qty; }
+    const adj = DB.adjOn !== false && DB.adj && DB.adj[i] && DB.adj[i].length ? DB.adj[i] : null;   // CR-04 I8-c
+    if (adj) for (const x of adj) if (x.dn <= DB.snapDn) cons[x.j] += x.qty;
     asDn = Math.min(asDn, DB.snapDn);
     if (asDn === DB.snapDn) return { wh, cons, it: itAt(DB, i, asDn) };   // CR-01: + it
     const wa = Math.max(0, DB.wk(asDn)), wb = DB.nWeeks;
@@ -249,6 +328,7 @@
       if (x.dn < asDn || x.dn >= DB.snapDn) continue;
       if (x.j < 0) wh += x.qty; else cons[x.j] += x.qty;
     }
+    if (adj) for (const x of adj) if (x.dn > asDn && x.dn <= DB.snapDn) cons[x.j] -= x.qty;   // CR-04 I8-c: an adjustment after AS OF is not there yet
     // CR-01 (F5): the rollback above books a shipment out of WH on its Sales In (delivery) date, so it gives WH + In-transit.
     // WH really dropped at goods issue: put the snapshot's in-transit back and take the in-transit at AS OF out.
     const itA = itAt(DB, i, asDn);
@@ -261,6 +341,8 @@
       L4W = 4 weeks · L3M = 13 weeks · L6M = 26 weeks · W (Weighted) = 50 % L4W + 30 % L3M + 20 % L6M.
       A SKU × account that started selling inside the window is averaged over the weeks since its first sale (NPD). */
   function runRate(DB, i, j, asDn, basis) {
+    if (basis === 'TR') return trendRate(DB, i, j, asDn, null, false).rate;                  // CR-04 R9
+    if (basis === 'AUTO') return runRate(DB, i, j, asDn, autoPick(DB, i, asDn, null, false).pick);   // CR-04 R9
     const cap = DB.rrEndMode === 'account' && DB.rrEndA ? DB.rrEndA[j] : DB.rrEndW;   // CR-03 R1: per-account end (switch rrEndMode)
     const wEnd = clamp(Math.min(DB.wk(asDn), cap ?? Infinity), 0, DB.nWeeks), f = DB.firstSale[i][j];   // CR-01: ≤ end of history
     if (f < 0 || f >= wEnd) return 0;
@@ -315,6 +397,8 @@
       Never below the sell-out Run Rate — demand is at least what was sold (an out-of-stock week can still sell before / after the gap).
       A window with no out-of-stock week gives exactly the sell-out Run Rate. Same bases (L4W / L3M / L6M / Weighted) and end week as runRate. */
   function runRateU(DB, i, j, asDn, basis, S) {
+    if (basis === 'TR') return trendRate(DB, i, j, asDn, S, true).rate;                       // CR-04 R9
+    if (basis === 'AUTO') return runRateU(DB, i, j, asDn, autoPick(DB, i, asDn, S, true).pick, S);   // CR-04 R9
     const wEnd = clamp(Math.min(DB.wk(asDn), rrCap(DB, j) ?? Infinity), 0, DB.nWeeks), f = DB.firstSale[i][j];
     if (f < 0 || f >= wEnd) return 0;
     const c = DB.cumSO[i][j], O = oosOf(DB, i, S), cn = O.cntN[j], sn = O.sumN[j], lo = Math.max(f, wEnd - 26);
@@ -338,7 +422,7 @@
   function cr3Oos(DB, i, ctx, out, rr) {
     const nA = DB.accounts.length, S = ctx.S, mask = ctx.mask, O = oosOf(DB, i, S), wE = clamp(DB.wk(ctx.asDn), 0, DB.nWeeks), w13 = wE - 13;
     const bits = new Int32Array(nA), ru = new Float64Array(nA), plain = !ctx.rrMult || ctx.rrMult === 1;
-    let any = 0, q13 = 0, v13 = 0, q4 = 0, v4 = 0;
+    let any = 0, q13 = 0, v13 = 0, q4 = 0, v4 = 0, q4c = 0, v4c = 0, q4w = 0, v4w = 0;   // CR-04 R10: + at the account (consignment) / at our warehouse (outright)
     for (let j = 0; j < nA; j++) {
       ru[j] = ctx.rrU && plain ? rr[j] : runRateU(DB, i, j, ctx.asDn, ctx.basis, S);
       const end = Math.min(wE, rrCap(DB, j) ?? wE), fl = O.flags[j], so = DB.so[i][j], p = DB.price[i][j];
@@ -350,11 +434,13 @@
       if (mask[j]) {
         const l13 = Math.max(0, ru[j] * 7 * n13 - s13), l4 = Math.max(0, ru[j] * 7 * n4 - s4);
         q13 += l13; v13 += l13 * p; q4 += l4; v4 += l4 * p;
+        if (DB.accounts[j].is_consignment) { q4c += l4; v4c += l4 * p; } else { q4w += l4; v4w += l4 * p; }   // CR-04 R10
       }
       if (mask[j]) any |= bits[j];
     }
     out.oosBits = bits; out.oosW13 = popcount(any); out.rrU = ru;
     out.lost13Q = q13; out.lost13V = v13; out.lost4Q = q4; out.lost4V = v4;
+    out.lost4C = [q4c, v4c]; out.lost4W = [q4w, v4w];   // CR-04 R10
   }
   /** CR-03 R3: weekly Sales Out of the selected accounts for the 26 weeks before AS OF, out-of-stock weeks marked (the SKU drawer chart). */
   function soWeeksOf(DB, M, row) {
@@ -578,8 +664,10 @@
     let lostAll = 0, lostSelCum = 0, writeOff = 0, unfilledIn = 0, stockoutT = -1, k = 0;
     const plan = new Float64Array(nA);
     const rrTot = rr.reduce((x, y) => x + y, 0);
+    const rrW = o.rrW, rrT = rrW ? new Float64Array(nA) : rr;            // CR-04 R9: a week-by-week forecast (Trend) — absent = the constant run rate
     let mi = 0;
     for (let t = 0; t < H; t++) {
+      if (rrW) { const wk = Math.floor(t / 7); for (let j = 0; j < nA; j++) { const a = rrW[j]; rrT[j] = a ? a[Math.min(a.length - 1, wk)] : rr[j]; } }
       while (mi < months.length - 1 && t >= months[mi].t1) mi++;
       const perDay = months[mi] && months[mi].perDay;
       wh += po[t];
@@ -595,7 +683,7 @@
       }
       let need = 0;
       for (let j = 0; j < nA; j++) {
-        plan[j] = isC[j] ? ((o.useQuota && perDay && perDay[j] > 0) ? perDay[j] * (o.qMult || 1) : rr[j]) : rr[j];
+        plan[j] = isC[j] ? ((o.useQuota && perDay && perDay[j] > 0) ? perDay[j] * (o.qMult || 1) : rrT[j]) : rrT[j];
         need += plan[j];
       }
       const f = need > 0 ? Math.min(1, wh / need) : 0;
@@ -604,9 +692,9 @@
         if (isC[j]) { cons[j] += q; unfilledIn += plan[j] - q; }
         else { const l = plan[j] - q; lostAll += l; if (o.mask[j]) lostSelCum += l * DB.price[i][j]; }
       }
-      for (let j = 0; j < nA; j++) if (isC[j] && rr[j] > 0) {
-        const s = Math.min(rr[j], cons[j]); cons[j] -= s;
-        const l = rr[j] - s; lostAll += l; if (o.mask[j]) lostSelCum += l * DB.price[i][j];
+      for (let j = 0; j < nA; j++) if (isC[j] && rrT[j] > 0) {
+        const s = Math.min(rrT[j], cons[j]); cons[j] -= s;
+        const l = rrT[j] - s; lostAll += l; if (o.mask[j]) lostSelCum += l * DB.price[i][j];
       }
       if (wh < 1e-9) wh = 0;
       let cs = 0, ca = 0;
@@ -649,7 +737,7 @@
   function skuMatches(s, F) {
     if (F.brand && F.brand.length && !F.brand.includes(s.brand)) return false;
     if (F.cat && F.cat.length && !F.cat.includes(s.category)) return false;
-    if (F.q) { const q = F.q.toLowerCase().trim(); if (q && !(s.sku.toLowerCase().includes(q) || s.name.toLowerCase().includes(q))) return false; }
+    if (F.q) { const q = F.q.toLowerCase().trim(); if (q && !(s.sku.toLowerCase().includes(q) || s.name.toLowerCase().includes(q) || (s.alt && s.alt.includes(q)))) return false; }   // CR-04 R7: + alt codes
     return true;
   }
 
@@ -666,6 +754,12 @@
     for (let j = 0; j < nA; j++) rr[j] = (ctx.rrU ? runRateU(DB, i, j, as, ctx.basis, S) : runRate(DB, i, j, as, ctx.basis)) * (ctx.rrMult || 1);   // What-if: Run Rate ± % · CR-03 R3: switch rrMode
     const rrTot = rr.reduce((x, y) => x + y, 0);
     let rrSel = 0; for (let j = 0; j < nA; j++) if (mask[j]) rrSel += rr[j];
+    let rrW = null, rrM = null;                                          // CR-04 R9: Trend / Auto → week-by-week forecast in the projection
+    if (ctx.basis === 'TR' || ctx.basis === 'AUTO') {
+      const ap = ctx.basis === 'AUTO' ? autoPick(DB, i, as, S, !!ctx.rrU) : null, useTr = !ap || ap.pick === 'TR';
+      if (useTr) { rrW = []; for (let j = 0; j < nA; j++) { const R = trendRate(DB, i, j, as, S, !!ctx.rrU); rrW.push(R.short || !(rr[j] > 0) ? null : Float64Array.from(R.T.f, v => v / 7 * (ctx.rrMult || 1))); } }
+      rrM = { basis: ctx.basis, pick: ap ? ap.pick : 'TR', wape: ap ? ap.wape : null };
+    }
     // WH share for the filter (no run rate → share of accounts that carry it)
     let share = 1;
     if (!ctx.allMask) {
@@ -694,9 +788,9 @@
 
     // projection
     const H = S.projectionDays;
-    const P = projectSku(DB, i, { asDn: as, H, wh0: st.wh, cons0: st.cons, rr, mask, useQuota: S.useQuotaForSalesIn, qMult: ctx.rrMult, ltShift: ctx.ltAdd,
+    const P = projectSku(DB, i, { asDn: as, H, wh0: st.wh, cons0: st.cons, rr, rrW, mask, useQuota: S.useQuotaForSalesIn, qMult: ctx.rrMult, ltShift: ctx.ltAdd,   // CR-04 R9: + rrW
       prDaily: S.prPlanOn && S.prPlan ? (+S.prPlan[s.sku] || 0) / 30.4375 : 0 });   // CR-03 R2: + planned PR issues
-    out._p = P;
+    out._p = P; if (rrM) out.rrMethod = rrM;   // CR-04 R9
     out.proj = [1, 3, 6].map(m => { const t = Math.min(H, addMonths(as, m) - as) - 1; return P.whA[t] * share + P.consSelA[t] + P.itSelA[t]; });   // CR-01: + in-transit
     out.projAll = [1, 3, 6].map(m => P.totA[Math.min(H, addMonths(as, m) - as) - 1]);
     out.hDays = addMonths(as, ctx.h) - as;
@@ -819,6 +913,8 @@
     S = Object.assign({}, DEFAULT_SETTINGS, S || {});
     opts = opts || {};
     DB.rrEndMode = S.rrEndMode;                                          // CR-03 R1: the run-rate end follows the setting
+    { const on = S.countAdjustOn !== false; if (DB.hasAdj && DB.adjOn !== on) { DB._wkSt = null; DB._oos = null; DB._wkEnd = null; DB._trK = null; } DB.adjOn = on; }   // CR-04 I8-c: the switch (stock caches follow it)
+    { const tk = [S.trendPhi, S.trendCap, S.trendMinW, S.rrEndMode].join(','); if (DB._trK !== tk) { DB._trK = tk; DB._tr = new Map(); DB._auto = new Map(); DB._skuTr = new Map(); } DB._trS = S; }   // CR-04 R9
     if (F.rm === 'sellout' || F.rm === 'unconstrained') S.rrMode = F.rm;   // CR-03 R3: the filter bar can switch the run-rate method
     const asDn = clamp(monday(F.asDn), DB.minAsOf, DB.maxAsOf);
     const mask = accountMask(DB, F), allMask = isAllMask(mask);
@@ -990,7 +1086,8 @@
         next.cons.forEach(q => { if (q < -0.5) neg++; });
         const f = flowsSku(DB, i, a, b, new Uint8Array(nA).fill(1), 1);
         const totPrev = prev.wh + prev.cons.reduce((x, y) => x + y, 0) + sumArr(prev.it), totNext = next.wh + next.cons.reduce((x, y) => x + y, 0) + sumArr(next.it);   // CR-01: + in-transit
-        const expect = totPrev + f.poRec + f.cnGoodOut - f.so - f.writeOff - f.oo;   // CR-03: − other_out
+        let adjQ = 0; if (DB.adjOn !== false) for (const x of (DB.adj && DB.adj[i]) || []) if (x.dn > a && x.dn <= b) adjQ += x.qty;   // CR-04 I8-c: count adjustments are part of the balance
+        const expect = totPrev + f.poRec + f.cnGoodOut - f.so - f.writeOff - f.oo + adjQ;   // CR-03: − other_out
         pairs++;
         if (Math.abs(expect - totNext) > 0.5) { recon++; if (!worst) worst = DB.skus[i].sku + ' wk ' + iso(a); }
         prev = next;
@@ -1674,6 +1771,7 @@
   }
 
   global.Calc = {
+    trendOf, trendRate, autoPick, skuTrend, RR_BASES, TREND, AUTO_SET,   // CR-04 R8 / R9
     sopGapOf, planSnapshotOf, comparePlans,   // CR-03 (3D)
     earlyWarnOf, ewSeriesOf, replenCycle, fvaOf,   // CR-03 (3C)
     staleWeeks, otherOutOf,   // CR-03

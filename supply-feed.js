@@ -22,7 +22,7 @@ Object.assign(dict.en,{feedMeta:'Ops data as of {t} · WMS version {v}',feedMeta
 
 /** Ops t() takes no parameters: tp('key', {a:1}) fills {a} placeholders. */
 function tp(k,p){return t(k).replace(/\{(\w+)\}/g,(m,x)=>p&&p[x]!=null?p[x]:m)}
-const FEED_MONTH='2026-11';                                       // the Ops planning period ("รอบแผน พฤศจิกายน 2026")
+let FEED_MONTH=(typeof db!=='undefined'&&/^\d{4}-\d{2}$/.test(db?.planPeriod||''))?db.planPeriod:'2026-11';   // the Ops planning period — CR-04 R6: follows db.planPeriod (was the constant '2026-11')
 function feedOn(){return typeof db!=='undefined'&&db?.dataset==='integrated'&&!!db.feedBase}
 const feedT=x=>Number(x)||0;
 

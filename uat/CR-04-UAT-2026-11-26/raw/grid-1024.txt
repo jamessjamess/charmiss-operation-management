@@ -1,0 +1,2 @@
+#grid-1024|1024|2026-11-25T23:53:11.958Z|8.5.0-c9
+CR4-ALERT-GRID (1024px)|P|{"width":1024,"ag":[{"who":"director","cols":3,"rows":[3,3],"ok":true},{"who":"mgr-mt","cols":4,"rows":[4],"ok":true},{"who":"warehouse","cols":1,"rows":[1],"ok":true},{"who":"planner","cols":4,"rows":[4],"ok":true}]}
