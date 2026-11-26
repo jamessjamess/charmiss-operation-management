@@ -1,0 +1,15 @@
+#phase3B|1440|2026-11-26T01:18:15.823Z|1.5.0
+CR3-3B-VERSION|P|{"foot":"Charmiss Operations Management · v1.5.0"}
+CR3-LEGACY (every switch old → CR-01 anchors)|P|{"diff":[],"selfCheck":"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS"}
+CR3-ANCHOR-NEW (every switch new → README anchors)|P|{"diff":[],"got":{"stockValue":50091183,"whV":39518371,"consV":10572812,"units":"514864/136418/651282","doc":70,"sellThrough":17.8,"status":"6/4/7/99/4/+7","risk3M":"726866/7265","recall":"519974/11/7194","quotaFit":"95/110/116","mape":13.5,"bias":-4.2,"fill":93.1,"achMTD":94.1,"lost4":2020669,"lost13":3071760,"oosSku":21,"abc":"48/34/27/6/5","ssUnits":167765,"sugValue":42971040,"ew":"98.8/12/18/23/0/22/20/104","fva3":"13.5/13.5/0.0","ts":"114/252/145"}}
+CR3-DEFAULTS (A2 new on · filter switch)|P|{"rrNew":9106,"rrOld":8708}
+CR3-OOS (R3 · up where out of stock · same where not · lost sales)|P|{"same":902,"up":41,"equalFloor":10,"down":0,"example":"CM-FD-003 @ Shopee: 251.5 → 284.3/wk","lost13":3071760}
+CR3-OOS-VIEW (stock columns · drawer · overview card · matrix)|P|{"sku":"TF-SK-003","card":"ยอดขายที่เสียโอกาส (ของขาด) · 4 สัปดาห์ล่าสุด\n26 ต.ค. – 22 พ"}
+CR3-ABCXYZ (A ≤ 80 % line · B ≤ 95 % · N · E · SS 0 for E)|P|{"groups":"48/34/27/6/5","shares":"80.1/15.1/4.7","clearanceSku":"CM-FD-001"}
+CR3-ABC-FILTER (Stock E · Replen B)|P|{"stockE":5,"replenB":25}
+CR3-SS (3 SKUs by hand · actual vs estimated LT)|P|{"hand":[{"sku":"CM-FD-006","src":"sku","group":"AX","z":2.0537,"d":251.21,"sdD":77.73,"lt":74,"sdLT":1.7,"ss":1638,"app":1638,"rop":20228,"appRop":20228},{"sku":"CM-FD-001","src":"supplier","group":"AX","z":2.0537,"d":46.18,"sdD":20.35,"lt":68.8,"sdLT":19.2,"ss":1852,"app":1853,"rop":5030,"appRop":5031},{"sku":"JB-LP-006","src":"est","group":"CX","z":1.6449,"d":9.11,"sdD":5.44,"lt":105,"sdLT":0,"ss":92,"app":92,"rop":1048,"appRop":1048}],"estBadge":true}
+CR3-SL-WHATIF (+1 pp more SS · −5 pp less · slider off with safety days)|P|{"ss":[122578,167765,187459]}
+CR3-SETTINGS (threshold + audit · old-method button)|P|{"A70":35,"A80":48}
+CR3-SC-12 (ABC = 100 % · every SKU grouped)|P|{"detail":"A 48 · 80.1% / B 34 · 15.1% / C 27 · 4.7% / N 6 / E 5"}
+selfCheck 1–12|P|{"failed":[]}
+console errors (3B)|P|{"errors":[]}

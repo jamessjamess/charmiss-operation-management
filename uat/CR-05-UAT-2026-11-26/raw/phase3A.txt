@@ -1,0 +1,21 @@
+#phase3A|1440|2026-11-26T01:19:24.991Z|1.5.0
+CR3-VERSION|P|{"foot":"Charmiss Operations Management · v1.5.0","side":"Charmiss Ops v1.5.0 · 26 พ.ย. 2026"}
+CR3-LEGACY (old methods → CR-01 anchors)|P|{"diff":[],"selfCheck":"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS"}
+CR3-ANCHOR-NEW (R1 new · 3A gives the same numbers)|P|{"diff":[],"got":{"stockValue":50091183,"whV":39518371,"consV":10572812,"units":"514864/136418/651282","doc":73,"sellThrough":17.8,"status":"7/2/9/98/4/+7","risk3M":"547597/4489","recall":"519974/11/7194","quotaFit":"92/107/116","mape":13.5,"bias":-4.2,"fill":93.1,"achMTD":94.1}}
+CR3-SO-INTAKE-ERRORS|P|{"errors":"4:ve_future 5:ve_date 6:ve_sku 7:ve_neg 8:ve_qty"}
+CR3-SO-INTAKE-MAP|P|{"rows":55,"code":"71100377"}
+CR3-SO-INTAKE (append)|P|{"batch":"SOI-55952092","rows":55,"snapshot":"2026-11-30","A01":"ok","A02":"pending"}
+CR3-RR-END (only 7-Eleven moves · old method does not move)|P|{"moved7Eleven":54,"movedOther":0,"movedOldMethod":0}
+CR3-STALE|P|{"banner":"ข้อมูล Sales Out ค้าง (เกิน 0 สัปดาห์ก่อน AS OF): Watsons ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Eveandboy ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Boots ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Tops ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Big C ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Lotus's ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Dealer ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Wholesale ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Shopee ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Lazada ข้อมูล Sales Out ค้าง 1 สัปดาห์ · TikTok Shop ข้อมูล Sales Out ค้าง 1 สัปดาห์"}
+CR3-SO-INTAKE-DUP (xlsx · skip / replace / remove)|P|{"dup":113,"skip":[0,113],"replace":113,"fileQty":10844,"baseQty":10855}
+CR3-OTHER-OUT-APPROVAL|P|{"ownApprove":"issueSelf","reject":"issueNeedReason"}
+CR3-OTHER-OUT (WH −100 · Sales Out and run rate unchanged)|P|{"sku":"TF-FD-001","wh":[19751,19651],"wms":19651}
+CR3-OTHER-OUT-VIEW (waterfall bar + month card)|P|{"wfOO":100}
+CR3-PRPLAN (switch prPlanOn · 1-month total)|P|{"off":17431.78571428571,"on":14474.906864183004,"off2":17431.78571428571}
+CR3-SC-10 (WH flow incl. other_out)|P|{}
+CR3-SC-11 (Sales Out keys unique)|P|{}
+selfCheck 1–11|P|{"failed":[]}
+CR3-AUDIT|P|{}
+CR3-MENU-INTAKE (MT view only · TT refused)|P|{}
+CR3-ANCHOR-AFTER (AS OF 23 Nov · both methods)|P|{"diff":[]}
+console errors (3A)|P|{"errors":[]}

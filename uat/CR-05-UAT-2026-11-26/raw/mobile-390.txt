@@ -1,0 +1,12 @@
+#mobile-390|390|2026-11-26T01:58:42.458Z|1.5.0
+SUP-MOBILE-director|P|{"width":390,"overflow":[]}
+SUP-MOBILE-mgr-mt|P|{"width":390,"overflow":[]}
+SUP-MOBILE-mgr-tt|P|{"width":390,"overflow":[]}
+SUP-MOBILE-mgr-ecom|P|{"width":390,"overflow":[]}
+SUP-MOBILE-sa-mt|P|{"width":390,"overflow":[]}
+SUP-MOBILE-sa-tt|P|{"width":390,"overflow":[]}
+SUP-MOBILE-sa-ecom|P|{"width":390,"overflow":[]}
+SUP-MOBILE-admin|P|{"width":390,"overflow":[]}
+SUP-MOBILE-finance|P|{"width":390,"overflow":[]}
+SUP-MOBILE-warehouse|P|{"width":390,"overflow":[]}
+SUP-MOBILE-planner|P|{"width":390,"overflow":[]}

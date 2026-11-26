@@ -4,7 +4,7 @@
   'use strict';
   const t = global.St;   // CR-01: Supply translator (the global `t` belongs to the Ops shell)
   const Pages = global.Pages = global.Pages || {};
-  const PAGE = 50;
+  const PS_KEY = 'cr5.ps.sup:stock', pageSize = () => { try { return +localStorage.getItem(PS_KEY) || 25; } catch (e) { return 25; } };   // CR-05 G2 / D1: 25 / 50 / 100 rows (was a fixed 50), remembered per user
   const RANK = { stockout: 0, reorder: 1, overstock: 2, healthy: 3, npd: 4, inactive: 5 };
 
   function columns(M, ui) {
@@ -59,7 +59,7 @@
       const cols = columns(M, ui);
       const gRows = ui.grp ? M.rows.filter(r => Pages.grpMatch(r, ui.grp)) : M.rows;   // CR-03 R4: group filter
       const rows = sortRows(tabRows(gRows, ui.stockTab), cols, ui.sort);
-      const pages = Math.max(1, Math.ceil(rows.length / PAGE));
+      const PAGE = pageSize(), pages = Math.max(1, Math.ceil(rows.length / PAGE));
       ui.pageNo = Math.min(Math.max(1, ui.pageNo), pages);
       const slice = rows.slice((ui.pageNo - 1) * PAGE, ui.pageNo * PAGE);
       const c = Charts.col();
@@ -78,9 +78,10 @@
       if (rows.length) {
         const val = rows.reduce((x, r) => x + r.totalSel * r.cost, 0);
         html += `<div class="pager"><span>${t('rows_of', { a: U.n((ui.pageNo - 1) * PAGE + 1), b: U.n(Math.min(rows.length, ui.pageNo * PAGE)), n: U.n(rows.length) })} · ${t('col_value')} ${t('col_total')} <b class="tnum">${U.money(val)}</b></span>
-          <span class="pg"><button type="button" class="btn small" data-pg="-1" ${ui.pageNo <= 1 ? 'disabled' : ''}>${U.icon('left')}${t('page_prev')}</button><span class="tnum">${ui.pageNo} / ${pages}</span><button type="button" class="btn small" data-pg="1" ${ui.pageNo >= pages ? 'disabled' : ''}>${t('page_next')}${U.icon('right')}</button></span></div>`;
+          <span class="pg"><button type="button" class="btn small" data-pg="-1" ${ui.pageNo <= 1 ? 'disabled' : ''}>${U.icon('left')}${t('page_prev')}</button><span class="tnum">${ui.pageNo} / ${pages}</span><button type="button" class="btn small" data-pg="1" ${ui.pageNo >= pages ? 'disabled' : ''}>${t('page_next')}${U.icon('right')}</button></span><label class="c5-size">${t('rows_per_page') === 'rows_per_page' ? '' : t('rows_per_page')}<select data-c5-psize aria-label="rows">${[25, 50, 100].map(x => `<option ${x === PAGE ? 'selected' : ''}>${x}</option>`).join('')}</select></label></div>`;   // CR-05 G2
       }
       main.innerHTML = html;
+      main.querySelectorAll('[data-c5-psize]').forEach(sel => sel.addEventListener('change', () => { try { localStorage.setItem(PS_KEY, sel.value); } catch (e) { /* blocked */ } ui.pageNo = 1; App.rerender(); }));   // CR-05 G2
 
       main.querySelector('.stabs').addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if (b) { ui.stockTab = b.dataset.tab; ui.pageNo = 1; App.rerender(); } });
       main.querySelector('#rrUnit').addEventListener('click', e => { const b = e.target.closest('[data-v]'); if (b) { ui.rrUnit = b.dataset.v; App.rerender(); } });

@@ -90,7 +90,8 @@ function sopConditions(){
 
 /* ---------------------------------------------------------------- sync: one open item per key · never closed by the system (condition gone → flag) */
 let sopSyncKey='',sopSeqN=0;
-const sopId=()=>'ACT-'+Date.now().toString(36).toUpperCase()+'-'+(++sopSeqN).toString(36).toUpperCase();
+/* CR-05 C4: a readable number that runs per month (ACT-2611-0001) — the same data built again gives the same numbers */
+const sopId=()=>{const ym=dateKey(Date.now()).slice(2,7).replace('-','');let n=0;sopActs().forEach(a=>{const m=/^ACT-(\d{4})-(\d{4,})$/.exec(a.id);if(m&&m[1]===ym)n=Math.max(n,+m[2])});++sopSeqN;return'ACT-'+ym+'-'+String(n+1).padStart(4,'0')};
 function sopSync(force){
  if(!session||!supReady())return false;
  const A=Supply.App,key=[A.feedKey,JSON.stringify(A.S),props().map(p=>p.id+':'+p.status).join(','),dateKey(Date.now())].join('|');

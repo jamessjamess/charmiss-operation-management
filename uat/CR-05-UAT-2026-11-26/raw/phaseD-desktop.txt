@@ -1,0 +1,17 @@
+#phaseD-desktop|1440|2026-11-26T01:39:27.788Z|1.5.0
+SUP-F1-CARD|P|{"card":"Quota Achievement MTD   94.1%   Sales In 180,046 / Quota 191,330 ชิ้น · สัปดาห์นี้ 48.1%   ▼ 17.7 pp   เทียบ MTD วันเดียวกันของเดือนก่อน","mtd":94.1,"prevMtd":111.77}
+SUP-F1-TABLE (desktop)|P|{"pairs":953,"mismatch":0}
+SUP-F1-REPORT|P|{}
+SUP-F4|P|{"overview":"<span class=\"delta flat\">▲ 3 วัน</span>","review":"<span class=\"delta flat\">▲ 3 วัน</span>"}
+SUP-F2 (desktop)|P|{"indexAxis":"x","labels":7}
+SUP-F3 (desktop)|P|{"rows":25}
+SUP-F8-SHOW|P|{"counts":52,"shown":25,"summary":"นับแล้ว 52 คู่ · ตรง 36 · ตรวจ 11 · ต่างมาก 5 · ส่วนต่างรวม -423 ชิ้น (−฿30,170)"}
+SUP-F8-DIFF (= counted − calculated; calculation untouched)|P|{"diff":-423,"calcAtCount":18826,"lots":18826}
+SUP-F8-SCOPE (after AS OF / other channel → hidden)|P|{}
+SUP-F8-IMPORT (schema)|P|{"bad":["qty:negative:-3","date:not_date:22/13/2026"]}
+SUP-NOLEAK-sa-mt|P|{"refused":true,"viaUrl":true}
+SUP-NOLEAK-sa-tt|P|{"refused":true,"viaUrl":true}
+SUP-NOLEAK-sa-ecom|P|{"refused":true,"viaUrl":true}
+SUP-NOTAG|P|{"pages":[]}
+console errors (Phase D)|P|{"errors":[]}
+SUP-ANCHOR (Phase D)|P|{"diff":[],"selfCheck":"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS"}

@@ -352,7 +352,7 @@
     const ch = Object.values(global.Chart.instances || {}).find(c => c.canvas && c.canvas.closest('#card-inout'));
     const horiz = ch && ch.options.indexAxis === 'y';
     step('SUP-F2' + tag, ch && (mob ? horiz : !horiz) && ch.data.labels.length > 1, { indexAxis: ch && ch.options.indexAxis, labels: ch && ch.data.labels.length });
-    // F3 — card lists on phones: 20 + "load more" (same order, filter resets to 20); desktop keeps the pager
+    // F3 — card lists on phones: 25 + "load more" (same order, filter resets to 25); desktop keeps the pager   (CR-05 D1: the step was 20)
     const mx = () => document.querySelector('#mxHost'), cards = () => [...mx().querySelectorAll('.ccard')].map(c => c.innerText.split('\n')[0]);
     if (mob) {
       const c20 = cards(), more = mx().querySelector('[data-more]');
@@ -361,7 +361,7 @@
       App.setF(Object.assign({}, F0, { brand: ['Charmiss'] })); await wait(1000);   // a different row set (every consignment account is MT, so a channel filter would not change it)
       const M2 = App.model(), C2 = Calc.consignmentOf(DB, M2.rows, M2.asDn, M2.period, M2.mask, M2.S), cf = cards(), total = new Set(C2.pairs.map(p => p.i)).size;
       App.setF(F0); await wait(900);
-      step('SUP-F3' + tag, c20.length === 20 && !!more && c40.length === 40 && c40.slice(0, 20).join('|') === c20.join('|') && cf.length === Math.min(20, total), { first: c20.length, afterMore: c40.length, filtered: cf.length });
+      step('SUP-F3' + tag, c20.length === 25 && !!more && c40.length === 50 && c40.slice(0, 25).join('|') === c20.join('|') && cf.length === Math.min(25, total), { first: c20.length, afterMore: c40.length, filtered: cf.length });
     } else {
       const rows = mx().querySelectorAll('tbody tr').length;
       step('SUP-F3' + tag, rows > 0 && !mx().querySelector('[data-more]') && !!mx().querySelector('.pager'), { rows });
@@ -373,7 +373,7 @@
     const lotsSum = cc.reduce((x, r) => x + DB.lots[DB.skuIdx.get(r.sku)].filter(L => L.j === DB.accIdx.get(r.account_id)).reduce((y, L) => y + L.qty, 0), 0);
     const shownN = cntCard ? (mob ? cntCard.querySelectorAll('.ccard').length : cntCard.querySelectorAll('tbody tr').length) : 0;
     const sumTxt = cntCard ? cntCard.querySelector('.cnt-sum').innerText : '';
-    step('SUP-F8-SHOW', cc.length === 52 && calcOk && !!cntCard && sumTxt.includes(U.n(cc.length)) && shownN === Math.min(cc.length, mob ? 20 : 50), { counts: cc.length, shown: shownN, summary: sumTxt });
+    step('SUP-F8-SHOW', cc.length === 52 && calcOk && !!cntCard && sumTxt.includes(U.n(cc.length)) && shownN === Math.min(cc.length, 25)   /* CR-05 D1: 25 rows by default on every screen (was 20 phone / 50 desktop) */, { counts: cc.length, shown: shownN, summary: sumTxt });
     const exp = cc.reduce((x, r, k) => x + (Number(r.qty) - pairCalc[k]), 0);
     step('SUP-F8-DIFF (= counted − calculated; calculation untouched)', sumTxt.includes((exp > 0 ? '+' : '') + U.n(exp)) && (DB.snapDn !== Calc.dn('2026-11-23') || Math.abs(lotsSum - pairCalc.reduce((x, y) => x + y, 0)) < 0.5), { diff: exp, calcAtCount: pairCalc.reduce((x, y) => x + y, 0), lots: Math.round(lotsSum) });
     App.setF(Object.assign({}, F0, { asDn: Calc.dn('2026-11-16') })); await wait(1000);
@@ -426,7 +426,7 @@
     await login('planner'); global.navigate('supIntake'); await wait(400);
     const foot = (document.querySelector('#footBuild') || {}).innerText || '', side = (document.querySelector('.appver-side') || {}).innerText || '';
     const vb = document.querySelector('[data-appver]'); vb && vb.click(); await wait(150); const dlg = (document.querySelector('#modal') || {}).innerText || ''; document.querySelector('#modal').open && document.querySelector('#modal').close();
-    step('CR3-VERSION', foot.includes('v' + APP_VERSION.number) && side.includes(APP_VERSION.number) && dlg.includes(APP_VERSION.number) && dlg.includes('8.0.0'), { foot, side });
+    step('CR3-VERSION', foot.includes('v' + APP_VERSION.number) && side.includes(APP_VERSION.number) && dlg.includes(APP_VERSION.number) && dlg.includes('1.1.0'), { foot, side });   // CR-05 §9: 8.0.0 is now 1.1.0
     const R3R4_OLD = { rrMode: 'sellout', safetyMode: 'days', prPlanOn: false };   // CR-03 (3B): the 3A checks keep R3 / R4 on their old methods
     const aL = await anchors(Object.assign({ rrEndMode: 'history' }, R3R4_OLD)), aN = await anchors(Object.assign({ rrEndMode: 'account' }, R3R4_OLD));
     step('CR3-LEGACY (old methods → CR-01 anchors)', aL.pass, { diff: aL.diff, selfCheck: aL.selfCheck });
@@ -518,7 +518,7 @@
     const before = errors.length, setS = patch => App.saveSettings(Object.assign({}, App.S, patch)), D = () => App.DB, as = Calc.dn('2026-11-23');
     await login('planner'); global.navigate('supStock'); await wait(1200);
     const foot = (document.querySelector('#footBuild') || {}).innerText || '';
-    step('CR3-3B-VERSION', APP_VERSION.history.some(h => h[0] === '8.2.0') && foot.includes('v' + APP_VERSION.number) && APP_VERSION.history.some(h => h[0] === '8.1.0'), { foot });   // later releases keep 8.2.0 in the history
+    step('CR3-3B-VERSION', APP_VERSION.history.some(h => h[0] === '1.3.2') && foot.includes('v' + APP_VERSION.number) && APP_VERSION.history.some(h => h[0] === '1.3.1'), { foot });   // later releases keep 3B in the history · CR-05 §9: 8.2.0 / 8.1.0 are now 1.3.2 / 1.3.1
     // 1) anchors — every old method = CR-01 · every new method = README
     const aL = await anchors(), aN = await anchors('new');
     step('CR3-LEGACY (every switch old → CR-01 anchors)', aL.pass, { diff: aL.diff, selfCheck: aL.selfCheck });
@@ -616,7 +616,7 @@
     const F0 = { asDn: as, view: 'W', ch: [], acc: [], brand: [], cat: [], q: '', rr: 'L4W', h: 3 }, near = (a, b, e) => Math.abs(a - b) <= (e || 1e-6) || (a === Infinity && b === Infinity);
     await login('planner'); global.navigate('supConsign'); await wait(1200);
     const foot = (document.querySelector('#footBuild') || {}).innerText || '';
-    step('CR3-3C-VERSION', APP_VERSION.history.some(h => h[0] === '8.3.0') && foot.includes('v' + APP_VERSION.number) && APP_VERSION.history.some(h => h[0] === '8.2.0'), { foot });
+    step('CR3-3C-VERSION', APP_VERSION.history.some(h => h[0] === '1.3.3') && foot.includes('v' + APP_VERSION.number) && APP_VERSION.history.some(h => h[0] === '1.3.2'), { foot });   // CR-05 §9: 8.3.0 / 8.2.0 → 1.3.3 / 1.3.2
     const aL = await anchors(), aN = await anchors('new');
     step('CR3-LEGACY (every switch old → CR-01 anchors)', aL.pass, { diff: aL.diff });
     step('CR3-ANCHOR-NEW (every switch new → README anchors incl. 3C)', aN.pass, { diff: aN.diff, got: { ew: aN.got.ew, fva3: aN.got.fva3, ts: aN.got.ts } });
@@ -712,7 +712,7 @@
     const before = errors.length, setS = patch => App.saveSettings(Object.assign({}, App.S, patch)), acts = () => db.sopActions || [], isOpen = a => a.status === 'open' || a.status === 'ack';
     await login('planner'); global.navigate('supSop'); await wait(1500);
     const foot = (document.querySelector('#footBuild') || {}).innerText || '';
-    step('CR3-3D-VERSION', APP_VERSION.history.some(h => h[0] === '8.4.0') && foot.includes('v' + APP_VERSION.number), { foot });
+    step('CR3-3D-VERSION', APP_VERSION.history.some(h => h[0] === '1.3.4') && foot.includes('v' + APP_VERSION.number), { foot });   // CR-05 §9: 8.4.0 → 1.3.4
     const aL = await anchors(), aN = await anchors('new');
     step('CR3-LEGACY (every switch old → CR-01 anchors)', aL.pass, { diff: aL.diff });
     step('CR3-ANCHOR-NEW (every switch new → README anchors)', aN.pass, { diff: aN.diff });
@@ -856,7 +856,7 @@
     step('CR4-GATE', g.every(x => x.pass) && m.every(x => x.pass), { fail: g.filter(x => !x.pass).map(x => x.id + ' ' + x.denied + ' ' + (x.broken || []).join(',')) });
 
     // CR4-HOME-ROLE — the R2-3 cards per role · Warehouse / ERP no sales or E-commerce · nothing the role cannot act on
-    const EXP = { director: 'netMtd,backlog,stock,stockout,expiry,lost', 'mgr-mt': 'salesMtd,quotaLeft,backlog,instock,fva', 'mgr-tt': 'salesMtd,quotaLeft,backlog,stockout,fva', 'mgr-ecom': 'salesMtd,quotaLeft,backlog,stockout,fva',
+    const EXP = { director: 'netMtd,ach,backlog,stock,stockout,expiry,lost', 'mgr-mt': 'salesMtd,ach,quotaLeft,backlog,instock,fva', 'mgr-tt': 'salesMtd,ach,quotaLeft,backlog,stockout,fva', 'mgr-ecom': 'salesMtd,ach,quotaLeft,backlog,stockout,fva',   // CR-05 C2 / D10: + Quota Achievement MTD card
       'sa-mt': 'ordersToday,payWait,blocked,quotaLeft', 'sa-tt': 'ordersToday,payWait,blocked,quotaLeft', 'sa-ecom': 'ordersToday,payWait,blocked,quotaLeft', warehouse: 'manifest,returns,issue,po7,lot90', finance: 'payCheck,sla,cn,ivcn',
       planner: 'soComplete,actions,propWait,order30,poDelay,sc', admin: 'sc,storage,ds' };
     const hr = [];
@@ -874,15 +874,16 @@
     const mt = [], cmp = (k, home, page, tol) => mt.push({ k, home, page, ok: isFinite(home) && isFinite(page) && Math.abs(home - page) <= (tol == null ? 0.5 : tol) });
     await login('director'); await homeReady();
     const H = { netMtd: cardVal('netMtd'), backlog: cardVal('backlog'), stock: cardVal('stock'), stockout: cardVal('stockout'), expiry: cardVal('expiry'), lost: cardVal('lost'), alertOut: num(document.querySelector('.sup-b4-item[data-b4-go="supStock:stockout"] b')?.innerText) };
-    global.navigate('workQueue'); await wait(150); cmp('backlog = งานค้าง (ทั้งหมด)', H.backlog, num(document.querySelector('.fu-kpis .panel h2')?.innerText));
-    const rs = global.ofbState('reports'); rs.d = 'custom'; rs.from = today.slice(0, 8) + '01'; rs.to = today; global.navigate('reports'); await wait(150); cmp('net MTD = รายงาน', H.netMtd, Math.round(global.opsReportData().net));
+    const netTxt0 = (document.querySelector('[data-hm-card="netMtd"] strong')?.innerText || '').trim(); global.navigate('workQueue'); await wait(150); cmp('backlog = งานค้าง (ทั้งหมด)', H.backlog, num(document.querySelector('.fu-kpis .panel h2')?.innerText));
+    const rs = global.ofbState('reports'); rs.d = 'custom'; rs.from = today.slice(0, 8) + '01'; rs.to = today; global.navigate('reports'); await wait(150); cmp('net MTD = รายงาน', netTxt0 === '—' ? (global.hmReportHas(today.slice(0, 8) + '01', today) ? NaN : 0) : H.netMtd, Math.round(global.opsReportData().net));   // CR-05 C2: '—' when the month has no IV / CN
     global.ofbReset('reports'); await supReady('supOverview'); const M0 = App.model();
     cmp('Stock value', H.stock, Math.round(M0.kpi.stockValue)); cmp('SKU stockout', H.stockout, M0.statusCount.stockout); cmp('Supply Alert stockout', H.alertOut, M0.statusCount.stockout);
     cmp('Expiry 3M', H.expiry, Math.round(M0.kpi.riskBy[1][1])); cmp('Lost sales 4W', H.lost, Math.round(M0.rows.reduce((x, r) => x + (r.lost4V || 0), 0)));
     await login('manager', 'mgr-mt'); await homeReady(); const HM = { ql: cardVal('quotaLeft'), ins: cardVal('instock'), fva: cardVal('fva') };
     global.navigate('allocation'); await wait(250);
-    const qPanel = [...document.querySelectorAll('#page .panel')].find(s => [...s.querySelectorAll('th')].some(th => th.innerText.trim() === t('workQuotaLeft')));
-    cmp('Quota left = สินค้าคงคลังและโควตา', HM.ql, qPanel ? [...qPanel.querySelectorAll('tbody tr')].reduce((x, tr) => x + num(tr.children[1]?.innerText), 0) : NaN);
+    // CR-05: the list may sit in a folded <details> (DC-3) and be paged — read the cells' text, every row (paging only hides rows)
+    const qPanel = [...document.querySelectorAll('#page .panel')].find(s => [...s.querySelectorAll('th')].some(th => th.textContent.trim() === t('workQuotaLeft')));
+    cmp('Quota left = สินค้าคงคลังและโควตา', HM.ql, qPanel ? [...qPanel.querySelectorAll('tbody tr')].reduce((x, tr) => x + num(tr.children[1]?.textContent), 0) : NaN);
     await supReady('supConsign'); const MC = App.model(); cmp('In-stock rate (MT)', HM.ins, Math.round(Calc.earlyWarnOf(App.DB, MC.rows, MC.asDn, MC.mask, MC.S).kpi.instock * 10) / 10, 0.05);
     await supReady('supQuota'); const fv = global.Pages.fvaData(App, 3).total; cmp('FVA (MT)', HM.fva, Math.round(fv.fva * 10) / 10, 0.05);
     await login('planner'); await homeReady(); const HP = { prop: cardVal('propWait'), delay: cardVal('poDelay') };
@@ -1003,7 +1004,7 @@
 
     // CR4-PLAN-PERIOD — the chip only where the plan period is used · another period = read-only · back · one shared value
     await login('director'); const chip = {};
-    for (const v of ['overview', 'orders', 'allocation', 'reports', 'supQuota', 'supProposals', 'supSop', 'customers', 'audit', 'access']) { global.navigate(v); await wait(v.startsWith('sup') ? 900 : 120); chip[v] = !!document.querySelector('main .content > .banner .pp-chip'); }
+    for (const v of ['overview', 'orders', 'allocation', 'reports', 'supQuota', 'supProposals', 'supSop', 'customers', 'audit', 'access']) { global.navigate(v); await wait(v.startsWith('sup') ? 900 : 120); chip[v] = !!document.querySelector('main .c5-h1row .pp-chip, main .content > .banner .pp-chip'); }   // CR-05 G1: the chip sits next to H1
     const chipOk = ['overview', 'orders', 'allocation', 'reports', 'supQuota', 'supProposals', 'supSop'].every(v => chip[v]) && ['customers', 'audit', 'access'].every(v => !chip[v]);
     global.navigate('allocation'); await wait(150); const pair = db.allocations.find(x => x.status === 'approved' && (!x.month || x.month === FEED_MONTH)), qNow = pair ? global.quotaFor(pair.partner, pair.sku) : 0;
     cr4ViewPeriod = global.cr4AddMonth(global.cr4PP(), -1); global.render(); await wait(150);
@@ -1135,12 +1136,223 @@
     return res;
   }
 
+  /* ---------------------------------------------------------------- CR-05 · SupUAT.cr05() — UX / UI (fresh Integrated demo · run at 1440, 1024 and 390 px).
+     Director on every page + one more role per width (1440 Manager MT · 1024 Planner · 390 Warehouse). A check bound to a width says so in `at`
+     and passes as n/a at the other widths. Page measurements: tools/uat-cr05-probe.js (loaded on demand). */
+  async function c5probe() { if (global.C5Probe) return; await new Promise((res, rej) => { const s = document.createElement('script'); s.src = 'tools/uat-cr05-probe.js?v=' + Date.now(); s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
+  const lum = el => { for (let e = el; e; e = e.parentElement) { const m = getComputedStyle(e).backgroundColor.match(/[\d.]+/g); if (m && (m.length < 4 || +m[3] > 0.5)) { const [r, g, b] = m.slice(0, 3).map(x => +x / 255); return 0.2126 * r + 0.7152 * g + 0.0722 * b; } } return 1; };
+  function c5Modal(name) {
+    const d = document.querySelector('#modal'); if (!d || !d.open) return { name, open: false };
+    const r = d.getBoundingClientRect(), H = innerHeight, vis = global.C5Probe.vis;
+    const scrollers = [d, ...d.querySelectorAll('*')].filter(e => { const cs = getComputedStyle(e); return (e === d || /auto|scroll/.test(cs.overflowX)) && e.clientWidth > 0 && e.scrollWidth > e.clientWidth + 4; }).map(e => (String(e.className || e.tagName)).slice(0, 30) + ' ' + e.scrollWidth + '/' + e.clientWidth).slice(0, 3);
+    const foot = d.querySelector('.c5-mfoot'), fb = foot ? [...foot.querySelectorAll('button')].filter(vis) : [];
+    const prim = foot ? (foot.querySelector('button.primary') || fb[fb.length - 1]) : null, pr = prim && vis(prim) ? prim.getBoundingClientRect() : null;
+    const x = d.querySelector('.c5-x'), xr = x ? x.getBoundingClientRect() : null, tops = fb.map(b => Math.round(b.getBoundingClientRect().top));
+    const body = d.querySelector('.c5-mbody'), txt = d.innerText;
+    return { name, open: true, size: [...d.classList].filter(c => /^c5-[sml]$/.test(c))[0] || '', w: Math.round(r.width), h: Math.round(r.height), scrollers,
+      footIn: pr ? pr.top >= 0 && pr.bottom <= H + 1 : null, x40: !!xr && xr.width >= 40 && xr.height >= 40, full: Math.abs(r.width - innerWidth) <= 1,
+      vertical: fb.length < 2 || (new Set(tops).size === fb.length && (!prim || !vis(prim) || Math.round(prim.getBoundingClientRect().top) === Math.min(...tops))) /* one button per row · the main one on top */, fb40: fb.every(b => b.getBoundingClientRect().height >= 40),
+      tall: !!body && body.scrollHeight > H, tech: /(INTEGRATED|MIGRATION)-\d{10,}/.test(txt), iso: /\b20\d\d-\d\d-\d\d\b|\b\d\d\/\d\d\/20\d\d\b/.test(txt) };
+  }
+  async function c5Open(name, open) {
+    const d0 = document.querySelector('#modal'); if (d0 && d0.open) d0.close();
+    await open(); for (let k = 0; k < 25 && !(document.querySelector('#modal') || {}).open; k++) await wait(100); await wait(250);
+    const m = c5Modal(name); const d = document.querySelector('#modal'); if (d && d.open) { d.dataset.c5Dirty = ''; d.close(); } await wait(120); return m;
+  }
+  async function cr05() {
+    const res = [], App = global.App, step = (id, pass, info) => res.push(Object.assign({ id, pass: !!pass }, info || {}));
+    if (global.supDataset() !== 'integrated' || !db.feedBase) return [{ id: 'CR5', pass: false, info: 'needs a fresh Integrated demo' }];
+    await c5probe(); const P = global.C5Probe, W = innerWidth, desk = W >= 1200, tab = W <= 768, phone = W <= 640, before = errors.length, today = opsDay();
+    const XTRA = desk ? ['manager', 'mgr-mt'] : W > 768 ? ['planner'] : ['warehouse'], at = { desk: '≥ 1200 px', tab: '≤ 768 px', phone: '≤ 640 px', wide: '≥ 768 px' };
+    const PAGES = OPS.concat(SUP), noRes = t('noResults');
+    try { Object.keys(localStorage).filter(k => /^cr5\.(about|ps)\./.test(k)).forEach(k => localStorage.removeItem(k)); } catch (e) { /* storage blocked */ }
+
+    // the page sweep — Director on every page + the role of this width
+    const sweep = {};
+    for (const [r, u] of [['director'], XTRA]) {
+      await login(r, u); if (global.workCanVisit('supOverview')) await supReady('supOverview');
+      sweep[u || r] = await P.all(PAGES, 1500);
+    }
+    const flat = Object.entries(sweep).flatMap(([who, l]) => l.map(x => Object.assign({ who }, x))), bad = f => flat.filter(f).map(x => x.who + ':' + x.view);
+    const heights = Object.fromEntries((sweep.director || []).map(x => [x.view, x.height]));
+
+    // CR5-HEADER — no eyebrow · breadcrumb group = the menu group (CR4_NAV) · no card / sticky title equal to H1 · at most one full-width bar before the content
+    step('CR5-HEADER', !bad(x => x.eyebrow || x.crumbGrp !== x.navGrp || !x.crumbPage || x.dupTitle.length || x.bars > 1).length,
+      { eyebrow: bad(x => x.eyebrow), crumb: flat.filter(x => x.crumbGrp !== x.navGrp || !x.crumbPage).map(x => x.who + ':' + x.view + ' ' + x.crumbGrp + '≠' + x.navGrp).slice(0, 6), dupTitle: bad(x => x.dupTitle.length), bars: flat.filter(x => x.bars > 1).map(x => x.who + ':' + x.view + ':' + x.bars) });
+    // CR5-FIRST-CONTENT — ≤ 420 px at 1440 · ≤ 400 px at 390
+    const lim = desk ? 420 : W <= 420 ? 400 : null;
+    step('CR5-FIRST-CONTENT', lim == null || !bad(x => x.first == null || x.first > lim).length, { at: '1440 / 390', limit: lim, over: flat.filter(x => lim != null && (x.first == null || x.first > lim)).map(x => x.who + ':' + x.view + ':' + x.first), worst: Math.max(...flat.map(x => x.first || 0)) });
+    // CR5-PAGE-HEIGHT — ≤ 4,000 px at 1440 (D8: Consignment and Supply Review may be taller — the heights go to the README)
+    const D8 = ['supConsign', 'supReview'];
+    step('CR5-PAGE-HEIGHT', !desk || !bad(x => x.height > 4000 && !D8.includes(x.view)).length, { at: at.desk, over: flat.filter(x => desk && x.height > 4000).map(x => x.who + ':' + x.view + ':' + x.height), heights });
+    // CR5-TABLE-FIT — at 1440 no table scrolls sideways unless its first and last columns are sticky (checked at every width: none either)
+    step('CR5-TABLE-FIT', !bad(x => x.wide.length).length && !bad(x => x.hs > 1).length, { wide: flat.filter(x => x.wide.length).map(x => x.who + ':' + x.view + ' ' + x.wide[0]), pageScroll: bad(x => x.hs > 1) });
+    // CR5-MOBILE-CARDS — at 390 every list table is cards; nothing scrolls sideways
+    step('CR5-MOBILE-CARDS', !phone || !bad(x => x.tblMode || x.wide.length || x.hs > 1).length, { at: at.phone, bad: bad(x => phone && (x.tblMode || x.wide.length || x.hs > 1)) });
+    // CR5-TAP — ≤ 768 px: buttons / selects / tick boxes / links ≥ 40 × 40 px
+    step('CR5-TAP', !tab || !bad(x => (x.tap || []).length).length, { at: at.tab, bad: flat.filter(x => tab && (x.tap || []).length).map(x => x.who + ':' + x.view + ' ' + x.tap.join(',')).slice(0, 8) });
+    // CR5-FONT — nothing under 11 px · nothing under 12 px outside tables / cards
+    step('CR5-FONT', !bad(x => x.tiny || x.small).length, { bad: flat.filter(x => x.tiny || x.small).map(x => x.who + ':' + x.view + ' ' + x.tinyEx.concat(x.smallEx).join(';')).slice(0, 8) });
+    // CR5-TECH-TEXT · CR5-DATE (pages; the modals are checked below)
+    step('CR5-TECH-TEXT', !bad(x => x.tech.length).length, { bad: flat.filter(x => x.tech.length).map(x => x.who + ':' + x.view + ' ' + x.tech[0]) });
+    const dateBad = flat.filter(x => x.dates.length).map(x => x.who + ':' + x.view + ' ' + x.dates[0]);
+    // CR5-NO-DISABLED-WALL — at most 2 faded buttons without a reason per page
+    step('CR5-NO-DISABLED-WALL', !bad(x => x.disabledNoTip.length > 2).length, { bad: flat.filter(x => x.disabledNoTip.length > 2).map(x => x.who + ':' + x.view + ' ' + x.disabledNoTip.join(',')) });
+
+    // CR5-MOBILE-SHELL — ≤ 768 px: one 56 px bar · the drawer shows the CR4_NAV groups this role can open · a menu item closes it
+    let shell = { at: at.tab };
+    if (tab) {
+      for (const [r, u] of [['director'], XTRA]) {
+        await login(r, u); global.navigate('overview'); await wait(200);
+        const bar = Math.round(document.querySelector('header').getBoundingClientRect().height), aside = document.querySelector('.shell > aside');
+        const until = async (f, ms) => { for (let k = 0; k < ms / 100 && !f(); k++) await wait(100); return f(); };   // the drawer slides (0.2 s; slower in a background tab)
+        const closed0 = aside.getBoundingClientRect().right <= 1; document.querySelector('.c5-burger').click();
+        const open = await until(() => { const ar = aside.getBoundingClientRect(); return ar.left >= -1 && ar.right > 200; }, 3000);
+        const groups = [...aside.querySelectorAll('.navgroup')].filter(g => g.querySelector('nav button[data-view]')).map(g => g.dataset.group);
+        const expect = CR4_NAV.filter(g => g[2].some(v => global.workCanVisit(v))).map(g => g[0]);
+        const heads = [...aside.querySelectorAll('.navgroup')].filter(g => g.dataset.group !== 'home' && g.querySelector('nav button[data-view]')).every(g => P.vis(g.querySelector('.navhead')));
+        const target = [...aside.querySelectorAll('nav button[data-view]')].map(b => b.dataset.view).find(v => v !== 'overview' && !v.startsWith('sup'));
+        if (target) { aside.querySelector('.navgroup.collapsed [data-view="' + target + '"]')?.closest('.navgroup')?.querySelector('.navhead')?.click(); aside.querySelector('[data-view="' + target + '"]').click(); await wait(320); }
+        const closed1 = await until(() => !document.body.classList.contains('c5-navopen') && aside.getBoundingClientRect().right <= 1, 3000) && (!target || view === target);
+        shell[u || r] = { bar, closed0, open, groups: groups.join('>'), expect: expect.join('>'), heads, closed1 };
+      }
+    }
+    step('CR5-MOBILE-SHELL', !tab || Object.values(shell).filter(x => typeof x === 'object').every(x => x.bar <= 56 && x.closed0 && x.open && x.groups === x.expect && x.heads && x.closed1), shell);
+
+    // CR5-MODAL-* — the main modals + the SKU drawer (Director)
+    await login('director');
+    const M = [];
+    M.push(await c5Open('so', async () => { global.navigate('soRequests'); await wait(300); (document.querySelector('#soNew') || document.querySelector('[data-c5-sonew]'))?.click(); }));
+    M.push(await c5Open('override', async () => { global.navigate('overview'); await wait(150); document.querySelector('[data-c5-user]')?.click(); await wait(80); document.querySelector('[data-c5-override]')?.click(); await wait(300); }));
+    M.push(await c5Open('stockRequest', async () => { global.navigate('allocation'); await wait(300); document.querySelector('#newStockRequest')?.click(); }));
+    M.push(await c5Open('addChannel', async () => { global.navigate('allocation'); await wait(300); document.querySelector('#addStockChannel')?.click(); }));
+    M.push(await c5Open('sopAction', async () => { await supReady('supSop'); document.querySelector('[data-sop-open]')?.click(); }));
+    M.push(await c5Open('version', async () => { document.querySelector('[data-appver]')?.click(); }));
+    await supReady('supStock'); App.openSku(App.model().rows[0].sku); await wait(700);
+    const dr = document.querySelector('#supDrawer'), drIn = dr ? [dr, ...dr.querySelectorAll('*')].filter(e => /auto|scroll/.test(getComputedStyle(e).overflowX) && e.clientWidth > 0 && e.scrollWidth > e.clientWidth + 4 && !e.closest('table.c5-sticky, .tablewrap.c5-scrollx')).map(e => String(e.className).slice(0, 30) + ' ' + e.scrollWidth + '/' + e.clientWidth) : ['no drawer'];
+    const drW = dr ? Math.round(dr.getBoundingClientRect().width) : 0; App.closeSku(); global.U.drawer.close(); await wait(150);
+    const opened = M.filter(m => m.open);
+    step('CR5-MODAL-NOSCROLL', W < 768 || (opened.length === M.length && opened.every(m => !m.scrollers.length && m.size) && !drIn.length && drW <= innerWidth), { at: at.wide, modals: M.map(m => m.name + ':' + (m.open ? m.size + ' ' + m.w + '×' + m.h + (m.scrollers.length ? ' SCROLL ' + m.scrollers.join(';') : '') : 'NOT OPEN')), drawer: drW + ' ' + drIn.join(';') });
+    step('CR5-MODAL-SHEET', !phone || (opened.length === M.length && opened.every(m => m.full && m.vertical && m.fb40)), { at: at.phone, bad: opened.filter(m => !(m.full && m.vertical && m.fb40)).map(m => m.name + ' full' + m.full + ' vertical' + m.vertical + ' fb40' + m.fb40) });
+    step('CR5-MODAL-FOOTER', opened.length === M.length && opened.every(m => m.footIn !== false && m.x40), { tall: opened.filter(m => m.tall).map(m => m.name), bad: opened.filter(m => m.footIn === false || !m.x40).map(m => m.name + ' footIn' + m.footIn + ' x40' + m.x40) });
+    step('CR5-TECH-TEXT (modals)', !opened.some(m => m.tech), { bad: opened.filter(m => m.tech).map(m => m.name) });
+    step('CR5-DATE', !dateBad.length && !opened.some(m => m.iso), { pages: dateBad.slice(0, 6), modals: opened.filter(m => m.iso).map(m => m.name), helper: global.fmtDate('2026-11-27') + ' · ' + global.fmtDateTime(Date.UTC(2026, 10, 25, 23, 56)) });
+
+    // CR5-PAGINATE — > 50 rows → 25 shown · "1–25 of N" = the real count · page 2 has other rows · 50 / 100 · the export keeps N rows
+    await login('director'); global.navigate('allocation'); await wait(400);
+    const pgr = document.querySelector('#page .c5-pager'), tb = pgr ? global.c5PagerTable(pgr) : null, allR = tb ? [...tb.tBodies[0].rows].filter(r => !r.classList.contains('c5-sub') && !r.hasAttribute('data-c5-out')) : [];
+    const shown = () => allR.filter(r => !r.hidden), s1 = shown(), ofTxt1 = pgr ? pgr.querySelector('.c5-of').innerText : '';
+    pgr?.querySelector('[data-c5-pg="1"]')?.click(); await wait(150); const s2 = shown(), disjoint = s2.length === 25 && s2.every(r => !s1.includes(r));
+    const pg2 = document.querySelector('#page .c5-pager'), sz = pg2?.querySelector('[data-c5-size]'); if (sz) { sz.value = '50'; sz.dispatchEvent(new Event('change', { bubbles: true })); await wait(150); }
+    const s50 = shown().length, sz2 = document.querySelector('#page .c5-pager [data-c5-size]'); if (sz2) { sz2.value = '25'; sz2.dispatchEvent(new Event('change', { bubbles: true })); await wait(100); }
+    const ops = { N: allR.length, first: s1.length, text: ofTxt1, textOk: ofTxt1.includes('1–25') && num(ofTxt1.split(/จาก|of/)[1]) === allR.length, disjoint, s50, domKeepsAll: tb ? tb.tBodies[0].rows.length >= allR.length : false };
+    await supReady('supStock'); const sp = document.querySelector('#main .pager'), spTxt = sp ? sp.innerText : '', spN = num(spTxt.split(/จาก|of/)[1]);
+    const stRows = () => [...document.querySelectorAll('#main table tbody tr, #main .clist > *')].map(r => r.innerText.replace(/\s+/g, ' ').trim());   // the whole row (two SKUs can share a name)
+    const p1 = stRows(); document.querySelector('#main [data-pg="1"]')?.click(); await wait(800); const p2 = stRows(); document.querySelector('#main [data-pg="-1"]')?.click(); await wait(600);
+    const keepX = global.U.xlsx; let got = null; global.U.xlsx = (f, sheets) => { got = sheets; }; document.querySelector('#tXlsx')?.click(); global.U.xlsx = keepX;
+    const sup = { N: spN, first: p1.length, text: spTxt.split('\n')[0], textOk: spTxt.includes('1–25'), disjoint: p2.length > 0 && p2.every(x => !p1.includes(x)), exported: got ? got[0].rows.length - 1 : null };
+    await supReady('supQuota'); const qp = document.querySelector('#main .pager'), qTxt = qp ? qp.innerText : '', qN = num(qTxt.split(/จาก|of/)[1]);
+    step('CR5-PAGINATE', ops.N > 50 && ops.first === 25 && ops.textOk && ops.disjoint && ops.s50 === 50 && ops.domKeepsAll && sup.N > 50 && sup.first === 25 && sup.textOk && sup.disjoint && sup.exported === sup.N && qN > 50 && (phone ? /\b25\b/.test(qTxt) : qTxt.includes('1–25')),   // phone: the card list shows 25 + "show more"
+      { ops, supStock: sup, supQuota: qTxt.split('\n')[0] });
+
+    // CR5-ACT-ID — ACT-YYMM-#### · the same number for the same action after a reset (compared with the previous fresh demo) · old numbers migrate with their history
+    await login('planner'); await supReady('supSop'); global.sopSync && global.sopSync(true);
+    const acts = global.sopActs(), idOk = acts.length > 0 && acts.every(a => /^ACT-\d{4}-\d{4}$/.test(a.id));
+    const amap = Object.fromEntries(acts.filter(a => a.source === 'auto').map(a => [a.type + '|' + a.sku + '|' + (a.acc || a.account || ''), a.id]));
+    let prev = null; try { prev = JSON.parse(localStorage.getItem('uat.cr05.actmap') || 'null'); } catch (e) { prev = null; }
+    const same = prev ? Object.keys(prev).filter(k => amap[k]) : [], stable = prev ? same.length > 0 && same.every(k => amap[k] === prev[k]) : null;
+    try { localStorage.setItem('uat.cr05.actmap', JSON.stringify(amap)); } catch (e) { /* storage blocked */ }
+    const src = acts[0], fake = JSON.parse(JSON.stringify(src)), OLDID = 'ACT-MWWS46XM-3D';
+    fake.id = OLDID; fake.created = Date.now(); fake.history = (fake.history || []).concat([{ at: Date.now(), by: 'uat', what: 'UAT C4' }]); const h0 = fake.history.length;
+    acts.push(fake); db.logs.push({ time: Date.now(), user: 'uat', event: 'sopEvent', ref: OLDID + ' · UAT C4' });
+    const moved = global.c5ActMigrate(), fk = global.sopActs().find(a => a.oldId === OLDID);
+    const mig = { moved, id: fk && fk.id, idOk: !!fk && /^ACT-\d{4}-\d{4}$/.test(fk.id), history: !!fk && fk.history.length === h0, log: !!fk && db.logs.some(l => l.ref === fk.id + ' · UAT C4'), noOld: !db.logs.some(l => String(l.ref).includes(OLDID)) };
+    if (fk) { db.sopActions = global.sopActs().filter(a => a !== fk); db.logs = db.logs.filter(l => l.ref !== fk.id + ' · UAT C4'); global.persist(); }
+    step('CR5-ACT-ID', idOk && stable !== false && mig.moved === 1 && mig.idOk && mig.history && mig.log && mig.noOld, { n: acts.length, sample: acts.slice(0, 3).map(a => a.id), stable: stable == null ? 'baseline stored (compared on the next fresh demo)' : stable, compared: same.length, mig });
+
+    // CR5-EMPTY — no "no match" where the user set no filter · the SO page says why and offers the next step · the decision panel does not contradict itself
+    await login('director'); global.navigate('soRequests'); await wait(300); const so = document.querySelector('#page'), soTxt = so.innerText;
+    const soRows = so.querySelectorAll('table tbody tr').length, soOk = !soTxt.includes(noRes) && (soRows > 0 || (soTxt.includes(t('c5SoEmpty')) && (!/\d/.test(soTxt.split(t('c5SoEmpty'))[1] || '') || !!so.querySelector('[data-c5-sonew]'))));
+    global.navigate('allocation'); await wait(350); const al = document.querySelector('#page').innerText, decOk = !al.includes(noRes);
+    step('CR5-EMPTY', !bad(x => x.noRes).length && soOk && decOk, { noRes: bad(x => x.noRes), soRows, soOk, decOk });
+
+    // CR5-HOME-KPI — net sales without achievement · '—' (with the reason) when the month has no IV / CN · achievement in its own card = the Supply number
+    const hk = {};
+    for (const [r, u] of [['director'], ['manager', 'mgr-mt']]) {
+      await login(r, u); await homeReady(); const id = r === 'director' ? 'netMtd' : 'salesMtd', nc = document.querySelector(`[data-hm-card="${id}"]`), ac = document.querySelector('[data-hm-card="ach"]');
+      const has = global.hmReportHas(today.slice(0, 8) + '01', today), val = (nc?.querySelector('strong')?.innerText || '').trim(), tip = nc ? (nc.getAttribute('title') || nc.querySelector('[title]')?.getAttribute('title') || '') : '';
+      await supReady('supQuota'); const MQ = App.model(), achP = Math.round(global.Calc.achMtd(App.DB, MQ.rows, MQ.mask, MQ.asDn) * 10) / 10;
+      hk[u || r] = { val, has, tip: !!tip, noAch: !!nc && !/Achievement|%/.test(nc.innerText), ach: ac ? num(ac.querySelector('strong').innerText) : null, achPage: achP };
+    }
+    step('CR5-HOME-KPI', Object.values(hk).every(x => x.noAch && (x.has ? x.val !== '—' : x.val === '—' && x.tip) && x.ach === x.achPage), hk);
+
+    // CR5-USER-MENU — theme / language / switch user / log out live in the user menu and work · no "Director · move stock now" in the top bar
+    await login('director'); global.navigate('overview'); await wait(200);
+    const um = document.querySelector('.c5-umenu'), ub = document.querySelector('[data-c5-user]'); ub?.click(); await wait(80);
+    const inMenu = { open: !!um && !um.hidden, theme: !!um?.querySelector('#themeSel'), lang: !!um?.querySelector('#lang'), sw: !!um?.querySelector('#globalLogout'), out: !!um?.querySelector('[data-c5-logout]'), override: !!um?.querySelector('[data-c5-override]') };
+    const barBtns = [...document.querySelectorAll('header button, header a')].filter(b => !b.closest('.c5-umenu')).map(b => b.innerText.trim());
+    const noShortcut = !barBtns.some(x => /ย้ายสต็อกทันที|move stock now/i.test(x)) && !document.querySelector('header #identity');
+    const ts = document.querySelector('#themeSel'), th0 = document.documentElement.dataset.theme || ts.value, th1 = th0 === 'dark' ? 'light' : 'dark'; ts.value = th1; ts.dispatchEvent(new Event('change')); await wait(250);
+    const themeOk = document.documentElement.dataset.theme === th1; const ts2 = document.querySelector('#themeSel'); ts2.value = th0; ts2.dispatchEvent(new Event('change')); await wait(200);
+    const l0 = lang, ls = document.querySelector('#lang'); ls.value = l0 === 'th' ? 'en' : 'th'; ls.dispatchEvent(new Event('change')); await wait(200); const langOk = lang !== l0; global.setLang(l0); await wait(150);
+    document.querySelector('[data-c5-user]')?.click(); await wait(60); document.querySelector('#globalLogout')?.click(); await wait(200); const swOk = !session && !!document.querySelector('#loginRole');
+    await login('director'); document.querySelector('[data-c5-user]')?.click(); await wait(60); document.querySelector('[data-c5-logout]')?.click(); await wait(200); const outOk = !session && !!document.querySelector('#loginRole');
+    await login('director');
+    step('CR5-USER-MENU', Object.values(inMenu).every(Boolean) && noShortcut && themeOk && langOk && swOk && outOk, { inMenu, noShortcut, themeOk, langOk, swOk, outOk });
+
+    // CR5-NOLEAK — department roles: page text + phone cards + ⋯ menus + "about" panels + tooltips + labels carry no other department's partner / account
+    const nl = [];
+    for (const [r, u] of PROFILES.filter(([r]) => ['manager', 'salesAdmin'].includes(r))) {
+      await login(r, u); if (global.workCanVisit('supOverview')) await supReady('supOverview');
+      const own = { MT: 'MT', TT: 'TT', Ecom: 'ECOM' }[global.orgSessionGroup()];
+      const ownSale = new Set(global.scopedOrders().flatMap(o => [o.channel, t(o.channel)]));   // an in-scope order's own sales channel (e.g. "LINE OA") may share its name with another department's account — that text is the order's data
+      const names = [...new Set(db.partners.filter(p => !global.visiblePartner(p)).map(p => p.name).concat(App.DB ? App.DB.accounts.filter(a => a.channel !== own).map(a => a.name) : []))].filter(x => x && x.length > 3 && !ownSale.has(x));
+      const hits = [];
+      for (const v of PAGES) {
+        if (!global.workCanVisit(v) || global.navigate(v) === false) continue; await wait(v.startsWith('sup') ? 1000 : 120);
+        const root = document.querySelector('main'), extra = [...root.querySelectorAll('.c5-ddmenu, .c5-about, [hidden]')].map(e => e.textContent).join(' ');
+        const attrs = [...root.querySelectorAll('[title], [data-label], [aria-label]')].map(e => ['title', 'data-label', 'aria-label'].map(a => e.getAttribute(a) || '').join(' ')).join(' ');
+        const txt = root.innerText + ' ' + extra + ' ' + attrs; names.forEach(nm => { if (word(nm).test(txt)) hits.push(v + ':' + nm); });
+      }
+      nl.push({ who: u, names: names.length, hits: [...new Set(hits)].slice(0, 8) });
+    }
+    const supNl = [await noleak('mgr-mt'), await noleak('mgr-tt'), await noleak('mgr-ecom')];
+    step('CR5-NOLEAK', nl.every(x => !x.hits.length) && supNl.every(x => x.pass), { ops: nl.filter(x => x.hits.length), supply: supNl.filter(x => !x.pass).map(x => x.id + ' ' + x.hits.join(',')), width: W });
+
+    // CR5-THEME — 5 pages again in the dark theme (same checks) · the new parts (top bar · user menu · about · pager · modal head) are dark
+    await login('director'); const tsd = document.querySelector('#themeSel'), thKeep = tsd.value; tsd.value = 'dark'; tsd.dispatchEvent(new Event('change')); await wait(250);
+    const dk = await P.all(['overview', 'orders', 'allocation', 'supStock', 'supSop'], 1500);
+    const dkBad = dk.filter(x => x.wide.length || x.hs > 1 || x.tiny || x.small || x.tech.length || x.dates.length || (tab && (x.tap || []).length) || (lim != null && x.first > lim) || x.eyebrow || x.bars > 1).map(x => x.view);
+    global.navigate('allocation'); await wait(300); document.querySelector('[data-c5-user]')?.click(); await wait(80);
+    const darkParts = { head: lum(document.querySelector('header')), menu: lum(document.querySelector('.c5-umenu')), pager: document.querySelector('#page .c5-pager') ? lum(document.querySelector('#page .c5-pager')) : 0 };
+    document.querySelector('[data-c5-user]')?.click(); await wait(60);
+    global.navigate('soRequests'); await wait(250); (document.querySelector('#soNew') || document.querySelector('[data-c5-sonew]'))?.click(); await wait(500);
+    darkParts.modal = document.querySelector('#modal[open] .c5-mhead') ? lum(document.querySelector('#modal[open] .c5-mhead')) : 0; const dm = document.querySelector('#modal'); if (dm && dm.open) { dm.dataset.c5Dirty = ''; dm.close(); }
+    const t3 = document.querySelector('#themeSel'); t3.value = thKeep; t3.dispatchEvent(new Event('change')); await wait(200);
+    step('CR5-THEME', !dkBad.length && Object.values(darkParts).every(x => x < 0.35), { pages: dk.map(x => x.view), bad: dkBad, lum: Object.fromEntries(Object.entries(darkParts).map(([k, v]) => [k, Math.round(v * 100) / 100])) });
+
+    // CR5-VERSION — 1.5.0 · every ?v= = 1.5.0 · history new → old with the old numbers noted · footer / sidebar / login show v1.5.0
+    const html = await fetch('index.html?x=' + Date.now()).then(r => r.text()), vs = [...html.matchAll(/\?v=([^"'&\s>]+)/g)].map(m => m[1]);
+    const EXPV = ['1.5.0', '1.4.0', '1.3.4', '1.3.3', '1.3.2', '1.3.1', '1.1.0', '1.0.0'], OLDV = { '1.4.0': '8.5.0', '1.3.4': '8.4.0', '1.3.3': '8.3.0', '1.3.2': '8.2.0', '1.3.1': '8.1.0', '1.1.0': '8.0.0', '1.0.0': '7.0' };
+    const H = APP_VERSION.history, hOk = JSON.stringify(H.map(h => h[0])) === JSON.stringify(EXPV) && H.every(h => !OLDV[h[0]] || (h[2].th.includes('(เดิม ' + OLDV[h[0]] + ')') && h[2].en.includes('(was ' + OLDV[h[0]] + ')')));
+    await login('director'); global.navigate('overview'); await wait(200);
+    const foot = (document.querySelector('#footBuild') || {}).innerText || '', side = (document.querySelector('.appver-side') || {}).textContent || '';
+    global.logoutForUserSwitch(); global.render(); await wait(150); global.appVersionUI && global.appVersionUI(); const loginV = (document.querySelector('.appver-login') || {}).innerText || '';
+    await login('director');
+    step('CR5-VERSION', APP_VERSION.number === '1.5.0' && vs.length > 20 && vs.every(x => x === '1.5.0') && hOk && foot.includes('v1.5.0') && side.includes('v1.5.0') && loginV.includes('v1.5.0'),
+      { number: APP_VERSION.number, scripts: vs.length, other: [...new Set(vs.filter(x => x !== '1.5.0'))], history: H.map(h => h[0]).join(' '), hOk, foot, side, login: loginV });
+
+    step('CR5-CONSOLE', errors.length === before, { errors: errors.slice(before) });
+    return res.map(x => Object.assign({ width: W }, x));
+  }
+
   global.SupUAT = {
     keep, menu, noleak, anchors, theme, errors,
     opsGate, mobile, flow, phaseC, phaseD, phase3A, phase3B, phase3C, phase3D, cr04, cr04data, login,   // CR-04
+    cr05,   // CR-05
     _proto: () => location.protocol,   // CR-04 I9: the page protocol (a test can pretend file://)
     async all() {
-      const out = [].concat(await anchors(), await menu(), await noleak('mgr-mt'), await noleak('mgr-tt'), await noleak('mgr-ecom'), await theme(), await opsGate(), await cr04());   // CR-04: + cr04()
+      const out = [].concat(await anchors(), await menu(), await noleak('mgr-mt'), await noleak('mgr-tt'), await noleak('mgr-ecom'), await theme(), await opsGate(), await cr04(), await cr05());   // CR-04: + cr04() · CR-05: + cr05()
       return { pass: out.filter(r => r.pass).length, of: out.length, failed: out.filter(r => !r.pass), consoleErrors: errors.slice(), results: out };   // CR-03: + every result (UAT report)
     }
   };

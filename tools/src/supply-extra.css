@@ -193,3 +193,13 @@
 .sup .pp-qpanel{margin-bottom:16px}
 .sup .cc-prop{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
 .sup .asof-btn{min-width:132px;text-align:left;cursor:pointer;white-space:nowrap}
+
+/* CR-05 · Supply pages inside the Ops page: the Ops H1 is the only title · one status line (B4) · tables / cards */
+.sup #main > .pagehead:not(.keep-title) > div:first-child{display:none}
+.sup #main > .pagehead{margin:0 0 12px;justify-content:flex-start}
+.sup #main > .note{width:fit-content;max-width:100%}   /* G1: a must-see note is a short line, not a full-width bar */
+.sup #main > .pagehead .perchip{margin:0}
+.sup .sup-meta{display:none}
+.sup #supTopTitle{display:none}
+.sup .c5-info{border:0;background:transparent;color:var(--accent);padding:0 4px;font-size:14px;cursor:pointer;min-height:0}
+@media(max-width:768px){.sup .ctl,.sup select,.sup .btn,.sup .seg button,.sup button.icon-btn,.sup .fc-chip,.sup .c5-info{min-height:40px}.sup .btn.small{min-height:40px}.sup .icon-btn{min-width:40px}}

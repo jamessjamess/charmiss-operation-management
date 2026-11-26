@@ -86,6 +86,7 @@ const fcName = F => St('fc_' + (F.rr || 'L4W')) + ((F.rm || App.S.rrMode) === 'u
 const pageHeadBefore = Pages.pageHead;
 Pages.pageHead = function (M, titleKey, qKey, right) {
   let h = pageHeadBefore.call(this, M, titleKey, qKey, right);
+  if (titleKey === 's360') h = h.replace('<div class="pagehead">', '<div class="pagehead keep-title">');   // CR-05: SKU 360 keeps its own title
   const pg = App.page, chip = RR_PAGES.includes(pg) ? `<button type="button" class="fc-chip" data-fc-open="1" aria-haspopup="dialog">${U.esc(St('fc_chip', { m: fcName(App.F) }))} ▾</button>` : '';
   h = h.replace(/Run Rate <b>[^<]*<\/b>/, chip || '');
   if (!H_PAGES.includes(pg)) h = h.replace(/<span class="dotsep">·<\/span>[^<]*<b>\d+M<\/b>/, ''); else h = h.replace(/(<span class="dotsep">·<\/span>)[^<]*(<b>\d+M<\/b>)/, `$1${U.esc(St('f_h'))} $2`);

@@ -163,7 +163,7 @@ button.linkish{background:none!important;border:0!important;padding:0!important;
 .hm-fstep:hover:not(:disabled){border-color:var(--accent)}
 .hm-fstep:disabled{cursor:default;opacity:1}
 .hm-fstep b{font-size:18px;overflow-wrap:anywhere}
-.hm-fstep small,.hm-fstep em{font-size:11px;color:var(--muted);font-style:normal}
+.hm-fstep small,.hm-fstep em{font-size:12px;color:var(--muted);font-style:normal}
 .hm-2col{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;align-items:start}
 .hm-alist{display:flex;flex-direction:column}
 .hm-aitem{display:grid;grid-template-columns:60px minmax(0,1fr);gap:10px;text-align:left;border:0;border-top:1px solid var(--line);border-radius:0;background:transparent;padding:8px 18px;color:var(--text);font-weight:400}
@@ -293,3 +293,179 @@ button.linkish[data-hm-home]:hover{color:var(--accent);text-decoration:underline
 .fc-ex .fc-tbl{width:100%;border-collapse:collapse;margin-top:4px}
 .fc-ex .fc-tbl td,.fc-ex .fc-tbl th{padding:3px 6px;border-bottom:1px solid var(--line);font-size:12px}
 .fc-ex .fc-tbl tr.on td{font-weight:700}
+
+/* ================================================================ CR-05 · UX / UI (G1–G9 · A · B · C) */
+/* B6 · the top bar: breadcrumb (group / page) · simulated-data badge · SSO DEMO · user menu */
+header.c5-head{padding:8px 24px;min-height:56px;gap:12px;flex-wrap:nowrap}
+.c5-left{display:flex;align-items:center;gap:10px;min-width:0;flex:1 1 auto}
+.c5-burger{display:none;width:40px;height:40px;padding:0;font-size:20px;line-height:1;flex:0 0 40px}
+.c5-crumb{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);min-width:0;white-space:nowrap;overflow:hidden}
+.c5-crumb b{color:var(--text);overflow:hidden;text-overflow:ellipsis}
+.c5-crumb span{width:auto;flex:0 0 auto}   /* the base sheet sizes every "nav span" (sidebar icons) at 28 px */
+.c5-crumb b{min-width:0}
+.c5-grp{font-size:12px;letter-spacing:.6px}
+.c5-tools{position:relative;flex-wrap:nowrap;flex:0 0 auto}
+.c5-mock{white-space:nowrap;cursor:help}
+.c5-user{border:0;padding:0;width:40px;height:40px;border-radius:50%;cursor:pointer;font-weight:700;display:grid;place-items:center}
+.c5-umenu{position:absolute;right:0;top:calc(100% + 8px);z-index:950;width:300px;max-width:calc(100vw - 16px);background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 36px rgba(15,23,42,.18);padding:14px;display:flex;flex-direction:column;gap:10px;text-align:left}
+.c5-umenu[hidden]{display:none}
+.c5-uhead b{display:block;color:var(--text)}
+.c5-uhead small{color:var(--muted);font-size:12px}
+.c5-ubadges{display:none;gap:6px;flex-wrap:wrap}
+.c5-urow{display:flex;flex-direction:row;justify-content:space-between;align-items:center;gap:10px;font-size:13px;color:var(--text)}
+.c5-urow select{max-width:170px;width:170px}
+.c5-uacts{display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:10px}
+.c5-uacts button{text-align:left;width:100%;font-size:13px}
+/* G1 · page header: H1 + one line · plan chip + "about this page" beside H1 */
+.content{padding:22px 28px}
+.pagehead{margin-bottom:16px;align-items:flex-start}
+.c5-h1row{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap}
+.c5-h1row h1{margin:0}
+.pagehead .heading > .muted{margin-top:4px;font-size:13px}
+.c5-aboutbtn{border:0;background:transparent;color:var(--accent);font-size:13px;padding:6px 8px;min-height:0;white-space:nowrap}
+.c5-aboutbtn:hover{background:transparent;text-decoration:underline}
+.c5-about{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:10px 14px;margin:-4px 0 16px;display:flex;flex-direction:column;gap:6px}
+.c5-about[hidden]{display:none}
+.c5-about .c5-note,.c5-about .banner{margin:0;padding:0;border:0;background:transparent;display:block;color:var(--muted);font-size:13px;line-height:1.6;border-radius:0}
+.c5-about .c5-note > *{margin:0}
+.c5-about .c5-meta span{display:inline;margin-right:10px}
+.c5-ro{font-size:12px;color:var(--muted);margin:0 0 10px;width:fit-content;max-width:100%}   /* G1: a short line, not a full-width bar */
+.c5-shade{display:none}
+/* B8 · left menu: 36 px rows · one line · tighter groups */
+aside{padding:16px 12px;gap:12px;overflow-y:auto}
+.brand{font-size:20px;padding:0 10px}
+aside .navgroups{gap:2px}
+aside .navgroup + .navgroup{padding-top:4px}
+aside .navhead{padding:6px 10px 2px}
+aside nav{gap:1px}
+aside nav button{height:36px;line-height:36px;padding:0 10px;display:block;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px}
+aside nav button span{display:inline-block;width:24px}
+.sidebarfoot{padding:10px;font-size:12px}
+/* G2 · tables: headers on at most 2 lines · pager · sticky first / last column when wider than the box */
+table.c5-ct th{white-space:normal;line-height:1.3;vertical-align:bottom;min-width:56px}
+.c5-scrollx{position:relative}
+table.c5-sticky th.c5-s1,table.c5-sticky th.c5-s2,table.c5-sticky th.c5-sl{position:sticky;z-index:3}
+table.c5-sticky td.c5-s1,table.c5-sticky td.c5-s2,table.c5-sticky td.c5-sl{position:sticky;z-index:2;background:var(--panel)}
+table.c5-sticky .c5-s1{left:0}
+table.c5-sticky .c5-s2{box-shadow:6px 0 6px -6px rgba(15,23,42,.28)}
+table.c5-sticky .c5-sl{right:0;box-shadow:-6px 0 6px -6px rgba(15,23,42,.28)}
+.c5-pager{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;padding:10px 16px;font-size:13px;color:var(--muted);border-top:1px solid var(--line)}
+.c5-pg{display:flex;align-items:center;gap:8px}
+.c5-pg button{padding:4px 14px;min-height:0;font-size:16px;line-height:1.2}
+.c5-size{display:flex;flex-direction:row;align-items:center;gap:8px;font-size:13px}
+.c5-size select{padding:4px 8px}
+td.c5-tap,th.c5-tap{cursor:pointer}
+/* G3 · modals: S 480 · M 720 · L 960 · fixed head + foot · close 40 px */
+dialog#modal{max-width:92vw;max-height:90vh;overflow:hidden}
+dialog#modal.c5-s{width:min(480px,92vw)}
+dialog#modal.c5-m{width:min(720px,92vw)}
+dialog#modal.c5-l{width:min(960px,92vw)}
+dialog#modal .c5-mbody{max-height:90vh;overflow:auto;padding-top:0;padding-bottom:0}
+dialog#modal .c5-mhead{position:sticky;top:0;z-index:5;background:var(--panel);padding:18px 0 12px;margin:0 0 6px;border-bottom:1px solid var(--line);align-items:flex-start}
+dialog#modal .c5-mfoot{position:sticky;bottom:0;z-index:5;background:var(--panel);padding:12px 0 18px;margin-top:16px;border-top:1px solid var(--line);flex-wrap:wrap}
+.c5-x{width:40px;height:40px;min-width:40px;padding:0;font-size:20px;line-height:1;border-radius:8px;flex:0 0 40px}
+dialog#modal .tablewrap{max-width:100%}
+/* G4 · phones and small tablets: one-row bar (56 px) · menu in a drawer from the left */
+@media(max-width:768px){
+  .shell{display:block}
+  aside{position:fixed;top:0;left:0;bottom:0;width:min(300px,86vw);height:100dvh;z-index:1001;transform:translateX(-105%);transition:transform .2s ease;overflow-y:auto;padding:16px 12px;border:0;display:flex;flex-direction:column;gap:12px}
+  body.c5-navopen aside{transform:none}
+  .c5-shade{display:none}
+  body.c5-navopen .c5-shade{display:block;position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:1000}
+  aside .navgroups{flex-direction:column;overflow:visible;gap:2px;margin-top:0}
+  aside .navgroup{flex-direction:column;align-items:stretch;flex:0 0 auto}
+  aside .navgroup + .navgroup{border-left:0;padding-left:0;border-top:1px solid #33465e;padding-top:6px}
+  aside .navhead{display:flex}
+  aside .navgroup.collapsed nav{display:none}
+  aside nav{display:grid;overflow:visible}
+  aside .sidebarfoot,aside .brand small{display:block}
+  header.c5-head{height:56px;min-height:56px;padding:8px 12px}
+  .c5-burger{display:inline-flex;align-items:center;justify-content:center}
+  .c5-crumb .c5-grp,.c5-crumb .c5-sep{display:none}
+  .c5-crumb b{font-size:16px}
+  .c5-tools .c5-mock,.c5-tools > .pill.ok{display:none}
+  .c5-ubadges{display:flex}
+  .content{padding:14px 14px 24px}
+  .pagehead{margin-bottom:10px}
+  .pagehead h1,.c5-h1row h1{font-size:22px}
+  main button,main select,main input:not([type=checkbox]):not([type=radio]),main a[href]{min-height:40px}
+  main button{min-width:40px}
+  .sop-tools select,.sop-tools .check{min-height:40px}
+  .column-menu label{display:flex;align-items:center;gap:8px;min-height:40px}
+  .column-menu label input{width:20px;height:20px}
+  main button.pf-bar{min-width:0;min-height:0}
+  main .linkish{min-width:40px}
+  #page .work-family-tabs{margin-bottom:10px}
+  #page .ops-cockpit-head{margin-bottom:8px}
+  table.c5-ct th button{min-height:40px;width:100%;text-align:inherit}
+  table.c5-ct th.c5-tap,table.c5-ct td.c5-tap{min-width:40px;height:40px}
+  .c5-pg button{min-height:40px}
+}
+/* G2 · 640 px and below: list tables become cards (label · value) · G3 · modals become full-screen sheets */
+@media(max-width:640px){
+  .tablewrap{overflow:visible}
+  .order-table-scroll{max-height:none}
+  table.c5-ct{white-space:normal;display:block;min-width:0!important;width:100%}
+  table.c5-ct thead{display:none}
+  table.c5-ct tbody,table.c5-ct tfoot{display:flex;flex-direction:column;gap:10px;padding:10px 0}
+  table.c5-ct tr{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:8px 12px}
+  table.c5-ct tr[hidden]{display:none}
+  table.c5-ct td{display:grid;grid-template-columns:minmax(0,38%) minmax(0,1fr);column-gap:12px;align-items:start;padding:6px 0;border:0;text-align:left;white-space:normal;min-width:0!important;max-width:none}
+  table.c5-ct td::before{content:attr(data-label);grid-column:1;grid-row:1 / span 20;color:var(--muted);font-size:12px;font-weight:400}
+  table.c5-ct td > *{grid-column:2;min-width:0;max-width:100%}
+  table.c5-ct td > button,table.c5-ct td > a[href]{min-width:40px}
+  table.c5-ct td:first-child{display:block;font-weight:600;padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:4px}
+  table.c5-ct td:first-child::before,table.c5-ct td:not([data-label])::before{display:none}
+  table.c5-ct td:not([data-label]){display:block}
+  table.c5-ct td small{display:block;margin-top:2px}
+  table.c5-ct td.c5-tap{display:flex;align-items:center;min-height:40px;border-bottom:0;margin:0;padding:0}
+  table.c5-ct td.c5-tap input{width:22px;height:22px}
+  dialog#modal,dialog#modal.c5-s,dialog#modal.c5-m,dialog#modal.c5-l{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0;border-radius:0;border:0}
+  dialog#modal .c5-mbody{max-height:100dvh;min-height:100dvh;display:flex;flex-direction:column;padding:0 16px}
+  dialog#modal .c5-mfoot{flex-direction:column;align-items:stretch;margin-top:auto}
+  dialog#modal .c5-mfoot button{width:100%;min-height:44px}
+  dialog#modal .c5-mfoot .primary{order:-1}
+}
+/* G5 · type: nothing under 12 px outside tables / cards (11 px for secondary lines inside them) */
+small{font-size:12px}
+td small{font-size:11px}
+/* CR-05 · compact rows (desktop) · dropdowns · page pieces */
+@media(min-width:641px){table.c5-ct td{padding:10px 14px}table.c5-ct th{padding:10px 14px}}
+table.c5-ct td small{margin-top:3px}
+.c5-dd{position:relative;display:inline-block}
+.c5-ddbtn{white-space:nowrap}
+.c5-ddmenu{position:absolute;left:0;top:calc(100% + 6px);z-index:900;min-width:220px;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 30px rgba(15,23,42,.16);padding:6px;display:flex;flex-direction:column;gap:2px}
+.c5-ddmenu[hidden]{display:none}
+.c5-ddmenu button{border:0;background:transparent;text-align:left;width:100%;padding:8px 10px;border-radius:6px;white-space:nowrap;font-weight:400;color:var(--text)}
+.c5-ddmenu button:hover{background:rgba(127,127,127,.1)}
+.c5-right .c5-ddmenu,.c5-more.c5-right .c5-ddmenu{left:auto;right:0}
+.c5-toolrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.c5-wait{color:var(--muted);font-size:12px;white-space:nowrap}
+.ops-cockpit-grid > div{position:static!important;top:auto!important}
+.ops-cockpit-grid.c5-onecol{grid-template-columns:minmax(0,1fr)}
+.c5-decide{margin-bottom:16px}
+.c5-decide > summary{cursor:pointer;padding:12px 16px;display:flex;gap:8px;align-items:center}
+.c5-decide > div{padding:0 12px 12px}
+.c5-decide > div > .panel{margin-bottom:10px}
+.c5-shops .c5-shopname{display:inline-flex;align-items:center;gap:10px}
+.c5-shops .c5-shopname > span{display:flex;flex-direction:column}
+.c5-sync{white-space:normal;max-width:260px;display:block}
+.c5-tfilter{display:flex;gap:8px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--line)}
+.c5-tfilter input{flex:1 1 220px}
+.c5-acctabs{margin-bottom:16px}
+.c5-sosum{margin:6px 0}
+.c5-tip{cursor:help;color:var(--accent)}
+.c5-sotable td small{display:block}
+dl.c5-kv{display:grid;grid-template-columns:repeat(2,minmax(0,160px) minmax(0,1fr));gap:8px 14px;margin:8px 0 12px;font-size:13px}
+dl.c5-kv dt{color:var(--muted)}
+dl.c5-kv dd{margin:0;color:var(--text);overflow-wrap:anywhere}
+@media(max-width:900px){dl.c5-kv{grid-template-columns:minmax(0,140px) minmax(0,1fr)}}
+
+.c5-fold{margin-bottom:16px}
+.c5-fold > summary{cursor:pointer;padding:12px 16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.c5-fold > .panel{margin:0;border:0;border-top:1px solid var(--line);border-radius:0}
+@media(max-width:768px){
+  .pp-chip,.c5-aboutbtn,.c5-info,.text-link,.order-id-link,.linkish,.cr4-next,.c5-ddbtn,.ofb-chip button,.ofb-clear{min-height:40px;min-width:40px}
+  .c5-info{display:inline-grid;place-items:center}
+  .ofb-chip{min-height:40px}
+}

@@ -1,4 +1,4 @@
-# Charmiss Operations Management (Charmiss Ops) — v8.5.0
+# Charmiss Operations Management (Charmiss Ops) — v1.5.0
 
 เว็บเดียวที่รวม **Commerce Operations** (OMS + Quota · ระบบบันทึก) กับ **Supply Planning** (ระบบวิเคราะห์และวางแผน) ตาม `Document/CR-01`
 HTML + CSS + Vanilla JS · static (ไม่มี Backend) · ข้อมูลจำลองทั้งหมด · Deploy แบบ static ได้ (GitHub Pages)
@@ -17,16 +17,18 @@ HTML + CSS + Vanilla JS · static (ไม่มี Backend) · ข้อมู�
 | C | B1 ATP · B2 แผงอนุมัติ Quota · B3 ข้อเสนอ Supply · B4 การ์ด Supply Alert · B5 Review + งานค้าง · F7 ETA | ✅ เสร็จ |
 | D | F1 Achievement MTD · F2 กราฟแนวนอนบนมือถือ · F3 โหลดเพิ่ม 20 · F4 DOC Δ สีเทา · F8 นับจริงฝากขาย · UAT ทั้งหมด · README ฉบับเต็ม | ✅ เสร็จ |
 
-**CR-03 — ยกระดับ Supply Planning ตามแนวปฏิบัติที่ดี** (`Document/CR-03 - Supply Planning Best Practice Upgrade.md`) — **ปิดแล้ว 25 พ.ย. 2026 (v8.4.0)**
+**CR-03 — ยกระดับ Supply Planning ตามแนวปฏิบัติที่ดี** (`Document/CR-03 - Supply Planning Best Practice Upgrade.md`) — **ปิดแล้ว 25 พ.ย. 2026 (v1.3.4 · เดิม v8.4.0)**
 
 | Phase | ขอบเขต | สถานะ |
 |---|---|---|
-| 3A ข้อมูล | R1 รับรายงาน Sales Out + Run Rate ตามข้อมูลจริง · R2 เบิกออกที่ไม่ใช่การขาย · selfCheck 10–11 · เลขเวอร์ชันในแอป | ✅ เสร็จ (v8.1.0) |
-| 3B สูตร | R3 Run Rate ปรับช่วงของขาด (OOS) + Lost sales · R4 ABC-XYZ + Safety Stock แบบสถิติ · selfCheck 12 | ✅ เสร็จ (v8.2.0) |
-| 3C วิเคราะห์ | R5 Early Warning ฝากขาย · R6 FVA + Tracking signal · ข้อเสนอ Quota เริ่มจาก Naive | ✅ เสร็จ (v8.3.0) |
-| 3D กระบวนการ | R7 รอบ S&OP: Action log + Snapshot แผน + วันปิดรับแก้แผน · Supply Review รายเดือน 4 ส่วน · README + UAT ทั้งชุด | ✅ เสร็จ (v8.4.0) |
+| 3A ข้อมูล | R1 รับรายงาน Sales Out + Run Rate ตามข้อมูลจริง · R2 เบิกออกที่ไม่ใช่การขาย · selfCheck 10–11 · เลขเวอร์ชันในแอป | ✅ เสร็จ (v1.3.1 · เดิม v8.1.0) |
+| 3B สูตร | R3 Run Rate ปรับช่วงของขาด (OOS) + Lost sales · R4 ABC-XYZ + Safety Stock แบบสถิติ · selfCheck 12 | ✅ เสร็จ (v1.3.2 · เดิม v8.2.0) |
+| 3C วิเคราะห์ | R5 Early Warning ฝากขาย · R6 FVA + Tracking signal · ข้อเสนอ Quota เริ่มจาก Naive | ✅ เสร็จ (v1.3.3 · เดิม v8.3.0) |
+| 3D กระบวนการ | R7 รอบ S&OP: Action log + Snapshot แผน + วันปิดรับแก้แผน · Supply Review รายเดือน 4 ส่วน · README + UAT ทั้งชุด | ✅ เสร็จ (v1.3.4 · เดิม v8.4.0) |
 
-**CR-04 — หน้าหลักแบบ Command Center + จัดลำดับเมนูใหม่ + รวมปัญหาที่พบ** (`Document/CR-04 - Home Command Center, Menu Order and Fix List.md`) — **ปิดแล้ว 26 พ.ย. 2026 (v8.5.0) · ทำรอบเดียวครบทุกข้อ (R1–R12 · I1–I10) · ไม่มีข้อที่ต้องถอยกลับ** · การเปลี่ยนต่อจากนี้ (เช่น Open issues OI-1–OI-3) ต้องเปิด CR ใหม่ — รายละเอียดในหัวข้อ CR-04 ด้านล่าง · รายงาน UAT `uat/CR-04-UAT-2026-11-26/`
+**CR-04 — หน้าหลักแบบ Command Center + จัดลำดับเมนูใหม่ + รวมปัญหาที่พบ** (`Document/CR-04 - Home Command Center, Menu Order and Fix List.md`) — **ปิดแล้ว 26 พ.ย. 2026 (v1.4.0 · เดิม v8.5.0) · ทำรอบเดียวครบทุกข้อ (R1–R12 · I1–I10) · ไม่มีข้อที่ต้องถอยกลับ** · การเปลี่ยนต่อจากนี้ (เช่น Open issues OI-1–OI-3) ต้องเปิด CR ใหม่ — รายละเอียดในหัวข้อ CR-04 ด้านล่าง · รายงาน UAT `uat/CR-04-UAT-2026-11-26/`
+
+**CR-05 — UX/UI ทั้งระบบ (Responsive · ความรก · ความชัดเจน)** (`Document/CR-05 - UX UI Cleanup (Responsive, Clutter, Clarity).md`) — **เสร็จ 26 พ.ย. 2026 (v1.5.0) · ทำรอบเดียว (G1–G9 · A1–A6 · B1–B8 · C1–C10 · §9 เลขเวอร์ชันใหม่) · ไม่มีข้อที่ต้องถอยกลับ · Open issues OI-1–OI-3** — รายละเอียดในหัวข้อ CR-05 ด้านล่าง · รายงาน UAT `uat/CR-05-UAT-2026-11-26/` · ภาพก่อน / หลัง `uat/CR-05-screenshots/`
 
 รายงาน UAT CR-01: `uat/Charmiss-Ops-Management-UAT-2026-11-25/` (HTML + CSV + JSON + ภาพหน้าจอ รูปแบบเดียวกับรายงาน UAT เดิม)
 
@@ -39,8 +41,9 @@ HTML + CSS + Vanilla JS · static (ไม่มี Backend) · ข้อมู�
 
 ## เลขเวอร์ชันของแอป (CR-03)
 - ตั้งที่เดียว: `version.js` (`APP_VERSION.number` + ประวัติแต่ละรุ่น) · แสดงที่ **Sidebar ล่าง** (ใต้ปุ่มเริ่มชุดสาธิตใหม่) · **Footer** ของทุกหน้า · **หน้า Login** — กดเลขเวอร์ชันเพื่อดูประวัติรุ่น
-- ตอนออกรุ่นใหม่: เปลี่ยน `APP_VERSION.number` + เพิ่มบรรทัดประวัติ และเปลี่ยน `?v=` ทุกตัวใน `index.html` เป็นเลขนั้น (ต่อท้ายได้ เช่น `8.4.0-3d4` — ต้องไม่ซ้ำค่าที่เคยใช้ ให้เบราว์เซอร์โหลดไฟล์ใหม่)
-- ลำดับรุ่น: 7.0 (Ops v13) → **8.0.0** CR-01 ครบ A–D → **8.1.0** CR-03 Phase 3A → **8.2.0** CR-03 Phase 3B → **8.3.0** CR-03 Phase 3C → **8.4.0** CR-03 Phase 3D (ครบ CR-03) → **8.5.0** CR-04 (หน้าหลัก Command Center · เมนูใหม่ · รวมปัญหาที่พบ)
+- **กติกาเลข (CR-05 §9): `Phase.Release.Fix`** — เลขหน้า = Phase (Phase 1 ต้นแบบ / UAT = 1.x) · เลขกลาง = ลำดับ CR ที่ปล่อย (CR-05 = 1.5 · CR ถัดไป = 1.6 · CR-10 = 1.10) · เลขท้าย = แก้ไขเล็กหลังปล่อย หรือ Phase ย่อยของ CR (CR-03 3A–3D = 1.3.1–1.3.4) · **1.2 ว่างไว้** — CR-02 ยังไม่ได้ทำ เมื่อปล่อยให้ใช้เลขรุ่นถัดไป ณ ตอนนั้น
+- ตอนออกรุ่นใหม่: เปลี่ยน `APP_VERSION.number` / `label` / `date` + เพิ่มบรรทัดประวัติบนสุด และตั้ง `?v=` **ทุกตัว**ใน `index.html` เป็นเลขนั้นพอดี (ระหว่างพัฒนาใช้ต่อท้ายได้ เช่น `1.5.0-d12` แต่ตอนปล่อยต้องเป็น `1.5.0`) · `SupUAT.cr05()` ตรวจทั้งหมดนี้ (CR5-VERSION)
+- ลำดับรุ่น (เลขใหม่ · เดิม): **1.0.0** Ops v13 (เดิม 7.0) → **1.1.0** CR-01 ครบ A–D (เดิม 8.0.0) → **1.3.1–1.3.4** CR-03 Phase 3A–3D (เดิม 8.1.0–8.4.0) → **1.4.0** CR-04 หน้าหลัก Command Center · เมนูใหม่ · รวมปัญหาที่พบ (เดิม 8.5.0) → **1.5.0** CR-05 UX/UI ทั้งระบบ — ประวัติในแอปมี "(เดิม x)" ทุกแถวที่เปลี่ยนเลข
 
 ## เมนู (Sidebar จัดเป็นกลุ่ม Module พับ/กางได้) — ลำดับใหม่ตาม CR-04 R1
 
@@ -343,7 +346,7 @@ Early warning `98.8 / 12 / 18 / 23 / 0 / 22 / 20 / 104` (In-stock % / WOS แด
 ### แก้บั๊กเดิมระหว่างทดสอบ 3D
 - เริ่มชุดสาธิต Integrated ใหม่ตอนที่ CDN โหลดช้า → ระบบตกไปเป็นชุด UAT (`Papa is not defined` เพราะการ resume เริ่มก่อน Library ที่ท้ายหน้า) — แก้ให้ resume รอ `DOMContentLoaded` (`supply-planning.js`)
 
-## CR-04 — หน้าหลัก Command Center + เมนูใหม่ + รวมปัญหาที่พบ (v8.5.0) — ปิดแล้ว 26 พ.ย. 2026
+## CR-04 — หน้าหลัก Command Center + เมนูใหม่ + รวมปัญหาที่พบ (v1.4.0 · เดิม v8.5.0) — ปิดแล้ว 26 พ.ย. 2026
 
 `Document/CR-04 - Home Command Center, Menu Order and Fix List.md` · ไฟล์ใหม่ `cr04-core.js` · `cr04-nav.js` · `cr04-home.js` · `cr04-lists.js` · `cr04-period.js` · `cr04-supply.js` · `cr04-ops.js` (ครอบฟังก์ชันเดิมแบบโมดูลอื่นของ Ops · โหลดท้ายสุด)
 
@@ -422,6 +425,80 @@ Early warning `98.8 / 12 / 18 / 23 / 0 / 22 / 20 / 104` (In-stock % / WOS แด
 - **PROD-01** ตัวกรอง (sessionStorage) · คำขอปรับยอดฝากขาย · รอบแผน อยู่ในเบราว์เซอร์ — ต้องย้ายไประบบกลางเมื่อเชื่อมระบบจริง
 - ไม่มีข้อที่ต้องถอยกลับ — ทุก Req ของ CR-04 ทำครบ
 
+## CR-05 — UX/UI ทั้งระบบ (Responsive · ความรก · ความชัดเจน) (v1.5.0)
+
+`Document/CR-05 - UX UI Cleanup (Responsive, Clutter, Clarity).md` · ไฟล์ใหม่ `cr05-ui.js` (มาตรฐานกลาง G1–G9 + โครงหน้า) · `cr05-pages.js` (รายหน้า) — ครอบฟังก์ชันเดิมแบบ CR-04 · โหลดหลัง `cr04-ops.js` · CSS ใน `tools/src/ops-extra.css` / `supply-extra.css` (ส่วน "CR-05") · ไม่แตะ `calc.js` / `supply-feed.js` / Quota / สิทธิ์ — `anchors()` และ `anchors('new')` ตรงเหมือนเดิม
+
+| ข้อ | ทำอะไร | ที่ไหน |
+|---|---|---|
+| G1 ส่วนหัว | H1 + คำอธิบาย 1 บรรทัด · ชิปรอบแผนอยู่ข้าง H1 · ป้ายข้อมูลจำลองเป็น Badge ในแถบบน · แถบอธิบาย / ข้อควรรู้ของหน้า (และข้อมูล Ops ณ / WMS ของหน้า Supply) รวมใน **ⓘ เกี่ยวกับหน้านี้** (เปิดครั้งแรก · จำต่อผู้ใช้ต่อหน้า) · ไม่มี Eyebrow · หัวการ์ด / แถบติดหัวที่ซ้ำ H1 ถูกเอาออก | `c5Header()` |
+| G2 ตาราง | หัวคอลัมน์ ≤ 2 บรรทัด · แบ่งหน้าเมื่อเกิน 50 แถว: 25 แถว เลือก 25 / 50 / 100 (จำต่อผู้ใช้ต่อตาราง `cr5.ps.*`) "1–25 จาก N" · ตารางที่กว้างกว่ากรอบตรึงคอลัมน์แรก (+ ช่องติ๊ก) และคอลัมน์สุดท้ายพร้อมเงา · ≤ 640px เป็น Card (ป้าย · ค่า) · Supply ใช้ Component เดียวกัน (`U.table` · Stock & Projection) · "แสดงเพิ่ม" บนมือถือทีละ 25 | `c5Tables()` · `c5Paginate()` · `c5Sticky()` · `supply/ui.js` · `supply/pages/stock.js` |
+| G3 Modal | S 480 · M 720 · L 960 (`max-width: 92vw`) เลือกตามเนื้อหา · หัว + แถบปุ่มล่างติดที่ · ปุ่ม × 40×40 · Esc / คลิกพื้นหลังปิด (ฟอร์มที่กรอกแล้วถามก่อน) · ≤ 640px เต็มจอ ปุ่มเรียงแนวตั้ง ปุ่มหลักบนสุด | `c5Modal()` |
+| G4 / A2 มือถือ | แถบบนแถวเดียว 56px (☰ · ชื่อหน้า · ผู้ใช้) · เมนูเป็น Drawer จากซ้ายตามกลุ่ม `CR4_NAV` (พับ DATA / ADMIN) · ข้อมูลแรก ≤ 400px ทุกหน้า | `c5Shell()` · `c5NavOpen()` |
+| G5 / B7 ตัวอักษร · พื้นที่กด | Build CSS ยกทุกขนาดที่ต่ำกว่า 12px เป็น 12px (ในตาราง / Card 11px) · ≤ 768px ปุ่ม / Select / ช่องติ๊ก / ลิงก์ ≥ 40×40px (ช่องติ๊กใช้ทั้งช่องของตารางเป็นพื้นที่กด) | `tools/build_css.py` (`clamp_fonts`) · CSS |
+| G6 ข้อความเทคนิค | `WMS version INTEGRATED-…` / `MIGRATION-…` → "ข้อมูล WMS ณ 26 พ.ย. 2026 06:55" รหัสเดิมอยู่ใน Tooltip ⓘ | `c5TextSweep()` |
+| G7 วันที่ | ทุกหน้า / Modal ใช้ `fmtDate` / `fmtDateTime` (รวม `toLocaleString` เดิม · ข้อความ ISO และ dd/mm/yyyy · วันที่ในประวัติเวอร์ชัน) · Export ยังเป็น ISO | `cr05-ui.js` · `version.js` |
+| G8 สถานะว่าง | "ไม่มีรายการในช่วง …" + [ดูทุกช่วงเวลา] หรือ "ยังไม่มีรายการ" เมื่อผู้ใช้ไม่ได้ตั้งตัวกรองเอง · "ไม่พบรายการตามเงื่อนไข" เหลือเฉพาะเมื่อผู้ใช้กรองเอง | `c5Empty()` |
+| G9 ปุ่ม | ปุ่มที่บทบาทไม่มีสิทธิ์ (สีจางซ้ำ ๆ) ซ่อน + หมายเหตุบรรทัดเดียว "บทบาทนี้ดูได้อย่างเดียว…" · ปุ่มที่ปิดชั่วคราวคงไว้ | `c5Walls()` |
+| A1 Modal เตรียมคำขอ SO | ขนาด L · คอลัมน์ SKU · คงเหลือ (อนุมัติ · ใช้แล้ว) · ขอใช้ · ผลตรวจ · บรรทัดสรุป "คู่ค้า · ช่องทาง · n SKU · n ชิ้น" + กติกา SO หักโควตาใน ⓘ · มือถือเต็มจอ | `cr05-pages.js` (`soRequestForm`) |
+| A3 ตารางกว้าง | ทุกตารางในรายการ A3 พอดีกรอบที่ 1440 หรือตรึงคอลัมน์แรก + สุดท้าย · ไม่มีหน้าที่เลื่อนข้างที่ 1024 | G2 |
+| A4 ตารางบนมือถือ | ทุกหน้าในรายการเป็น Card ที่ 390px | G2 |
+| A5 แผงงานที่ต้องตัดสินใจ | ≥ 1440px อยู่ขวาแบบไม่ติดจอ · < 1440px เป็นแถบพับ "งานที่ต้องตัดสินใจ (n)" เหนือตาราง | `c5DecidePlace()` |
+| A6 Modal สูง | ปุ่มล่างติดที่ (G3) — Director Override ปุ่มบันทึกอยู่ในจอเสมอ | G3 |
+| B1 แบ่งหน้า | สินค้าคงคลังและโควตา (960 แถว) · โควต้า Ecom แยกตามร้าน (+ ตัวกรองร้าน + ค้นหา SKU) · Action log · รายการสินค้า · บัญชีและสิทธิ์ (แยกแท็บ ผู้ใช้ / บทบาท / ฝ่ายและสิทธิ์) | G2 · `c5Ecom()` · `c5Access()` |
+| B2 ส่วนหัวซ้อน | G1 ทุกหน้า | G1 |
+| B3 ร้านค้า E-commerce | การ์ด 6 ร้าน → ตาราง ร้าน · สถานะเชื่อมต่อ · ออเดอร์ในระบบ · คิวรอนำเข้า · ซิงก์ล่าสุด · ⋯ (ตั้งค่าร้าน / SKU · ดูออเดอร์ · จำลองดึง / ส่ง) | `c5Ecom()` |
+| B4 บรรทัดข้อมูล Supply | เหลือบรรทัดเดียว (AS OF · คาดการณ์ ▾ · ⓘ) — ข้อมูล Ops ณ / WMS / หมายเหตุ อยู่ใน ⓘ | `c5SupHead()` · CSS |
+| B5 แถบเครื่องมือ สินค้าคงคลังและโควตา | ปุ่มหลัก ＋ สร้างการจัดสรร · ปุ่มรอง ＋ ขอรับสต็อก · เมนู "นำเข้า / ส่งออก ▾" · เมนู "⋯ เพิ่มเติม" (เพิ่มช่องทางสต็อก · Director Override เฉพาะคนที่มีสิทธิ์) | `c5Alloc()` |
+| B6 แถบบน | Breadcrumb · Badge ข้อมูลจำลอง · SSO DEMO · ไอคอนผู้ใช้ → เมนู: ชื่อ / บทบาท · ธีม · ภาษา · บัญชีและสิทธิ์ · ย้ายสต็อกด่วน (Director) · สลับผู้ใช้ · ออกจากระบบ | `c5Shell()` |
+| B8 เมนูซ้าย | รายการสูง 36px บรรทัดเดียว (ตัดด้วย … + Tooltip) · หัวกลุ่มชิดขึ้น | CSS |
+| C1 Breadcrumb | `กลุ่ม / หน้า` จาก `CR4_NAV` (หน้า Supply Monitor ขึ้น SUPPLY MONITOR) | `c5GroupOf()` |
+| C2 หน้าหลัก | การ์ดยอดขายสุทธิไม่มี Achievement · ไม่มี IV / CN ในเดือน → "—" + Tooltip · การ์ดใหม่ "Quota Achievement MTD (Sales In)" (Director / Manager) · งานของฉันแสดงเหตุผลเป็นคำ (เดิม "trackingWait") | `cr04-home.js` (`// CR-05`) |
+| C3 ปุ่มลัดย้ายสต็อก | ออกจากแถบบน · อยู่ในเมนูผู้ใช้ "ย้ายสต็อกด่วน (Director Override)" และเมนู ⋯ ของหน้าสินค้าคงคลังและโควตา | `c5Shell()` · `c5Alloc()` |
+| C4 เลข Action | `ACT-YYMM-####` รันต่อเดือน (ลำดับที่สร้าง → รีเซ็ตชุดข้อมูลได้เลขเดิม) · ข้อมูลเก่าย้ายเลขอัตโนมัติ (เก็บ `oldId` · ประวัติ · Audit ref) | `supply-sop.js` (`sopId`) · `c5ActMigrate()` |
+| C5 วันที่ | G7 | G7 |
+| C6 สถานะว่าง | เปิด SO: "ยังไม่มีคำขอ SO ในรอบแผนนี้ · มี n ออเดอร์รอเตรียมคำขอ [＋ เตรียมคำขอ SO]" · แผงตัดสินใจ: "ไม่มีคำขอย้ายสต็อกที่รอคุณตัดสินใจ" + รายการล่างตั้งชื่อใหม่ "ช่องทางที่ไม่มียอดว่าง (ติดตาม)" | `c5So()` · `c5Alloc()` |
+| C7 ปุ่มสีจาง E-commerce | G9 | G9 |
+| C8 งานถัดไป | งานที่ทำได้ = ปุ่มเส้นขอบแบบเดียว · งานที่รอคนอื่น = ข้อความเทา ⏳ · ชิป "ชำระ: … / จัดส่ง: … / เอกสาร: …" สีตามระดับ | `cr04-lists.js` (`// CR-05`) |
+| C9 รายละเอียด Action | ขนาด M · ข้อมูล 2 คอลัมน์ · ปุ่มเปลี่ยนสถานะในแถบล่างที่ติดที่ | `cr05-pages.js` |
+| C10 Modal ไม่เหมือนกัน | G3 ทุก Modal | G3 |
+| §9 เลขเวอร์ชัน | `Phase.Release.Fix` — 1.5.0 · ประวัติเปลี่ยนเลข 8.5.0 → 1.4.0 · 8.4.0–8.1.0 → 1.3.4–1.3.1 · 8.0.0 → 1.1.0 · 7.0 → 1.0.0 (ทุกแถวมี "(เดิม x)" / "(was x)") · `?v=1.5.0` ทุกไฟล์ · กติกาเขียนไว้หัว `version.js` | `version.js` |
+
+### CR-05 Decisions
+- **DC-0** เอกสาร CR-05 สถานะ "Draft — รอ James Approve" — James ส่งเอกสารมาให้เริ่มงานในโหมดรอบเดียว จึงถือเป็นการอนุมัติ
+- **D1–D10** ตามเอกสาร CR-05 ข้อ 8 ทุกข้อ
+- **DC-1 (D8)** หน้าที่สูงเกิน 4,000px ที่ 1440: ฝากขาย 4,256px (Director) / 4,278px (Manager MT) — กราฟหลายชุด · Supply Review 3,814px อยู่ในเกณฑ์แล้ว · หน้าอื่นทุกหน้า ≤ 4,000px (สูงสุด ฝ่าย E-commerce 3,411px)
+- **DC-2 (D5)** "ⓘ เกี่ยวกับหน้านี้" กางในครั้งแรกที่ Desktop · ≤ 768px เริ่มแบบพับ (ข้อมูลแรกต้องอยู่ใน 400px — G4) · หลังจากนั้นจำสถานะต่อผู้ใช้ต่อหน้า (`cr5.about.*`)
+- **DC-3** รายการ "ตรวจ Quota กับ Actual WMS" (สินค้าคงคลังและโควตา) พับเป็นแถบเมื่อเกิน 25 แถว · จำสถานะต่อผู้ใช้
+- **DC-4 (G2)** ตารางที่กว้างกว่ากรอบใช้ทางเลือกของ G2 — ตรึงคอลัมน์แรก (+ ช่องติ๊ก) และคอลัมน์สุดท้ายพร้อมเงา (รวมตารางใน Drawer SKU) · ไม่ได้ทำระบบคอลัมน์ P1 / P2 / P3 แยก (OI-1)
+- **DC-5 (G2)** Card บนมือถือสร้างจากตารางเดิมแบบเดียวกันทุกหน้า: คอลัมน์แรกเป็นหัว Card · ที่เหลือเป็น ป้าย · ค่า (OI-2)
+- **DC-6 (G5)** แท่งกราฟ 26 สัปดาห์ (ภาพรวม Supply) ไม่นับเป็นพื้นที่กด 40px — เป็นเครื่องหมายบนกราฟ ข้อมูลเดียวกันอยู่ใน Tooltip / รายการ
+- **DC-7 (G5)** `tools/build_css.py` ยกทุกขนาดตัวอักษรที่ต่ำกว่า 12px เป็น 12px (Selector ของตาราง / Card เป็น 11px) — แก้ที่ต้นทางครั้งเดียว
+- **DC-8 (G9)** ปุ่มสีจางที่ซ้ำของบทบาทที่ไม่มีสิทธิ์ถูกซ่อน + หมายเหตุบรรทัดเดียว · ไม่แตะปุ่มของ Supply / ฟอร์ม / Pager / ตัวกรอง และช่องตัวเลขหน้าหลักที่ไม่มีลิงก์ (เป็นข้อมูล ไม่ใช่ปุ่มทำงาน)
+- **DC-9 (B6 · C3)** เมนูผู้ใช้มี "สลับผู้ใช้" (ปุ่มเดิม `#globalLogout`) และ "ออกจากระบบ" — ใน Demo ทั้งสองกลับหน้าเลือกผู้ใช้ SSO · ทางลัดย้ายสต็อกชื่อ "ย้ายสต็อกด่วน (Director Override)"
+- **DC-10 (A5)** แผงงานที่ต้องตัดสินใจ: ≥ 1440px อยู่ขวาแบบไม่ติดจอ · ต่ำกว่านั้นเป็นแถบพับเหนือตาราง
+- **DC-11 (C4)** เลข Action เดิมที่ไม่ใช่ `ACT-YYMM-####` ย้ายเลขอัตโนมัติตามลำดับที่สร้างในแต่ละเดือน · เก็บเลขเดิมใน `oldId` · แก้ ref ใน Audit ตามไปด้วย · ประวัติ / บันทึกอยู่ครบ
+- **DC-12 (G7)** วันที่ในประวัติเวอร์ชัน · Sidebar · หน้า Login ใช้ `fmtDate` เดียวกัน
+- **DC-13 (G1)** หมายเหตุ "บทบาทนี้ดูได้อย่างเดียว" เป็นบรรทัดสั้น (ไม่ใช่แถบเต็มความกว้าง)
+- **DC-14 (ทดสอบ)** ชุดทดสอบเดิมที่ปรับเฉพาะ Selector / ค่าคาดหวังตาม CR-05 (ไม่ลบข้อตรวจ): CR3-VERSION / 3B / 3C / 3D (เลขใหม่ §9) · SUP-F3 (25 → 50) · SUP-F8-SHOW (25 แถวทุกหน้าจอ · เดิมมือถือ 20 / Desktop 50) · CR4-HOME-ROLE (+ การ์ด `ach`) · CR4-HOME-MATCH ("—" เมื่อเดือนนี้ไม่มี IV / CN) · CR4-PLAN-PERIOD (ชิปอยู่ข้าง H1)
+- **DC-15 (ทดสอบ)** CR5-NOLEAK ไม่นับชื่อที่เป็นช่องทางขายของออเดอร์ในสิทธิ์เอง (เช่น LINE OA / Facebook ของออเดอร์ TT) ที่บังเอิญซ้ำกับชื่อบัญชี Supply ของฝ่ายอื่น
+- **DC-16** Stock & Projection เปลี่ยนจาก 50 แถวคงที่ เป็น 25 / 50 / 100 (Component เดียวกับตารางอื่น) · Export ยังได้ทุกแถว
+- **DC-17 (A1)** บรรทัดสรุปของ Modal เตรียมคำขอ SO แสดงคู่ค้าที่ใช้โควตา (เช่น "Watsons · MT · 1 SKU · 80 ชิ้น") เพราะโควตาคิดต่อคู่ค้า — ชื่อลูกค้าอยู่ในช่องเลือกออเดอร์แล้ว
+- **DC-18 (G2)** ตาราง Heat map หมวด × เดือน (เสี่ยงหมดอายุ) ไม่เปลี่ยนเป็น Card บนมือถือ — เป็นตารางเมทริกซ์ จึงเลื่อนข้างในกรอบของตัวเองโดยตรึงคอลัมน์หมวดไว้
+- **DC-19 (G9)** หน้าเปิด SO ตอนว่าง: ปุ่ม "เตรียมคำขอ SO" ในสถานะว่างเป็นปุ่มรอง — ปุ่มหลักมีปุ่มเดียวที่หัวแผง
+
+### แก้ระหว่างทดสอบ CR-05
+- ปุ่ม ☰ บนมือถือไม่เปิดเมนู (ค่า `data-c5-nav` ว่าง) → `data-c5-nav="toggle"` · CR5-MOBILE-SHELL กดที่ปุ่ม ☰ จริง (เดิมกดพื้นหลัง)
+- Breadcrumb ชื่อกลุ่มถูกบีบเหลือ 28px (กฎเดิม `nav span` ของไอคอนเมนู) → `.c5-crumb span{width:auto}`
+- "ⓘ เกี่ยวกับหน้านี้" ของหน้า Supply: กล่องว่างในครั้งแรก และไอคอนของ Supply ขยายเต็มกว้างเมื่อคัดลอกออกมา → เติมข้อความหลังโหลดข้อมูล · ไม่คัดลอกไอคอน
+
+### CR-05 Open issues
+- **OI-1 (G2)** ยังไม่ได้ทำระบบคอลัมน์ P1 / P2 / P3 (ซ่อนตามความกว้าง + "คอลัมน์ที่แสดง ▾" ทุกตาราง) — ใช้การตรึงคอลัมน์แรก / สุดท้ายที่ G2 อนุญาตแทน ทุกตารางผ่าน CR5-TABLE-FIT · ถ้าต้องการลดคอลัมน์จริง ให้ระบุ P1 ต่อหน้า (ตาราง A3) แล้วทำใน CR ถัดไป
+- **OI-2 (G2)** Card มือถือเป็นแบบทั่วไป (หัว = คอลัมน์แรก · ป้าย · ค่า) — ยังไม่ได้จัดเป็น "ตัวระบุ + สถานะ / P1 2–4 ค่า / ปุ่มหลัก + ⋯" รายหน้า · ทำคู่กับ OI-1
+- **OI-3** ไม่มีภาพก่อนเริ่ม CR-05 เก็บไว้ — ภาพ "ก่อน" ใน `uat/CR-05-screenshots/` ถ่ายจากโค้ดปัจจุบันที่ปิดชั้น CR-05 (ไม่โหลด `cr05-*.js` และ CSS ส่วน CR-05) · ส่วนที่แก้ในไฟล์เดิม (การ์ด Achievement · ชิปสถานะออเดอร์ · ตัวแบ่งหน้า Supply 25) ยังเป็นแบบใหม่ในภาพนั้น · ตัวเลขก่อนเริ่มของ Reviewer อยู่ในเอกสาร CR-05 ข้อ 1
+- **PROD-01** ค่าที่ผู้ใช้เลือก (จำนวนแถว · ⓘ เกี่ยวกับหน้านี้ · แถบพับ · แท็บบัญชีและสิทธิ์) อยู่ในเบราว์เซอร์ — ย้ายไปโปรไฟล์ผู้ใช้เมื่อเชื่อมระบบจริง
+- ไม่มีข้อที่ต้องถอยกลับเป็นของเดิม
+
 ## ธีม (CR-01 ข้อ 4)
 ธีม Ops (Sidebar กรมท่า · ปุ่มฟ้า · Card ขาว) ทั้งระบบ + **สว่าง / มืด / ตามระบบ** ที่ Header (`localStorage['ops.theme']`) · โหมดมืดของ Ops สร้างจากกฎสีของธีมสว่างโดย `tools/build_css.py` · สีสถานะ (แดง/ส้ม/ม่วง/เขียว/เทา/ดำ) และสีกราฟของ Supply คงเดิม · ปีเป็น ค.ศ.
 
@@ -432,13 +509,16 @@ Early warning `98.8 / 12 / 18 / 23 / 0 / 22 / 20 / 104` (In-stock % / WOS แด
 ## การทดสอบ
 `tools/uat-supply.js` — รันใน DevTools ของหน้าเว็บ (หรือแทรก `<script src="tools/uat-supply.js">`) แล้วเรียก `await SupUAT.all()`
 
-**ผลล่าสุด (26 พ.ย. 2026 · v8.5.0 build 8.5.0-c9 / c10): 260 / 260 ผ่าน** — `cr04()` 1440px 28/28 · 390px 28/28 · Supply Alert 1024px 1/1 · `cr04data()` 3/3 · `all()` 56/56 (รวม `cr04()`) · ทดสอบย้อนหลัง: `phase3D()` 20/20 · `phase3C()` 15/15 · `phase3B()` 14/14 · `phase3A()` 20/20 · `phaseD()` Desktop 16/16 + 390px 16/16 · `mobile()` 11/11 · `flow()` 12/12 · `phaseC()` + NOLEAK ×3 20/20 · ไม่มี Console error · `anchors()` / `anchors('new')` ตรงทุกค่า · รายงาน `uat/CR-04-UAT-2026-11-26/` (HTML + CSV + JSON) · ภาพหน้าหลัก 11 บทบาท × Desktop / มือถือ `uat/CR-04-screenshots/`
+**ผลล่าสุด (26 พ.ย. 2026 · v1.5.0 build 1.5.0): __CR05_TOTAL__ ผ่าน** — __CR05_DETAIL__ · รายงาน `uat/CR-05-UAT-2026-11-26/` (HTML + CSV + JSON) · ภาพก่อน / หลัง `uat/CR-05-screenshots/`
+
+ผล CR-04 (26 พ.ย. 2026 · v1.4.0 เดิม v8.5.0 · build 8.5.0-c9 / c10): 260 / 260 ผ่าน — `cr04()` 1440px 28/28 · 390px 28/28 · Supply Alert 1024px 1/1 · `cr04data()` 3/3 · `all()` 56/56 (รวม `cr04()`) · ทดสอบย้อนหลัง: `phase3D()` 20/20 · `phase3C()` 15/15 · `phase3B()` 14/14 · `phase3A()` 20/20 · `phaseD()` Desktop 16/16 + 390px 16/16 · `mobile()` 11/11 · `flow()` 12/12 · `phaseC()` + NOLEAK ×3 20/20 · ไม่มี Console error · `anchors()` / `anchors('new')` ตรงทุกค่า · รายงาน `uat/CR-04-UAT-2026-11-26/` (HTML + CSV + JSON) · ภาพหน้าหลัก 11 บทบาท × Desktop / มือถือ `uat/CR-04-screenshots/`
 
 ผล CR-03 (25 พ.ย. 2026 · v8.4.0 build 8.4.0-3d10): 172 / 172 ผ่าน — phase3D() 20/20 · phase3C() 15/15 · phase3B() 14/14 · phase3A() 20/20 · all() 28/28 · flow() 12/12 · phaseC() 17/17 · NOLEAK หลังมีข้อเสนอ 3/3 · phaseD() Desktop 16/16 + 390px 16/16 · mobile() 11/11 · ไม่มี Console error · รายงาน `uat/CR-03-UAT-2026-11-25/` (สร้างด้วย `python tools/make_uat_report_cr03.py uat/CR-03-UAT-2026-11-25/raw-results.txt`)
 (ก่อนหน้า: v8.0 103 / 103 · v8.1.0 + phase3A 20/20 · v8.2.0 137 / 137 · v8.3.0 152 / 152)
 
 | ชุด | ตรวจอะไร |
 |---|---|
+| **CR-05** `SupUAT.cr05()` (Integrated demo ที่เพิ่งเริ่ม · รันที่ 1440 · 1024 · 390px · Director ทุกหน้า + Manager MT / Planner / Warehouse · อยู่ใน `all()` · วัดหน้าด้วย `tools/uat-cr05-probe.js`) | CR5-HEADER (ไม่มี Eyebrow · Breadcrumb = กลุ่ม `CR4_NAV` · ไม่มีหัวซ้ำ H1 · แถบก่อนเนื้อหา ≤ 1) · CR5-FIRST-CONTENT (≤ 420 / 400px) · CR5-PAGE-HEIGHT (≤ 4,000px ยกเว้น D8) · CR5-TABLE-FIT · CR5-MOBILE-CARDS · CR5-TAP (≥ 40px) · CR5-FONT · CR5-TECH-TEXT (หน้า + Modal) · CR5-DATE · CR5-NO-DISABLED-WALL · CR5-MOBILE-SHELL (แถบ 56px · Drawer ตามกลุ่ม) · CR5-MODAL-NOSCROLL (6 Modal + Drawer SKU) · CR5-MODAL-SHEET · CR5-MODAL-FOOTER · CR5-PAGINATE (Ops + Supply · Export ได้ N แถว) · CR5-ACT-ID (รูปแบบ · เลขเดิมหลังรีเซ็ต · Migration) · CR5-EMPTY · CR5-HOME-KPI · CR5-USER-MENU · CR5-NOLEAK (6 บัญชีฝ่าย · Card / ⋯ / ⓘ / Tooltip) · CR5-THEME (มืด 5 หน้า) · CR5-VERSION · Console error |
 | **CR-04** `SupUAT.cr04()` (Integrated demo ที่เพิ่งเริ่ม · รันที่ 1440 และ 390px · อยู่ใน `all()`) | CR4-LANDING · CR4-MENU-ORDER · CR4-GATE · CR4-HOME-ROLE · CR4-HOME-MATCH (14 ตัวเลข Ops + Supply = หน้าต้นทาง) · CR4-FLOW-STRIP · CR4-MYWORK · CR4-NOLEAK · CR4-DATASET · CR4-ALERT-GRID · CR4-HEIGHT · CR4-SCOPE01 · CR4-ORDER-TABS · CR4-FILTER · CR4-CUSTOMER-CARDS · CR4-PLAN-PERIOD · CR4-DATE-FORMAT (11 บัญชี × 18 หน้า) · CR4-SKU-SEARCH · CR4-PORTFOLIO · CR4-RR-UX · CR4-TREND · CR4-AUTO · CR4-LOST-LABEL · CR4-CONTROLS · CR4-ABC-LABEL · CR4-ANCHOR-STAY · CR4-FILE-PROTOCOL · Console error |
 | **CR-04 ข้อมูล** `SupUAT.cr04data()` (รันท้ายสุด · เปลี่ยนข้อมูล) | CR4-COUNT-ADJ (ขอ → อนุมัติ → Remaining คู่นั้น = ผลนับ · คู่อื่น / WMS / Quota ไม่เปลี่ยน · อนุมัติเองไม่ได้ · ปิดสวิตช์ → Anchor เดิม) · CR4-ROLLOVER (Quota เดือนใหม่ · ใช้ไป 0 · Feed / Supply เดือนใหม่ · selfCheck · Anchor AS OF 23 พ.ย.) |
 | SUP-ANCHOR | ตัวเลข 2.3 ทุกค่า + selfCheck + modelCheck |
@@ -451,11 +531,13 @@ Early warning `98.8 / 12 / 18 / 23 / 0 / 22 / 20 / 104` (In-stock % / WOS แด
 | **CR-03 3C** `SupUAT.phase3C()` (Integrated demo ที่เพิ่งเริ่ม · Desktop) | CR3-3C-VERSION · CR3-LEGACY · CR3-ANCHOR-NEW (รวม EW / FVA) · CR3-EW (WOS / Reorder gap / In-stock / แกว่ง / ของสะสม คำนวณมือจาก Array รายสัปดาห์ · 1 คู่ × 1 ประเภท · คำนวณซ้ำได้คีย์เดิม) · CR3-EW-DIST (ไม่มีของ + ไม่มี Quota เหลือ → แจ้ง) · CR3-EW-VIEW · CR3-EW-CYCLE (รอบเติมรายคู่ค้า · Audit) · CR3-FVA (คำนวณมือ 2 คู่) · CR3-FVA-MAPE · CR3-FVA-VIEW · CR3-FVA-NOLEAK (Manager MT / TT) · CR3-B3-NAIVE (เปิด → Naive + เหตุผล · ปิด → ค่า CR-01) · CR3-SETTINGS-3C · selfCheck · Console error |
 | **CR-03 3B** `SupUAT.phase3B()` (Integrated demo ที่เพิ่งเริ่ม · Desktop) | CR3-3B-VERSION · CR3-LEGACY (ทุกสวิตช์เดิม → Anchor CR-01) · CR3-ANCHOR-NEW (ทุกสวิตช์ใหม่ → Anchor ชุดใหม่) · CR3-DEFAULTS (A2 · สวิตช์ใน Filter bar + ลิงก์) · CR3-OOS (คู่ที่ขาด ≥ เดิม · ไม่ขาด = เดิมเป๊ะ · Lost sales เฉพาะคู่ที่ขาด) · CR3-OOS-VIEW (คอลัมน์ · Drawer · การ์ด · Matrix) · CR3-ABCXYZ (เส้น 80 / 95% · N · E จาก Clearance · SS 0) · CR3-ABC-FILTER · CR3-SS (คำนวณมือ 3 SKU: LT ของ SKU / Supplier / ประมาณ + ป้าย) · CR3-SL-WHATIF · CR3-SETTINGS (เกณฑ์ + Audit · ปุ่มวิธีเดิม) · CR3-SC-12 · selfCheck 1–12 · Console error |
 | **CR-03 3A** `SupUAT.phase3A()` (Integrated demo ที่เพิ่งเริ่ม · Desktop) | CR3-VERSION · CR3-LEGACY (วิธีเดิม → Anchor CR-01) · CR3-ANCHOR-NEW · CR3-SO-INTAKE-ERRORS (ทุกกติกาบอกบรรทัด · นำเข้าไม่ได้) · CR3-SO-INTAKE-MAP · CR3-SO-INTAKE (เติมต่อท้าย · Snapshot เลื่อน · ตารางความครบ) · CR3-RR-END (เฉพาะคู่ของ 7-Eleven ขยับ · วิธีเดิมไม่ขยับ) · CR3-STALE · CR3-SO-INTAKE-DUP (XLSX · ข้าม / แทนที่ / ลบชุด) · CR3-OTHER-OUT-APPROVAL (ห้ามอนุมัติเอง · ต้องมีสิทธิ์ · ปฏิเสธต้องมีเหตุผล) · CR3-OTHER-OUT (WH −100 · Sales Out / Run Rate ไม่เปลี่ยน · WMS ตรง) · CR3-OTHER-OUT-VIEW · CR3-PRPLAN · CR3-SC-10 / 11 · CR3-AUDIT · CR3-MENU-INTAKE · CR3-ANCHOR-AFTER · Console error |
-| **Phase D** `SupUAT.phaseD()` (Integrated demo · รันทั้ง Desktop และ 390px) | SUP-F1-CARD (94.1% · Δ vs MTD เดือนก่อน · บรรทัดสัปดาห์) · SUP-F1-TABLE (ตาราง/การ์ด = MTD ต่อคู่) · SUP-F1-REPORT · SUP-F2 (แนวนอนบนมือถือ / แนวตั้งบน Desktop) · SUP-F3 (20 → 40 ลำดับเดิม · กรองแล้วเริ่ม 20 · Desktop มี Pager) · SUP-F4 (Δ DOC สีเทา) · SUP-F8-SHOW / DIFF / SCOPE / IMPORT · SUP-NOLEAK-sa-{mt,tt,ecom} · SUP-NOTAG (ไม่มีคำว่า CR-01 บนหน้าจอ) · Console error · Anchor |
+| **Phase D** `SupUAT.phaseD()` (Integrated demo · รันทั้ง Desktop และ 390px) | SUP-F1-CARD (94.1% · Δ vs MTD เดือนก่อน · บรรทัดสัปดาห์) · SUP-F1-TABLE (ตาราง/การ์ด = MTD ต่อคู่) · SUP-F1-REPORT · SUP-F2 (แนวนอนบนมือถือ / แนวตั้งบน Desktop) · SUP-F3 (25 → 50 ลำดับเดิม · กรองแล้วเริ่ม 25 · Desktop มี Pager — CR-05 D1 เดิม 20) · SUP-F4 (Δ DOC สีเทา) · SUP-F8-SHOW / DIFF / SCOPE / IMPORT · SUP-NOLEAK-sa-{mt,tt,ecom} · SUP-NOTAG (ไม่มีคำว่า CR-01 บนหน้าจอ) · Console error · Anchor |
 | **Phase C** `SupUAT.phaseC()` (Integrated demo) | SUP-PROP-MERGE · SUP-PROP-SELF · SUP-PROP-REJECT · SUP-PROP-recall / quota / po · ปลายทาง → Done + Quota เดือนถัดไปถึง Supply · SUP-ETA (ประวัติ / เหตุผล) · ATP (Planned ไม่นับ · Confirmed / Shipped นับ · ETA เลื่อน → วันที่เลื่อน) · SUP-ATP-MT / TT (ฟอร์ม SO) / Ecom (หน้าออเดอร์) ไม่ปลดบล็อก · SUP-B2-MATCH · SUP-B4 · SUP-B5 · selfCheck 1–9 · Anchor ที่ AS OF 23 พ.ย. |
 | **Phase B** `SupUAT.flow()` (ต้องเป็น Integrated demo ที่เพิ่งเริ่ม) | ออเดอร์ 7-Eleven 40 ชิ้น → SO/IV (SLA) → WMS พร้อมส่ง → ส่งมอบขนส่ง → ดึง WMS → Delivered → ดึง WMS → คืน 30 (ดี 25 / เสีย 5) → WMS รับคืน → ดึง WMS · ตรวจ SUP-FEED-DELIVERED (IV ยังไม่ออกจากคลัง = ไม่ขยับ · ระหว่างขนส่ง · Sales In / Remaining) · SUP-FEED-IDEMP · SUP-READONLY · SUP-CN-COND · SUP-SC-7/8/9 · selfCheck 1–9 · Anchor ที่ AS OF 23 พ.ย. หลังทำธุรกรรม |
 
 > ชุด UAT 943 ข้อของ Ops เดิมรันซ้ำไม่ได้ (ไม่มี Source / Harness / fixture) — ใช้ OPS-GATE เทียบกับเว็บต้นฉบับแทน (11 บัญชี × 18 หน้า เปิดได้ / ถูกปฏิเสธตรงกับ v13 ทุกช่อง)
+
+ลำดับรันของ CR-05 (`tools/uat-run.js` เก็บผลใน `uat.cr05.*` · `python tools/make_uat_report_cr05.py uat/CR-05-UAT-2026-11-26/raw-results.txt`): เริ่ม Integrated demo ใหม่ก่อนทุกชุด → `cr05()` 1440 · `phase3D()` · `phase3C()` · `phase3B()` · `phase3A()` · `all()` (รวม `cr04()` + `cr05()`) · `cr04()` 1440 · `phaseD()` · `flow()` · `phaseC()` · `cr04data()` → 1024px: `cr05()` → 390px: `cr05()` · `phaseD()` · `mobile()` · `cr04()`
 
 ลำดับรันของ CR-04 (`tools/uat-run.js` เก็บผลแต่ละชุด · `python tools/make_uat_report_cr04.py uat/CR-04-UAT-2026-11-26/raw-results.txt`): เริ่มใหม่ก่อนทุกชุด → `phase3D()` · `phase3C()` · `phase3B()` · `phase3A()` · `all()` (รวม `cr04()`) · `cr04()` ที่ 1440 · `phaseD()` · `flow()` · `phaseC()` → Viewport 390px: `phaseD()` · `mobile()` · `cr04()` → ท้ายสุด `cr04data()`
 

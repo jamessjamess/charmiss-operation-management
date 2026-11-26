@@ -1,0 +1,21 @@
+#phaseC|1440|2026-11-26T01:41:44.351Z|1.5.0
+SUP-PROP-MERGE|P|{}
+SUP-PROP-SELF|P|{}
+SUP-PROP-REJECT|P|{}
+SUP-PROP-recall|P|{}
+SUP-PROP-quota (draft, not in this month)|P|{}
+SUP-PROP-po (Planned)|P|{}
+SUP-PROP-downstream|P|{"dec":600}
+SUP-ETA|P|{"history":2}
+SUP-ATP (Planned ignored · Confirmed / Shipped counted · ETA moves the date)|P|{"atp0":{"none":true,"base":161},"atp1":"2026-12-16","atp3":"2026-12-26"}
+SUP-ATP-MT|P|{"order":"OR-UAT-MT67664"}
+SUP-ATP-TT|P|{"order":"OR-UAT-TT68231"}
+SUP-ATP-EC|P|{"order":"OR-UAT-EC68797"}
+SUP-B2-MATCH|P|{"b2":{"fit":72.83783783783785,"mape":22.646657571623464,"cov3":10.53893331445063},"page":{"fit":72.83783783783785,"mape":22.646657571623464,"cov3":10.53893331445063}}
+SUP-B4|P|{}
+SUP-B5|P|{}
+selfCheck 1–9 (after Phase C)|P|{"checks":[]}
+SUP-ANCHOR (after Phase C)|P|{"diff":[]}
+SUP-NOLEAK-mgr-mt|P|{"lock":"MT","hits":[]}
+SUP-NOLEAK-mgr-tt|P|{"lock":"TT","hits":[]}
+SUP-NOLEAK-mgr-ecom|P|{"lock":"ECOM","hits":[]}

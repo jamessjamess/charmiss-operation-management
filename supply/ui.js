@@ -211,7 +211,8 @@
   const TS = {};
   U.table = function (host, o) {
     const st = TS[o.key] || (TS[o.key] = { sort: o.defaultSort || null, page: 1 });
-    const size = o.pageSize || 50;
+    const psKey = 'cr5.ps.sup:' + o.key, savedSize = () => { try { return +localStorage.getItem(psKey) || 0; } catch (e) { return 0; } };   // CR-05 G2: 25 / 50 / 100 rows, remembered per table
+    let size = st.size || savedSize() || o.pageSize || 25;
     function sorted() {
       if (!st.sort) return o.rows.slice();
       const c = o.cols.find(x => x.k === st.sort.key); if (!c) return o.rows.slice();
@@ -225,24 +226,24 @@
       st.page = Math.min(Math.max(1, st.page), pages);
       // CR-01 F3: on phones a card list shows 20 cards + "load more" (same sort / filter); a new row set starts again at 20
       const cards = U.isMobile() && !!o.card;
-      if (cards && st.cardRows !== rows.length) { st.cardRows = rows.length; st.cardN = 20; }
+      if (cards && st.cardRows !== rows.length) { st.cardRows = rows.length; st.cardN = 25; }   // CR-05 G2: 25 cards a step
       const slice = cards ? rows.slice(0, st.cardN) : rows.slice((st.page - 1) * size, st.page * size);
       let h;
       if (!rows.length) h = U.empty(o.empty || t('empty'), o.emptyHint || '', 'filter');
       else if (U.isMobile() && o.card) h = `<div class="clist">${slice.map((r, n) => o.cardDiv ? `<div class="ccard" data-row="${n}">${o.card(r)}</div>` : `<button type="button" class="ccard" data-row="${n}">${o.card(r)}</button>`).join('')}</div>`;
       else {
         const sumOf = c => rows.reduce((x, r) => x + (+c.get(r) || 0), 0);
-        h = `<div class="tablewrap${o.free ? ' free' : ''}"><table class="tbl${o.compact ? ' compact' : ''}"><thead><tr>${o.cols.map(c => {
+        h = `<div class="tablewrap${o.free ? ' free' : ''}"><table class="tbl c5-ct${o.compact ? ' compact' : ''}" data-c5="1"><thead><tr>${o.cols.map(c => {
           const arr = st.sort && st.sort.key === c.k ? `<span class="arr">${st.sort.dir === 'asc' ? '▲' : '▼'}</span>` : '';
           return `<th data-sort="${c.k}" class="${c.nosort ? '' : 'sort'} ${c.num ? 'num' : ''} ${c.sticky ? 'sticky' : ''} ${c.hcls || ''}" scope="col">${U.esc(c.label)}${arr}</th>`; }).join('')}</tr></thead>
           <tbody>${slice.map((r, n) => `<tr class="${o.onRow ? 'click' : ''} ${o.rowCls ? o.rowCls(r) : ''}" ${o.onRow ? 'tabindex="0"' : ''} data-row="${n}">${o.cols.map(c =>
-            `<td class="${c.num ? 'num' : ''} ${c.sticky ? 'sticky' : ''} ${c.cls ? c.cls(r) : ''}">${c.html ? c.html(r) : U.esc(c.get(r))}</td>`).join('')}</tr>`).join('')}</tbody>
+            `<td class="${c.num ? 'num' : ''} ${c.sticky ? 'sticky' : ''} ${c.cls ? c.cls(r) : ''}" data-label="${U.esc(c.label)}">${c.html ? c.html(r) : U.esc(c.get(r))}</td>`).join('')}</tr>`).join('')}</tbody>
           ${o.total ? `<tfoot><tr>${o.cols.map((c, k) => k === 0 ? `<td class="${c.sticky ? 'sticky' : ''}">${U.esc(o.total(rows))}</td>` : c.sum ? `<td class="num">${(c.fmt || U.n)(sumOf(c))}</td>` : '<td></td>').join('')}</tr></tfoot>` : ''}
           </table></div>`;
       }
       if (cards && rows.length > st.cardN) h += `<div class="pager more"><span>${t('rows_shown', { a: U.n(slice.length), n: U.n(rows.length) })}</span><button type="button" class="btn small" data-more>${t('load_more')}</button></div>`;   // CR-01 F3
       else if (!cards && rows.length > size) h += `<div class="pager"><span>${t('rows_of', { a: U.n((st.page - 1) * size + 1), b: U.n(Math.min(rows.length, st.page * size)), n: U.n(rows.length) })}</span>
-        <span class="pg"><button type="button" class="btn small" data-pg="-1" ${st.page <= 1 ? 'disabled' : ''}>${U.icon('left')}${t('page_prev')}</button><span class="tnum">${st.page} / ${pages}</span><button type="button" class="btn small" data-pg="1" ${st.page >= pages ? 'disabled' : ''}>${t('page_next')}${U.icon('right')}</button></span></div>`;
+        <span class="pg"><button type="button" class="btn small" data-pg="-1" ${st.page <= 1 ? 'disabled' : ''}>${U.icon('left')}${t('page_prev')}</button><span class="tnum">${st.page} / ${pages}</span><button type="button" class="btn small" data-pg="1" ${st.page >= pages ? 'disabled' : ''}>${t('page_next')}${U.icon('right')}</button></span><label class="c5-size">${t('rows_per_page') === 'rows_per_page' ? '' : t('rows_per_page')}<select data-c5-psize aria-label="rows">${[25, 50, 100].map(x => `<option ${x === size ? 'selected' : ''}>${x}</option>`).join('')}</select></label></div>`;   // CR-05 G2: + rows per page
       host.innerHTML = h;
       host.querySelectorAll('th.sort').forEach(th => th.addEventListener('click', () => {
         const k = th.dataset.sort, s = st.sort, num = th.classList.contains('num');
@@ -250,7 +251,8 @@
         st.page = 1; draw();
       }));
       host.querySelectorAll('[data-pg]').forEach(b => b.addEventListener('click', () => { st.page += +b.dataset.pg; draw(); }));
-      host.querySelectorAll('[data-more]').forEach(b => b.addEventListener('click', () => { st.cardN += 20; draw(); }));   // CR-01 F3
+      host.querySelectorAll('[data-more]').forEach(b => b.addEventListener('click', () => { st.cardN += 25; draw(); }));   // CR-01 F3 · CR-05: + 25
+      host.querySelectorAll('[data-c5-psize]').forEach(sel => sel.addEventListener('change', () => { size = st.size = +sel.value; try { localStorage.setItem(psKey, sel.value); } catch (e) { /* blocked */ } st.page = 1; draw(); }));   // CR-05 G2
       if (o.onRow) host.querySelectorAll('[data-row]').forEach(el => {
         const r = slice[+el.dataset.row];
         el.addEventListener('click', () => o.onRow(r));

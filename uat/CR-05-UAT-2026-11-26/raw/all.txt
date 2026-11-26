@@ -1,0 +1,81 @@
+#all|1440|2026-11-26T01:34:03.107Z|1.5.0
+SUP-ANCHOR|P|{"selfCheck":"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS","diff":[],"got":{"stockValue":50091183,"whV":39518371,"consV":10572812,"units":"514864/136418/651282","doc":73,"sellThrough":17.8,"status":"7/2/9/98/4/+7","risk3M":"547597/4489","recall":"519974/11/7194","quotaFit":"92/107/116","mape":13.5,"bias":-4.2,"fill":93.1,"achMTD":94.1}}
+SUP-MENU-director|P|{"menu":"Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Sop,Review,Intake","refused":true}
+SUP-MENU-mgr-mt|P|{"menu":"Overview,Stock,Expiry,Consign,Calendar,Quota,Proposals,Sop,Review,Intake","refused":true}
+SUP-MENU-mgr-tt|P|{"menu":"Overview,Stock,Expiry,Calendar,Quota,Proposals,Sop,Review","refused":true}
+SUP-MENU-mgr-ecom|P|{"menu":"Overview,Stock,Expiry,Calendar,Quota,Proposals,Sop,Review","refused":true}
+SUP-MENU-sa-mt|P|{"menu":"","refused":true}
+SUP-MENU-sa-tt|P|{"menu":"","refused":true}
+SUP-MENU-sa-ecom|P|{"menu":"","refused":true}
+SUP-MENU-admin|P|{"menu":"Intake,Setup","refused":true}
+SUP-MENU-finance|P|{"menu":"Calendar,Review","refused":true}
+SUP-MENU-warehouse|P|{"menu":"Expiry,Calendar","refused":true}
+SUP-MENU-planner|P|{"menu":"Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Sop,Review,Intake,Setup","refused":true}
+SUP-NOLEAK-mgr-mt|P|{"lock":"MT","hits":[]}
+SUP-NOLEAK-mgr-tt|P|{"lock":"TT","hits":[]}
+SUP-NOLEAK-mgr-ecom|P|{"lock":"ECOM","hits":[]}
+SUP-THEME-light|P|{"errors":[]}
+SUP-THEME-dark|P|{"errors":[]}
+OPS-GATE-director|P|{"denied":"","broken":[]}
+OPS-GATE-mgr-mt|P|{"denied":"ecommerce,stockoverview","broken":[]}
+OPS-GATE-mgr-tt|P|{"denied":"ecommerce,stockoverview","broken":[]}
+OPS-GATE-mgr-ecom|P|{"denied":"stockoverview,soRequests","broken":[]}
+OPS-GATE-sa-mt|P|{"denied":"ecommerce,stockoverview","broken":[]}
+OPS-GATE-sa-tt|P|{"denied":"ecommerce,stockoverview","broken":[]}
+OPS-GATE-sa-ecom|P|{"denied":"stockoverview,soRequests","broken":[]}
+OPS-GATE-admin|P|{"denied":"","broken":[]}
+OPS-GATE-finance|P|{"denied":"ecommerce,customers","broken":[]}
+OPS-GATE-warehouse|P|{"denied":"ecommerce,customers,soRequests,reports","broken":[]}
+OPS-GATE-planner|P|{"denied":"ecommerce,customers,stockoverview,soRequests","broken":[]}
+CR4-LANDING|P|{"land":[],"deepSup":"supQuota","deepOps":"customers:7d","again":"overview"}
+CR4-MENU-ORDER|P|{"bad":[],"curOpen":true,"ids":[]}
+CR4-GATE|P|{"fail":[]}
+CR4-HOME-ROLE|P|{"bad":[]}
+CR4-HOME-MATCH|P|{"n":14,"bad":[]}
+CR4-FLOW-STRIP|P|{"fl":[],"poBox":16,"poPage":16}
+CR4-MYWORK|P|{"dirProp":true,"plannerSeesOwn":false,"dirIssue":true,"whSeesOwn":false,"mtAct":true,"ttAct":false,"saMt":true,"saTt":false,"sorted":true,"opened":true}
+CR4-NOLEAK|P|{"hits":[]}
+CR4-DATASET|P|{"integ":true,"uat":true}
+CR4-ALERT-GRID|P|{"width":1440,"ag":[{"who":"director","cols":3,"rows":[3,3],"ok":true},{"who":"mgr-mt","cols":2,"rows":[2,2],"ok":true},{"who":"warehouse","cols":1,"rows":[1],"ok":true},{"who":"planner","cols":2,"rows":[2,2],"ok":true}]}
+CR4-HEIGHT|P|{"width":1440,"height":1762,"limit":1800}
+CR4-SCOPE01|P|{"phone":false,"sc":[{"v":"supReplen","n":11},{"v":"supConsign","n":11},{"v":"supQuota","n":25}],"made":1}
+CR4-ORDER-TABS|P|{"n":8,"sumOk":true,"bad":[],"payTab":"pay","shipTab":"pick","erpTab":"pay","whTab":"pick"}
+CR4-FILTER|P|{"bars":["orders:1","customers:1","documents:1","workQueue:1","returns:1","reports:1","audit:1"],"presetsOk":true,"chips":[2,1,0],"urlOk":true,"desc":true,"asc":true,"sheet":null,"scopeOk":true}
+CR4-CUSTOMER-CARDS|P|{"c1":{"total":6,"spend":60931.15,"aov":10155.19},"spendHand":60931.15,"colSum":60931.15,"customers":6,"changed":true,"quietRows":0,"quietCard":0,"dup":["Demo MT Quota Check","Demo Beauty Co."]}
+CR4-PLAN-PERIOD|P|{"chip":{"overview":true,"orders":true,"allocation":true,"reports":true,"supQuota":true,"supProposals":true,"supSop":true,"customers":false,"audit":false,"access":false},"ro":{"bar":true,"btns":true,"refuse":true,"quota":0,"preset":"2026-10"},"back":{"bar":true,"check":true,"quota":100},"FEED_MONTH":"2026-11","pp":"2026-11"}
+CR4-DATE-FORMAT|P|{"bad":[],"helper":"25 พ.ย. 2026 / TH"}
+CR4-SKU-SEARCH|P|{"sr":{"alias":true,"partner":true,"barcode":true,"name":true},"s360":{"h1":"SKU 360","hash":"#/supply/overview?q=JB-FD-001","inline":true},"kp":["15 มิ.ย. 2027","14 ม.ค. 2027","51,191","2,525.3"]}
+CR4-PORTFOLIO|P|{"pfw":[{"k":1,"page":"1/72","hand":"1/72"},{"k":8,"page":"3/50","hand":"3/50"},{"k":20,"page":"13/86","hand":"13/86"}],"projUnit":"v"}
+CR4-RR-UX|P|{"radios":6,"skip":true,"chipTxt":"คาดการณ์: ล่าสุด 4 สัปดาห์ · ไม่นับช่วงของขาด ▾","exRows":[2525.3,2354.6,2222.5,2413.5,2626.4,2626.4],"hand2":[2525.3,2354.6,2222.5,2413.5,2626.4,2626.4],"link":"L3M/sellout"}
+CR4-TREND|P|{"trOk":{"dec":true,"flat":true,"neg":true,"cap":true,"short":true,"down":true},"fallback":{"sku":"CM-LP-007","short":true,"same":true},"actions":1,"declining":1}
+CR4-AUTO|P|{"au":[{"sku":"CM-FD-001","ok":true,"pick":"L3M","wape":{"L4W":10.451227604512276,"L3M":7.887975771187448,"W":8.810763445799944,"TR":9.601728255401135}},{"sku":"CM-FD-003","ok":true,"pick":"L4W","wape":{"L4W":30.449029126213595,"L3M":43.36445108289769,"W":36.018530619865565,"TR":32.430399023914276}}],"share":{"L3M":31,"L4W":45,"TR":27,"W":17}}
+CR4-LOST-LABEL|P|{"parts":[100277,1920392],"tot":2020669}
+CR4-CONTROLS|P|{"ctl":{"supOverview":"VH","supStock":"","supExpiry":"H","supConsign":"V","supCalendar":"H","supReplen":"","supQuota":"VH","supReview":"V"},"kept":true,"info":true}
+CR4-ABC-LABEL|P|{"shown":"ขายหลัก · สม่ำเสมอ","mxSum":109,"ac":109,"filt":true}
+CR4-ANCHOR-STAY|P|{"old":[],"new":[]}
+CR4-FILE-PROTOCOL|P|{"got":{"id":"CR3-3A","pass":false,"info":"run via http server (python -m http.server)"}}
+CR4-CONSOLE|P|{"errors":[]}
+CR5-HEADER|P|{"width":1440,"eyebrow":[],"crumb":[],"dupTitle":[],"bars":[]}
+CR5-FIRST-CONTENT|P|{"width":1440,"at":"1440 / 390","limit":420,"over":[],"worst":408}
+CR5-PAGE-HEIGHT|P|{"width":1440,"at":"≥ 1200 px","over":["director:supConsign:4256","mgr-mt:supConsign:4278"],"heights":{"overview":1762,"orders":1069,"payments":900,"shipping":900,"ecommerce":3411,"customers":900,"catalog":2098,"allocation":2924,"stockoverview":2405,"partners":2119,"soRequests":900,"workQueue":1203,"documents":1136,"erp":900,"reports":1122,"access":1285,"audit":1892,"returns":931,"supOverview":2623,"supStock":1211,"supExpiry":1495,"supConsign":4256,"supCalendar":2612,"supReplen":1964,"supQuota":2690,"supProposals":900,"supReview":3814,"supSop":2256,"supIntake":1086}}
+CR5-TABLE-FIT|P|{"width":1440,"wide":[],"pageScroll":[]}
+CR5-MOBILE-CARDS|P|{"width":1440,"at":"≤ 640 px","bad":[]}
+CR5-TAP|P|{"width":1440,"at":"≤ 768 px","bad":[]}
+CR5-FONT|P|{"width":1440,"bad":[]}
+CR5-TECH-TEXT|P|{"width":1440,"bad":[]}
+CR5-NO-DISABLED-WALL|P|{"width":1440,"bad":[]}
+CR5-MOBILE-SHELL|P|{"width":1440,"at":"≤ 768 px"}
+CR5-MODAL-NOSCROLL|P|{"width":1440,"at":"≥ 768 px","modals":["so:c5-l 960×424","override:c5-m 720×810","stockRequest:c5-m 720×810","addChannel:c5-m 720×455","sopAction:c5-m 720×612","version:c5-l 960×693"],"drawer":"1440 "}
+CR5-MODAL-SHEET|P|{"width":1440,"at":"≤ 640 px","bad":["so fullfalse verticalfalse fb40true","override fullfalse verticalfalse fb40true","stockRequest fullfalse verticalfalse fb40true","addChannel fullfalse verticalfalse fb40true","sopAction fullfalse verticalfalse fb40true","version fullfalse verticaltrue fb40true"]}
+CR5-MODAL-FOOTER|P|{"width":1440,"tall":["override","stockRequest"],"bad":[]}
+CR5-TECH-TEXT (modals)|P|{"width":1440,"bad":[]}
+CR5-DATE|P|{"width":1440,"pages":[],"modals":[],"helper":"27 พ.ย. 2026 · 26 พ.ย. 2026 06:56"}
+CR5-PAGINATE|P|{"width":1440,"ops":{"N":960,"first":25,"text":"1–25 จาก 960","textOk":true,"disjoint":true,"s50":50,"domKeepsAll":true},"supStock":{"N":120,"first":25,"text":"1–25 จาก 120 · มูลค่า Total ฿50,091,183","textOk":true,"disjoint":true,"exported":120},"supQuota":"1–25 จาก 953"}
+CR5-ACT-ID|P|{"width":1440,"n":125,"sample":["ACT-2611-0124","ACT-2611-0123","ACT-2611-0122"],"stable":true,"compared":123,"mig":{"moved":1,"id":"ACT-2611-0125","idOk":true,"history":true,"log":true,"noOld":true}}
+CR5-EMPTY|P|{"width":1440,"noRes":[],"soRows":0,"soOk":true,"decOk":true}
+CR5-HOME-KPI|P|{"width":1440,"director":{"val":"—","has":false,"tip":true,"noAch":true,"ach":94.1,"achPage":94.1},"mgr-mt":{"val":"—","has":false,"tip":true,"noAch":true,"ach":84.2,"achPage":84.2}}
+CR5-USER-MENU|P|{"width":1440,"inMenu":{"open":true,"theme":true,"lang":true,"sw":true,"out":true,"override":true},"noShortcut":true,"themeOk":true,"langOk":true,"swOk":true,"outOk":true}
+CR5-NOLEAK|P|{"width":1440,"ops":[],"supply":[]}
+CR5-THEME|P|{"width":1440,"pages":["overview","orders","allocation","supStock","supSop"],"bad":[],"lum":{"head":0.12,"menu":0.12,"pager":0.12,"modal":0.12}}
+CR5-VERSION|P|{"width":1440,"number":"1.5.0","scripts":51,"other":[],"history":"1.5.0 1.4.0 1.3.4 1.3.3 1.3.2 1.3.1 1.1.0 1.0.0","hOk":true,"foot":"Charmiss Operations Management · v1.5.0","side":"Charmiss Ops v1.5.0 · 26 พ.ย. 2026","login":"Charmiss Ops v1.5.0 · 26 พ.ย. 2026"}
+CR5-CONSOLE|P|{"width":1440,"errors":[]}

@@ -1,0 +1,4 @@
+#cr04data|1440|2026-11-26T01:42:23.802Z|1.5.0
+CR4-COUNT-ADJ|P|{"pair":"A01·CM-CH-008","rem0":487,"rem1":433,"counted":433,"other":[137,137],"plannerApprove":"caDenied","own":"caOwn","audit":true,"sc3":true,"remOff":487,"anchors":true}
+CR4-ROLLOVER|P|{"old":"2026-11","next":"2026-12","seeded":910,"approved":0,"qNew":144,"used":0,"supplyQuota":144,"chipTxt":"รอบแผน: ธ.ค. 2026 ▾","scOk":true,"sc":[],"anchors":true,"denied":"ppRollDenied"}
+CR4-DATA-CONSOLE|P|{"errors":[]}

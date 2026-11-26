@@ -1,0 +1,21 @@
+#phase3D|1440|2026-11-26T01:15:27.992Z|1.5.0
+CR3-3D-VERSION|P|{"foot":"Charmiss Operations Management · v1.5.0"}
+CR3-LEGACY (every switch old → CR-01 anchors)|P|{"diff":[]}
+CR3-ANCHOR-NEW (every switch new → README anchors)|P|{"diff":[]}
+CR3-MENU-SOP|P|{"seen":{"director":true,"planner":true,"mgr-tt":true,"sa-mt":false,"finance":false,"warehouse":false,"admin":false}}
+CR3-ACTION-AUTO (one per condition · no duplicate · owners A7)|P|{"open":122,"want":122,"again":0,"ew":"mgr-mt","stockout":"planner","expiry":["planner","mgr-mt"]}
+CR3-ACTION-FLOW (ack → done · reason for not done · no going back · audit)|P|{"audit":3}
+CR3-ACTION-NOCLOSE (condition gone → flagged, still open · confirm close)|P|{"open":30,"flagged":30,"after":29}
+CR3-ACTION-MANUAL (Planner · Manager own department only)|P|{"tt":"sopBadAcc"}
+CR3-ACTION-NOLEAK (Manager MT / TT see own department · cannot work others)|P|{"mt":107,"tt":0}
+CR3-ACTION-B4 (home card · my overdue → the page)|P|{"b4":1}
+CR3-SNAPSHOT (close · PO moved + Stockout Date > 14 days · quota change · compare on the page)|P|{"sku":"CM-FD-001","po":"PO2609-0003","so":75,"poCh":1}
+CR3-SNAPSHOT-CAP (12 cycles · IndexedDB · export)|P|{"kept":12,"stored":12}
+CR3-LOCK (after day 20 → warning + audit · lock day 28 → none)|P|{"today":26,"a":true}
+CR3-REVIEW-MONTHLY (demand · supply · pre-S&OP gap · exec summary)|P|{"parts":[true,true,true,true],"tiles":6}
+CR3-REVIEW-WEEKLY (format kept + open actions)|P|{}
+CR3-GAP (month 1 by hand · options)|P|{"hand":{"sku":"CM-FD-003","gap":-5125,"app":-5125},"rows":13}
+CR3-STORAGE (snapshots 12 · action log 2,000 shown)|P|{"text":"พื้นที่ข้อมูลในเบราว์เซอร์ localStorage — ข้อมูล Ops + ตั้งค่า (เพดานประมาณ 5 MB) ใช้ 847 KB IndexedDB — ไฟล์นำเข้า + Sales Out ที่รับ Sales Out ที่รับ: 0 ไฟล์ · 0 แถว · Snapshot แผน 12 / 12 รอบ · Act"}
+selfCheck 1–12|P|{"failed":[]}
+CR3-DEFAULT-PAGE (sign-in → หน้าหลัก · link in a new tab → that page once)|P|{"land":["director:overview","mgr-mt:overview","planner:overview"],"deep":"supQuota","again":"overview"}
+console errors (3D)|P|{"errors":[]}

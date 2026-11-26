@@ -1,0 +1,29 @@
+#cr04-390|390|2026-11-26T02:01:53.575Z|1.5.0
+CR4-LANDING|P|{"land":[],"deepSup":"supQuota","deepOps":"customers:7d","again":"overview"}
+CR4-MENU-ORDER|P|{"bad":[],"curOpen":true,"ids":[]}
+CR4-GATE|P|{"fail":[]}
+CR4-HOME-ROLE|P|{"bad":[]}
+CR4-HOME-MATCH|P|{"n":14,"bad":[]}
+CR4-FLOW-STRIP|P|{"fl":[],"poBox":16,"poPage":16}
+CR4-MYWORK|P|{"dirProp":true,"plannerSeesOwn":false,"dirIssue":true,"whSeesOwn":false,"mtAct":true,"ttAct":false,"saMt":true,"saTt":false,"sorted":true,"opened":true}
+CR4-NOLEAK|P|{"hits":[]}
+CR4-DATASET|P|{"integ":true,"uat":true}
+CR4-ALERT-GRID|P|{"width":390,"ag":[{"who":"director","cols":2,"rows":[2,2,2],"ok":true},{"who":"mgr-mt","cols":2,"rows":[2,2],"ok":true},{"who":"warehouse","cols":1,"rows":[1],"ok":true},{"who":"planner","cols":2,"rows":[2,2],"ok":true}]}
+CR4-HEIGHT|P|{"width":390,"height":2598,"limit":3400}
+CR4-SCOPE01|P|{"phone":true,"sc":[{"v":"supReplen","n":11},{"v":"supConsign","n":11},{"v":"supQuota","n":25}],"made":1}
+CR4-ORDER-TABS|P|{"n":8,"sumOk":true,"bad":[],"payTab":"pay","shipTab":"pick","erpTab":"pay","whTab":"pick"}
+CR4-FILTER|P|{"bars":["orders:1","customers:1","documents:1","workQueue:1","returns:1","reports:1","audit:1"],"presetsOk":true,"chips":[2,1,0],"urlOk":true,"desc":true,"asc":true,"sheet":true,"scopeOk":true}
+CR4-CUSTOMER-CARDS|P|{"c1":{"total":6,"spend":60931.15,"aov":10155.19},"spendHand":60931.15,"colSum":60931.15,"customers":6,"changed":true,"quietRows":0,"quietCard":0,"dup":["Demo MT Quota Check","Demo Beauty Co."]}
+CR4-PLAN-PERIOD|P|{"chip":{"overview":true,"orders":true,"allocation":true,"reports":true,"supQuota":true,"supProposals":true,"supSop":true,"customers":false,"audit":false,"access":false},"ro":{"bar":true,"btns":true,"refuse":true,"quota":0,"preset":"2026-10"},"back":{"bar":true,"check":true,"quota":100},"FEED_MONTH":"2026-11","pp":"2026-11"}
+CR4-DATE-FORMAT|P|{"bad":[],"helper":"25 พ.ย. 2026 / TH"}
+CR4-SKU-SEARCH|P|{"sr":{"alias":true,"partner":true,"barcode":true,"name":true},"s360":{"h1":"SKU 360","hash":"#/supply/overview?q=JB-FD-001","inline":true},"kp":["15 มิ.ย. 2027","14 ม.ค. 2027","51,191","2,525.3"]}
+CR4-PORTFOLIO|P|{"pfw":[{"k":1,"page":"1/72","hand":"1/72"},{"k":8,"page":"3/50","hand":"3/50"},{"k":20,"page":"13/86","hand":"13/86"}],"projUnit":"v"}
+CR4-RR-UX|P|{"radios":6,"skip":true,"chipTxt":"คาดการณ์: ล่าสุด 4 สัปดาห์ · ไม่นับช่วงของขาด ▾","exRows":[2525.3,2354.6,2222.5,2413.5,2626.4,2626.4],"hand2":[2525.3,2354.6,2222.5,2413.5,2626.4,2626.4],"link":"L3M/sellout"}
+CR4-TREND|P|{"trOk":{"dec":true,"flat":true,"neg":true,"cap":true,"short":true,"down":true},"fallback":{"sku":"CM-LP-007","short":true,"same":true},"actions":1,"declining":1}
+CR4-AUTO|P|{"au":[{"sku":"CM-FD-001","ok":true,"pick":"L3M","wape":{"L4W":10.451227604512276,"L3M":7.887975771187448,"W":8.810763445799944,"TR":9.601728255401135}},{"sku":"CM-FD-003","ok":true,"pick":"L4W","wape":{"L4W":30.449029126213595,"L3M":43.36445108289769,"W":36.018530619865565,"TR":32.430399023914276}}],"share":{"L3M":31,"L4W":45,"TR":27,"W":17}}
+CR4-LOST-LABEL|P|{"parts":[100277,1920392],"tot":2020669}
+CR4-CONTROLS|P|{"ctl":{"supOverview":"VH","supStock":"","supExpiry":"H","supConsign":"V","supCalendar":"H","supReplen":"","supQuota":"VH","supReview":"V"},"kept":true,"info":true}
+CR4-ABC-LABEL|P|{"shown":"หลัก·สม่ำเสมอ","mxSum":109,"ac":109,"filt":true}
+CR4-ANCHOR-STAY|P|{"old":[],"new":[]}
+CR4-FILE-PROTOCOL|P|{"got":{"id":"CR3-3A","pass":false,"info":"run via http server (python -m http.server)"}}
+CR4-CONSOLE|P|{"errors":[]}
