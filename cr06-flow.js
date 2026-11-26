@@ -110,7 +110,7 @@ async function cr6Sku360(sku) {
   const dr = document.querySelector('#supDrawer .drawer');
   if (dr && !dr.querySelector('.cr6-skulinks')) {
     const go = [['supStock', 'q'], ['allocation', 'sku'], ['supReplen', 'q'], ['supQuota', 'q'], ['catalog', 'sku']].filter(([v]) => workCanVisit(v));
-    dr.insertAdjacentHTML('beforeend', `<div class="cr6-skulinks"><span>${t('cr6SkuLinks')}</span>${go.map(([v]) => `<button type="button" class="text-link" data-cr6-skugo="${v}" data-sku="${esc(sku)}">${esc(t(v))} →</button>`).join('')}</div>`);
+    (dr.querySelector('.dr-body') || dr).insertAdjacentHTML('beforeend', `<div class="cr6-skulinks"><span>${t('cr6SkuLinks')}</span>${go.map(([v]) => `<button type="button" class="text-link" data-cr6-skugo="${v}" data-sku="${esc(sku)}">${esc(t(v))} →</button>`).join('')}</div>`);
   }
 }
 

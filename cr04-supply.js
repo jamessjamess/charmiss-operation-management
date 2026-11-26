@@ -209,7 +209,7 @@ Pages.stock.openDrawer = function (A, sku) {
   const M = A.model(), r = M.rows.find(x => x.sku === sku), body = U.drawer.body(); if (!r || !body || !document.getElementById('supDrawer') || document.getElementById('supDrawer').classList.contains('hidden')) return;
   Calc.skuIdxFocus = r.i; const X = fcExample(M); Calc.skuIdxFocus = null;
   const T = Calc.skuTrend(A.DB, r.i, M.asDn, M.mask);
-  body.insertAdjacentHTML('beforeend', `<section class="card"><div class="card-head"><h3>${St('s360_methods')}</h3>${T.ok ? `<span class="muted small" title="${U.esc(St('tr_tip', { p: U.n(T.pctM, 1), r: U.n(T.r2, 2) }))}">${T.pctM >= 0 ? '▲' : '▼'} ${U.n(Math.abs(T.pctM), 1)}%${St('per_month')}${T.down ? ' · ' + St('tr_down') : ''}</span>` : ''}</div>${X ? fcMethodsTable(M, X, A.F.rr || 'L4W') : ''}</section>`);
+  (body.querySelector('.dr-body') || body).insertAdjacentHTML('beforeend', `<section class="card"><div class="card-head"><h3>${St('s360_methods')}</h3>${T.ok ? `<span class="muted small" title="${U.esc(St('tr_tip', { p: U.n(T.pctM, 1), r: U.n(T.r2, 2) }))}">${T.pctM >= 0 ? '▲' : '▼'} ${U.n(Math.abs(T.pctM), 1)}%${St('per_month')}${T.down ? ' · ' + St('tr_down') : ''}</span>` : ''}</div>${X ? fcMethodsTable(M, X, A.F.rr || 'L4W') : ''}</section>`);
   const head = body.querySelector('.drawer-head, .dr-head, h2'); if (head && workCanVisit('supOverview')) head.insertAdjacentHTML('afterend', `<button type="button" class="btn small ghost s360-link" data-s360="${U.esc(sku)}">${St('s360_link')} ↗</button>`);
 };
 document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-s360]'); if (!b) return; if (U.drawer.isOpen()) U.drawer.close(); window.cr4OpenSku360(b.dataset.s360); });

@@ -1478,7 +1478,8 @@
       const soR = (db.soRequests || []).filter(r => r.orderId === id).sort((a, b) => (b.time || 0) - (a.time || 0))[0], doc = orderDoc(o);
       const soOk = !soR || (dw.querySelector('[data-cr6-so-state]')?.textContent || '').includes(soR.id), docOk = !doc || (dw.querySelector('[data-cr6-doc]')?.textContent || '').includes(doc.so || '—');
       const rets = (db.returns || []).filter(r => r.orderId === id), retOk = rets.every(r => (dw.innerText || '').includes(r.id));
-      od.push({ v, id, ok: dwOpen() === 'order:' + id && steps === 7 && soOk && docOk && retOk }); cr6DwClose(); await wait(80);
+      const pr = dw.querySelector('.cr6-dw-panel')?.getBoundingClientRect(), onScreen = !!pr && pr.width > 0 && pr.left >= -1 && pr.right <= innerWidth + 1;   // DC-20: the panel is on screen (not only "open")
+      od.push({ v, id, onScreen, ok: dwOpen() === 'order:' + id && steps === 7 && soOk && docOk && retOk && onScreen }); cr6DwClose(); await wait(80);
     };
     await tryPage('orders'); await tryPage('soRequests'); await tryPage('workQueue'); await tryPage('returns'); await tryPage('documents');
     await tryPage('customers', async () => { document.querySelector('#page .cr6-cust')?.click(); await wait(200); });
@@ -1494,7 +1495,8 @@
     const viaSku = async (where, open) => {
       const el = await open(); if (!el) { s3.push({ where, none: true }); return; }
       const sku = el.dataset.sku360; el.click(); await wait(900); const txt = drawerOf();
-      s3.push({ where, sku, ok: txt.includes(sku) && (sku !== SK || txt.split('\n').slice(0, 8).join('|') === ref.split('\n').slice(0, 8).join('|')) }); global.U.drawer.close(); await wait(150);
+      const pr = document.querySelector('#supDrawer .drawer')?.getBoundingClientRect(), onScreen = !!pr && pr.width > 0 && pr.left >= -1 && pr.right <= innerWidth + 1;   // DC-20: on screen, not only open
+      s3.push({ where, sku, onScreen, ok: onScreen && txt.includes(sku) && (sku !== SK || txt.split('\n').slice(0, 8).join('|') === ref.split('\n').slice(0, 8).join('|')) }); global.U.drawer.close(); await wait(150);
     };
     const pick = sel => document.querySelector(sel);
     await viaSku('allocation', async () => { global.navigate('allocation'); await wait(400); return pick(`#page [data-sku360="${SK}"]`) || pick('#page [data-sku360]'); });
