@@ -367,7 +367,8 @@
     t, get lang() { return lang; },
     setLang(l) { lang = l === 'en' ? 'en' : 'th'; try { localStorage.setItem('scm.lang', lang); } catch (e) { /* ignore */ } document.documentElement.lang = lang; },
     month(m) { return MONTHS[lang][m]; }, monthLong(m) { return MONTHS_LONG[lang][m]; },
-    add(th, en) { Object.assign(TH, th || {}); Object.assign(EN, en || {}); }   // CR-01: later modules add their own texts
+    add(th, en) { Object.assign(TH, th || {}); Object.assign(EN, en || {}); },   // CR-01: later modules add their own texts
+    dicts() { return { TH, EN }; }   // CR-06: page names are renamed in every text at once
   };
   // CR-03 (3B): R3 run rate without out-of-stock weeks · R4 ABC-XYZ + statistical safety stock
   global.I18N.add({

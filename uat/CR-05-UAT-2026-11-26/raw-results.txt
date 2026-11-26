@@ -1,0 +1,371 @@
+#cr05-1440|1440|2026-11-26T02:11:37.549Z|1.5.0
+CR5-HEADER|P|{"width":1440,"eyebrow":[],"crumb":[],"dupTitle":[],"bars":[]}
+CR5-FIRST-CONTENT|P|{"width":1440,"at":"1440 / 390","limit":420,"over":[],"worst":408}
+CR5-PAGE-HEIGHT|P|{"width":1440,"at":"≥ 1200 px","over":["director:supConsign:4256","mgr-mt:supConsign:4278"],"heights":{"overview":1595,"orders":1069,"payments":900,"shipping":900,"ecommerce":3411,"customers":900,"catalog":2098,"allocation":2924,"stockoverview":2343,"partners":2119,"soRequests":900,"workQueue":1019,"documents":1136,"erp":900,"reports":1122,"access":1285,"audit":900,"returns":931,"supOverview":2623,"supStock":1211,"supExpiry":1495,"supConsign":4256,"supCalendar":2612,"supReplen":1964,"supQuota":2690,"supProposals":900,"supReview":3814,"supSop":2256,"supIntake":1086}}
+CR5-TABLE-FIT|P|{"width":1440,"wide":[],"pageScroll":[]}
+CR5-MOBILE-CARDS|P|{"width":1440,"at":"≤ 640 px","bad":[]}
+CR5-TAP|P|{"width":1440,"at":"≤ 768 px","bad":[]}
+CR5-FONT|P|{"width":1440,"bad":[]}
+CR5-TECH-TEXT|P|{"width":1440,"bad":[]}
+CR5-NO-DISABLED-WALL|P|{"width":1440,"bad":[]}
+CR5-MOBILE-SHELL|P|{"width":1440,"at":"≤ 768 px"}
+CR5-MODAL-NOSCROLL|P|{"width":1440,"at":"≥ 768 px","modals":["so:c5-l 960×424","override:c5-m 720×810","stockRequest:c5-m 720×810","addChannel:c5-m 720×455","sopAction:c5-m 720×601","version:c5-l 960×693"],"drawer":"1440 "}
+CR5-MODAL-SHEET|P|{"width":1440,"at":"≤ 640 px","bad":["so fullfalse verticalfalse fb40true","override fullfalse verticalfalse fb40true","stockRequest fullfalse verticalfalse fb40true","addChannel fullfalse verticalfalse fb40true","sopAction fullfalse verticalfalse fb40true","version fullfalse verticaltrue fb40true"]}
+CR5-MODAL-FOOTER|P|{"width":1440,"tall":["override","stockRequest"],"bad":[]}
+CR5-TECH-TEXT (modals)|P|{"width":1440,"bad":[]}
+CR5-DATE|P|{"width":1440,"pages":[],"modals":[],"helper":"27 พ.ย. 2026 · 26 พ.ย. 2026 06:56"}
+CR5-PAGINATE|P|{"width":1440,"ops":{"N":960,"first":25,"text":"1–25 จาก 960","textOk":true,"disjoint":true,"s50":50,"domKeepsAll":true},"supStock":{"N":120,"first":25,"text":"1–25 จาก 120 · มูลค่า Total ฿50,091,183","textOk":true,"disjoint":true,"exported":120},"supQuota":"1–25 จาก 953"}
+CR5-ACT-ID|P|{"width":1440,"n":123,"sample":["ACT-2611-0122","ACT-2611-0121","ACT-2611-0120"],"stable":true,"compared":122,"mig":{"moved":1,"id":"ACT-2611-0123","idOk":true,"history":true,"log":true,"noOld":true}}
+CR5-EMPTY|P|{"width":1440,"noRes":[],"soRows":0,"soOk":true,"decOk":true}
+CR5-HOME-KPI|P|{"width":1440,"director":{"val":"—","has":false,"tip":true,"noAch":true,"ach":94.1,"achPage":94.1},"mgr-mt":{"val":"—","has":false,"tip":true,"noAch":true,"ach":84.2,"achPage":84.2}}
+CR5-USER-MENU|P|{"width":1440,"inMenu":{"open":true,"theme":true,"lang":true,"sw":true,"out":true,"override":true},"noShortcut":true,"themeOk":true,"langOk":true,"swOk":true,"outOk":true}
+CR5-NOLEAK|P|{"width":1440,"ops":[],"supply":[]}
+CR5-THEME|P|{"width":1440,"pages":["overview","orders","allocation","supStock","supSop"],"bad":[],"lum":{"head":0.12,"menu":0.12,"pager":0.12,"modal":0.12}}
+CR5-VERSION|P|{"width":1440,"number":"1.5.0","scripts":51,"other":[],"history":"1.5.0 1.4.0 1.3.4 1.3.3 1.3.2 1.3.1 1.1.0 1.0.0","hOk":true,"foot":"Charmiss Operations Management · v1.5.0","side":"Charmiss Ops v1.5.0 · 26 พ.ย. 2026","login":"Charmiss Ops v1.5.0 · 26 พ.ย. 2026"}
+CR5-CONSOLE|P|{"width":1440,"errors":[]}
+#cr05-1024|1024|2026-11-26T01:46:16.532Z|1.5.0
+CR5-HEADER|P|{"width":1024,"eyebrow":[],"crumb":[],"dupTitle":[],"bars":[]}
+CR5-FIRST-CONTENT|P|{"width":1024,"at":"1440 / 390","limit":null,"over":[],"worst":422}
+CR5-PAGE-HEIGHT|P|{"width":1024,"at":"≥ 1200 px","over":[],"heights":{"overview":1839,"orders":1172,"payments":961,"shipping":961,"ecommerce":3667,"customers":1061,"catalog":2113,"allocation":3097,"stockoverview":2372,"partners":3020,"soRequests":800,"workQueue":1327,"documents":1187,"erp":800,"reports":1137,"access":1309,"audit":800,"returns":982,"supOverview":4188,"supStock":1235,"supExpiry":2102,"supConsign":4783,"supCalendar":2935,"supReplen":2470,"supQuota":3582,"supProposals":800,"supReview":4652,"supSop":2330,"supIntake":1121}}
+CR5-TABLE-FIT|P|{"width":1024,"wide":[],"pageScroll":[]}
+CR5-MOBILE-CARDS|P|{"width":1024,"at":"≤ 640 px","bad":[]}
+CR5-TAP|P|{"width":1024,"at":"≤ 768 px","bad":[]}
+CR5-FONT|P|{"width":1024,"bad":[]}
+CR5-TECH-TEXT|P|{"width":1024,"bad":[]}
+CR5-NO-DISABLED-WALL|P|{"width":1024,"bad":[]}
+CR5-MOBILE-SHELL|P|{"width":1024,"at":"≤ 768 px"}
+CR5-MODAL-NOSCROLL|P|{"width":1024,"at":"≥ 768 px","modals":["so:c5-l 942×424","override:c5-m 720×720","stockRequest:c5-m 720×720","addChannel:c5-m 720×455","sopAction:c5-m 720×601","version:c5-l 942×693"],"drawer":"1024 "}
+CR5-MODAL-SHEET|P|{"width":1024,"at":"≤ 640 px","bad":["so fullfalse verticalfalse fb40true","override fullfalse verticalfalse fb40true","stockRequest fullfalse verticalfalse fb40true","addChannel fullfalse verticalfalse fb40true","sopAction fullfalse verticalfalse fb40true","version fullfalse verticaltrue fb40true"]}
+CR5-MODAL-FOOTER|P|{"width":1024,"tall":["override","stockRequest"],"bad":[]}
+CR5-TECH-TEXT (modals)|P|{"width":1024,"bad":[]}
+CR5-DATE|P|{"width":1024,"pages":[],"modals":[],"helper":"27 พ.ย. 2026 · 26 พ.ย. 2026 06:56"}
+CR5-PAGINATE|P|{"width":1024,"ops":{"N":960,"first":25,"text":"1–25 จาก 960","textOk":true,"disjoint":true,"s50":50,"domKeepsAll":true},"supStock":{"N":120,"first":25,"text":"1–25 จาก 120 · มูลค่า Total ฿50,091,183","textOk":true,"disjoint":true,"exported":120},"supQuota":"1–25 จาก 953"}
+CR5-ACT-ID|P|{"width":1024,"n":123,"sample":["ACT-2611-0122","ACT-2611-0121","ACT-2611-0120"],"stable":true,"compared":122,"mig":{"moved":1,"id":"ACT-2611-0123","idOk":true,"history":true,"log":true,"noOld":true}}
+CR5-EMPTY|P|{"width":1024,"noRes":[],"soRows":0,"soOk":true,"decOk":true}
+CR5-HOME-KPI|P|{"width":1024,"director":{"val":"—","has":false,"tip":true,"noAch":true,"ach":94.1,"achPage":94.1},"mgr-mt":{"val":"—","has":false,"tip":true,"noAch":true,"ach":84.2,"achPage":84.2}}
+CR5-USER-MENU|P|{"width":1024,"inMenu":{"open":true,"theme":true,"lang":true,"sw":true,"out":true,"override":true},"noShortcut":true,"themeOk":true,"langOk":true,"swOk":true,"outOk":true}
+CR5-NOLEAK|P|{"width":1024,"ops":[],"supply":[]}
+CR5-THEME|P|{"width":1024,"pages":["overview","orders","allocation","supStock","supSop"],"bad":[],"lum":{"head":0.12,"menu":0.12,"pager":0.12,"modal":0.12}}
+CR5-VERSION|P|{"width":1024,"number":"1.5.0","scripts":51,"other":[],"history":"1.5.0 1.4.0 1.3.4 1.3.3 1.3.2 1.3.1 1.1.0 1.0.0","hOk":true,"foot":"Charmiss Operations Management · v1.5.0","side":"Charmiss Ops v1.5.0 · 26 พ.ย. 2026","login":"Charmiss Ops v1.5.0 · 26 พ.ย. 2026"}
+CR5-CONSOLE|P|{"width":1024,"errors":[]}
+#cr05-390|390|2026-11-26T02:15:18.967Z|1.5.0
+CR5-HEADER|P|{"width":390,"eyebrow":[],"crumb":[],"dupTitle":[],"bars":[]}
+CR5-FIRST-CONTENT|P|{"width":390,"at":"1440 / 390","limit":400,"over":[],"worst":397}
+CR5-PAGE-HEIGHT|P|{"width":390,"at":"≥ 1200 px","over":[],"heights":{"overview":2369,"orders":5434,"payments":977,"shipping":977,"ecommerce":12840,"customers":2509,"catalog":8398,"allocation":10902,"stockoverview":8529,"partners":5767,"soRequests":844,"workQueue":2527,"documents":1096,"erp":844,"reports":2579,"access":1897,"audit":1131,"returns":987,"supOverview":4676,"supStock":5367,"supExpiry":2804,"supConsign":13544,"supCalendar":5437,"supReplen":4589,"supQuota":8353,"supProposals":870,"supReview":15031,"supSop":12758,"supIntake":3572}}
+CR5-TABLE-FIT|P|{"width":390,"wide":[],"pageScroll":[]}
+CR5-MOBILE-CARDS|P|{"width":390,"at":"≤ 640 px","bad":[]}
+CR5-TAP|P|{"width":390,"at":"≤ 768 px","bad":[]}
+CR5-FONT|P|{"width":390,"bad":[]}
+CR5-TECH-TEXT|P|{"width":390,"bad":[]}
+CR5-NO-DISABLED-WALL|P|{"width":390,"bad":[]}
+CR5-MOBILE-SHELL|P|{"width":390,"at":"≤ 768 px","director":{"bar":56,"closed0":true,"open":true,"groups":"home>sales>fulfil>inventory>supmon>supplan>reports>data>admin","expect":"home>sales>fulfil>inventory>supmon>supplan>reports>data>admin","heads":true,"closed1":true},"warehouse":{"bar":56,"closed0":true,"open":true,"groups":"home>sales>fulfil>inventory>supmon>data>admin","expect":"home>sales>fulfil>inventory>supmon>data>admin","heads":true,"closed1":true}}
+CR5-MODAL-NOSCROLL|P|{"width":390,"at":"≥ 768 px","modals":["so:c5-l 390×844","override:c5-m 390×844","stockRequest:c5-m 390×844","addChannel:c5-m 390×844","sopAction:c5-m 390×844","version:c5-l 390×844"],"drawer":"390 "}
+CR5-MODAL-SHEET|P|{"width":390,"at":"≤ 640 px","bad":[]}
+CR5-MODAL-FOOTER|P|{"width":390,"tall":["override","stockRequest","sopAction","version"],"bad":[]}
+CR5-TECH-TEXT (modals)|P|{"width":390,"bad":[]}
+CR5-DATE|P|{"width":390,"pages":[],"modals":[],"helper":"27 พ.ย. 2026 · 26 พ.ย. 2026 06:56"}
+CR5-PAGINATE|P|{"width":390,"ops":{"N":960,"first":25,"text":"1–25 จาก 960","textOk":true,"disjoint":true,"s50":50,"domKeepsAll":true},"supStock":{"N":120,"first":25,"text":"1–25 จาก 120 · มูลค่า Total ฿50,091,183","textOk":true,"disjoint":true,"exported":120},"supQuota":"แสดง 25 จาก 953 รายการ"}
+CR5-ACT-ID|P|{"width":390,"n":123,"sample":["ACT-2611-0122","ACT-2611-0121","ACT-2611-0120"],"stable":true,"compared":122,"mig":{"moved":1,"id":"ACT-2611-0123","idOk":true,"history":true,"log":true,"noOld":true}}
+CR5-EMPTY|P|{"width":390,"noRes":[],"soRows":0,"soOk":true,"decOk":true}
+CR5-HOME-KPI|P|{"width":390,"director":{"val":"—","has":false,"tip":true,"noAch":true,"ach":94.1,"achPage":94.1},"mgr-mt":{"val":"—","has":false,"tip":true,"noAch":true,"ach":84.2,"achPage":84.2}}
+CR5-USER-MENU|P|{"width":390,"inMenu":{"open":true,"theme":true,"lang":true,"sw":true,"out":true,"override":true},"noShortcut":true,"themeOk":true,"langOk":true,"swOk":true,"outOk":true}
+CR5-NOLEAK|P|{"width":390,"ops":[],"supply":[]}
+CR5-THEME|P|{"width":390,"pages":["overview","orders","allocation","supStock","supSop"],"bad":[],"lum":{"head":0.12,"menu":0.12,"pager":0.12,"modal":0.12}}
+CR5-VERSION|P|{"width":390,"number":"1.5.0","scripts":51,"other":[],"history":"1.5.0 1.4.0 1.3.4 1.3.3 1.3.2 1.3.1 1.1.0 1.0.0","hOk":true,"foot":"Charmiss Operations Management · v1.5.0","side":"Charmiss Ops v1.5.0 · 26 พ.ย. 2026","login":"Charmiss Ops v1.5.0 · 26 พ.ย. 2026"}
+CR5-CONSOLE|P|{"width":390,"errors":[]}
+#all|1440|2026-11-26T01:34:03.107Z|1.5.0
+SUP-ANCHOR|P|{"selfCheck":"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS","diff":[],"got":{"stockValue":50091183,"whV":39518371,"consV":10572812,"units":"514864/136418/651282","doc":73,"sellThrough":17.8,"status":"7/2/9/98/4/+7","risk3M":"547597/4489","recall":"519974/11/7194","quotaFit":"92/107/116","mape":13.5,"bias":-4.2,"fill":93.1,"achMTD":94.1}}
+SUP-MENU-director|P|{"menu":"Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Sop,Review,Intake","refused":true}
+SUP-MENU-mgr-mt|P|{"menu":"Overview,Stock,Expiry,Consign,Calendar,Quota,Proposals,Sop,Review,Intake","refused":true}
+SUP-MENU-mgr-tt|P|{"menu":"Overview,Stock,Expiry,Calendar,Quota,Proposals,Sop,Review","refused":true}
+SUP-MENU-mgr-ecom|P|{"menu":"Overview,Stock,Expiry,Calendar,Quota,Proposals,Sop,Review","refused":true}
+SUP-MENU-sa-mt|P|{"menu":"","refused":true}
+SUP-MENU-sa-tt|P|{"menu":"","refused":true}
+SUP-MENU-sa-ecom|P|{"menu":"","refused":true}
+SUP-MENU-admin|P|{"menu":"Intake,Setup","refused":true}
+SUP-MENU-finance|P|{"menu":"Calendar,Review","refused":true}
+SUP-MENU-warehouse|P|{"menu":"Expiry,Calendar","refused":true}
+SUP-MENU-planner|P|{"menu":"Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Sop,Review,Intake,Setup","refused":true}
+SUP-NOLEAK-mgr-mt|P|{"lock":"MT","hits":[]}
+SUP-NOLEAK-mgr-tt|P|{"lock":"TT","hits":[]}
+SUP-NOLEAK-mgr-ecom|P|{"lock":"ECOM","hits":[]}
+SUP-THEME-light|P|{"errors":[]}
+SUP-THEME-dark|P|{"errors":[]}
+OPS-GATE-director|P|{"denied":"","broken":[]}
+OPS-GATE-mgr-mt|P|{"denied":"ecommerce,stockoverview","broken":[]}
+OPS-GATE-mgr-tt|P|{"denied":"ecommerce,stockoverview","broken":[]}
+OPS-GATE-mgr-ecom|P|{"denied":"stockoverview,soRequests","broken":[]}
+OPS-GATE-sa-mt|P|{"denied":"ecommerce,stockoverview","broken":[]}
+OPS-GATE-sa-tt|P|{"denied":"ecommerce,stockoverview","broken":[]}
+OPS-GATE-sa-ecom|P|{"denied":"stockoverview,soRequests","broken":[]}
+OPS-GATE-admin|P|{"denied":"","broken":[]}
+OPS-GATE-finance|P|{"denied":"ecommerce,customers","broken":[]}
+OPS-GATE-warehouse|P|{"denied":"ecommerce,customers,soRequests,reports","broken":[]}
+OPS-GATE-planner|P|{"denied":"ecommerce,customers,stockoverview,soRequests","broken":[]}
+CR4-LANDING|P|{"land":[],"deepSup":"supQuota","deepOps":"customers:7d","again":"overview"}
+CR4-MENU-ORDER|P|{"bad":[],"curOpen":true,"ids":[]}
+CR4-GATE|P|{"fail":[]}
+CR4-HOME-ROLE|P|{"bad":[]}
+CR4-HOME-MATCH|P|{"n":14,"bad":[]}
+CR4-FLOW-STRIP|P|{"fl":[],"poBox":16,"poPage":16}
+CR4-MYWORK|P|{"dirProp":true,"plannerSeesOwn":false,"dirIssue":true,"whSeesOwn":false,"mtAct":true,"ttAct":false,"saMt":true,"saTt":false,"sorted":true,"opened":true}
+CR4-NOLEAK|P|{"hits":[]}
+CR4-DATASET|P|{"integ":true,"uat":true}
+CR4-ALERT-GRID|P|{"width":1440,"ag":[{"who":"director","cols":3,"rows":[3,3],"ok":true},{"who":"mgr-mt","cols":2,"rows":[2,2],"ok":true},{"who":"warehouse","cols":1,"rows":[1],"ok":true},{"who":"planner","cols":2,"rows":[2,2],"ok":true}]}
+CR4-HEIGHT|P|{"width":1440,"height":1762,"limit":1800}
+CR4-SCOPE01|P|{"phone":false,"sc":[{"v":"supReplen","n":11},{"v":"supConsign","n":11},{"v":"supQuota","n":25}],"made":1}
+CR4-ORDER-TABS|P|{"n":8,"sumOk":true,"bad":[],"payTab":"pay","shipTab":"pick","erpTab":"pay","whTab":"pick"}
+CR4-FILTER|P|{"bars":["orders:1","customers:1","documents:1","workQueue:1","returns:1","reports:1","audit:1"],"presetsOk":true,"chips":[2,1,0],"urlOk":true,"desc":true,"asc":true,"sheet":null,"scopeOk":true}
+CR4-CUSTOMER-CARDS|P|{"c1":{"total":6,"spend":60931.15,"aov":10155.19},"spendHand":60931.15,"colSum":60931.15,"customers":6,"changed":true,"quietRows":0,"quietCard":0,"dup":["Demo MT Quota Check","Demo Beauty Co."]}
+CR4-PLAN-PERIOD|P|{"chip":{"overview":true,"orders":true,"allocation":true,"reports":true,"supQuota":true,"supProposals":true,"supSop":true,"customers":false,"audit":false,"access":false},"ro":{"bar":true,"btns":true,"refuse":true,"quota":0,"preset":"2026-10"},"back":{"bar":true,"check":true,"quota":100},"FEED_MONTH":"2026-11","pp":"2026-11"}
+CR4-DATE-FORMAT|P|{"bad":[],"helper":"25 พ.ย. 2026 / TH"}
+CR4-SKU-SEARCH|P|{"sr":{"alias":true,"partner":true,"barcode":true,"name":true},"s360":{"h1":"SKU 360","hash":"#/supply/overview?q=JB-FD-001","inline":true},"kp":["15 มิ.ย. 2027","14 ม.ค. 2027","51,191","2,525.3"]}
+CR4-PORTFOLIO|P|{"pfw":[{"k":1,"page":"1/72","hand":"1/72"},{"k":8,"page":"3/50","hand":"3/50"},{"k":20,"page":"13/86","hand":"13/86"}],"projUnit":"v"}
+CR4-RR-UX|P|{"radios":6,"skip":true,"chipTxt":"คาดการณ์: ล่าสุด 4 สัปดาห์ · ไม่นับช่วงของขาด ▾","exRows":[2525.3,2354.6,2222.5,2413.5,2626.4,2626.4],"hand2":[2525.3,2354.6,2222.5,2413.5,2626.4,2626.4],"link":"L3M/sellout"}
+CR4-TREND|P|{"trOk":{"dec":true,"flat":true,"neg":true,"cap":true,"short":true,"down":true},"fallback":{"sku":"CM-LP-007","short":true,"same":true},"actions":1,"declining":1}
+CR4-AUTO|P|{"au":[{"sku":"CM-FD-001","ok":true,"pick":"L3M","wape":{"L4W":10.451227604512276,"L3M":7.887975771187448,"W":8.810763445799944,"TR":9.601728255401135}},{"sku":"CM-FD-003","ok":true,"pick":"L4W","wape":{"L4W":30.449029126213595,"L3M":43.36445108289769,"W":36.018530619865565,"TR":32.430399023914276}}],"share":{"L3M":31,"L4W":45,"TR":27,"W":17}}
+CR4-LOST-LABEL|P|{"parts":[100277,1920392],"tot":2020669}
+CR4-CONTROLS|P|{"ctl":{"supOverview":"VH","supStock":"","supExpiry":"H","supConsign":"V","supCalendar":"H","supReplen":"","supQuota":"VH","supReview":"V"},"kept":true,"info":true}
+CR4-ABC-LABEL|P|{"shown":"ขายหลัก · สม่ำเสมอ","mxSum":109,"ac":109,"filt":true}
+CR4-ANCHOR-STAY|P|{"old":[],"new":[]}
+CR4-FILE-PROTOCOL|P|{"got":{"id":"CR3-3A","pass":false,"info":"run via http server (python -m http.server)"}}
+CR4-CONSOLE|P|{"errors":[]}
+CR5-HEADER|P|{"width":1440,"eyebrow":[],"crumb":[],"dupTitle":[],"bars":[]}
+CR5-FIRST-CONTENT|P|{"width":1440,"at":"1440 / 390","limit":420,"over":[],"worst":408}
+CR5-PAGE-HEIGHT|P|{"width":1440,"at":"≥ 1200 px","over":["director:supConsign:4256","mgr-mt:supConsign:4278"],"heights":{"overview":1762,"orders":1069,"payments":900,"shipping":900,"ecommerce":3411,"customers":900,"catalog":2098,"allocation":2924,"stockoverview":2405,"partners":2119,"soRequests":900,"workQueue":1203,"documents":1136,"erp":900,"reports":1122,"access":1285,"audit":1892,"returns":931,"supOverview":2623,"supStock":1211,"supExpiry":1495,"supConsign":4256,"supCalendar":2612,"supReplen":1964,"supQuota":2690,"supProposals":900,"supReview":3814,"supSop":2256,"supIntake":1086}}
+CR5-TABLE-FIT|P|{"width":1440,"wide":[],"pageScroll":[]}
+CR5-MOBILE-CARDS|P|{"width":1440,"at":"≤ 640 px","bad":[]}
+CR5-TAP|P|{"width":1440,"at":"≤ 768 px","bad":[]}
+CR5-FONT|P|{"width":1440,"bad":[]}
+CR5-TECH-TEXT|P|{"width":1440,"bad":[]}
+CR5-NO-DISABLED-WALL|P|{"width":1440,"bad":[]}
+CR5-MOBILE-SHELL|P|{"width":1440,"at":"≤ 768 px"}
+CR5-MODAL-NOSCROLL|P|{"width":1440,"at":"≥ 768 px","modals":["so:c5-l 960×424","override:c5-m 720×810","stockRequest:c5-m 720×810","addChannel:c5-m 720×455","sopAction:c5-m 720×612","version:c5-l 960×693"],"drawer":"1440 "}
+CR5-MODAL-SHEET|P|{"width":1440,"at":"≤ 640 px","bad":["so fullfalse verticalfalse fb40true","override fullfalse verticalfalse fb40true","stockRequest fullfalse verticalfalse fb40true","addChannel fullfalse verticalfalse fb40true","sopAction fullfalse verticalfalse fb40true","version fullfalse verticaltrue fb40true"]}
+CR5-MODAL-FOOTER|P|{"width":1440,"tall":["override","stockRequest"],"bad":[]}
+CR5-TECH-TEXT (modals)|P|{"width":1440,"bad":[]}
+CR5-DATE|P|{"width":1440,"pages":[],"modals":[],"helper":"27 พ.ย. 2026 · 26 พ.ย. 2026 06:56"}
+CR5-PAGINATE|P|{"width":1440,"ops":{"N":960,"first":25,"text":"1–25 จาก 960","textOk":true,"disjoint":true,"s50":50,"domKeepsAll":true},"supStock":{"N":120,"first":25,"text":"1–25 จาก 120 · มูลค่า Total ฿50,091,183","textOk":true,"disjoint":true,"exported":120},"supQuota":"1–25 จาก 953"}
+CR5-ACT-ID|P|{"width":1440,"n":125,"sample":["ACT-2611-0124","ACT-2611-0123","ACT-2611-0122"],"stable":true,"compared":123,"mig":{"moved":1,"id":"ACT-2611-0125","idOk":true,"history":true,"log":true,"noOld":true}}
+CR5-EMPTY|P|{"width":1440,"noRes":[],"soRows":0,"soOk":true,"decOk":true}
+CR5-HOME-KPI|P|{"width":1440,"director":{"val":"—","has":false,"tip":true,"noAch":true,"ach":94.1,"achPage":94.1},"mgr-mt":{"val":"—","has":false,"tip":true,"noAch":true,"ach":84.2,"achPage":84.2}}
+CR5-USER-MENU|P|{"width":1440,"inMenu":{"open":true,"theme":true,"lang":true,"sw":true,"out":true,"override":true},"noShortcut":true,"themeOk":true,"langOk":true,"swOk":true,"outOk":true}
+CR5-NOLEAK|P|{"width":1440,"ops":[],"supply":[]}
+CR5-THEME|P|{"width":1440,"pages":["overview","orders","allocation","supStock","supSop"],"bad":[],"lum":{"head":0.12,"menu":0.12,"pager":0.12,"modal":0.12}}
+CR5-VERSION|P|{"width":1440,"number":"1.5.0","scripts":51,"other":[],"history":"1.5.0 1.4.0 1.3.4 1.3.3 1.3.2 1.3.1 1.1.0 1.0.0","hOk":true,"foot":"Charmiss Operations Management · v1.5.0","side":"Charmiss Ops v1.5.0 · 26 พ.ย. 2026","login":"Charmiss Ops v1.5.0 · 26 พ.ย. 2026"}
+CR5-CONSOLE|P|{"width":1440,"errors":[]}
+#cr04-1440|1440|2026-11-26T01:36:42.381Z|1.5.0
+CR4-LANDING|P|{"land":[],"deepSup":"supQuota","deepOps":"customers:7d","again":"overview"}
+CR4-MENU-ORDER|P|{"bad":[],"curOpen":true,"ids":[]}
+CR4-GATE|P|{"fail":[]}
+CR4-HOME-ROLE|P|{"bad":[]}
+CR4-HOME-MATCH|P|{"n":14,"bad":[]}
+CR4-FLOW-STRIP|P|{"fl":[],"poBox":16,"poPage":16}
+CR4-MYWORK|P|{"dirProp":true,"plannerSeesOwn":false,"dirIssue":true,"whSeesOwn":false,"mtAct":true,"ttAct":false,"saMt":true,"saTt":false,"sorted":true,"opened":true}
+CR4-NOLEAK|P|{"hits":[]}
+CR4-DATASET|P|{"integ":true,"uat":true}
+CR4-ALERT-GRID|P|{"width":1440,"ag":[{"who":"director","cols":3,"rows":[3,3],"ok":true},{"who":"mgr-mt","cols":2,"rows":[2,2],"ok":true},{"who":"warehouse","cols":1,"rows":[1],"ok":true},{"who":"planner","cols":2,"rows":[2,2],"ok":true}]}
+CR4-HEIGHT|P|{"width":1440,"height":1762,"limit":1800}
+CR4-SCOPE01|P|{"phone":false,"sc":[{"v":"supReplen","n":11},{"v":"supConsign","n":11},{"v":"supQuota","n":25}],"made":1}
+CR4-ORDER-TABS|P|{"n":8,"sumOk":true,"bad":[],"payTab":"pay","shipTab":"pick","erpTab":"pay","whTab":"pick"}
+CR4-FILTER|P|{"bars":["orders:1","customers:1","documents:1","workQueue:1","returns:1","reports:1","audit:1"],"presetsOk":true,"chips":[2,1,0],"urlOk":true,"desc":true,"asc":true,"sheet":null,"scopeOk":true}
+CR4-CUSTOMER-CARDS|P|{"c1":{"total":6,"spend":60931.15,"aov":10155.19},"spendHand":60931.15,"colSum":60931.15,"customers":6,"changed":true,"quietRows":0,"quietCard":0,"dup":["Demo MT Quota Check","Demo Beauty Co."]}
+CR4-PLAN-PERIOD|P|{"chip":{"overview":true,"orders":true,"allocation":true,"reports":true,"supQuota":true,"supProposals":true,"supSop":true,"customers":false,"audit":false,"access":false},"ro":{"bar":true,"btns":true,"refuse":true,"quota":0,"preset":"2026-10"},"back":{"bar":true,"check":true,"quota":100},"FEED_MONTH":"2026-11","pp":"2026-11"}
+CR4-DATE-FORMAT|P|{"bad":[],"helper":"25 พ.ย. 2026 / TH"}
+CR4-SKU-SEARCH|P|{"sr":{"alias":true,"partner":true,"barcode":true,"name":true},"s360":{"h1":"SKU 360","hash":"#/supply/overview?q=JB-FD-001","inline":true},"kp":["15 มิ.ย. 2027","14 ม.ค. 2027","51,191","2,525.3"]}
+CR4-PORTFOLIO|P|{"pfw":[{"k":1,"page":"1/72","hand":"1/72"},{"k":8,"page":"3/50","hand":"3/50"},{"k":20,"page":"13/86","hand":"13/86"}],"projUnit":"v"}
+CR4-RR-UX|P|{"radios":6,"skip":true,"chipTxt":"คาดการณ์: ล่าสุด 4 สัปดาห์ · ไม่นับช่วงของขาด ▾","exRows":[2525.3,2354.6,2222.5,2413.5,2626.4,2626.4],"hand2":[2525.3,2354.6,2222.5,2413.5,2626.4,2626.4],"link":"L3M/sellout"}
+CR4-TREND|P|{"trOk":{"dec":true,"flat":true,"neg":true,"cap":true,"short":true,"down":true},"fallback":{"sku":"CM-LP-007","short":true,"same":true},"actions":1,"declining":1}
+CR4-AUTO|P|{"au":[{"sku":"CM-FD-001","ok":true,"pick":"L3M","wape":{"L4W":10.451227604512276,"L3M":7.887975771187448,"W":8.810763445799944,"TR":9.601728255401135}},{"sku":"CM-FD-003","ok":true,"pick":"L4W","wape":{"L4W":30.449029126213595,"L3M":43.36445108289769,"W":36.018530619865565,"TR":32.430399023914276}}],"share":{"L3M":31,"L4W":45,"TR":27,"W":17}}
+CR4-LOST-LABEL|P|{"parts":[100277,1920392],"tot":2020669}
+CR4-CONTROLS|P|{"ctl":{"supOverview":"VH","supStock":"","supExpiry":"H","supConsign":"V","supCalendar":"H","supReplen":"","supQuota":"VH","supReview":"V"},"kept":true,"info":true}
+CR4-ABC-LABEL|P|{"shown":"ขายหลัก · สม่ำเสมอ","mxSum":109,"ac":109,"filt":true}
+CR4-ANCHOR-STAY|P|{"old":[],"new":[]}
+CR4-FILE-PROTOCOL|P|{"got":{"id":"CR3-3A","pass":false,"info":"run via http server (python -m http.server)"}}
+CR4-CONSOLE|P|{"errors":[]}
+#cr04-390|390|2026-11-26T02:01:53.575Z|1.5.0
+CR4-LANDING|P|{"land":[],"deepSup":"supQuota","deepOps":"customers:7d","again":"overview"}
+CR4-MENU-ORDER|P|{"bad":[],"curOpen":true,"ids":[]}
+CR4-GATE|P|{"fail":[]}
+CR4-HOME-ROLE|P|{"bad":[]}
+CR4-HOME-MATCH|P|{"n":14,"bad":[]}
+CR4-FLOW-STRIP|P|{"fl":[],"poBox":16,"poPage":16}
+CR4-MYWORK|P|{"dirProp":true,"plannerSeesOwn":false,"dirIssue":true,"whSeesOwn":false,"mtAct":true,"ttAct":false,"saMt":true,"saTt":false,"sorted":true,"opened":true}
+CR4-NOLEAK|P|{"hits":[]}
+CR4-DATASET|P|{"integ":true,"uat":true}
+CR4-ALERT-GRID|P|{"width":390,"ag":[{"who":"director","cols":2,"rows":[2,2,2],"ok":true},{"who":"mgr-mt","cols":2,"rows":[2,2],"ok":true},{"who":"warehouse","cols":1,"rows":[1],"ok":true},{"who":"planner","cols":2,"rows":[2,2],"ok":true}]}
+CR4-HEIGHT|P|{"width":390,"height":2598,"limit":3400}
+CR4-SCOPE01|P|{"phone":true,"sc":[{"v":"supReplen","n":11},{"v":"supConsign","n":11},{"v":"supQuota","n":25}],"made":1}
+CR4-ORDER-TABS|P|{"n":8,"sumOk":true,"bad":[],"payTab":"pay","shipTab":"pick","erpTab":"pay","whTab":"pick"}
+CR4-FILTER|P|{"bars":["orders:1","customers:1","documents:1","workQueue:1","returns:1","reports:1","audit:1"],"presetsOk":true,"chips":[2,1,0],"urlOk":true,"desc":true,"asc":true,"sheet":true,"scopeOk":true}
+CR4-CUSTOMER-CARDS|P|{"c1":{"total":6,"spend":60931.15,"aov":10155.19},"spendHand":60931.15,"colSum":60931.15,"customers":6,"changed":true,"quietRows":0,"quietCard":0,"dup":["Demo MT Quota Check","Demo Beauty Co."]}
+CR4-PLAN-PERIOD|P|{"chip":{"overview":true,"orders":true,"allocation":true,"reports":true,"supQuota":true,"supProposals":true,"supSop":true,"customers":false,"audit":false,"access":false},"ro":{"bar":true,"btns":true,"refuse":true,"quota":0,"preset":"2026-10"},"back":{"bar":true,"check":true,"quota":100},"FEED_MONTH":"2026-11","pp":"2026-11"}
+CR4-DATE-FORMAT|P|{"bad":[],"helper":"25 พ.ย. 2026 / TH"}
+CR4-SKU-SEARCH|P|{"sr":{"alias":true,"partner":true,"barcode":true,"name":true},"s360":{"h1":"SKU 360","hash":"#/supply/overview?q=JB-FD-001","inline":true},"kp":["15 มิ.ย. 2027","14 ม.ค. 2027","51,191","2,525.3"]}
+CR4-PORTFOLIO|P|{"pfw":[{"k":1,"page":"1/72","hand":"1/72"},{"k":8,"page":"3/50","hand":"3/50"},{"k":20,"page":"13/86","hand":"13/86"}],"projUnit":"v"}
+CR4-RR-UX|P|{"radios":6,"skip":true,"chipTxt":"คาดการณ์: ล่าสุด 4 สัปดาห์ · ไม่นับช่วงของขาด ▾","exRows":[2525.3,2354.6,2222.5,2413.5,2626.4,2626.4],"hand2":[2525.3,2354.6,2222.5,2413.5,2626.4,2626.4],"link":"L3M/sellout"}
+CR4-TREND|P|{"trOk":{"dec":true,"flat":true,"neg":true,"cap":true,"short":true,"down":true},"fallback":{"sku":"CM-LP-007","short":true,"same":true},"actions":1,"declining":1}
+CR4-AUTO|P|{"au":[{"sku":"CM-FD-001","ok":true,"pick":"L3M","wape":{"L4W":10.451227604512276,"L3M":7.887975771187448,"W":8.810763445799944,"TR":9.601728255401135}},{"sku":"CM-FD-003","ok":true,"pick":"L4W","wape":{"L4W":30.449029126213595,"L3M":43.36445108289769,"W":36.018530619865565,"TR":32.430399023914276}}],"share":{"L3M":31,"L4W":45,"TR":27,"W":17}}
+CR4-LOST-LABEL|P|{"parts":[100277,1920392],"tot":2020669}
+CR4-CONTROLS|P|{"ctl":{"supOverview":"VH","supStock":"","supExpiry":"H","supConsign":"V","supCalendar":"H","supReplen":"","supQuota":"VH","supReview":"V"},"kept":true,"info":true}
+CR4-ABC-LABEL|P|{"shown":"หลัก·สม่ำเสมอ","mxSum":109,"ac":109,"filt":true}
+CR4-ANCHOR-STAY|P|{"old":[],"new":[]}
+CR4-FILE-PROTOCOL|P|{"got":{"id":"CR3-3A","pass":false,"info":"run via http server (python -m http.server)"}}
+CR4-CONSOLE|P|{"errors":[]}
+#cr04data|1440|2026-11-26T01:42:23.802Z|1.5.0
+CR4-COUNT-ADJ|P|{"pair":"A01·CM-CH-008","rem0":487,"rem1":433,"counted":433,"other":[137,137],"plannerApprove":"caDenied","own":"caOwn","audit":true,"sc3":true,"remOff":487,"anchors":true}
+CR4-ROLLOVER|P|{"old":"2026-11","next":"2026-12","seeded":910,"approved":0,"qNew":144,"used":0,"supplyQuota":144,"chipTxt":"รอบแผน: ธ.ค. 2026 ▾","scOk":true,"sc":[],"anchors":true,"denied":"ppRollDenied"}
+CR4-DATA-CONSOLE|P|{"errors":[]}
+#phase3D|1440|2026-11-26T01:15:27.992Z|1.5.0
+CR3-3D-VERSION|P|{"foot":"Charmiss Operations Management · v1.5.0"}
+CR3-LEGACY (every switch old → CR-01 anchors)|P|{"diff":[]}
+CR3-ANCHOR-NEW (every switch new → README anchors)|P|{"diff":[]}
+CR3-MENU-SOP|P|{"seen":{"director":true,"planner":true,"mgr-tt":true,"sa-mt":false,"finance":false,"warehouse":false,"admin":false}}
+CR3-ACTION-AUTO (one per condition · no duplicate · owners A7)|P|{"open":122,"want":122,"again":0,"ew":"mgr-mt","stockout":"planner","expiry":["planner","mgr-mt"]}
+CR3-ACTION-FLOW (ack → done · reason for not done · no going back · audit)|P|{"audit":3}
+CR3-ACTION-NOCLOSE (condition gone → flagged, still open · confirm close)|P|{"open":30,"flagged":30,"after":29}
+CR3-ACTION-MANUAL (Planner · Manager own department only)|P|{"tt":"sopBadAcc"}
+CR3-ACTION-NOLEAK (Manager MT / TT see own department · cannot work others)|P|{"mt":107,"tt":0}
+CR3-ACTION-B4 (home card · my overdue → the page)|P|{"b4":1}
+CR3-SNAPSHOT (close · PO moved + Stockout Date > 14 days · quota change · compare on the page)|P|{"sku":"CM-FD-001","po":"PO2609-0003","so":75,"poCh":1}
+CR3-SNAPSHOT-CAP (12 cycles · IndexedDB · export)|P|{"kept":12,"stored":12}
+CR3-LOCK (after day 20 → warning + audit · lock day 28 → none)|P|{"today":26,"a":true}
+CR3-REVIEW-MONTHLY (demand · supply · pre-S&OP gap · exec summary)|P|{"parts":[true,true,true,true],"tiles":6}
+CR3-REVIEW-WEEKLY (format kept + open actions)|P|{}
+CR3-GAP (month 1 by hand · options)|P|{"hand":{"sku":"CM-FD-003","gap":-5125,"app":-5125},"rows":13}
+CR3-STORAGE (snapshots 12 · action log 2,000 shown)|P|{"text":"พื้นที่ข้อมูลในเบราว์เซอร์ localStorage — ข้อมูล Ops + ตั้งค่า (เพดานประมาณ 5 MB) ใช้ 847 KB IndexedDB — ไฟล์นำเข้า + Sales Out ที่รับ Sales Out ที่รับ: 0 ไฟล์ · 0 แถว · Snapshot แผน 12 / 12 รอบ · Act"}
+selfCheck 1–12|P|{"failed":[]}
+CR3-DEFAULT-PAGE (sign-in → หน้าหลัก · link in a new tab → that page once)|P|{"land":["director:overview","mgr-mt:overview","planner:overview"],"deep":"supQuota","again":"overview"}
+console errors (3D)|P|{"errors":[]}
+#phase3C|1440|2026-11-26T01:16:53.693Z|1.5.0
+CR3-3C-VERSION|P|{"foot":"Charmiss Operations Management · v1.5.0"}
+CR3-LEGACY (every switch old → CR-01 anchors)|P|{"diff":[]}
+CR3-ANCHOR-NEW (every switch new → README anchors incl. 3C)|P|{"diff":[],"got":{"ew":"98.8/12/18/23/0/22/20/104","fva3":"13.5/13.5/0.0","ts":"114/252/145"}}
+CR3-EW (WOS · reorder gap · in-stock · swing · piling up by hand · one alert per pair × type)|P|{"pairs":{"wos":"CM-FD-010 @ Eveandboy","rgap":"CP-FD-007 @ Watsons","instock":"CP-FD-007 @ Watsons","swing":"CM-FD-004 @ Eveandboy","accum":"CM-FD-003 @ Boots"},"kpi":{"instock":98.81512741438078,"inW":6088,"allW":6161,"red":12,"yellow":18,"rgap":23,"lowIn":9,"dist":0,"swing":22,"accum":20,"alerts":104,"pairs":481}}
+CR3-EW-DIST (no stock + no quota left + no open order → gap)|P|{"pair":"CP-FD-007 @ Watsons"}
+CR3-EW-VIEW (4 cards · cumulative chart · alerts · matrix WOS / in-stock / gap)|P|{"cards":4,"matrix":[true,true,true]}
+CR3-EW-CYCLE (Tops cycle 1 week → more red at Tops only · audit)|P|{"topsRed":[2,21]}
+CR3-FVA (2 pairs by hand · WAPE naive / quota · FVA · tracking signal)|P|{"hand":[{"sku":"JB-FD-001","acc":"7-Eleven","wN":5.33,"wQ":5.33,"fva":0,"ts":-4.83,"ok":true},{"sku":"JB-CH-003","acc":"Shopee","wN":12.34,"wQ":23.33,"fva":-10.99,"ts":-6,"ok":true}]}
+CR3-FVA-MAPE (WAPE quota 3M = MAPE on the page)|P|{"wapeQ":13.483212623031687,"mape":13.483212623031674,"fva":0.017674086705863346}
+CR3-FVA-VIEW (card · by account / Sales / group · scatter · pair FVA + tracking signal)|P|{"segs":{"acc":true,"sales":true,"group":true}}
+CR3-FVA-NOLEAK (Manager MT / TT · Sales owners of the own department only)|P|{"mt":[],"tt":[]}
+CR3-B3-NAIVE (negative FVA 3 months → Naive + reason · switch off → CR-01 quantity)|P|{"pair":"JB-FD-001 @ Watsons","on":[958,"FVA ติดลบ 3 เดือนติด (FVA −2.9 pp) → เริ่มจาก Naive = Run Rate L3M × วันของเดือน"],"off":[1094,"fit 87%"]}
+CR3-SETTINGS-3C (R5 / R6 thresholds · cycle per account · old-method button)|P|{}
+selfCheck 1–12|P|{"failed":[]}
+console errors (3C)|P|{"errors":[]}
+#phase3B|1440|2026-11-26T01:18:15.823Z|1.5.0
+CR3-3B-VERSION|P|{"foot":"Charmiss Operations Management · v1.5.0"}
+CR3-LEGACY (every switch old → CR-01 anchors)|P|{"diff":[],"selfCheck":"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS"}
+CR3-ANCHOR-NEW (every switch new → README anchors)|P|{"diff":[],"got":{"stockValue":50091183,"whV":39518371,"consV":10572812,"units":"514864/136418/651282","doc":70,"sellThrough":17.8,"status":"6/4/7/99/4/+7","risk3M":"726866/7265","recall":"519974/11/7194","quotaFit":"95/110/116","mape":13.5,"bias":-4.2,"fill":93.1,"achMTD":94.1,"lost4":2020669,"lost13":3071760,"oosSku":21,"abc":"48/34/27/6/5","ssUnits":167765,"sugValue":42971040,"ew":"98.8/12/18/23/0/22/20/104","fva3":"13.5/13.5/0.0","ts":"114/252/145"}}
+CR3-DEFAULTS (A2 new on · filter switch)|P|{"rrNew":9106,"rrOld":8708}
+CR3-OOS (R3 · up where out of stock · same where not · lost sales)|P|{"same":902,"up":41,"equalFloor":10,"down":0,"example":"CM-FD-003 @ Shopee: 251.5 → 284.3/wk","lost13":3071760}
+CR3-OOS-VIEW (stock columns · drawer · overview card · matrix)|P|{"sku":"TF-SK-003","card":"ยอดขายที่เสียโอกาส (ของขาด) · 4 สัปดาห์ล่าสุด\n26 ต.ค. – 22 พ"}
+CR3-ABCXYZ (A ≤ 80 % line · B ≤ 95 % · N · E · SS 0 for E)|P|{"groups":"48/34/27/6/5","shares":"80.1/15.1/4.7","clearanceSku":"CM-FD-001"}
+CR3-ABC-FILTER (Stock E · Replen B)|P|{"stockE":5,"replenB":25}
+CR3-SS (3 SKUs by hand · actual vs estimated LT)|P|{"hand":[{"sku":"CM-FD-006","src":"sku","group":"AX","z":2.0537,"d":251.21,"sdD":77.73,"lt":74,"sdLT":1.7,"ss":1638,"app":1638,"rop":20228,"appRop":20228},{"sku":"CM-FD-001","src":"supplier","group":"AX","z":2.0537,"d":46.18,"sdD":20.35,"lt":68.8,"sdLT":19.2,"ss":1852,"app":1853,"rop":5030,"appRop":5031},{"sku":"JB-LP-006","src":"est","group":"CX","z":1.6449,"d":9.11,"sdD":5.44,"lt":105,"sdLT":0,"ss":92,"app":92,"rop":1048,"appRop":1048}],"estBadge":true}
+CR3-SL-WHATIF (+1 pp more SS · −5 pp less · slider off with safety days)|P|{"ss":[122578,167765,187459]}
+CR3-SETTINGS (threshold + audit · old-method button)|P|{"A70":35,"A80":48}
+CR3-SC-12 (ABC = 100 % · every SKU grouped)|P|{"detail":"A 48 · 80.1% / B 34 · 15.1% / C 27 · 4.7% / N 6 / E 5"}
+selfCheck 1–12|P|{"failed":[]}
+console errors (3B)|P|{"errors":[]}
+#phase3A|1440|2026-11-26T01:19:24.991Z|1.5.0
+CR3-VERSION|P|{"foot":"Charmiss Operations Management · v1.5.0","side":"Charmiss Ops v1.5.0 · 26 พ.ย. 2026"}
+CR3-LEGACY (old methods → CR-01 anchors)|P|{"diff":[],"selfCheck":"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS"}
+CR3-ANCHOR-NEW (R1 new · 3A gives the same numbers)|P|{"diff":[],"got":{"stockValue":50091183,"whV":39518371,"consV":10572812,"units":"514864/136418/651282","doc":73,"sellThrough":17.8,"status":"7/2/9/98/4/+7","risk3M":"547597/4489","recall":"519974/11/7194","quotaFit":"92/107/116","mape":13.5,"bias":-4.2,"fill":93.1,"achMTD":94.1}}
+CR3-SO-INTAKE-ERRORS|P|{"errors":"4:ve_future 5:ve_date 6:ve_sku 7:ve_neg 8:ve_qty"}
+CR3-SO-INTAKE-MAP|P|{"rows":55,"code":"71100377"}
+CR3-SO-INTAKE (append)|P|{"batch":"SOI-55952092","rows":55,"snapshot":"2026-11-30","A01":"ok","A02":"pending"}
+CR3-RR-END (only 7-Eleven moves · old method does not move)|P|{"moved7Eleven":54,"movedOther":0,"movedOldMethod":0}
+CR3-STALE|P|{"banner":"ข้อมูล Sales Out ค้าง (เกิน 0 สัปดาห์ก่อน AS OF): Watsons ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Eveandboy ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Boots ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Tops ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Big C ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Lotus's ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Dealer ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Wholesale ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Shopee ข้อมูล Sales Out ค้าง 1 สัปดาห์ · Lazada ข้อมูล Sales Out ค้าง 1 สัปดาห์ · TikTok Shop ข้อมูล Sales Out ค้าง 1 สัปดาห์"}
+CR3-SO-INTAKE-DUP (xlsx · skip / replace / remove)|P|{"dup":113,"skip":[0,113],"replace":113,"fileQty":10844,"baseQty":10855}
+CR3-OTHER-OUT-APPROVAL|P|{"ownApprove":"issueSelf","reject":"issueNeedReason"}
+CR3-OTHER-OUT (WH −100 · Sales Out and run rate unchanged)|P|{"sku":"TF-FD-001","wh":[19751,19651],"wms":19651}
+CR3-OTHER-OUT-VIEW (waterfall bar + month card)|P|{"wfOO":100}
+CR3-PRPLAN (switch prPlanOn · 1-month total)|P|{"off":17431.78571428571,"on":14474.906864183004,"off2":17431.78571428571}
+CR3-SC-10 (WH flow incl. other_out)|P|{}
+CR3-SC-11 (Sales Out keys unique)|P|{}
+selfCheck 1–11|P|{"failed":[]}
+CR3-AUDIT|P|{}
+CR3-MENU-INTAKE (MT view only · TT refused)|P|{}
+CR3-ANCHOR-AFTER (AS OF 23 Nov · both methods)|P|{"diff":[]}
+console errors (3A)|P|{"errors":[]}
+#phaseD-desktop|1440|2026-11-26T01:39:27.788Z|1.5.0
+SUP-F1-CARD|P|{"card":"Quota Achievement MTD   94.1%   Sales In 180,046 / Quota 191,330 ชิ้น · สัปดาห์นี้ 48.1%   ▼ 17.7 pp   เทียบ MTD วันเดียวกันของเดือนก่อน","mtd":94.1,"prevMtd":111.77}
+SUP-F1-TABLE (desktop)|P|{"pairs":953,"mismatch":0}
+SUP-F1-REPORT|P|{}
+SUP-F4|P|{"overview":"<span class=\"delta flat\">▲ 3 วัน</span>","review":"<span class=\"delta flat\">▲ 3 วัน</span>"}
+SUP-F2 (desktop)|P|{"indexAxis":"x","labels":7}
+SUP-F3 (desktop)|P|{"rows":25}
+SUP-F8-SHOW|P|{"counts":52,"shown":25,"summary":"นับแล้ว 52 คู่ · ตรง 36 · ตรวจ 11 · ต่างมาก 5 · ส่วนต่างรวม -423 ชิ้น (−฿30,170)"}
+SUP-F8-DIFF (= counted − calculated; calculation untouched)|P|{"diff":-423,"calcAtCount":18826,"lots":18826}
+SUP-F8-SCOPE (after AS OF / other channel → hidden)|P|{}
+SUP-F8-IMPORT (schema)|P|{"bad":["qty:negative:-3","date:not_date:22/13/2026"]}
+SUP-NOLEAK-sa-mt|P|{"refused":true,"viaUrl":true}
+SUP-NOLEAK-sa-tt|P|{"refused":true,"viaUrl":true}
+SUP-NOLEAK-sa-ecom|P|{"refused":true,"viaUrl":true}
+SUP-NOTAG|P|{"pages":[]}
+console errors (Phase D)|P|{"errors":[]}
+SUP-ANCHOR (Phase D)|P|{"diff":[],"selfCheck":"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS"}
+#phaseD-390|390|2026-11-26T01:56:43.997Z|1.5.0
+SUP-F1-CARD|P|{"card":"Quota Achievement MTD   94.1%   Sales In 180,046 / Quota 191,330 ชิ้น · สัปดาห์นี้ 48.1%   ▼ 17.7 pp   เทียบ MTD วันเดียวกันของเดือนก่อน","mtd":94.1,"prevMtd":111.77}
+SUP-F1-TABLE (mobile)|P|{"pairs":953,"mismatch":0}
+SUP-F1-REPORT|P|{}
+SUP-F4|P|{"overview":"<span class=\"delta flat\">▲ 3 วัน</span>","review":"<span class=\"delta flat\">▲ 3 วัน</span>"}
+SUP-F2 (mobile)|P|{"indexAxis":"y","labels":7}
+SUP-F3 (mobile)|P|{"first":25,"afterMore":50,"filtered":25}
+SUP-F8-SHOW|P|{"counts":52,"shown":25,"summary":"นับแล้ว 52 คู่ · ตรง 36 · ตรวจ 11 · ต่างมาก 5 · ส่วนต่างรวม -423 ชิ้น (−฿30,170)"}
+SUP-F8-DIFF (= counted − calculated; calculation untouched)|P|{"diff":-423,"calcAtCount":18826,"lots":18826}
+SUP-F8-SCOPE (after AS OF / other channel → hidden)|P|{}
+SUP-F8-IMPORT (schema)|P|{"bad":["qty:negative:-3","date:not_date:22/13/2026"]}
+SUP-NOLEAK-sa-mt|P|{"refused":true,"viaUrl":true}
+SUP-NOLEAK-sa-tt|P|{"refused":true,"viaUrl":true}
+SUP-NOLEAK-sa-ecom|P|{"refused":true,"viaUrl":true}
+SUP-NOTAG|P|{"pages":[]}
+console errors (Phase D)|P|{"errors":[]}
+SUP-ANCHOR (Phase D)|P|{"diff":[],"selfCheck":"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS"}
+#mobile-390|390|2026-11-26T01:58:42.458Z|1.5.0
+SUP-MOBILE-director|P|{"width":390,"overflow":[]}
+SUP-MOBILE-mgr-mt|P|{"width":390,"overflow":[]}
+SUP-MOBILE-mgr-tt|P|{"width":390,"overflow":[]}
+SUP-MOBILE-mgr-ecom|P|{"width":390,"overflow":[]}
+SUP-MOBILE-sa-mt|P|{"width":390,"overflow":[]}
+SUP-MOBILE-sa-tt|P|{"width":390,"overflow":[]}
+SUP-MOBILE-sa-ecom|P|{"width":390,"overflow":[]}
+SUP-MOBILE-admin|P|{"width":390,"overflow":[]}
+SUP-MOBILE-finance|P|{"width":390,"overflow":[]}
+SUP-MOBILE-warehouse|P|{"width":390,"overflow":[]}
+SUP-MOBILE-planner|P|{"width":390,"overflow":[]}
+#flow|1440|2026-11-26T01:40:04.480Z|1.5.0
+SUP-FEED-DELIVERED (IV, not shipped)|P|{}
+SUP-FEED-DELIVERED (in transit)|P|{"sku":"CM-FD-005","asOf":"2026-11-30","it":40,"wh":[3084,3044],"total":[4354,4354],"sc":"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS"}
+SUP-FEED-DELIVERED (Sales In / Remaining)|P|{"salesIn":40,"remaining":[356,396],"sc":"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS"}
+SUP-FEED-IDEMP|P|{"replay":{"ok":true,"already":true}}
+SUP-READONLY|P|{}
+SUP-CN-COND|P|{}
+SUP-FLOW (CN Good → WH up, consignment down)|P|{"wh":[3084,3069],"remaining":[356,366],"total":[4354,4349]}
+SUP-SC-7|P|{"n":0,"of":120}
+SUP-SC-8|P|{"n":0,"of":1}
+SUP-SC-9|P|{"n":0,"of":953}
+selfCheck 1–9|P|{"checks":"refs:PASS outright:PASS negative:PASS reconcile:PASS lots:PASS wh_flow:PASS abc:PASS wms:PASS delivered:PASS quota_ops:PASS so_keys:PASS"}
+SUP-ANCHOR (after the flow)|P|{"diff":[]}
+#phaseC|1440|2026-11-26T01:41:44.351Z|1.5.0
+SUP-PROP-MERGE|P|{}
+SUP-PROP-SELF|P|{}
+SUP-PROP-REJECT|P|{}
+SUP-PROP-recall|P|{}
+SUP-PROP-quota (draft, not in this month)|P|{}
+SUP-PROP-po (Planned)|P|{}
+SUP-PROP-downstream|P|{"dec":600}
+SUP-ETA|P|{"history":2}
+SUP-ATP (Planned ignored · Confirmed / Shipped counted · ETA moves the date)|P|{"atp0":{"none":true,"base":161},"atp1":"2026-12-16","atp3":"2026-12-26"}
+SUP-ATP-MT|P|{"order":"OR-UAT-MT67664"}
+SUP-ATP-TT|P|{"order":"OR-UAT-TT68231"}
+SUP-ATP-EC|P|{"order":"OR-UAT-EC68797"}
+SUP-B2-MATCH|P|{"b2":{"fit":72.83783783783785,"mape":22.646657571623464,"cov3":10.53893331445063},"page":{"fit":72.83783783783785,"mape":22.646657571623464,"cov3":10.53893331445063}}
+SUP-B4|P|{}
+SUP-B5|P|{}
+selfCheck 1–9 (after Phase C)|P|{"checks":[]}
+SUP-ANCHOR (after Phase C)|P|{"diff":[]}
+SUP-NOLEAK-mgr-mt|P|{"lock":"MT","hits":[]}
+SUP-NOLEAK-mgr-tt|P|{"lock":"TT","hits":[]}
+SUP-NOLEAK-mgr-ecom|P|{"lock":"ECOM","hits":[]}

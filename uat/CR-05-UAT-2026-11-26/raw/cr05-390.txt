@@ -1,7 +1,7 @@
-#cr05-390|390|2026-11-26T01:53:54.692Z|1.5.0
+#cr05-390|390|2026-11-26T02:15:18.967Z|1.5.0
 CR5-HEADER|P|{"width":390,"eyebrow":[],"crumb":[],"dupTitle":[],"bars":[]}
 CR5-FIRST-CONTENT|P|{"width":390,"at":"1440 / 390","limit":400,"over":[],"worst":397}
-CR5-PAGE-HEIGHT|P|{"width":390,"at":"≥ 1200 px","over":[],"heights":{"overview":2369,"orders":5434,"payments":977,"shipping":977,"ecommerce":12840,"customers":2509,"catalog":8398,"allocation":10902,"stockoverview":8529,"partners":5767,"soRequests":844,"workQueue":2527,"documents":1096,"erp":844,"reports":2579,"access":1897,"audit":1131,"returns":987,"supOverview":4676,"supStock":5367,"supExpiry":6537,"supConsign":13544,"supCalendar":5437,"supReplen":4589,"supQuota":8353,"supProposals":870,"supReview":15031,"supSop":12758,"supIntake":3572}}
+CR5-PAGE-HEIGHT|P|{"width":390,"at":"≥ 1200 px","over":[],"heights":{"overview":2369,"orders":5434,"payments":977,"shipping":977,"ecommerce":12840,"customers":2509,"catalog":8398,"allocation":10902,"stockoverview":8529,"partners":5767,"soRequests":844,"workQueue":2527,"documents":1096,"erp":844,"reports":2579,"access":1897,"audit":1131,"returns":987,"supOverview":4676,"supStock":5367,"supExpiry":2804,"supConsign":13544,"supCalendar":5437,"supReplen":4589,"supQuota":8353,"supProposals":870,"supReview":15031,"supSop":12758,"supIntake":3572}}
 CR5-TABLE-FIT|P|{"width":390,"wide":[],"pageScroll":[]}
 CR5-MOBILE-CARDS|P|{"width":390,"at":"≤ 640 px","bad":[]}
 CR5-TAP|P|{"width":390,"at":"≤ 768 px","bad":[]}

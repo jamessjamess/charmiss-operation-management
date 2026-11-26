@@ -17,11 +17,11 @@
     ['salesAdmin', 'sa-ecom'], ['admin'], ['finance'], ['warehouse'], ['planner']];
   const SUP = ['supOverview', 'supStock', 'supExpiry', 'supConsign', 'supCalendar', 'supReplen', 'supQuota', 'supProposals', 'supReview', 'supSop', 'supSetup', 'supIntake'];   // CR-03: + Intake · + S&OP
   /* CR-01 7.3 — the expected Supply menu per profile (CR-03: + Intake for Director / Manager MT (view) / Planner / Admin) */
-  const EXPECT = {
-    director: 'Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Sop,Review,Intake',
-    'mgr-mt': 'Overview,Stock,Expiry,Consign,Calendar,Quota,Proposals,Sop,Review,Intake', 'mgr-tt': 'Overview,Stock,Expiry,Calendar,Quota,Proposals,Sop,Review',
-    'mgr-ecom': 'Overview,Stock,Expiry,Calendar,Quota,Proposals,Sop,Review', 'sa-mt': '', 'sa-tt': '', 'sa-ecom': '',
-    admin: 'Intake,Setup', finance: 'Calendar,Review', warehouse: 'Expiry,Calendar', planner: 'Overview,Stock,Expiry,Consign,Calendar,Replen,Quota,Proposals,Sop,Review,Intake,Setup'   // CR-03 R7: + Sop · CR-04 R1: menu order (S&OP before Review · Intake in DATA · Setup in ADMIN)
+  const EXPECT = {   // CR-06 J1: วางแผนและสต็อก (Overview · Stock · Consign · Expiry · Calendar · Replen · Quota · Sop) → รายงาน (Review) → จัดการข้อมูล (Intake · Setup) · Proposals is a tab of Sop
+    director: 'Overview,Stock,Consign,Expiry,Calendar,Replen,Quota,Sop,Review,Intake',
+    'mgr-mt': 'Overview,Stock,Consign,Expiry,Calendar,Quota,Sop,Review,Intake', 'mgr-tt': 'Overview,Stock,Expiry,Calendar,Quota,Sop,Review',
+    'mgr-ecom': 'Overview,Stock,Expiry,Calendar,Quota,Sop,Review', 'sa-mt': '', 'sa-tt': '', 'sa-ecom': '',
+    admin: 'Overview,Stock,Consign,Expiry,Calendar,Replen,Quota,Sop,Review,Intake,Setup', finance: 'Calendar,Review', warehouse: 'Expiry,Calendar', planner: 'Overview,Stock,Consign,Expiry,Calendar,Replen,Quota,Sop,Review,Intake,Setup'   // CR-06 (asked 26 พ.ย.): Admin sees every page
   };
   const ANCHOR = { stockValue: 50091183, whV: 39518371, consV: 10572812, units: '514864/136418/651282', doc: 73, sellThrough: 17.8,
     status: '7/2/9/98/4/+7', risk3M: '547597/4489', recall: '519974/11/7194', quotaFit: '92/107/116', mape: 13.5, bias: -4.2, fill: 93.1, achMTD: 94.1 };
@@ -45,7 +45,7 @@
     for (const [r, u] of PROFILES) {
       await login(r, u);
       const sup = [...document.querySelectorAll('aside nav button[data-view]')].map(b => b.dataset.view).filter(v => v.startsWith('sup')).map(v => v.slice(3)).join(',');
-      const refused = SUP.filter(v => !sup.split(',').includes(v.slice(3))).every(v => global.navigate(v) === false);
+      const refused = SUP.filter(v => !sup.split(',').includes(v.slice(3)) && !(v === 'supProposals' && sup.split(',').includes('Sop'))).every(v => global.navigate(v) === false);   // CR-06 M2: supProposals opens the S&OP tab
       res.push({ id: 'SUP-MENU-' + (u || r), pass: sup === EXPECT[u || r] && refused, menu: sup, refused });
     }
     return res;
@@ -719,7 +719,7 @@
     // 1) menu: Director / Planner / every Manager see the page · Sales Admin / Finance / Warehouse / Admin are refused
     const seen = {};
     for (const [r, u] of [['director'], ['planner'], ['manager', 'mgr-tt'], ['salesAdmin', 'sa-mt'], ['finance'], ['warehouse'], ['admin']]) { await login(r, u); seen[u || r] = global.workCanVisit('supSop') && !!document.querySelector('aside nav button[data-view="supSop"]'); }
-    step('CR3-MENU-SOP', seen.director && seen.planner && seen['mgr-tt'] && !seen['sa-mt'] && !seen.finance && !seen.warehouse && !seen.admin, { seen });
+    step('CR3-MENU-SOP', seen.director && seen.planner && seen['mgr-tt'] && !seen['sa-mt'] && !seen.finance && !seen.warehouse && seen.admin, { seen });   // CR-06 DC-18 (asked 26 พ.ย.): Admin sees every page, S&OP included
     // 2) automatic actions: one open item per condition key · a second sync adds nothing · A7 owners
     await login('planner'); global.navigate('supSop'); await wait(1500);
     const D = App.DB, S = App.S, as = global.Supply.defaultAsOf(), M = Calc.computeModel(D, { asDn: as, view: 'W', ch: [], acc: [], brand: [], cat: [], q: '', rr: S.rrBasis || 'L4W', h: 3 }, S, {}), E = Calc.earlyWarnOf(D, M.rows, as, M.mask, S);
@@ -1226,7 +1226,7 @@
     M.push(await c5Open('override', async () => { global.navigate('overview'); await wait(150); document.querySelector('[data-c5-user]')?.click(); await wait(80); document.querySelector('[data-c5-override]')?.click(); await wait(300); }));
     M.push(await c5Open('stockRequest', async () => { global.navigate('allocation'); await wait(300); document.querySelector('#newStockRequest')?.click(); }));
     M.push(await c5Open('addChannel', async () => { global.navigate('allocation'); await wait(300); document.querySelector('#addStockChannel')?.click(); }));
-    M.push(await c5Open('sopAction', async () => { await supReady('supSop'); document.querySelector('[data-sop-open]')?.click(); }));
+    M.push(await c5Open('sopAction', async () => { await supReady('supSop'); if (typeof sopTab !== 'undefined' && sopTab !== 'actions') { sopTab = 'actions'; global.render(); await wait(600); } document.querySelector('[data-sop-open]')?.click(); }));   // CR-06 M2: the S&OP page remembers its tab (proposals · action log · snapshots)
     M.push(await c5Open('version', async () => { document.querySelector('[data-appver]')?.click(); }));
     await supReady('supStock'); App.openSku(App.model().rows[0].sku); await wait(700);
     const dr = document.querySelector('#supDrawer'), drIn = dr ? [dr, ...dr.querySelectorAll('*')].filter(e => /auto|scroll/.test(getComputedStyle(e).overflowX) && e.clientWidth > 0 && e.scrollWidth > e.clientWidth + 4 && !e.closest('table.c5-sticky, .tablewrap.c5-scrollx')).map(e => String(e.className).slice(0, 30) + ' ' + e.scrollWidth + '/' + e.clientWidth) : ['no drawer'];
@@ -1334,15 +1334,260 @@
     // CR5-VERSION — 1.5.0 · every ?v= = 1.5.0 · history new → old with the old numbers noted · footer / sidebar / login show v1.5.0
     const html = await fetch('index.html?x=' + Date.now()).then(r => r.text()), vs = [...html.matchAll(/\?v=([^"'&\s>]+)/g)].map(m => m[1]);
     const EXPV = ['1.5.0', '1.4.0', '1.3.4', '1.3.3', '1.3.2', '1.3.1', '1.1.0', '1.0.0'], OLDV = { '1.4.0': '8.5.0', '1.3.4': '8.4.0', '1.3.3': '8.3.0', '1.3.2': '8.2.0', '1.3.1': '8.1.0', '1.1.0': '8.0.0', '1.0.0': '7.0' };
-    const H = APP_VERSION.history, hOk = JSON.stringify(H.map(h => h[0])) === JSON.stringify(EXPV) && H.every(h => !OLDV[h[0]] || (h[2].th.includes('(เดิม ' + OLDV[h[0]] + ')') && h[2].en.includes('(was ' + OLDV[h[0]] + ')')));
+    const H = APP_VERSION.history, REL = APP_VERSION.number, hv = H.map(h => h[0]);   // CR-06: later releases sit on top (1.6.0 …) — the CR-05 rows below stay as they are
+    const hOk = hv[0] === REL && /^1\.\d+\.\d+$/.test(REL) && JSON.stringify(hv.slice(hv.indexOf('1.5.0'))) === JSON.stringify(EXPV) && H.every(h => !OLDV[h[0]] || (h[2].th.includes('(เดิม ' + OLDV[h[0]] + ')') && h[2].en.includes('(was ' + OLDV[h[0]] + ')')));
     await login('director'); global.navigate('overview'); await wait(200);
     const foot = (document.querySelector('#footBuild') || {}).innerText || '', side = (document.querySelector('.appver-side') || {}).textContent || '';
     global.logoutForUserSwitch(); global.render(); await wait(150); global.appVersionUI && global.appVersionUI(); const loginV = (document.querySelector('.appver-login') || {}).innerText || '';
     await login('director');
-    step('CR5-VERSION', APP_VERSION.number === '1.5.0' && vs.length > 20 && vs.every(x => x === '1.5.0') && hOk && foot.includes('v1.5.0') && side.includes('v1.5.0') && loginV.includes('v1.5.0'),
-      { number: APP_VERSION.number, scripts: vs.length, other: [...new Set(vs.filter(x => x !== '1.5.0'))], history: H.map(h => h[0]).join(' '), hOk, foot, side, login: loginV });
+    step('CR5-VERSION', vs.length > 20 && vs.every(x => x === REL) && hOk && foot.includes('v' + REL) && side.includes('v' + REL) && loginV.includes('v' + REL),
+      { number: REL, scripts: vs.length, other: [...new Set(vs.filter(x => x !== REL))], history: hv.join(' '), hOk, foot, side, login: loginV });
 
     step('CR5-CONSOLE', errors.length === before, { errors: errors.slice(before) });
+    return res.map(x => Object.assign({ width: W }, x));
+  }
+
+  /* ---------------------------------------------------------------- CR-06 · SupUAT.cr06() — menu by journey · names · merged pages · drawers · data management
+     (fresh Integrated demo · run at 1440 and 390 px · every profile for the menu / access checks). It writes a little test data and removes it again. */
+  const CR6_OLD_NAMES = ['เปิด SO · MT/TT', 'งานค้างและส่งมอบ', 'ฝ่าย E-commerce', 'สินค้าคงคลังและโควตา', 'เอกสารและระบบเชื่อมต่อ', 'ของเข้า & CN Calendar'];
+  const CR6_ALL_VIEWS = () => OPS.concat(SUP, ['erp']).filter((v, k, a) => a.indexOf(v) === k);
+  async function cr06() {
+    const tmpOrder = sku => { const b = db.orders.find(o => partner(o.partner)?.type === 'MT' && canAccessOrder(o)), x = JSON.parse(JSON.stringify(b)); x.id = 'OR-UAT-CR6-' + Math.random().toString(36).slice(2, 7); x.lines = [{ sku, qty: 1, price: 1 }]; x.sku = sku; x.qty = 1; x.time = Date.now(); db.orders.unshift(x); persist(); return x; };   // an order without an SO request (the earlier checks send them)
+    const dropOrder = x => { if (x) { db.orders = db.orders.filter(o => o.id !== x.id); persist(); } };
+    const res = [], App = global.App, step = (id, pass, info) => res.push(Object.assign({ id, pass: !!pass }, info || {}));
+    if (global.supDataset() !== 'integrated' || !db.feedBase) return [{ id: 'CR6', pass: false, info: 'needs a fresh Integrated demo' }];
+    const before = errors.length, W = innerWidth, phone = W <= 768;
+    const vis = el => !!el && el.getClientRects().length > 0 && getComputedStyle(el).visibility !== 'hidden';
+    const dwOpen = () => { const d = document.getElementById('cr6Drawer'); return d && !d.hidden ? d.dataset.key : ''; };
+    try { localStorage.removeItem('ops.navCollapsed'); localStorage.removeItem('ops.navOpened'); } catch (e) { /* storage blocked */ }
+
+    // CR6-MENU-ORDER — groups and pages in the order of the CR-06 table · DATA MANAGEMENT / ADMIN folded · a group with nothing for the role has no header (desktop + phone drawer)
+    const ORDER = CR4_NAV.flatMap(g => g[2]), GROUPS = CR4_NAV.map(g => g[0]), mo = [];
+    for (const [r, u] of PROFILES) {
+      await login(r, u); global.navigate('overview'); await wait(120);
+      const groups = [...document.querySelectorAll('aside .navgroup')].map(g => ({ id: g.dataset.group, views: [...g.querySelectorAll('nav button[data-view]')].map(b => b.dataset.view), head: !!g.querySelector('.navhead'), closed: g.classList.contains('collapsed') }));
+      const flat = groups.flatMap(g => g.views), inOrder = flat.every((v, k) => k === 0 || ORDER.indexOf(flat[k - 1]) < ORDER.indexOf(v)) && flat.every(v => ORDER.includes(v));
+      const gOrder = groups.every((g, k) => k === 0 || GROUPS.indexOf(groups[k - 1].id) < GROUPS.indexOf(g.id)), noEmpty = groups.every(g => g.views.length > 0);
+      const folded = ['data', 'admin'].every(id => { const g = groups.find(x => x.id === id); return !g || g.closed; }), gone = !flat.includes('supProposals') && !flat.includes('stockoverview');
+      let drawer = null;
+      if (phone) { document.querySelector('.c5-burger')?.click(); for (let k = 0; k < 30 && document.querySelector('.shell > aside').getBoundingClientRect().right < 200; k++) await wait(100); drawer = document.querySelector('.shell > aside').getBoundingClientRect().right >= 200; document.querySelector('.c5-shade')?.click(); await wait(250); }
+      mo.push({ who: u || r, ok: inOrder && gOrder && noEmpty && folded && gone && (!phone || drawer), menu: groups.map(g => g.id + ':' + g.views.length).join(' '), drawer });
+    }
+    step('CR6-MENU-ORDER', mo.every(x => x.ok), { bad: mo.filter(x => !x.ok), sample: mo.find(x => x.who === 'director')?.menu });
+
+    // CR6-SAME-ACCESS — each role reaches the same pages as v1.5 (the page gate before CR-06) · merged ids = their tab · no page added · a denied id stays denied
+    const acc = [], table = [];
+    for (const [r, u] of PROFILES) {
+      await login(r, u); global.navigate('overview'); await wait(80);
+      const menu = new Set([...document.querySelectorAll('aside nav button[data-view]')].map(b => b.dataset.view)), oldGate = cr6VisitBefore, diff = [], denied = [];
+      for (const v of CR6_ALL_VIEWS()) {
+        const was = oldGate(v), now = global.workCanVisit(v);
+        const reach = menu.has(v) || (['payments', 'shipping'].includes(v) && menu.has('orders')) || (v === 'stockoverview' && menu.has('allocation') && now) || (v === 'supProposals' && menu.has('supSop') && was) || (v === 'erp' && menu.has('erp'));
+        const adminAll = r === 'admin' && !was && now;   // asked during CR-06: Admin opens every page (view only)
+        if (r === 'admin' && !now) diff.push(v + ':admin should see every page');
+        if (was !== now && !adminAll && !(v === 'supSop' && !was && oldGate('supProposals'))) diff.push(v + ':' + was + '→' + now);
+        if ((was || adminAll) && !reach) diff.push(v + ':not reachable');
+        if (!was && !adminAll && !(v === 'supSop' && oldGate('supProposals'))) { const ok = global.navigate(v); if (ok !== false && v !== 'supProposals') denied.push(v); }
+        table.push([u || r, v, was ? 'Y' : '-', now ? 'Y' : '-', reach ? 'menu' : '-']);
+      }
+      if (global.workCanVisit('stockoverview')) { global.navigate('allocation'); await wait(80); const tabs = [...document.querySelectorAll('#page .work-family-tabs button')].map(b => b.dataset.workRoute || b.dataset.cr6Stocktab); if (!tabs.includes('stockoverview') || !tabs.includes('issue')) diff.push('allocation tabs ' + tabs.join(',')); }
+      else { global.navigate('allocation'); await wait(80); if (document.querySelector('#page [data-cr6-stocktab], #page [data-work-route="stockoverview"]')) diff.push('WMS tab shown without access'); }
+      acc.push({ who: u || r, diff, denied });
+    }
+    global.SupUAT.cr06Access = table;
+    step('CR6-SAME-ACCESS', acc.every(x => !x.diff.length && !x.denied.length), { bad: acc.filter(x => x.diff.length || x.denied.length) });
+
+    // CR6-NAMES — new names in menu · H1 · breadcrumb · home · buttons · toast (TH / EN) · no old name on screen
+    await login('director'); const nm = [], oldSeen = [], keepLang = lang;
+    for (const L of ['th', 'en']) {
+      global.setLang(L); await wait(80);
+      for (const v of ['orders', 'soRequests', 'workQueue', 'returns', 'documents', 'erp', 'customers', 'ecommerce', 'allocation', 'stockoverview', 'reports', 'catalog', 'partners', 'access', 'audit', 'supStock', 'supConsign', 'supCalendar', 'supSop', 'supReview', 'supIntake']) {
+        if (!global.workCanVisit(v) || global.navigate(v) === false) continue; await wait(v.startsWith('sup') ? 900 : 120);
+        const h1 = (document.querySelector('main h1') || {}).textContent || '', crumb = (document.querySelector('.c5-crumb b') || {}).textContent || '', btn = document.querySelector(`aside nav button[data-view="${cr6MenuView(v)}"]`), item = btn ? [...btn.childNodes].filter(x => x.nodeType === 3).map(x => x.textContent).join('').trim() : '';
+        const want = t(v); if (h1.trim() !== want || crumb.trim() !== want || (item && !item.includes(t(cr6MenuView(v))))) nm.push(L + ':' + v + ' h1=' + h1 + ' crumb=' + crumb + ' menu=' + item);
+        const txt = document.body.innerText; CR6_OLD_NAMES.forEach(o => { if (txt.includes(o)) oldSeen.push(L + ':' + v + ':' + o); });
+      }
+      global.navigate('overview'); await wait(300); const ht = document.body.innerText; CR6_OLD_NAMES.forEach(o => { if (ht.includes(o)) oldSeen.push(L + ':overview:' + o); });
+    }
+    global.setLang(keepLang); await wait(80);
+    step('CR6-NAMES', !nm.length && !oldSeen.length, { mismatch: nm.slice(0, 6), oldOnScreen: [...new Set(oldSeen)].slice(0, 8), sample: ['soRequests', 'workQueue', 'ecommerce', 'allocation', 'documents', 'supCalendar'].map(v => t(v)).join(' · ') });
+
+    // CR6-REDIRECT — #stockoverview → สต็อกและโควตา tab สต็อกคลัง · #/supply/proposals → รอบ S&OP tab ข้อเสนอ · #erp → ระบบเชื่อมต่อ · the menu lights the right item
+    await login('director'); global.navigate('overview'); await wait(150); const rd = {};
+    location.hash = '#stockoverview'; for (let k = 0; k < 20 && view !== 'stockoverview'; k++) await wait(100); await wait(200);
+    rd.wms = { view, h1: (document.querySelector('main h1') || {}).textContent, tab: document.querySelector('#page .work-family-tabs .selected')?.textContent, menu: document.querySelector('aside nav button.active')?.dataset.view };
+    location.hash = '#/supply/proposals'; for (let k = 0; k < 30 && view !== 'supSop'; k++) await wait(100); await wait(400);
+    rd.props = { view, tab: document.querySelector('#page .orderTabs .selected')?.dataset.sopTab, menu: document.querySelector('aside nav button.active')?.dataset.view, hash: location.hash };
+    location.hash = '#erp'; for (let k = 0; k < 20 && view !== 'erp'; k++) await wait(100); await wait(200);
+    rd.erp = { view, rows: document.querySelectorAll('[data-cr6-sys]').length, menu: document.querySelector('aside nav button.active')?.dataset.view };
+    step('CR6-REDIRECT', rd.wms.view === 'stockoverview' && rd.wms.h1 === t('allocation') && rd.wms.tab === t('workActual') && rd.wms.menu === 'allocation' && rd.props.view === 'supSop' && rd.props.tab === 'props' && rd.props.menu === 'supSop' && rd.erp.view === 'erp' && rd.erp.rows === 5 && rd.erp.menu === 'erp', rd);
+
+    // CR6-INBOX-MATCH — home count = decision panel + proposals tab · a decision in the home drawer updates every place · audited
+    await login('planner'); await supReady('supOverview'); const M0 = App.model(), pr = supPropose({ type: 'po', sku: M0.rows[3].sku, qty: 300, lt: 20 }); supPropAct(pr.prop.id, 'submit');
+    await login('director'); await homeReady(); await wait(200);
+    const homeN = +(document.querySelector('[data-cr6-inboxn]')?.dataset.cr6Inboxn ?? -1), box = cr6Inbox();
+    global.navigate('allocation'); await wait(300); const panelN = +(document.querySelector('.cr6-inbox')?.dataset.cr6InboxN ?? -1);
+    global.navigate('supSop'); await wait(1200); const propsN = num(document.querySelector('[data-sop-tab="props"] .pill')?.textContent || '0');
+    global.navigate('overview'); await homeReady(); global.render(); await homeReady(); await wait(150);
+    const item = [...document.querySelectorAll('#page .hm-witem[data-cr6-inbox]')].find(w => { const it = box.find(x => x.id === w.dataset.cr6Inbox); return it && it.kind !== 'prop'; });
+    let decided = null;
+    if (item) {
+      const id = item.dataset.cr6Inbox, logs0 = db.logs.length; item.click(); await wait(200); const inDrawer = dwOpen() === 'inbox:' + id;
+      document.querySelector('#cr6Drawer [data-cr6-dec="1"]')?.click(); await wait(300);
+      await homeReady(); const homeN2 = +(document.querySelector('[data-cr6-inboxn]')?.dataset.cr6Inboxn ?? -1); global.navigate('allocation'); await wait(300); const panelN2 = +(document.querySelector('.cr6-inbox')?.dataset.cr6InboxN ?? -1);
+      decided = { id, inDrawer, stayed: true, homeN2, panelN2, gone: !cr6Inbox().some(x => x.id === id), audited: db.logs.length > logs0 };
+    }
+    step('CR6-INBOX-MATCH', homeN === box.length && homeN === panelN + propsN && propsN >= 1 && decided && decided.inDrawer && decided.gone && decided.audited && decided.homeN2 === homeN - 1 && decided.homeN2 === decided.panelN2 + propsN, { homeN, panelN, propsN, decided });
+
+    // CR6-STAY — an SO request sent from คำสั่งซื้อ keeps the page · the row loses its "send" step · the toast links to the queue · from the queue page it stays there
+    await login('director'); global.navigate('orders'); await wait(150); ofbState('orders').d = 'all'; ofbApply('orders'); await wait(150);
+    const sb = document.querySelector('[data-cr6-stage="so"]'), st = { found: !!sb };
+    if (sb) {
+      const id = sb.dataset.id; sb.click(); await wait(500); const f = document.getElementById('soRequestForm'); f?.requestSubmit(); await wait(400);
+      st.order = id; st.view = view; st.toastLink = !!document.querySelector('#toast [data-cr6-go="soRequests"]'); st.rowStep = !!document.querySelector(`[data-cr6-stage="so"][data-id="${id}"]`); st.req = (db.soRequests || []).some(r => r.orderId === id);
+      const other = db.orders.find(o => o.id !== id && partner(o.partner)?.type === 'MT' && cr4OrderStage(o) === 'docs' && !(db.soRequests || []).some(r => r.orderId === o.id));
+      global.navigate('soRequests'); await wait(200);
+      if (other) { soRequestForm(other.id); await wait(400); document.getElementById('soRequestForm')?.requestSubmit(); await wait(400); st.fromQueue = view; }
+    }
+    step('CR6-STAY', st.found && st.view === 'orders' && st.toastLink && !st.rowStep && st.req && (st.fromQueue === undefined || st.fromQueue === 'soRequests'), st);
+
+    // CR6-QUOTA-INLINE — an SO short of quota offers "ขอโควตาเพิ่ม" in the modal · sent without leaving the page · it waits in the approver's inbox
+    await login('salesAdmin', 'sa-mt'); global.navigate('orders'); await wait(150);
+    const base = db.orders.find(o => partner(o.partner)?.type === 'MT' && canAccessOrder(o)), qi = { base: base && base.id };
+    let testOrder = null;
+    if (base) {
+      testOrder = JSON.parse(JSON.stringify(base)); testOrder.id = 'OR-UAT-CR6-Q'; testOrder.lines = [{ sku: base.lines?.[0]?.sku || base.sku, qty: 999999, price: 1 }]; testOrder.qty = 999999; testOrder.sku = testOrder.lines[0].sku; testOrder.time = Date.now();
+      db.orders.unshift(testOrder); global.persist();
+      soRequestForm(testOrder.id); await wait(500);
+      const btn = document.querySelector('#modal [data-cr6-moreq]'); qi.button = !!btn;
+      if (btn) { btn.click(); await wait(100); document.querySelectorAll('#modal [data-cr6-mq="qty"]').forEach(x => { x.value = '10'; }); const n0 = db.stockRequests.length; document.querySelector('#modal [data-cr6-mqsend]')?.click(); await wait(200); qi.sent = db.stockRequests.length - n0; qi.view = view; qi.modalOpen = !!document.getElementById('modal').open; qi.reqId = db.stockRequests[db.stockRequests.length - 1]?.id; }
+      const d = document.getElementById('modal'); if (d.open) { d.dataset.c5Dirty = ''; d.close(); }
+      await login('director'); qi.inInbox = cr6Inbox().some(x => x.id === qi.reqId);
+      db.orders = db.orders.filter(o => o.id !== testOrder.id); db.stockRequests = db.stockRequests.filter(x => x.id !== qi.reqId); global.persist();
+    }
+    step('CR6-QUOTA-INLINE', qi.button && qi.sent >= 1 && qi.view === 'orders' && qi.modalOpen && qi.inInbox, qi);
+
+    // CR6-ORDER-DRAWER — an order number on 7 pages opens the same drawer · the timeline matches the source · the URL opens it directly
+    await login('director'); const od = [];
+    const tryPage = async (v, prep) => {
+      if (!global.workCanVisit(v)) return; global.navigate(v); await wait(v === 'overview' ? 600 : 250); if (prep) await prep();
+      const el = document.querySelector('#page .cr6-oid, #page [data-cr6-order], #page .order-id-link[data-order], #page [data-open-order], #page [data-hm-order], #cr6Drawer:not([hidden]) [data-cr6-corder]');
+      if (!el) { od.push({ v, none: true }); return; }
+      const id = el.dataset.cr6Order || el.dataset.order || el.dataset.openOrder || el.dataset.hmOrder || el.dataset.cr6Corder; el.click(); await wait(250);
+      const o = db.orders.find(x => x.id === id), dw = document.getElementById('cr6Drawer'), steps = dw ? dw.querySelectorAll('.cr6-tl').length : 0;
+      const soR = (db.soRequests || []).filter(r => r.orderId === id).sort((a, b) => (b.time || 0) - (a.time || 0))[0], doc = orderDoc(o);
+      const soOk = !soR || (dw.querySelector('[data-cr6-so-state]')?.textContent || '').includes(soR.id), docOk = !doc || (dw.querySelector('[data-cr6-doc]')?.textContent || '').includes(doc.so || '—');
+      const rets = (db.returns || []).filter(r => r.orderId === id), retOk = rets.every(r => (dw.innerText || '').includes(r.id));
+      od.push({ v, id, ok: dwOpen() === 'order:' + id && steps === 7 && soOk && docOk && retOk }); cr6DwClose(); await wait(80);
+    };
+    await tryPage('orders'); await tryPage('soRequests'); await tryPage('workQueue'); await tryPage('returns'); await tryPage('documents');
+    await tryPage('customers', async () => { document.querySelector('#page .cr6-cust')?.click(); await wait(200); });
+    await tryPage('overview');
+    const anyId = db.orders.find(o => canAccessOrder(o)).id; global.navigate('orders'); await wait(150); location.hash = '#o/' + encodeURIComponent(anyId); await wait(400); const viaUrl = dwOpen() === 'order:' + anyId; cr6DwClose();
+    const odOk = od.filter(x => !x.none);
+    step('CR6-ORDER-DRAWER', odOk.length >= 5 && odOk.every(x => x.ok) && viaUrl, { pages: od.map(x => x.v + ':' + (x.none ? 'no order on page' : x.ok)), viaUrl });
+
+    // CR6-SKU360-ANYWHERE — a SKU code from 8 places opens the same SKU 360 drawer (the same HTML as on สต็อกและคาดการณ์)
+    await login('director'); await supReady('supStock'); const SK = App.model().rows[0].sku; App.openSku(SK); await wait(700);
+    const ref = (document.querySelector('#supDrawer .drawer') || {}).innerText || ''; App.closeSku(); global.U.drawer.close(); await wait(150);
+    const s3 = [], drawerOf = () => { const d = document.querySelector('#supDrawer'); return d && !d.classList.contains('hidden') ? (d.querySelector('.drawer').innerText || '') : ''; };
+    const viaSku = async (where, open) => {
+      const el = await open(); if (!el) { s3.push({ where, none: true }); return; }
+      const sku = el.dataset.sku360; el.click(); await wait(900); const txt = drawerOf();
+      s3.push({ where, sku, ok: txt.includes(sku) && (sku !== SK || txt.split('\n').slice(0, 8).join('|') === ref.split('\n').slice(0, 8).join('|')) }); global.U.drawer.close(); await wait(150);
+    };
+    const pick = sel => document.querySelector(sel);
+    await viaSku('allocation', async () => { global.navigate('allocation'); await wait(400); return pick(`#page [data-sku360="${SK}"]`) || pick('#page [data-sku360]'); });
+    await viaSku('order lines', async () => { global.navigate('orders'); await wait(200); cr6OrderDrawer(db.orders.find(o => canAccessOrder(o)).id); await wait(200); return pick('#cr6Drawer [data-sku360]'); });
+    let tmpS = null; await viaSku('SO modal', async () => { cr6DwClose(); global.navigate('soRequests'); await wait(200); tmpS = tmpOrder(SK); soRequestForm(tmpS.id); await wait(500); return pick('#modal [data-sku360]'); });
+    { const d = document.getElementById('modal'); if (d.open) { d.dataset.c5Dirty = ''; d.close(); } dropOrder(tmpS); }
+    await viaSku('consignment', async () => { await supReady('supConsign'); await wait(500); return pick('#main [data-sku360]'); });
+    await viaSku('replenishment', async () => { await supReady('supReplen'); await wait(500); const g = pick('#main [data-sku360], #main [data-go-sku]'); if (g && g.dataset.goSku) g.dataset.sku360 = g.dataset.goSku; return g; });
+    await viaSku('quota vs actual', async () => { await supReady('supQuota'); await wait(500); return pick('#main [data-sku360]'); });
+    await viaSku('products', async () => { global.navigate('catalog'); await wait(800); return pick(`#page [data-sku360="${SK}"]`); });
+    await viaSku('action log', async () => { global.navigate('supSop'); sopTab = 'actions'; global.render(); await wait(1200); return pick('#page [data-sku360]'); });
+    step('CR6-SKU360-ANYWHERE', s3.filter(x => !x.none).length >= (phone ? 6 : 8) && s3.every(x => x.none || x.ok), { places: s3.map(x => x.where + ':' + (x.none ? (phone ? 'card list (tap the card)' : 'none') : x.ok)) });   // phone: a list that is one button per card keeps its own tap
+
+    // CR6-CONTEXT-BACK — 5 cross-page links carry their filter · the target shows "มาจาก" · "← กลับ" restores page, filter, tab and scroll
+    await login('director'); const cb = [];
+    const back = async (name, start, go, check) => {
+      await start(); window.scrollTo(0, 260); await wait(80); const from = { view, y: window.scrollY, sop: sopTab };
+      await go(); await wait(700); const chip = !!document.querySelector('.cr6-from'), filt = await check();
+      document.querySelector('[data-cr6-back]')?.click(); await wait(700);
+      cb.push({ name, chip, filt, back: view === from.view, y: Math.abs(window.scrollY - from.y) <= 40 || document.documentElement.scrollHeight <= innerHeight + 260, ok: false }); const c = cb[cb.length - 1]; c.ok = c.chip && c.filt && c.back && c.y;
+    };
+    await back('ecom → store quota', async () => { global.navigate('ecommerce'); await wait(300); }, async () => document.querySelector('[data-cr6-ecomquota]')?.click(), async () => view === 'allocation' && !!document.querySelector('#cr6EcomQuota'));
+    await back('SKU 360 → stock & projection', async () => { global.navigate('allocation'); await wait(300); }, async () => { await cr6Sku360(SK); await wait(700); document.querySelector('#supDrawer [data-cr6-skugo="supStock"]')?.click(); }, async () => { await wait(800); return view === 'supStock' && App.F && App.F.q === SK; });
+    await back('order → SO queue', async () => { global.navigate('orders'); await wait(200); }, async () => { const o = (db.soRequests || [])[0]; if (!o) return; cr6OrderDrawer(o.orderId); await wait(150); document.querySelector('#cr6Drawer [data-cr6-go="soRequests"]')?.click(); }, async () => view === 'soRequests' && !!document.querySelector('#page tr.cr6-focus'));
+    await back('customer → orders', async () => { global.navigate('customers'); await wait(250); }, async () => { document.querySelector('#page .cr6-cust')?.click(); await wait(150); document.querySelector('#cr6Drawer [data-cr6-allorders]')?.click(); }, async () => view === 'orders' && !!ofbState('orders').q);
+    await back('connections → page', async () => { global.navigate('erp'); await wait(300); }, async () => document.querySelector('#page [data-cr6-go="documents"]')?.click(), async () => view === 'documents');
+    step('CR6-CONTEXT-BACK', cb.length === 5 && cb.every(x => x.ok), { links: cb });
+
+    // CR6-ECOM-SPLIT — no quota table on ร้านค้าออนไลน์ · "ดูโควต้าร้าน" opens สต็อกและโควตา with the store filter · per-store totals = the table before the move
+    await login('director'); global.navigate('ecommerce'); await wait(300);
+    const noTable = ![...document.querySelectorAll('#page .panelhead h2')].some(h => h.textContent.trim() === t('ecomStockPool'));
+    const store = governedEcomConnections()[0]?.id; ecomChannelFilter = store; global.render(); await wait(200);
+    document.querySelector('[data-cr6-ecomquota]')?.click(); await wait(500);
+    const sumPage = {}; document.querySelectorAll('#cr6EcomQuota tbody tr').forEach(tr => { sumPage[tr.dataset.cr6Store] = (sumPage[tr.dataset.cr6Store] || 0) + +tr.querySelector('[data-cr6-q]').dataset.cr6Q; });
+    const sumSrc = {}; governedEcomConnections().filter(c => c.id === store).forEach(c => { sumSrc[c.id] = ecomStockRows(c.id).reduce((s, r) => s + r.quota, 0); });
+    ecomChannelFilter = 'all';
+    step('CR6-ECOM-SPLIT', noTable && view === 'allocation' && JSON.stringify(sumPage) === JSON.stringify(sumSrc) && Object.keys(sumSrc).length === 1, { noTable, store, sumPage, sumSrc });
+    document.querySelector('[data-cr6-back]')?.click(); await wait(300);
+
+    // CR6-MASTER-ONE — one name change in the master shows on สินค้า · SKU 360 · the order drawer · the SO modal · the Supply table (masterSku) · the same for a partner (masterPartner)
+    await login('director'); const mo1 = {}, mSku = (db.orders.find(o => partner(o.partner)?.type === 'MT' && canAccessOrder(o) && !(db.soRequests || []).some(r => r.orderId === o.id)) || {}).lines?.[0]?.sku || SK, NEW = 'UAT CR6 ชื่อทดสอบ', orderM = db.orders.find(o => partner(o.partner)?.type === 'MT' && (o.lines || []).some(l => l.sku === mSku) && !(db.soRequests || []).some(r => r.orderId === o.id)) || db.orders.find(o => partner(o.partner)?.type === 'MT' && (o.lines || []).some(l => l.sku === mSku));
+    masterSkuSet(mSku, { name: NEW });
+    global.navigate('catalog'); await wait(800); mo1.catalog = (document.querySelector(`#page tr[data-cr6-sku="${mSku}"] [data-cr6-name]`) || {}).textContent === NEW;
+    await cr6Sku360(mSku); await wait(700); mo1.sku360 = (document.querySelector('#supDrawer .drawer')?.innerText || '').includes(NEW); global.U.drawer.close();
+    if (orderM) { cr6OrderDrawer(orderM.id); await wait(150); mo1.orderDrawer = (document.querySelector('#cr6Drawer')?.innerText || '').includes(NEW); cr6DwClose(); }
+    { global.navigate('soRequests'); await wait(150); const tm = tmpOrder(mSku); soRequestForm(tm.id); await wait(500); mo1.soModal = (document.getElementById('modal')?.innerText || '').includes(NEW); const d = document.getElementById('modal'); if (d.open) { d.dataset.c5Dirty = ''; d.close(); } dropOrder(tm); }
+    await supReady('supStock'); App.setF({ q: mSku }); await wait(900); mo1.supply = (document.querySelector('#main')?.innerText || '').includes(NEW); App.setF({ q: '' }); await wait(400);
+    mo1.read = masterSku(mSku).name === NEW && product(mSku)[1] === NEW;
+    masterSkuReset(mSku); mo1.reset = masterSku(mSku).name !== NEW;
+    const pid = 'A02', PN = 'UAT CR6 คู่ค้า'; masterPartnerSet(pid, { name: PN });
+    global.navigate('partners'); cr6PartnerTab = 'MT'; global.render(); await wait(200); mo1.partnerPage = (document.querySelector(`#page tr[data-cr6-partner="${pid}"]`)?.innerText || '').includes(PN);
+    if (orderM && orderM.partner === pid) { cr6OrderDrawer(orderM.id); await wait(150); mo1.partnerDrawer = (document.querySelector('#cr6Drawer')?.innerText || '').includes(PN); cr6DwClose(); }
+    await global.Supply.ensureData(); App.model(); mo1.partnerSupply = App.DB.accounts[App.DB.accIdx.get(pid)].name === PN && masterPartner(pid).name === PN;
+    masterPartnerReset(pid); mo1.partnerReset = masterPartner(pid).name !== PN;
+    step('CR6-MASTER-ONE', Object.entries(mo1).every(([k, v]) => v !== false), mo1);
+
+    // CR6-CATALOG-NOSTOCK — สินค้า: no stock / available column · no allocate button · a "stock" link (SKU 360)
+    global.navigate('catalog'); await wait(600); const heads = [...document.querySelectorAll('#page table th')].map(x => x.textContent);
+    const noStock = !heads.some(h => /On-hand|ใช้ได้|พร้อมใช้|ส่วนกลาง|Available/i.test(h)), noAlloc = ![...document.querySelectorAll('#page button')].some(b => /^จัดสรร$|^Allocate$/.test(b.textContent.trim()) || b.matches('[data-ops-allocate], [data-catalog-allocate]'));
+    step('CR6-CATALOG-NOSTOCK', noStock && noAlloc && document.querySelectorAll('#page [data-sku360]').length > 0, { heads, noAlloc });
+
+    // CR6-DOCS-SPLIT — เอกสาร SO / IV / CN shows documents only · ระบบเชื่อมต่อ shows 5 systems
+    global.navigate('documents'); await wait(250); const docOnly = !document.querySelector('#page .work-family-tabs') && !document.querySelector('#page #cr6Conn') && !!document.querySelector('#page table');
+    global.navigate('erp'); await wait(400); const sys = [...document.querySelectorAll('[data-cr6-sys]')].map(r => r.dataset.cr6Sys).join(',');
+    step('CR6-DOCS-SPLIT', docOnly && sys === 'ecom,wms,erp,sso,supply', { docOnly, sys });
+
+    // CR6-NOLEAK — every moved / merged page, tab and drawer of each department role (CR4-NOLEAK rule)
+    const nl = [];
+    for (const [r, u] of PROFILES.filter(([r]) => ['manager', 'salesAdmin'].includes(r))) {
+      await login(r, u); if (global.workCanVisit('supOverview')) await supReady('supOverview');
+      const own = { MT: 'MT', TT: 'TT', Ecom: 'ECOM' }[orgSessionGroup()], ownSale = new Set(scopedOrders().flatMap(o => [o.channel, t(o.channel)]));
+      const names = [...new Set(db.partners.filter(p => !visiblePartner(p)).map(p => p.name).concat(App.DB ? App.DB.accounts.filter(a => a.channel !== own).map(a => a.name) : []))].filter(x => x && x.length > 3 && !ownSale.has(x)), hits = [];
+      const scan = where => { const txt = (document.querySelector('main')?.innerText || '') + ' ' + (document.querySelector('#cr6Drawer:not([hidden])')?.innerText || '') + ' ' + (document.querySelector('#supDrawer:not(.hidden)')?.innerText || ''); names.forEach(nm => { if (word(nm).test(txt)) hits.push(where + ':' + nm); }); };
+      for (const [v, prep] of [['allocation'], ['stockoverview'], ['partners'], ['catalog'], ['erp'], ['documents'], ['supSop', () => { sopTab = 'props'; global.render(); }]]) {
+        if (!global.workCanVisit(v) || global.navigate(v) === false) continue; await wait(v.startsWith('sup') ? 1000 : 200); if (prep) { prep(); await wait(600); }
+        scan(v); if (v === 'partners') for (const tb of ['TT', 'stores', 'stock']) { cr6PartnerTab = tb; global.render(); await wait(120); scan('partners/' + tb); }
+        if (v === 'stockoverview') { cr6StockTab = 'issue'; global.render(); await wait(150); scan('issues'); cr6StockTab = 'wms'; }
+      }
+      cr6PartnerTab = 'MT';
+      const myOrder = scopedOrders()[0]; if (myOrder) { cr6OrderDrawer(myOrder.id); await wait(150); scan('order drawer'); cr6DwClose(); }
+      if (global.workCanVisit('customers')) { global.navigate('customers'); await wait(200); document.querySelector('#page .cr6-cust')?.click(); await wait(150); scan('customer drawer'); cr6DwClose(); }
+      if (cr6Can360() && App.DB) { await cr6Sku360(App.DB.skus[0].sku); await wait(600); scan('sku360'); global.U.drawer.close(); }
+      nl.push({ who: u, names: names.length, hits: [...new Set(hits)].slice(0, 8) });
+    }
+    step('CR6-NOLEAK', nl.every(x => !x.hits.length), { bad: nl.filter(x => x.hits.length), checked: nl.map(x => x.who + ':' + x.names) });
+
+    // CR6-SIDE-FOLD (asked during CR-06) — desktop: « folds the menu to an icon rail (names as tooltips) and » opens it again · remembered · phone: no button (☰ drawer)
+    await login('director'); global.navigate('orders'); await wait(150); const sbtn = document.querySelector('.cr6-sidebtn'), asideW = () => Math.round(document.querySelector('.shell > aside').getBoundingClientRect().width), sf = { phone };
+    if (phone) sf.hidden = !sbtn || !vis(sbtn);
+    else { sf.w0 = asideW(); sbtn.click(); await wait(200); sf.w1 = asideW(); sf.tips = [...document.querySelectorAll('aside nav button[data-view]')].every(b => b.title); global.navigate('catalog'); await wait(150); sf.kept = asideW() === sf.w1; document.querySelector('.cr6-sidebtn').click(); await wait(200); sf.w2 = asideW(); }
+    step('CR6-SIDE-FOLD', phone ? sf.hidden : sf.w0 > 200 && sf.w1 <= 70 && sf.tips && sf.kept && sf.w2 === sf.w0, sf);
+    step('CR6-CONSOLE', errors.length === before, { errors: errors.slice(before) });
+    await login('director');
     return res.map(x => Object.assign({ width: W }, x));
   }
 
@@ -1350,9 +1595,10 @@
     keep, menu, noleak, anchors, theme, errors,
     opsGate, mobile, flow, phaseC, phaseD, phase3A, phase3B, phase3C, phase3D, cr04, cr04data, login,   // CR-04
     cr05,   // CR-05
+    cr06,   // CR-06
     _proto: () => location.protocol,   // CR-04 I9: the page protocol (a test can pretend file://)
     async all() {
-      const out = [].concat(await anchors(), await menu(), await noleak('mgr-mt'), await noleak('mgr-tt'), await noleak('mgr-ecom'), await theme(), await opsGate(), await cr04(), await cr05());   // CR-04: + cr04() · CR-05: + cr05()
+      const out = [].concat(await anchors(), await menu(), await noleak('mgr-mt'), await noleak('mgr-tt'), await noleak('mgr-ecom'), await theme(), await opsGate(), await cr04(), await cr05(), await cr06());   // CR-04: + cr04() · CR-05: + cr05() · CR-06: + cr06()
       return { pass: out.filter(r => r.pass).length, of: out.length, failed: out.filter(r => !r.pass), consoleErrors: errors.slice(), results: out };   // CR-03: + every result (UAT report)
     }
   };

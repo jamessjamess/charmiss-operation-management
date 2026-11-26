@@ -1,0 +1,18 @@
+#cr06-1440|1440|2026-11-26T03:37:59.980Z|1.6.0
+CR6-MENU-ORDER|P|{"width":1440,"bad":[],"sample":"home:1 o2c:7 supply:9 reports:2 data:4 admin:2"}
+CR6-SAME-ACCESS|P|{"width":1440,"bad":[]}
+CR6-NAMES|P|{"width":1440,"mismatch":[],"oldOnScreen":[],"sample":"คำขอเปิด SO (MT/TT) · จัดส่งและส่งมอบ · ร้านค้าออนไลน์ · สต็อกและโควตา · เอกสาร SO / IV / CN · ของเข้าและ CN"}
+CR6-REDIRECT|P|{"width":1440,"wms":{"view":"stockoverview","h1":"สต็อกและโควตา","tab":"สต็อกคลัง (WMS)","menu":"allocation"},"props":{"view":"supSop","tab":"props","menu":"supSop","hash":"#/supply/sop"},"erp":{"view":"erp","rows":5,"menu":"erp"}}
+CR6-INBOX-MATCH|P|{"width":1440,"homeN":3,"panelN":2,"propsN":1,"decided":{"id":"AL-260014","inDrawer":true,"stayed":true,"homeN2":2,"panelN2":1,"gone":true,"audited":true}}
+CR6-STAY|P|{"width":1440,"found":true,"order":"OR-DEMO-QUOTA","view":"orders","toastLink":true,"rowStep":false,"req":true,"fromQueue":"soRequests"}
+CR6-QUOTA-INLINE|P|{"width":1440,"base":"OR-261113-001","button":true,"sent":1,"view":"orders","modalOpen":true,"reqId":"REQ-1795664207283-0","inInbox":true}
+CR6-ORDER-DRAWER|P|{"width":1440,"pages":["orders:true","soRequests:true","workQueue:true","returns:no order on page","documents:no order on page","customers:true","overview:true"],"viaUrl":true}
+CR6-SKU360-ANYWHERE|P|{"width":1440,"places":["allocation:true","order lines:true","SO modal:true","consignment:true","replenishment:true","quota vs actual:true","products:true","action log:true"]}
+CR6-CONTEXT-BACK|P|{"width":1440,"links":[{"name":"ecom → store quota","chip":true,"filt":true,"back":true,"y":true,"ok":true},{"name":"SKU 360 → stock & projection","chip":true,"filt":true,"back":true,"y":true,"ok":true},{"name":"order → SO queue","chip":true,"filt":true,"back":true,"y":true,"ok":true},{"name":"customer → orders","chip":true,"filt":true,"back":true,"y":true,"ok":true},{"name":"connections → page","chip":true,"filt":true,"back":true,"y":true,"ok":true}]}
+CR6-ECOM-SPLIT|P|{"width":1440,"noTable":true,"store":"tiktok","sumPage":{"tiktok":27828},"sumSrc":{"tiktok":27828}}
+CR6-MASTER-ONE|P|{"width":1440,"catalog":true,"sku360":true,"orderDrawer":true,"soModal":true,"supply":true,"read":true,"reset":true,"partnerPage":true,"partnerSupply":true,"partnerReset":true}
+CR6-CATALOG-NOSTOCK|P|{"width":1440,"heads":["SKU / ชื่อสินค้า","แบรนด์ / Series","หมวด","รหัส ERP / Barcode","รหัสเทียบ","สถานะ","Lead time (วัน)","MOQ","การทำงาน"],"noAlloc":true}
+CR6-DOCS-SPLIT|P|{"width":1440,"docOnly":true,"sys":"ecom,wms,erp,sso,supply"}
+CR6-NOLEAK|P|{"width":1440,"bad":[],"checked":["mgr-mt:9","mgr-tt:13","mgr-ecom:9","sa-mt:9","sa-tt:13","sa-ecom:9"]}
+CR6-SIDE-FOLD|P|{"width":1440,"phone":false,"w0":228,"w1":64,"tips":true,"kept":true,"w2":228}
+CR6-CONSOLE|P|{"width":1440,"errors":[]}

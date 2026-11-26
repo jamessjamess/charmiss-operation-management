@@ -739,4 +739,15 @@ html.lock{overflow:hidden}
 .sup #supTopTitle{display:none}
 .sup .c5-info{border:0;background:transparent;color:var(--accent);padding:0 4px;font-size:14px;cursor:pointer;min-height:0}
 @media(max-width:768px){.sup .ctl,.sup select,.sup .btn,.sup .seg button,.sup button.icon-btn,.sup .fc-chip,.sup .c5-info{min-height:40px}.sup .btn.small{min-height:40px}.sup .icon-btn{min-width:40px}}
+/* CR-06 (asked 26 พ.ย.) · a chart fills its card when the card is stretched by its row (never smaller than before) */
+@media(min-width:768px){
+  .sup .card:has(> .cbody > .chart-box){display:flex;flex-direction:column}
+  .sup .card:has(> .cbody > .chart-box) > .cbody{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
+  .sup .card > .cbody > .chart-box{flex:1 1 auto;height:auto;min-height:320px}
+  .sup .card > .cbody > .chart-box.h-row3{min-height:340px}
+  .sup .pf-card{display:flex;flex-direction:column}
+  .sup .pf-card .pf-bars{flex:1 1 auto;height:auto;min-height:140px}
+}
+/* CR-06 (asked 26 พ.ย.) · the Supply filter bar scrolls with the page — it no longer floats over the cards */
+.sup .topbar{position:static}
 

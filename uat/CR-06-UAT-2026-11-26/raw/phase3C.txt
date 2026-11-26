@@ -1,0 +1,16 @@
+#phase3C|1440|2026-11-26T03:25:57.081Z|1.6.0
+CR3-3C-VERSION|P|{"foot":"Charmiss Operations Management · v1.6.0"}
+CR3-LEGACY (every switch old → CR-01 anchors)|P|{"diff":[]}
+CR3-ANCHOR-NEW (every switch new → README anchors incl. 3C)|P|{"diff":[],"got":{"ew":"98.8/12/18/23/0/22/20/104","fva3":"13.5/13.5/0.0","ts":"114/252/145"}}
+CR3-EW (WOS · reorder gap · in-stock · swing · piling up by hand · one alert per pair × type)|P|{"pairs":{"wos":"CM-FD-010 @ Eveandboy","rgap":"CP-FD-007 @ Watsons","instock":"CP-FD-007 @ Watsons","swing":"CM-FD-004 @ Eveandboy","accum":"CM-FD-003 @ Boots"},"kpi":{"instock":98.81512741438078,"inW":6088,"allW":6161,"red":12,"yellow":18,"rgap":23,"lowIn":9,"dist":0,"swing":22,"accum":20,"alerts":104,"pairs":481}}
+CR3-EW-DIST (no stock + no quota left + no open order → gap)|P|{"pair":"CP-FD-007 @ Watsons"}
+CR3-EW-VIEW (4 cards · cumulative chart · alerts · matrix WOS / in-stock / gap)|P|{"cards":4,"matrix":[true,true,true]}
+CR3-EW-CYCLE (Tops cycle 1 week → more red at Tops only · audit)|P|{"topsRed":[2,21]}
+CR3-FVA (2 pairs by hand · WAPE naive / quota · FVA · tracking signal)|P|{"hand":[{"sku":"JB-FD-001","acc":"7-Eleven","wN":5.33,"wQ":5.33,"fva":0,"ts":-4.83,"ok":true},{"sku":"JB-CH-003","acc":"Shopee","wN":12.34,"wQ":23.33,"fva":-10.99,"ts":-6,"ok":true}]}
+CR3-FVA-MAPE (WAPE quota 3M = MAPE on the page)|P|{"wapeQ":13.483212623031687,"mape":13.483212623031674,"fva":0.017674086705863346}
+CR3-FVA-VIEW (card · by account / Sales / group · scatter · pair FVA + tracking signal)|P|{"segs":{"acc":true,"sales":true,"group":true}}
+CR3-FVA-NOLEAK (Manager MT / TT · Sales owners of the own department only)|P|{"mt":[],"tt":[]}
+CR3-B3-NAIVE (negative FVA 3 months → Naive + reason · switch off → CR-01 quantity)|P|{"pair":"JB-FD-001 @ Watsons","on":[958,"FVA ติดลบ 3 เดือนติด (FVA −2.9 pp) → เริ่มจาก Naive = Run Rate L3M × วันของเดือน"],"off":[1094,"fit 87%"]}
+CR3-SETTINGS-3C (R5 / R6 thresholds · cycle per account · old-method button)|P|{}
+selfCheck 1–12|P|{"failed":[]}
+console errors (3C)|P|{"errors":[]}

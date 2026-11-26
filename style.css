@@ -1111,3 +1111,65 @@ dl.c5-kv dd{margin:0;color:var(--text);overflow-wrap:anywhere}
   .ofb-chip{min-height:40px}
 }
 
+/* ================================================================ CR-06 · menu by journey · merged pages · drawers · data management */
+.cr6-gname[data-en]::after{content:attr(data-en);display:block;font-size:12px;letter-spacing:1.2px;opacity:.6;font-weight:400;margin-top:1px}
+aside .navhead .cr6-gname{text-transform:none;letter-spacing:.2px;font-size:12px;font-weight:700}
+/* N3 / N6 · the Ops drawer (720 px · full screen on a phone) */
+.cr6-dw[hidden]{display:none}
+.cr6-dw{position:fixed;inset:0;z-index:1200}
+.cr6-dw-shade{position:absolute;inset:0;background:rgba(15,23,42,.45)}
+.cr6-dw-panel{position:absolute;top:0;right:0;bottom:0;width:min(720px,100vw);background:var(--panel);border-left:1px solid var(--line);display:flex;flex-direction:column;box-shadow:-20px 0 40px rgba(15,23,42,.25)}
+.cr6-dw-head{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--line);background:var(--panel)}
+.cr6-dw-head h2{flex:1;margin:0;font-size:18px;min-width:0}
+.cr6-dw-body{overflow:auto;padding:16px 18px 28px;flex:1}
+.cr6-dw-body h3{font-size:14px;margin:16px 0 8px}
+html.cr6-lock{overflow:hidden}
+.cr6-tls{list-style:none;margin:14px 0 18px 6px;padding:0;border-left:2px solid var(--line)}
+.cr6-tl{position:relative;padding:4px 0 12px 18px}
+.cr6-tl::before{content:'';position:absolute;left:-8px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--line);border:2px solid var(--panel)}
+.cr6-tl.done::before{background:var(--green)}
+.cr6-tl.now::before{background:var(--accent)}
+.cr6-tl b{display:block;font-size:13px;color:var(--text)}
+.cr6-tl div{color:var(--muted);font-size:13px}
+.cr6-ohead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.cr6-ohead small{display:block;color:var(--muted);font-size:12px}
+.cr6-ototal{text-align:right}
+.cr6-ototal b{font-size:20px}
+.cr6-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.cr6-ckpis{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
+.cr6-why{display:grid;gap:6px;margin:10px 0;font-size:13px}
+.cr6-ok{color:var(--green)}
+/* N5 · "มาจาก …" chip + back */
+.cr6-from{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:6px 10px;margin:0 0 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);font-size:13px;width:fit-content;max-width:100%}
+/* N4 · SKU / order codes are links */
+button.cr6-sku.text-link,button.cr6-oid.text-link{font:inherit;font-weight:inherit;padding:0;border:0;background:none;color:var(--accent);cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px}
+button.cr6-cust.text-link{padding:0;border:0;background:none;color:inherit;cursor:pointer;text-align:left;font:inherit}
+button.cr6-cust.text-link b{text-decoration:underline dotted;text-underline-offset:3px}
+@media(min-width:769px){button.cr6-sku.text-link,button.cr6-oid.text-link,button.cr6-cust.text-link{min-height:0;min-width:0}}
+.cr6-skulinks{display:flex;gap:6px 14px;flex-wrap:wrap;align-items:center;padding:12px 16px;border-top:1px solid var(--line);font-size:13px}
+/* M3 · inbox list in the decision panel */
+.cr6-inbox{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.cr6-inbox-it{text-align:left;display:flex;flex-direction:column;gap:2px;padding:8px 10px}
+.cr6-inbox-it small{color:var(--muted)}
+/* N2 · quota request inside the SO modal */
+.cr6-moreq{border:1px dashed var(--line);border-radius:10px;padding:10px 12px;margin-top:10px;display:grid;gap:8px}
+.cr6-moreq[hidden]{display:none}
+.cr6-moreq h3{margin:0;font-size:14px}
+.cr6-moreq-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.cr6-focus td{background:rgba(121,155,249,.14)}
+.cr6-solo{grid-template-columns:1fr!important}
+.cr6-inline{display:flex;gap:6px;align-items:center;font-size:13px;flex-direction:row}
+.cr6-cattools{margin:0}
+/* the left menu folds to an icon rail (desktop) */
+.cr6-sidebtn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;min-width:36px;padding:0;font-size:18px;line-height:1;flex:0 0 36px}
+@media(max-width:768px){.cr6-sidebtn{display:none!important}}
+@media(min-width:769px){
+  body.cr6-fold .shell{grid-template-columns:64px minmax(0,1fr)}
+  body.cr6-fold aside{padding:14px 8px;overflow-x:hidden}
+  body.cr6-fold aside .brand,body.cr6-fold aside .sidebarfoot,body.cr6-fold aside .navhead{display:none}
+  body.cr6-fold aside .navgroup.collapsed nav{display:grid}
+  body.cr6-fold aside .navgroup + .navgroup{border-top:1px solid #33465e;padding-top:6px;margin-top:4px}
+  body.cr6-fold aside nav button{font-size:0;padding:0;text-align:center;justify-content:center}
+  body.cr6-fold aside nav button span{font-size:16px;width:auto;display:inline-block}
+}
+

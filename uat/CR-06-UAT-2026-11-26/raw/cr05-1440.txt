@@ -1,0 +1,25 @@
+#cr05-1440|1440|2026-11-26T03:19:25.758Z|1.6.0
+CR5-HEADER|P|{"width":1440,"eyebrow":[],"crumb":[],"dupTitle":[],"bars":[]}
+CR5-FIRST-CONTENT|P|{"width":1440,"at":"1440 / 390","limit":420,"over":[],"worst":408}
+CR5-PAGE-HEIGHT|P|{"width":1440,"at":"≥ 1200 px","over":["director:supConsign:4256","mgr-mt:supConsign:4278"],"heights":{"overview":1623,"orders":1069,"payments":900,"shipping":900,"ecommerce":1799,"customers":900,"catalog":2112,"allocation":2924,"stockoverview":2067,"partners":903,"soRequests":900,"workQueue":1019,"documents":1063,"erp":977,"reports":1122,"access":1285,"audit":900,"returns":931,"supOverview":2623,"supStock":1247,"supExpiry":1495,"supConsign":4256,"supCalendar":2612,"supReplen":1964,"supQuota":2690,"supSop":900,"supReview":3814,"supIntake":1117}}
+CR5-TABLE-FIT|P|{"width":1440,"wide":[],"pageScroll":[]}
+CR5-MOBILE-CARDS|P|{"width":1440,"at":"≤ 640 px","bad":[]}
+CR5-TAP|P|{"width":1440,"at":"≤ 768 px","bad":[]}
+CR5-FONT|P|{"width":1440,"bad":[]}
+CR5-TECH-TEXT|P|{"width":1440,"bad":[]}
+CR5-NO-DISABLED-WALL|P|{"width":1440,"bad":[]}
+CR5-MOBILE-SHELL|P|{"width":1440,"at":"≤ 768 px"}
+CR5-MODAL-NOSCROLL|P|{"width":1440,"at":"≥ 768 px","modals":["so:c5-l 960×424","override:c5-m 720×810","stockRequest:c5-m 720×810","addChannel:c5-m 720×455","sopAction:c5-m 720×601","version:c5-l 960×793"],"drawer":"1440 "}
+CR5-MODAL-SHEET|P|{"width":1440,"at":"≤ 640 px","bad":["so fullfalse verticalfalse fb40true","override fullfalse verticalfalse fb40true","stockRequest fullfalse verticalfalse fb40true","addChannel fullfalse verticalfalse fb40true","sopAction fullfalse verticalfalse fb40true","version fullfalse verticaltrue fb40true"]}
+CR5-MODAL-FOOTER|P|{"width":1440,"tall":["override","stockRequest"],"bad":[]}
+CR5-TECH-TEXT (modals)|P|{"width":1440,"bad":[]}
+CR5-DATE|P|{"width":1440,"pages":[],"modals":[],"helper":"27 พ.ย. 2026 · 26 พ.ย. 2026 06:56"}
+CR5-PAGINATE|P|{"width":1440,"ops":{"N":960,"first":25,"text":"1–25 จาก 960","textOk":true,"disjoint":true,"s50":50,"domKeepsAll":true},"supStock":{"N":120,"first":25,"text":"1–25 จาก 120 · มูลค่า Total ฿50,091,183","textOk":true,"disjoint":true,"exported":120},"supQuota":"1–25 จาก 953"}
+CR5-ACT-ID|P|{"width":1440,"n":123,"sample":["ACT-2611-0122","ACT-2611-0121","ACT-2611-0120"],"stable":true,"compared":122,"mig":{"moved":1,"id":"ACT-2611-0123","idOk":true,"history":true,"log":true,"noOld":true}}
+CR5-EMPTY|P|{"width":1440,"noRes":[],"soRows":0,"soOk":true,"decOk":true}
+CR5-HOME-KPI|P|{"width":1440,"director":{"val":"—","has":false,"tip":true,"noAch":true,"ach":94.1,"achPage":94.1},"mgr-mt":{"val":"—","has":false,"tip":true,"noAch":true,"ach":84.2,"achPage":84.2}}
+CR5-USER-MENU|P|{"width":1440,"inMenu":{"open":true,"theme":true,"lang":true,"sw":true,"out":true,"override":true},"noShortcut":true,"themeOk":true,"langOk":true,"swOk":true,"outOk":true}
+CR5-NOLEAK|P|{"width":1440,"ops":[],"supply":[]}
+CR5-THEME|P|{"width":1440,"pages":["overview","orders","allocation","supStock","supSop"],"bad":[],"lum":{"head":0.12,"menu":0.12,"pager":0.12,"modal":0.12}}
+CR5-VERSION|P|{"width":1440,"number":"1.6.0","scripts":54,"other":[],"history":"1.6.0 1.5.0 1.4.0 1.3.4 1.3.3 1.3.2 1.3.1 1.1.0 1.0.0","hOk":true,"foot":"Charmiss Operations Management · v1.6.0","side":"Charmiss Ops v1.6.0 · 26 พ.ย. 2026","login":"Charmiss Ops v1.6.0 · 26 พ.ย. 2026"}
+CR5-CONSOLE|P|{"width":1440,"errors":[]}

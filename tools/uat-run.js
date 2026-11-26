@@ -1,14 +1,14 @@
 /* tools/uat-run.js — test runner for the browser console (CR-04 · CR-05; not loaded by index.html).
    Loads tools/uat-supply.js, then UatRun.run(name, () => SupUAT.<suite>()) keeps the result in localStorage[UatRun.prefix + name]
-   ('uat.cr05.' since CR-05 · CR-04 used 'uat.cr04.') as compact text (#suite|width|at|build · id|P/F|detail) that
-   tools/make_uat_report_cr05.py reads. UatRun.dump() = every suite kept under the prefix. */
+   ('uat.cr06.' for CR-06 · CR-05 used 'uat.cr05.' · CR-04 'uat.cr04.') as compact text (#suite|width|at|build · id|P/F|detail) that
+   tools/make_uat_report_cr06.py reads. UatRun.dump() = every suite kept under the prefix. */
 (function (global) {
   'use strict';
   const BUILD = (document.querySelector('script[src^="cr05-ui.js"]') || document.querySelector('script[src^="cr04-core.js"]') || {}).src?.split('v=')[1] || '';
   const compact = (name, r) => '#' + name + '|' + innerWidth + '|' + new Date().toISOString() + '|' + BUILD + '\n' +
     r.map(x => { const { id, pass, ...rest } = x; return String(id).replace(/\|/g, '/') + '|' + (pass ? 'P' : 'F') + '|' + JSON.stringify(rest).replace(/[\r\n|]/g, ' ').slice(0, 600); }).join('\n');
   const U = global.UatRun = {
-    prefix: 'uat.cr05.', res: null, txt: '', t0: 0,
+    prefix: 'uat.cr06.', res: null, txt: '', t0: 0,
     async ready() { for (let k = 0; k < 80 && !(global.db && global.db.feedBase); k++) await new Promise(r => setTimeout(r, 250)); await new Promise(r => setTimeout(r, 800)); },
     async run(name, fn) {
       U.res = null; U.txt = ''; U.t0 = Date.now(); let r;
